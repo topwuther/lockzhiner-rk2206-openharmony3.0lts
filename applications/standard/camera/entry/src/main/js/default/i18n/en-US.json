@@ -1,0 +1,16 @@
+{
+    "strings": {
+        "photoMode": "PHOTO",
+        "videoMode": "VIDEO",
+        "app_name": "app_name",
+        "photo": "photo",
+        "video": "video",
+        "choose_device": "choose_device",
+        "localhost_front": "This device",
+        "remote_camera_in_use": "Remote camera in use",
+        "network_interruption": "Network interruption",
+        "remote_camera_started_fail": "Remote camera started fail",
+        "restore_defaults_dialog_confirm": "Restore defaults dialog confirm",
+        "restore_defaults_dialog_cancel": "Restore defaults dialog cancel"
+    }
+}

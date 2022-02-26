@@ -1,0 +1,60 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+
+config("samgr_proxy_config") {
+  include_dirs = [
+    "include",
+    "//foundation/distributedschedule/samgr/adapter/interfaces/innerkits/include",
+  ]
+}
+
+config("samgr_proxy_private_config") {
+  include_dirs = [
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "../../../services/lsamgr/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/lsamgr",
+    "//foundation/distributedschedule/samgr/services/lsamgr/include",
+    "//developtools/liblog",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/distributedschedule/samgr/frameworks/native/jni/include",
+    "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
+    "//foundation/distributedschedule/samgr/adapter/interfaces/innerkits/include",
+  ]
+}
+
+ohos_shared_library("samgr_proxy") {
+  sources = [
+    "//foundation/distributedschedule/samgr/frameworks/native/source/if_system_ability_manager.cpp",
+    "//foundation/distributedschedule/samgr/frameworks/native/source/system_ability_info.cpp",
+    "//foundation/distributedschedule/samgr/frameworks/native/source/system_ability_manager_proxy.cpp",
+    "//foundation/distributedschedule/samgr/services/lsamgr/src/local_ability_manager_proxy.cpp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/service_registry.cpp",
+  ]
+  configs = [ ":samgr_proxy_private_config" ]
+  public_configs = [ ":samgr_proxy_config" ]
+
+  if (is_standard_system) {
+    external_deps = [
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+    ]
+
+    deps = [ "//utils/native/base:utils" ]
+    part_name = "samgr_L2"
+  }
+  subsystem_name = "distributedschedule"
+}

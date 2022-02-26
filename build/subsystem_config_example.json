@@ -1,0 +1,8 @@
+{
+  "subsystem_examples": {
+    "project": "hmf/test/developertest",
+    "path": "test/developertest/examples",
+    "name": "subsystem_examples",
+    "dir": "test"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "subsystem": "security",
+  "parts": {
+   "huks_standard": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/security/huks/interfaces/innerkits/huks_standard/main:libhukssdk",
+          "header": {
+            "header_files": [
+              "hks_api.h"
+            ],
+            "header_base": "//base/security/huks/interfaces/innerkits/huks_standard/main/include"
+          }
+        }
+      ],
+      "module_list": [
+        "//base/security/huks/frameworks/huks_standard/main:huks_standard_frameworks",
+        "//base/security/huks/services/huks_standard:huks_service",
+        "//base/security/huks/services/huks_standard/huks_service/main/os_dependency/sa/sa_profile:huks_sa_profile"
+      ],
+      "test_list": [
+        "//base/security/huks:huks_sdk_test"
+      ]
+    }
+  }
+}

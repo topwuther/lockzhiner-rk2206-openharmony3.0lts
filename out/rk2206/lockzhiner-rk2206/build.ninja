@@ -1,0 +1,486 @@
+ninja_required_version = 1.7.2
+
+rule gn
+  command = ../../../prebuilts/build-tools/linux-x86/bin/gn --root=../../.. -q --dotfile=../../../build/lite/.gn --script-executable=/usr/bin/python3 gen .
+  description = Regenerating ninja files
+
+build build.ninja: gn
+  generator = 1
+  depfile = build.ninja.d
+
+subninja toolchain.ninja
+
+build ActsBootstrapTest: phony obj/test/xts/acts/startup_lite/bootstrap_hal/ActsBootstrapTest.stamp
+build ActsDfxFuncTest: phony obj/test/xts/acts/hiviewdfx_lite/hilog_hal/ActsDfxFuncTest.stamp
+build ActsHieventLiteTest: phony obj/test/xts/acts/hiviewdfx_lite/hievent_hal/ActsHieventLiteTest.stamp
+build ActsHuksHalFunctionTest: phony obj/test/xts/acts/security_lite/huks/liteos_m_adapter/ActsHuksHalFunctionTest.stamp
+build ActsKvStoreTest: phony obj/test/xts/acts/utils_lite/kv_store_hal/ActsKvStoreTest.stamp
+build ActsLwipTest: phony obj/test/xts/acts/communication_lite/lwip_hal/ActsLwipTest.stamp
+build ActsParameterTest: phony obj/test/xts/acts/startup_lite/syspara_hal/ActsParameterTest.stamp
+build ActsSamgrTest: phony obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/ActsSamgrTest.stamp
+build ActsUpdaterFuncTest: phony obj/test/xts/acts/update_lite/dupdate_hal/ActsUpdaterFuncTest.stamp
+build ActsUtilsFileTest: phony obj/test/xts/acts/utils_lite/file_hal/ActsUtilsFileTest.stamp
+build ActsWifiIotTest: phony obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/ActsWifiIotTest.stamp
+build ActsWifiServiceTest: phony obj/test/xts/acts/communication_lite/wifiservice_hal/ActsWifiServiceTest.stamp
+build ConfigFiles: phony obj/foundation/distributedschedule/samgr_lite/ConfigFiles.stamp
+build acts: phony obj/test/xts/acts/build_lite/acts.stamp
+build acts_component: phony obj/test/xts/acts/build_lite/acts_component.stamp
+build acts_generate_module_data: phony obj/test/xts/acts/build_lite/acts_generate_module_data.stamp
+build acts_xdevice: phony obj/test/xts/acts/build_lite/acts_xdevice.stamp
+build adc_driver: phony ./libs/libadc_driver.a
+build arch: phony ./libs/libarch.a
+build authmanager: phony ./libs/libauthmanager.a
+build backtrace: phony ./libs/libbacktrace.a
+build blackbox: phony ./libs/libblackbox.a
+build board: phony ./libs/libboard.a
+build bootstrap: phony ./libs/libbootstrap.a
+build broadcast: phony ./libs/libbroadcast.a
+build cjson_ndk: phony obj/build/lite/config/component/cJSON/cjson_ndk.stamp
+build cjson_shared: phony obj/build/lite/config/component/cJSON/cjson_shared.stamp
+build cjson_static: phony ./libs/libcjson_static.a
+build cmsis: phony ./libs/libcmsis.a
+build cppsupport: phony ./libs/libcppsupport.a
+build cpup: phony ./libs/libcpup.a
+build discovery: phony ./libs/libdiscovery.a
+build discovery_ndk: phony obj/foundation/communication/softbus_lite/discovery_ndk.stamp
+build dump_static: phony ./libs/libdump_static.a
+build exchook: phony ./libs/libexchook.a
+build fatfs: phony ./libs/libfatfs.a
+build file: phony obj/utils/native/lite/file/file.stamp
+build fs: phony obj/kernel/liteos_m/components/fs/fs.stamp
+build fs_operations: phony ./libs/libfs_operations.a
+build gpio_driver: phony ./libs/libgpio_driver.a
+build hal_file_static: phony ./libs/libhal_file_static.a
+build hal_iothardware: phony ./libs/libhal_iothardware.a
+build hal_sysparam: phony ./libs/libhal_sysparam.a
+build hal_token_static: phony ./libs/libhal_token_static.a
+build hal_update_static: phony ./libs/libhal_update_static.a
+build hal_wifiaware: phony ./libs/libhal_wifiaware.a
+build hardware: phony obj/device/rockchip/hardware/hardware.stamp
+build hc_gen: phony obj/vendor/lockzhiner/rk2206/hdf_config/hc_gen.stamp
+build hctest: phony ./libs/libhctest.a
+build hdf_config: phony ./libs/libhdf_config.a
+build hdf_core: phony ./libs/libhdf_core.a
+build hdf_drivers: phony obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp
+build hdf_osal_lite: phony ./libs/libhdf_osal_lite.a
+build hdf_platform_lite: phony ./libs/libhdf_platform_lite.a
+build hidumper_mini: phony ./libs/libhidumper_mini.a
+build hievent_lite: phony ./libs/libhievent_lite.a
+build hilog_lite: phony ./libs/libhilog_lite.a
+build hilog_lite_ndk: phony obj/base/hiviewdfx/hilog_lite/frameworks/mini/hilog_lite_ndk.stamp
+build hiview_lite: phony ./libs/libhiview_lite.a
+build hota: phony ./libs/libhota.a
+build huks_3.0_sdk: phony ./libs/libhuks_3.0_sdk.a
+build huks_sdk: phony obj/base/security/huks/frameworks/huks_lite/huks_sdk.stamp
+build huks_test_common: phony ./libs/libhuks_test_common.a
+build i2c_driver: phony ./libs/libi2c_driver.a
+build iot: phony obj/domains/iot/link/iot.stamp
+build iothardware: phony obj/base/iot_hardware/peripheral/iothardware.stamp
+build iothardware_ndk: phony obj/base/iot_hardware/peripheral/iothardware_ndk.stamp
+build kal: phony obj/kernel/liteos_m/kal/kal.stamp
+build khdf_platform_gn: phony obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn.stamp
+build kv_store: phony obj/utils/native/lite/kv_store/kv_store.stamp
+build libsec_ndk: phony obj/third_party/bounds_checking_function/libsec_ndk.stamp
+build libsec_shared: phony obj/third_party/bounds_checking_function/libsec_shared.stamp
+build libsec_static: phony ./libs/libsec_static.a
+build link: phony obj/domains/iot/link/link.stamp
+build liteos: phony obj/device/rockchip/rk2206/sdk_liteos/liteos.stamp
+build littlefs: phony ./libs/liblittlefs.a
+build lwip: phony ./libs/liblwip.a
+build mark_as_prebuilts: phony obj/build/lite/mark_as_prebuilts.stamp
+build mbedtls: phony obj/third_party/mbedtls/mbedtls.stamp
+build mbedtls_ndk: phony obj/third_party/mbedtls/mbedtls_ndk.stamp
+build mbedtls_shared: phony obj/third_party/mbedtls/mbedtls_shared.stamp
+build mbedtls_static: phony ./libs/libmbedtls.a
+build module_ActsBootstrapTest: phony ./libs/libmodule_ActsBootstrapTest.a
+build module_ActsDfxFuncTest: phony ./libs/libmodule_ActsDfxFuncTest.a
+build module_ActsHieventLiteTest: phony ./libs/libmodule_ActsHieventLiteTest.a
+build module_ActsHuksHalFunctionTest: phony ./libs/libmodule_ActsHuksHalFunctionTest.a
+build module_ActsKvStoreTest: phony ./libs/libmodule_ActsKvStoreTest.a
+build module_ActsLwipTest: phony ./libs/libmodule_ActsLwipTest.a
+build module_ActsParameterTest: phony ./libs/libmodule_ActsParameterTest.a
+build module_ActsSamgrTest: phony ./libs/libmodule_ActsSamgrTest.a
+build module_ActsUpdaterFuncTest: phony ./libs/libmodule_ActsUpdaterFuncTest.a
+build module_ActsUtilsFileTest: phony ./libs/libmodule_ActsUtilsFileTest.a
+build module_ActsWifiIotTest: phony ./libs/libmodule_ActsWifiIotTest.a
+build module_ActsWifiServiceTest: phony ./libs/libmodule_ActsWifiServiceTest.a
+build musl-c: phony ./libs/libmusl-c.a
+build musl-m: phony ./libs/libmusl-m.a
+build native_file: phony ./libs/libnative_file.a
+build ndk: phony obj/build/lite/ndk.stamp
+build ohos: phony obj/build/lite/ohos.stamp
+build pahomqtt_static: phony ./libs/libpahomqtt_static.a
+build parameter: phony obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp
+build parameter_notes: phony obj/base/startup/syspara_lite/frameworks/parameter/parameter_notes.stamp
+build pm: phony ./libs/libpm.a
+build posix: phony ./libs/libposix.a
+build prebuilts: phony obj/build/lite/prebuilts.stamp
+build product: phony obj/build/lite/product.stamp
+build pwm_driver: phony ./libs/libpwm_driver.a
+build rk2206_lwip: phony obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp
+build samgr_adapter: phony ./libs/libsamgr_adapter.a
+build samgr_lite_ndk: phony obj/foundation/distributedschedule/samgr_lite/samgr_lite_ndk.stamp
+build samgr_source: phony ./libs/libsamgr_source.a
+build sample_driver: phony ./libs/libsample_driver.a
+build sdk: phony obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp
+build sec_shared: phony obj/third_party/bounds_checking_function/sec_shared.stamp
+build securitytest: phony obj/test/xts/acts/security_lite/securitytest.stamp
+build shell: phony ./libs/libshell.a
+build softbus: phony obj/foundation/communication/softbus_lite/softbus.stamp
+build softbus_lite_ndk: phony obj/foundation/communication/softbus_lite/softbus_lite_ndk.stamp
+build spi_driver: phony ./libs/libspi_driver.a
+build startup: phony obj/applications/sample/wifi-iot/app/startup/startup.stamp
+build sysparam: phony ./libs/libsysparam.a
+build sysroot: phony obj/prebuilts/lite/sysroot/sysroot.stamp
+build token: phony obj/base/startup/syspara_lite/frameworks/token/token.stamp
+build token_notes: phony obj/base/startup/syspara_lite/frameworks/token/token_notes.stamp
+build token_static: phony ./libs/libtoken_static.a
+build tools: phony obj/test/xts/tools/lite/tools.stamp
+build trans_service: phony ./libs/libtrans_service.a
+build trans_service_ndk: phony obj/foundation/communication/softbus_lite/trans_service_ndk.stamp
+build utils: phony ./libs/libutils.a
+build utils_kv_store: phony ./libs/libutils_kv_store.a
+build utils_os_dump: phony obj/utils/native/lite/os_dump/utils_os_dump.stamp
+build wifi: phony obj/foundation/communication/wifi_lite/wifi.stamp
+build wifiaware: phony ./libs/libwifiaware.a
+build wifiiot_sdk: phony obj/device/rockchip/rk2206/sdk_liteos/wifiiot_sdk.stamp
+build wifiservice: phony ./libs/libwifiservice.a
+build wifiservice_ndk: phony obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice/wifiservice_ndk.stamp
+build applications/sample/wifi-iot/app$:app: phony obj/applications/sample/wifi-iot/app/app.stamp
+build applications/sample/wifi-iot/app: phony obj/applications/sample/wifi-iot/app/app.stamp
+build applications/sample/wifi-iot/app/startup$:startup: phony obj/applications/sample/wifi-iot/app/startup/startup.stamp
+build applications/sample/wifi-iot/app/startup: phony obj/applications/sample/wifi-iot/app/startup/startup.stamp
+build base/hiviewdfx/blackbox$:blackbox: phony ./libs/libblackbox.a
+build base/hiviewdfx/blackbox: phony ./libs/libblackbox.a
+build base/hiviewdfx/hidumper_lite/mini$:hidumper_mini: phony ./libs/libhidumper_mini.a
+build base/hiviewdfx/hievent_lite$:hievent_lite: phony ./libs/libhievent_lite.a
+build base/hiviewdfx/hievent_lite: phony ./libs/libhievent_lite.a
+build base/hiviewdfx/hilog_lite/frameworks/mini$:hilog_lite: phony ./libs/libhilog_lite.a
+build base/hiviewdfx/hilog_lite/frameworks/mini$:hilog_lite_ndk: phony obj/base/hiviewdfx/hilog_lite/frameworks/mini/hilog_lite_ndk.stamp
+build base/hiviewdfx/hiview_lite$:hiview_lite: phony ./libs/libhiview_lite.a
+build base/hiviewdfx/hiview_lite: phony ./libs/libhiview_lite.a
+build base/iot_hardware/peripheral$:iothardware: phony obj/base/iot_hardware/peripheral/iothardware.stamp
+build base/iot_hardware/peripheral$:iothardware_ndk: phony obj/base/iot_hardware/peripheral/iothardware_ndk.stamp
+build base/security/deviceauth/frameworks/deviceauth_lite$:hichainsdk: phony obj/base/security/deviceauth/frameworks/deviceauth_lite/hichainsdk.stamp
+build base/security/deviceauth/frameworks/deviceauth_lite/source$:hichainsdk: phony ./libs/libhichainsdk.a
+build base/security/huks/frameworks/huks_lite$:huks_sdk: phony obj/base/security/huks/frameworks/huks_lite/huks_sdk.stamp
+build base/security/huks/interfaces/innerkits/huks_lite$:huks_3.0_sdk: phony ./libs/libhuks_3.0_sdk.a
+build base/startup/bootstrap_lite/services/source$:bootstrap: phony ./libs/libbootstrap.a
+build base/startup/syspara_lite/frameworks/parameter$:parameter: phony obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp
+build base/startup/syspara_lite/frameworks/parameter: phony obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp
+build base/startup/syspara_lite/frameworks/parameter$:parameter_notes: phony obj/base/startup/syspara_lite/frameworks/parameter/parameter_notes.stamp
+build base/startup/syspara_lite/frameworks/parameter/src$:sysparam: phony ./libs/libsysparam.a
+build base/startup/syspara_lite/frameworks/token$:token: phony obj/base/startup/syspara_lite/frameworks/token/token.stamp
+build base/startup/syspara_lite/frameworks/token: phony obj/base/startup/syspara_lite/frameworks/token/token.stamp
+build base/startup/syspara_lite/frameworks/token$:token_notes: phony obj/base/startup/syspara_lite/frameworks/token/token_notes.stamp
+build base/startup/syspara_lite/frameworks/token$:token_static: phony ./libs/libtoken_static.a
+build base/update/ota_lite/frameworks/source$:hota: phony ./libs/libhota.a
+build build/lite$:mark_as_prebuilts: phony obj/build/lite/mark_as_prebuilts.stamp
+build build/lite$:ndk: phony obj/build/lite/ndk.stamp
+build build/lite$:ohos: phony obj/build/lite/ohos.stamp
+build build/lite$:prebuilts: phony obj/build/lite/prebuilts.stamp
+build build/lite$:product: phony obj/build/lite/product.stamp
+build build/lite/config/component/cJSON$:cjson_ndk: phony obj/build/lite/config/component/cJSON/cjson_ndk.stamp
+build build/lite/config/component/cJSON$:cjson_shared: phony obj/build/lite/config/component/cJSON/cjson_shared.stamp
+build build/lite/config/component/cJSON$:cjson_static: phony ./libs/libcjson_static.a
+build device/rockchip/hardware$:hardware: phony obj/device/rockchip/hardware/hardware.stamp
+build device/rockchip/hardware: phony obj/device/rockchip/hardware/hardware.stamp
+build device/rockchip/rk2206$:rk2206: phony obj/device/rockchip/rk2206/rk2206.stamp
+build device/rockchip/rk2206: phony obj/device/rockchip/rk2206/rk2206.stamp
+build device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiaware$:hal_wifiaware: phony ./libs/libhal_wifiaware.a
+build device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice$:wifiservice: phony ./libs/libwifiservice.a
+build device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice: phony ./libs/libwifiservice.a
+build device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice$:wifiservice_ndk: phony obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice/wifiservice_ndk.stamp
+build device/rockchip/rk2206/adapter/hals/iot_hardware/wifiiot_lite$:hal_iothardware: phony ./libs/libhal_iothardware.a
+build device/rockchip/rk2206/adapter/hals/update$:hal_update_static: phony ./libs/libhal_update_static.a
+build device/rockchip/rk2206/adapter/hals/utils/file$:hal_file_static: phony ./libs/libhal_file_static.a
+build device/rockchip/rk2206/sdk_liteos$:liteos: phony obj/device/rockchip/rk2206/sdk_liteos/liteos.stamp
+build device/rockchip/rk2206/sdk_liteos$:sdk: phony obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp
+build device/rockchip/rk2206/sdk_liteos$:wifiiot_sdk: phony obj/device/rockchip/rk2206/sdk_liteos/wifiiot_sdk.stamp
+build device/rockchip/rk2206/sdk_liteos/board$:board: phony ./libs/libboard.a
+build device/rockchip/rk2206/sdk_liteos/board: phony ./libs/libboard.a
+build device/rockchip/rk2206/third_party/lwip$:rk2206_lwip: phony obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp
+build domains/iot/link$:iot: phony obj/domains/iot/link/iot.stamp
+build domains/iot/link$:link: phony obj/domains/iot/link/link.stamp
+build domains/iot/link: phony obj/domains/iot/link/link.stamp
+build drivers/adapter/khdf/liteos_m/core$:hdf_core: phony ./libs/libhdf_core.a
+build drivers/adapter/khdf/liteos_m/osal$:hdf_osal_lite: phony ./libs/libhdf_osal_lite.a
+build drivers/adapter/khdf/liteos_m/platform$:hdf_platform_lite: phony ./libs/libhdf_platform_lite.a
+build drivers/adapter/khdf/liteos_m/test/sample_driver$:sample_driver: phony ./libs/libsample_driver.a
+build drivers/adapter/khdf/liteos_m/test/sample_driver: phony ./libs/libsample_driver.a
+build foundation/communication/softbus_lite$:discovery_ndk: phony obj/foundation/communication/softbus_lite/discovery_ndk.stamp
+build foundation/communication/softbus_lite$:softbus: phony obj/foundation/communication/softbus_lite/softbus.stamp
+build foundation/communication/softbus_lite$:softbus_lite_ndk: phony obj/foundation/communication/softbus_lite/softbus_lite_ndk.stamp
+build foundation/communication/softbus_lite$:trans_service_ndk: phony obj/foundation/communication/softbus_lite/trans_service_ndk.stamp
+build foundation/communication/softbus_lite/authmanager$:authmanager: phony ./libs/libauthmanager.a
+build foundation/communication/softbus_lite/authmanager: phony ./libs/libauthmanager.a
+build foundation/communication/softbus_lite/discovery$:discovery: phony ./libs/libdiscovery.a
+build foundation/communication/softbus_lite/discovery: phony ./libs/libdiscovery.a
+build foundation/communication/softbus_lite/trans_service$:trans_service: phony ./libs/libtrans_service.a
+build foundation/communication/softbus_lite/trans_service: phony ./libs/libtrans_service.a
+build foundation/communication/wifi_aware$:wifiaware: phony ./libs/libwifiaware.a
+build foundation/communication/wifi_lite$:wifi: phony obj/foundation/communication/wifi_lite/wifi.stamp
+build foundation/distributedschedule/samgr_lite$:ConfigFiles: phony obj/foundation/distributedschedule/samgr_lite/ConfigFiles.stamp
+build foundation/distributedschedule/samgr_lite$:samgr: phony obj/foundation/distributedschedule/samgr_lite/samgr.stamp
+build foundation/distributedschedule/samgr_lite$:samgr_lite_ndk: phony obj/foundation/distributedschedule/samgr_lite/samgr_lite_ndk.stamp
+build foundation/distributedschedule/samgr_lite/communication/broadcast$:broadcast: phony ./libs/libbroadcast.a
+build foundation/distributedschedule/samgr_lite/communication/broadcast: phony ./libs/libbroadcast.a
+build foundation/distributedschedule/samgr_lite/samgr$:samgr: phony ./libs/libsamgr.a
+build foundation/distributedschedule/samgr_lite/samgr: phony ./libs/libsamgr.a
+build foundation/distributedschedule/samgr_lite/samgr/adapter$:samgr_adapter: phony ./libs/libsamgr_adapter.a
+build foundation/distributedschedule/samgr_lite/samgr/source$:samgr_source: phony ./libs/libsamgr_source.a
+build kernel/liteos_m$:kernel: phony obj/kernel/liteos_m/kernel.stamp
+build kernel/liteos_m/components/backtrace$:backtrace: phony ./libs/libbacktrace.a
+build kernel/liteos_m/components/backtrace: phony ./libs/libbacktrace.a
+build kernel/liteos_m/components/cppsupport$:cppsupport: phony ./libs/libcppsupport.a
+build kernel/liteos_m/components/cppsupport: phony ./libs/libcppsupport.a
+build kernel/liteos_m/components/cpup$:cpup: phony ./libs/libcpup.a
+build kernel/liteos_m/components/cpup: phony ./libs/libcpup.a
+build kernel/liteos_m/components/exchook$:exchook: phony ./libs/libexchook.a
+build kernel/liteos_m/components/exchook: phony ./libs/libexchook.a
+build kernel/liteos_m/components/fs$:fs: phony obj/kernel/liteos_m/components/fs/fs.stamp
+build kernel/liteos_m/components/fs: phony obj/kernel/liteos_m/components/fs/fs.stamp
+build kernel/liteos_m/components/fs$:fs_operations: phony ./libs/libfs_operations.a
+build kernel/liteos_m/components/fs/fatfs$:fatfs: phony ./libs/libfatfs.a
+build kernel/liteos_m/components/fs/fatfs: phony ./libs/libfatfs.a
+build kernel/liteos_m/components/fs/littlefs$:littlefs: phony ./libs/liblittlefs.a
+build kernel/liteos_m/components/fs/littlefs: phony ./libs/liblittlefs.a
+build kernel/liteos_m/components/net/lwip-2.1$:lwip: phony ./libs/liblwip.a
+build kernel/liteos_m/components/power$:pm: phony ./libs/libpm.a
+build kernel/liteos_m/components/shell$:shell: phony ./libs/libshell.a
+build kernel/liteos_m/components/shell: phony ./libs/libshell.a
+build kernel/liteos_m/kal$:kal: phony obj/kernel/liteos_m/kal/kal.stamp
+build kernel/liteos_m/kal: phony obj/kernel/liteos_m/kal/kal.stamp
+build kernel/liteos_m/kal/cmsis$:cmsis: phony ./libs/libcmsis.a
+build kernel/liteos_m/kal/cmsis: phony ./libs/libcmsis.a
+build kernel/liteos_m/kal/posix$:posix: phony ./libs/libposix.a
+build kernel/liteos_m/kal/posix: phony ./libs/libposix.a
+build kernel/liteos_m/kernel$:kernel: phony ./libs/libkernel.a
+build kernel/liteos_m/kernel: phony ./libs/libkernel.a
+build kernel/liteos_m/kernel/arch/arm/cortex-m4/gcc$:arch: phony ./libs/libarch.a
+build kernel/liteos_m/utils$:utils: phony ./libs/libutils.a
+build kernel/liteos_m/utils: phony ./libs/libutils.a
+build prebuilts/lite/sysroot$:sysroot: phony obj/prebuilts/lite/sysroot/sysroot.stamp
+build prebuilts/lite/sysroot: phony obj/prebuilts/lite/sysroot/sysroot.stamp
+build test/xts/acts/build_lite$:acts: phony obj/test/xts/acts/build_lite/acts.stamp
+build test/xts/acts/build_lite$:acts_component: phony obj/test/xts/acts/build_lite/acts_component.stamp
+build test/xts/acts/build_lite$:acts_generate_module_data: phony obj/test/xts/acts/build_lite/acts_generate_module_data.stamp
+build test/xts/acts/build_lite$:acts_xdevice: phony obj/test/xts/acts/build_lite/acts_xdevice.stamp
+build test/xts/acts/communication_lite/lwip_hal$:ActsLwipTest: phony obj/test/xts/acts/communication_lite/lwip_hal/ActsLwipTest.stamp
+build test/xts/acts/communication_lite/lwip_hal$:module_ActsLwipTest: phony ./libs/libmodule_ActsLwipTest.a
+build test/xts/acts/communication_lite/wifiservice_hal$:ActsWifiServiceTest: phony obj/test/xts/acts/communication_lite/wifiservice_hal/ActsWifiServiceTest.stamp
+build test/xts/acts/communication_lite/wifiservice_hal$:module_ActsWifiServiceTest: phony ./libs/libmodule_ActsWifiServiceTest.a
+build test/xts/acts/distributed_schedule_lite/system_ability_manager_hal$:ActsSamgrTest: phony obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/ActsSamgrTest.stamp
+build test/xts/acts/distributed_schedule_lite/system_ability_manager_hal$:module_ActsSamgrTest: phony ./libs/libmodule_ActsSamgrTest.a
+build test/xts/acts/hiviewdfx_lite/hievent_hal$:ActsHieventLiteTest: phony obj/test/xts/acts/hiviewdfx_lite/hievent_hal/ActsHieventLiteTest.stamp
+build test/xts/acts/hiviewdfx_lite/hievent_hal$:module_ActsHieventLiteTest: phony ./libs/libmodule_ActsHieventLiteTest.a
+build test/xts/acts/hiviewdfx_lite/hilog_hal$:ActsDfxFuncTest: phony obj/test/xts/acts/hiviewdfx_lite/hilog_hal/ActsDfxFuncTest.stamp
+build test/xts/acts/hiviewdfx_lite/hilog_hal$:module_ActsDfxFuncTest: phony ./libs/libmodule_ActsDfxFuncTest.a
+build test/xts/acts/iot_hardware_lite/iot_controller_hal$:ActsWifiIotTest: phony obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/ActsWifiIotTest.stamp
+build test/xts/acts/iot_hardware_lite/iot_controller_hal$:module_ActsWifiIotTest: phony ./libs/libmodule_ActsWifiIotTest.a
+build test/xts/acts/security_lite$:securitytest: phony obj/test/xts/acts/security_lite/securitytest.stamp
+build test/xts/acts/security_lite/huks/common$:huks_test_common: phony ./libs/libhuks_test_common.a
+build test/xts/acts/security_lite/huks/liteos_m_adapter$:ActsHuksHalFunctionTest: phony obj/test/xts/acts/security_lite/huks/liteos_m_adapter/ActsHuksHalFunctionTest.stamp
+build test/xts/acts/security_lite/huks/liteos_m_adapter$:module_ActsHuksHalFunctionTest: phony ./libs/libmodule_ActsHuksHalFunctionTest.a
+build test/xts/acts/startup_lite/bootstrap_hal$:ActsBootstrapTest: phony obj/test/xts/acts/startup_lite/bootstrap_hal/ActsBootstrapTest.stamp
+build test/xts/acts/startup_lite/bootstrap_hal$:module_ActsBootstrapTest: phony ./libs/libmodule_ActsBootstrapTest.a
+build test/xts/acts/startup_lite/syspara_hal$:ActsParameterTest: phony obj/test/xts/acts/startup_lite/syspara_hal/ActsParameterTest.stamp
+build test/xts/acts/startup_lite/syspara_hal$:module_ActsParameterTest: phony ./libs/libmodule_ActsParameterTest.a
+build test/xts/acts/update_lite/dupdate_hal$:ActsUpdaterFuncTest: phony obj/test/xts/acts/update_lite/dupdate_hal/ActsUpdaterFuncTest.stamp
+build test/xts/acts/update_lite/dupdate_hal$:module_ActsUpdaterFuncTest: phony ./libs/libmodule_ActsUpdaterFuncTest.a
+build test/xts/acts/utils_lite/file_hal$:ActsUtilsFileTest: phony obj/test/xts/acts/utils_lite/file_hal/ActsUtilsFileTest.stamp
+build test/xts/acts/utils_lite/file_hal$:module_ActsUtilsFileTest: phony ./libs/libmodule_ActsUtilsFileTest.a
+build test/xts/acts/utils_lite/kv_store_hal$:ActsKvStoreTest: phony obj/test/xts/acts/utils_lite/kv_store_hal/ActsKvStoreTest.stamp
+build test/xts/acts/utils_lite/kv_store_hal$:module_ActsKvStoreTest: phony ./libs/libmodule_ActsKvStoreTest.a
+build test/xts/tools/lite$:tools: phony obj/test/xts/tools/lite/tools.stamp
+build test/xts/tools/lite/hctest$:hctest: phony ./libs/libhctest.a
+build test/xts/tools/lite/hctest: phony ./libs/libhctest.a
+build third_party/bounds_checking_function$:libsec_ndk: phony obj/third_party/bounds_checking_function/libsec_ndk.stamp
+build third_party/bounds_checking_function$:libsec_shared: phony obj/third_party/bounds_checking_function/libsec_shared.stamp
+build third_party/bounds_checking_function$:libsec_static: phony ./libs/libsec_static.a
+build third_party/bounds_checking_function$:sec_shared: phony obj/third_party/bounds_checking_function/sec_shared.stamp
+build third_party/mbedtls$:mbedtls: phony obj/third_party/mbedtls/mbedtls.stamp
+build third_party/mbedtls: phony obj/third_party/mbedtls/mbedtls.stamp
+build third_party/mbedtls$:mbedtls_ndk: phony obj/third_party/mbedtls/mbedtls_ndk.stamp
+build third_party/mbedtls$:mbedtls_shared: phony obj/third_party/mbedtls/mbedtls_shared.stamp
+build third_party/mbedtls$:mbedtls_static: phony ./libs/libmbedtls.a
+build third_party/musl/porting/liteos_m/kernel$:kernel: phony obj/third_party/musl/porting/liteos_m/kernel/kernel.stamp
+build third_party/musl/porting/liteos_m/kernel: phony obj/third_party/musl/porting/liteos_m/kernel/kernel.stamp
+build third_party/musl/porting/liteos_m/kernel$:musl-c: phony ./libs/libmusl-c.a
+build third_party/musl/porting/liteos_m/kernel$:musl-m: phony ./libs/libmusl-m.a
+build third_party/paho_mqtt$:pahomqtt_static: phony ./libs/libpahomqtt_static.a
+build utils/native/lite/file$:file: phony obj/utils/native/lite/file/file.stamp
+build utils/native/lite/file: phony obj/utils/native/lite/file/file.stamp
+build utils/native/lite/file$:native_file: phony ./libs/libnative_file.a
+build utils/native/lite/kv_store$:kv_store: phony obj/utils/native/lite/kv_store/kv_store.stamp
+build utils/native/lite/kv_store: phony obj/utils/native/lite/kv_store/kv_store.stamp
+build utils/native/lite/kv_store/src$:utils_kv_store: phony ./libs/libutils_kv_store.a
+build utils/native/lite/os_dump$:dump_static: phony ./libs/libdump_static.a
+build utils/native/lite/os_dump$:utils_os_dump: phony obj/utils/native/lite/os_dump/utils_os_dump.stamp
+build vendor/lockzhiner/rk2206$:rk2206: phony obj/vendor/lockzhiner/rk2206/rk2206.stamp
+build vendor/lockzhiner/rk2206: phony obj/vendor/lockzhiner/rk2206/rk2206.stamp
+build vendor/lockzhiner/rk2206/hals/utils/sys_param$:hal_sysparam: phony ./libs/libhal_sysparam.a
+build vendor/lockzhiner/rk2206/hals/utils/token$:hal_token_static: phony ./libs/libhal_token_static.a
+build vendor/lockzhiner/rk2206/hdf_config$:hc_gen: phony obj/vendor/lockzhiner/rk2206/hdf_config/hc_gen.stamp
+build vendor/lockzhiner/rk2206/hdf_config$:hdf_config: phony ./libs/libhdf_config.a
+build vendor/lockzhiner/rk2206/hdf_config: phony ./libs/libhdf_config.a
+build vendor/lockzhiner/rk2206/hdf_drivers$:hdf_drivers: phony obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp
+build vendor/lockzhiner/rk2206/hdf_drivers: phony obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp
+build vendor/lockzhiner/rk2206/hdf_drivers$:khdf_platform_gn: phony obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn.stamp
+build vendor/lockzhiner/rk2206/hdf_drivers/adc$:adc_driver: phony ./libs/libadc_driver.a
+build vendor/lockzhiner/rk2206/hdf_drivers/gpio$:gpio_driver: phony ./libs/libgpio_driver.a
+build vendor/lockzhiner/rk2206/hdf_drivers/i2c$:i2c_driver: phony ./libs/libi2c_driver.a
+build vendor/lockzhiner/rk2206/hdf_drivers/pwm$:pwm_driver: phony ./libs/libpwm_driver.a
+build vendor/lockzhiner/rk2206/hdf_drivers/spi$:spi_driver: phony ./libs/libspi_driver.a
+build vendor/lockzhiner/rk2206/samples$:app: phony obj/vendor/lockzhiner/rk2206/samples/app.stamp
+
+build all: phony $
+    obj/applications/sample/wifi-iot/app/app.stamp $
+    obj/applications/sample/wifi-iot/app/startup/startup.stamp $
+    ./libs/libblackbox.a $
+    ./libs/libhidumper_mini.a $
+    ./libs/libhievent_lite.a $
+    ./libs/libhilog_lite.a $
+    obj/base/hiviewdfx/hilog_lite/frameworks/mini/hilog_lite_ndk.stamp $
+    ./libs/libhiview_lite.a $
+    obj/base/iot_hardware/peripheral/iothardware.stamp $
+    obj/base/iot_hardware/peripheral/iothardware_ndk.stamp $
+    obj/base/security/deviceauth/frameworks/deviceauth_lite/hichainsdk.stamp $
+    ./libs/libhichainsdk.a $
+    obj/base/security/huks/frameworks/huks_lite/huks_sdk.stamp $
+    ./libs/libhuks_3.0_sdk.a $
+    ./libs/libbootstrap.a $
+    obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp $
+    obj/base/startup/syspara_lite/frameworks/parameter/parameter_notes.stamp $
+    ./libs/libsysparam.a $
+    obj/base/startup/syspara_lite/frameworks/token/token.stamp $
+    obj/base/startup/syspara_lite/frameworks/token/token_notes.stamp $
+    ./libs/libtoken_static.a $
+    ./libs/libhota.a $
+    obj/build/lite/mark_as_prebuilts.stamp $
+    obj/build/lite/ndk.stamp $
+    obj/build/lite/ohos.stamp $
+    obj/build/lite/prebuilts.stamp $
+    obj/build/lite/product.stamp $
+    obj/build/lite/config/component/cJSON/cjson_ndk.stamp $
+    obj/build/lite/config/component/cJSON/cjson_shared.stamp $
+    ./libs/libcjson_static.a $
+    obj/device/rockchip/hardware/hardware.stamp $
+    obj/device/rockchip/rk2206/rk2206.stamp $
+    ./libs/libhal_wifiaware.a $
+    ./libs/libwifiservice.a $
+    obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice/wifiservice_ndk.stamp $
+    ./libs/libhal_iothardware.a $
+    ./libs/libhal_update_static.a $
+    ./libs/libhal_file_static.a $
+    obj/device/rockchip/rk2206/sdk_liteos/liteos.stamp $
+    obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp $
+    obj/device/rockchip/rk2206/sdk_liteos/wifiiot_sdk.stamp $
+    ./libs/libboard.a $
+    obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp $
+    obj/domains/iot/link/iot.stamp $
+    obj/domains/iot/link/link.stamp $
+    ./libs/libhdf_core.a $
+    ./libs/libhdf_osal_lite.a $
+    ./libs/libhdf_platform_lite.a $
+    ./libs/libsample_driver.a $
+    obj/foundation/communication/softbus_lite/discovery_ndk.stamp $
+    obj/foundation/communication/softbus_lite/softbus.stamp $
+    obj/foundation/communication/softbus_lite/softbus_lite_ndk.stamp $
+    obj/foundation/communication/softbus_lite/trans_service_ndk.stamp $
+    ./libs/libauthmanager.a $
+    ./libs/libdiscovery.a $
+    ./libs/libtrans_service.a $
+    ./libs/libwifiaware.a $
+    obj/foundation/communication/wifi_lite/wifi.stamp $
+    obj/foundation/distributedschedule/samgr_lite/ConfigFiles.stamp $
+    obj/foundation/distributedschedule/samgr_lite/samgr.stamp $
+    obj/foundation/distributedschedule/samgr_lite/samgr_lite_ndk.stamp $
+    ./libs/libbroadcast.a $
+    ./libs/libsamgr.a $
+    ./libs/libsamgr_adapter.a $
+    ./libs/libsamgr_source.a $
+    obj/kernel/liteos_m/kernel.stamp $
+    ./libs/libbacktrace.a $
+    ./libs/libcppsupport.a $
+    ./libs/libcpup.a $
+    ./libs/libexchook.a $
+    obj/kernel/liteos_m/components/fs/fs.stamp $
+    ./libs/libfs_operations.a $
+    ./libs/libfatfs.a $
+    ./libs/liblittlefs.a $
+    ./libs/liblwip.a $
+    ./libs/libpm.a $
+    ./libs/libshell.a $
+    obj/kernel/liteos_m/kal/kal.stamp $
+    ./libs/libcmsis.a $
+    ./libs/libposix.a $
+    ./libs/libkernel.a $
+    ./libs/libarch.a $
+    ./libs/libutils.a $
+    obj/prebuilts/lite/sysroot/sysroot.stamp $
+    obj/test/xts/acts/build_lite/acts.stamp $
+    obj/test/xts/acts/build_lite/acts_component.stamp $
+    obj/test/xts/acts/build_lite/acts_generate_module_data.stamp $
+    obj/test/xts/acts/build_lite/acts_xdevice.stamp $
+    obj/test/xts/acts/communication_lite/lwip_hal/ActsLwipTest.stamp $
+    ./libs/libmodule_ActsLwipTest.a $
+    obj/test/xts/acts/communication_lite/wifiservice_hal/ActsWifiServiceTest.stamp $
+    ./libs/libmodule_ActsWifiServiceTest.a $
+    obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/ActsSamgrTest.stamp $
+    ./libs/libmodule_ActsSamgrTest.a $
+    obj/test/xts/acts/hiviewdfx_lite/hievent_hal/ActsHieventLiteTest.stamp $
+    ./libs/libmodule_ActsHieventLiteTest.a $
+    obj/test/xts/acts/hiviewdfx_lite/hilog_hal/ActsDfxFuncTest.stamp $
+    ./libs/libmodule_ActsDfxFuncTest.a $
+    obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/ActsWifiIotTest.stamp $
+    ./libs/libmodule_ActsWifiIotTest.a $
+    obj/test/xts/acts/security_lite/securitytest.stamp $
+    ./libs/libhuks_test_common.a $
+    obj/test/xts/acts/security_lite/huks/liteos_m_adapter/ActsHuksHalFunctionTest.stamp $
+    ./libs/libmodule_ActsHuksHalFunctionTest.a $
+    obj/test/xts/acts/startup_lite/bootstrap_hal/ActsBootstrapTest.stamp $
+    ./libs/libmodule_ActsBootstrapTest.a $
+    obj/test/xts/acts/startup_lite/syspara_hal/ActsParameterTest.stamp $
+    ./libs/libmodule_ActsParameterTest.a $
+    obj/test/xts/acts/update_lite/dupdate_hal/ActsUpdaterFuncTest.stamp $
+    ./libs/libmodule_ActsUpdaterFuncTest.a $
+    obj/test/xts/acts/utils_lite/file_hal/ActsUtilsFileTest.stamp $
+    ./libs/libmodule_ActsUtilsFileTest.a $
+    obj/test/xts/acts/utils_lite/kv_store_hal/ActsKvStoreTest.stamp $
+    ./libs/libmodule_ActsKvStoreTest.a $
+    obj/test/xts/tools/lite/tools.stamp $
+    ./libs/libhctest.a $
+    obj/third_party/bounds_checking_function/libsec_ndk.stamp $
+    obj/third_party/bounds_checking_function/libsec_shared.stamp $
+    ./libs/libsec_static.a $
+    obj/third_party/bounds_checking_function/sec_shared.stamp $
+    obj/third_party/mbedtls/mbedtls.stamp $
+    obj/third_party/mbedtls/mbedtls_ndk.stamp $
+    obj/third_party/mbedtls/mbedtls_shared.stamp $
+    ./libs/libmbedtls.a $
+    obj/third_party/musl/porting/liteos_m/kernel/kernel.stamp $
+    ./libs/libmusl-c.a $
+    ./libs/libmusl-m.a $
+    ./libs/libpahomqtt_static.a $
+    obj/utils/native/lite/file/file.stamp $
+    ./libs/libnative_file.a $
+    obj/utils/native/lite/kv_store/kv_store.stamp $
+    ./libs/libutils_kv_store.a $
+    ./libs/libdump_static.a $
+    obj/utils/native/lite/os_dump/utils_os_dump.stamp $
+    obj/vendor/lockzhiner/rk2206/rk2206.stamp $
+    ./libs/libhal_sysparam.a $
+    ./libs/libhal_token_static.a $
+    obj/vendor/lockzhiner/rk2206/hdf_config/hc_gen.stamp $
+    ./libs/libhdf_config.a $
+    obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp $
+    obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn.stamp $
+    ./libs/libadc_driver.a $
+    ./libs/libgpio_driver.a $
+    ./libs/libi2c_driver.a $
+    ./libs/libpwm_driver.a $
+    ./libs/libspi_driver.a $
+    obj/vendor/lockzhiner/rk2206/samples/app.stamp
+
+default all

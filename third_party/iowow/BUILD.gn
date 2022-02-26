@@ -1,0 +1,115 @@
+#Copyright (c) 2019-2021 Huawei Device Co., Ltd.
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+
+import("//build/ohos.gni")
+
+config("iowow_public_config") {
+  include_dirs = [
+    "//third_party/iowow/src",
+    "//third_party/iowow/src/fs",
+    "//third_party/iowow/src/kv",
+    "//third_party/iowow/src/log",
+    "//third_party/iowow/src/platform",
+    "//third_party/iowow/src/rdb",
+    "//third_party/iowow/src/utils",
+  ]
+}
+
+config("iowow_config") {
+  include_dirs = [
+    "//third_party/iowow/src",
+    "//third_party/iowow/src/fs",
+    "//third_party/iowow/src/kv",
+    "//third_party/iowow/src/log",
+    "//third_party/iowow/src/platform",
+    "//third_party/iowow/src/rdb",
+    "//third_party/iowow/src/utils",
+  ]
+
+  cflags = [
+    "-fPIC",
+    "-std=gnu11",
+    "-fsigned-char",
+    "-pedantic",
+    "-Wfatal-errors",
+    "-Wall",
+    "-Wextra",
+    "-Wno-int-conversion",
+    "-Wno-sign-compare",
+    "-Wno-unused-parameter",
+    "-Wno-unknown-pragmas",
+    "-Wno-unused-function",
+    "-Wno-missing-field-initializers",
+    "-Wno-missing-braces",
+    "-O3",
+    "-DNDEBUG",
+    "-U__ANDROID__",
+  ]
+
+  defines = [
+    "IW_API_EXPORTS",
+    "IW_HAVE_CLOCK_MONOTONIC",
+    "IW_HAVE_PTHREAD_CONDATTR_SETCLOCK",
+    "IW_PTHREADS",
+    "PTHREAD_SPIN_LOCK_SHIM",
+    "_GNU_SOURCE",
+    "_LARGEFILE_SOURCE",
+  ]
+
+  if (target_cpu == "x86" || target_cpu == "arm") {
+    defines += [
+      "IW_32",
+      "_FILE_OFFSET_BITS=64",
+    ]
+  } else {
+    defines += [
+      "IW_64",
+      "_FILE_OFFSET_BITS=64",
+    ]
+  }
+}
+
+ohos_shared_library("iowow") {
+  configs = [ ":iowow_config" ]
+
+  public_configs = [ ":iowow_public_config" ]
+
+  sources = [
+    "src/fs/iwexfile.c",
+    "src/fs/iwfile.c",
+    "src/fs/iwfs.c",
+    "src/fs/iwfsmfile.c",
+    "src/iowow.c",
+    "src/kv/iwal.c",
+    "src/kv/iwkv.c",
+    "src/log/iwlog.c",
+    "src/platform/iwp.c",
+    "src/rdb/iwrdb.c",
+    "src/utils/iwarr.c",
+    "src/utils/iwconv.c",
+    "src/utils/iwhmap.c",
+    "src/utils/iwpool.c",
+    "src/utils/iwsha2.c",
+    "src/utils/iwstree.c",
+    "src/utils/iwstw.c",
+    "src/utils/iwth.c",
+    "src/utils/iwutils.c",
+    "src/utils/iwuuid.c",
+    "src/utils/iwxstr.c",
+    "src/utils/mt19937ar.c",
+    "src/utils/murmur3.c",
+  ]
+
+  part_name = "hiview"
+  subsystem_name = "hiviewdfx"
+}

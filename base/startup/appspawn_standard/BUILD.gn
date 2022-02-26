@@ -1,0 +1,94 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/startup/appspawn_standard/appspawn.gni")
+import("//build/ohos.gni")
+
+config("appspawn_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "//utils/native/base/include",
+    "${appexecfwk_path}/interfaces/innerkits/appexecfwk_core/include/appmgr",
+    "${appexecfwk_path}/interfaces/innerkits/appexecfwk_core/include/bundlemgr",
+    "${appexecfwk_path}/interfaces/innerkits/appexecfwk_base/include",
+    "${appexecfwk_path}/interfaces/innerkits/libeventhandler/include",
+    "${appexecfwk_path}/kits/appkit/native/app/include",
+    "${appexecfwk_path}/common/log/include",
+    "${aafwk_path}/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "${aafwk_path}/interfaces/innerkits/want/include",
+    "${aafwk_path}/interfaces/innerkits/ability_manager/include",
+    "${aafwk_path}/interfaces/innerkits/base/include",
+    "${aafwk_path}/frameworks/kits/ability/native/include",
+    "${aafwk_path}/services/abilitymgr/include",
+    "${distributedschedule_path}/services/dtbschedmgr/include",
+  ]
+}
+
+ohos_executable("appspawn") {
+  sources = [ "${appspawn_path}/src/main.cpp" ]
+  configs = [ ":appspawn_config" ]
+  deps = [ "${appspawn_path}:appspawn_server" ]
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  install_enable = true
+  subsystem_name = "${subsystem_name}"
+  part_name = "${part_name}"
+}
+
+ohos_shared_library("appspawn_server") {
+  sources = [
+    "${appspawn_path}/src/appspawn_msg_peer.cpp",
+    "${appspawn_path}/src/appspawn_server.cpp",
+    "${appspawn_path}/src/socket/appspawn_socket.cpp",
+    "${appspawn_path}/src/socket/server_socket.cpp",
+  ]
+  configs = [ ":appspawn_config" ]
+  ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker64z" ]
+  deps = [
+    "${aafwk_path}/frameworks/kits/ability/native:abilitykit_native",
+    "${appexecfwk_path}/kits:appkit_native",
+    "//utils/native/base:utils",
+  ]
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+
+  subsystem_name = "${subsystem_name}"
+  part_name = "${part_name}"
+}
+
+ohos_shared_library("appspawn_socket_client") {
+  sources = [
+    "${appspawn_path}/src/socket/appspawn_socket.cpp",
+    "${appspawn_path}/src/socket/client_socket.cpp",
+  ]
+  configs = [ ":appspawn_config" ]
+  deps = [ "//utils/native/base:utils" ]
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  subsystem_name = "${subsystem_name}"
+  part_name = "${part_name}"
+}
+
+ohos_prebuilt_etc("appspawn.rc") {
+  if (use_musl) {
+    source = "appspawn.cfg"
+  } else {
+    source = "appspawn.rc"
+  }
+  relative_install_dir = "init"
+  subsystem_name = "${subsystem_name}"
+  part_name = "${part_name}"
+}

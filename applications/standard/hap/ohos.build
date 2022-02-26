@@ -1,0 +1,30 @@
+{
+  "subsystem": "applications",
+  "parts": {
+    "prebuilt_hap": {
+      "module_list": [
+        "//applications/standard/hap:launcher_hap",
+        "//applications/standard/hap:launcher_recents_hap",
+        "//applications/standard/hap:launcher_settings_hap",
+        "//applications/standard/hap:settings_hap",
+        "//applications/standard/hap:navigationBar_hap",
+        "//applications/standard/hap:statusBar_hap",
+        "//applications/standard/hap:systemDialog_hap",
+        "//applications/standard/hap:clock_demo_hap",
+        "//applications/standard/hap:calc_demo_hap",
+        "//applications/standard/hap:airquality_demo_hap",
+        "//applications/standard/hap:shopping_demo_hap",
+        "//applications/standard/hap:flashlight_demo_hap",
+        "//applications/standard/hap:ecg_demo_hap",
+        "//applications/standard/hap:photos_hap",
+        "//applications/standard/hap:music_demo_hap",
+        "//applications/standard/hap:demo.wav",
+        "//applications/standard/hap:dynamic.wav",
+        "//applications/standard/hap:camera_hap",
+        "//applications/standard/hap:capture.ogg",
+        "//applications/standard/hap:device_manager_ui_hap",
+        "//applications/standard/hap:kika_input_hap"
+      ]
+    }
+  }
+}

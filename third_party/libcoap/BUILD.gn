@@ -1,0 +1,99 @@
+# Copyright (C) 2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+  cflags = [
+    "-Wall",
+    "-fPIC",
+    "-std=c99",
+  ]
+  cflags_cc = cflags
+  ldflags = [
+    "-fPIC",
+  ]
+  config("libcoap_config") {
+    include_dirs = [ "include/coap2" ]
+    defines = [
+      "_GNU_SOURCE",
+    ]
+  }
+  source_set("libcoap_src") {
+    sources = [
+      "src/address.c",
+      "src/async.c",
+      "src/block.c",
+      "src/coap_debug.c",
+      "src/coap_event.c",
+      "src/coap_hashkey.c",
+      "src/coap_io.c",
+      "src/coap_notls.c",
+      "src/coap_openssl.c",
+      "src/coap_session.c",
+      "src/coap_time.c",
+      "src/encode.c",
+      "src/mem.c",
+      "src/net.c",
+      "src/option.c",
+      "src/pdu.c",
+      "src/resource.c",
+      "src/str.c",
+      "src/subscribe.c",
+      "src/uri.c",
+    ]
+    configs += [ ":libcoap_config" ]
+  }
+  static_library("libcoap_static") {
+    deps = [ ":libcoap_src" ]
+    public_configs = [ ":libcoap_config" ]
+  }
+
+  shared_library("libcoap") {
+    deps = [ ":libcoap_src" ]
+    public_configs = [ ":libcoap_config" ]
+  }
+} else {
+  import("//build/ohos.gni")
+
+  config("libcoap_config") {
+    include_dirs = [ "include/coap2" ]
+  }
+
+  ohos_source_set("libcoap_src") {
+    sources = [
+      "src/address.c",
+      "src/async.c",
+      "src/block.c",
+      "src/coap_debug.c",
+      "src/coap_event.c",
+      "src/coap_hashkey.c",
+      "src/coap_io.c",
+      "src/coap_notls.c",
+      "src/coap_openssl.c",
+      "src/coap_session.c",
+      "src/coap_time.c",
+      "src/encode.c",
+      "src/mem.c",
+      "src/net.c",
+      "src/option.c",
+      "src/pdu.c",
+      "src/resource.c",
+      "src/str.c",
+      "src/subscribe.c",
+      "src/uri.c",
+   ]
+    configs = [ ":libcoap_config" ]
+  }
+
+  ohos_static_library("libcoap_static") {
+    deps = [ ":libcoap_src" ]
+    public_configs = [ ":libcoap_config" ]
+  }
+
+  ohos_shared_library("libcoap") {
+    deps = [ ":libcoap_src" ]
+    public_configs = [ ":libcoap_config" ]
+    subsystem_name = "communication"
+    defines = [ "STANDARD_SYSTEM_ENABLE" ]
+    part_name = "dsoftbus_standard"
+  }
+}

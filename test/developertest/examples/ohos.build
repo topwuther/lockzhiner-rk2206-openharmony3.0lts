@@ -1,0 +1,21 @@
+{
+  "subsystem": "subsystem_examples",
+  "parts": {
+    "subsystem_examples": {
+      "module_list": [
+        "//test/developertest/examples/app_info:app_info",
+        "//test/developertest/examples/detector:detector",
+        "//test/developertest/examples/calculator:calculator",
+        "//test/developertest/examples/calculator:calculator_static"
+      ],
+      "test_list": [
+        "//test/developertest/examples/app_info/test:unittest",
+        "//test/developertest/examples/calculator/test:unittest",
+        "//test/developertest/examples/calculator/test:fuzztest",
+        "//test/developertest/examples/detector/test:unittest",
+        "//test/developertest/examples/sleep/test:performance",
+        "//test/developertest/examples/distributedb/test:distributedtest"
+      ]
+    }
+  }
+}

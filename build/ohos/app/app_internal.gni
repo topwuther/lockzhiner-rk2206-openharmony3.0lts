@@ -1,0 +1,258 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/config/python.gni")
+import("//build/ohos_var.gni")
+import("//build/templates/metadata/module_info.gni")
+
+template("compile_resources") {
+  forward_variables_from(invoker, [ "testonly" ])
+  assert(defined(invoker.hap_profile),
+         "hap_profile must be defined for compile_resources")
+  assert(
+      defined(invoker.packaged_resources) ||
+          defined(invoker.generated_header_dir),
+      "hap_profile or generated_header_dir must be defined for compile_resources")
+  _generate_resource = defined(invoker.packaged_resources)
+  if (_generate_resource) {
+    _packaged_resources = invoker.packaged_resources
+  }
+  _generate_header = defined(invoker.generated_header_dir)
+  if (_generate_header) {
+    _generated_header_file = invoker.generated_header_dir + "/ResourceTable.h"
+  }
+  action_with_pydeps(target_name) {
+    forward_variables_from(invoker,
+                           [
+                             "meta_data",
+                             "hap_profile",
+                             "deps",
+                           ])
+    script = "//build/scripts/compile_resources.py"
+    depfile = "$target_gen_dir/$target_name.d"
+
+    _rebased_metadata = rebase_path(meta_data, root_build_dir)
+    inputs = [
+      meta_data,
+      restool,
+      hap_profile,
+    ]
+    args = [
+      "--resources-dir=@FileArg($_rebased_metadata:root:resources)",
+      "--depfile",
+      rebase_path(depfile, root_build_dir),
+      "--restool-path",
+      rebase_path(restool, root_build_dir),
+      "--hap-profile",
+      rebase_path(hap_profile, root_build_dir),
+    ]
+    outputs = []
+    if (_generate_resource) {
+      outputs += [ _packaged_resources ]
+      args += [
+        "--output-resources-zipfile",
+        rebase_path(_packaged_resources, root_build_dir),
+      ]
+    }
+    if (_generate_header) {
+      outputs += [ _generated_header_file ]
+      args += [
+        "--output-header-file",
+        rebase_path(_generated_header_file, root_build_dir),
+      ]
+    }
+  }
+}
+
+template("package_app") {
+  forward_variables_from(invoker, [ "testonly" ])
+  assert(defined(invoker.hap_profile),
+         "hap_profile must be defined for package_app")
+  assert(defined(invoker.hap_path), "hap_path must be defined for package_app")
+  action_with_pydeps(target_name) {
+    forward_variables_from(invoker,
+                           [
+                             "deps",
+                             "shared_libraries",
+                             "hap_profile",
+                             "hap_path",
+                             "packaged_resources",
+                             "packaged_js_assets",
+                             "meta_data",
+                             "private_key_path",
+                             "signature_algorithm",
+                             "certificate_profile",
+                             "keystore_path",
+                             "keystore_password",
+                             "key_alias",
+                             "certificate_file",
+                             "install_module_info",
+                           ])
+    script = "//build/scripts/hapbuilder.py"
+    depfile = "$target_gen_dir/$target_name.d"
+    _rebased_metadata = rebase_path(meta_data, root_build_dir)
+    outputs = [ hap_path ]
+    args = [
+      "--depfile",
+      rebase_path(depfile, root_build_dir),
+      "--hap-profile",
+      rebase_path(hap_profile, root_build_dir),
+      "--hapsigner",
+      rebase_path(hapsigner, root_build_dir),
+      "--hap-packing-tool",
+      rebase_path(hap_packing_tool, root_build_dir),
+      "--hap-path",
+      rebase_path(hap_path, root_build_dir),
+      "--packaged-resources",
+      rebase_path(packaged_resources, root_build_dir),
+      "--packaged-js-assets",
+      rebase_path(packaged_js_assets, root_build_dir),
+      "--assets=@FileArg($_rebased_metadata:root:assets)",
+    ]
+
+    inputs = [
+      hap_profile,
+      hapsigner,
+      hap_packing_tool,
+      packaged_js_assets,
+      packaged_resources,
+      meta_data,
+    ]
+
+    _private_key_path = default_hap_private_key_path
+    if (defined(private_key_path)) {
+      _private_key_path = private_key_path
+    }
+    _signature_algorithm = default_signature_algorithm
+    if (defined(signature_algorithm)) {
+      _signature_algorithm = signature_algorithm
+    }
+    _key_alias = default_key_alias
+    if (defined(key_alias)) {
+      _key_alias = key_alias
+    }
+    _keystore_path = default_keystore_path
+    if (defined(keystore_path)) {
+      _keystore_path = keystore_path
+    }
+    _keystore_password = default_keystore_password
+    if (defined(keystore_password)) {
+      _keystore_password = keystore_password
+    }
+    _certificate_file = default_hap_certificate_file
+    if (defined(certificate_file)) {
+      _certificate_file = certificate_file
+    }
+
+    inputs += [
+      certificate_profile,
+      _keystore_path,
+      _certificate_file,
+    ]
+
+    args += [
+      "--private-key-path",
+      _private_key_path,
+      "--sign-algo",
+      _signature_algorithm,
+      "--certificate-profile",
+      rebase_path(certificate_profile, root_build_dir),
+      "--keyalias",
+      _key_alias,
+      "--keystore-path",
+      rebase_path(_keystore_path, root_build_dir),
+      "--keystorepasswd",
+      _keystore_password,
+      "--certificate-file",
+      rebase_path(_certificate_file, root_build_dir),
+    ]
+
+    if (defined(shared_libraries)) {
+      foreach(lib, shared_libraries) {
+        _module_info = get_label_info(lib, "target_out_dir") + "/" +
+                       get_label_info(lib, "name") + "_module_info.json"
+        _rebased_module_info = rebase_path(_module_info, root_build_dir)
+        args += [ "--dso=@FileArg($_rebased_module_info:source)" ]
+      }
+    }
+
+    if (defined(install_module_info)) {
+      metadata = {
+        install_modules = [ install_module_info ]
+      }
+    }
+  }
+}
+
+template("compile_js_assets") {
+  forward_variables_from(invoker, [ "testonly" ])
+  assert(defined(invoker.meta_data) && defined(invoker.packaged_js_assets),
+         "meta_data and packaged_js_assets must be for compile_js_assets")
+
+  _packaged_js_assets = invoker.packaged_js_assets
+  action_with_pydeps(target_name) {
+    forward_variables_from(invoker,
+                           [
+                             "deps",
+                             "meta_data",
+                             "hap_profile",
+                             "build_mode",
+                             "js2abc",
+                           ])
+    script = "//build/scripts/build_js_assets.py"
+    depfile = "$target_gen_dir/$target_name.d"
+    outputs = [ _packaged_js_assets ]
+
+    _rebased_metadata = rebase_path(meta_data, root_build_dir)
+
+    inputs = [
+      meta_data,
+      nodejs,
+      webpack_js,
+      webpack_config_js,
+    ]
+    args = [
+      "--js-assets-dir=@FileArg($_rebased_metadata:root:js_assets)",
+      "--output",
+      rebase_path(_packaged_js_assets, root_build_dir),
+      "--depfile",
+      rebase_path(depfile, root_build_dir),
+      "--nodejs-path",
+      rebase_path(nodejs, root_build_dir),
+      "--webpack-js",
+      rebase_path(webpack_js, root_build_dir),
+      "--webpack-config-js",
+      rebase_path(webpack_config_js, root_build_dir),
+      "--build-mode",
+      build_mode,
+    ]
+    if (js2abc) {
+      args += [ "--js2abc" ]
+    }
+    if (defined(hap_profile)) {
+      args += [
+        "--hap-profile",
+        rebase_path(hap_profile, root_build_dir),
+      ]
+      inputs += [ hap_profile ]
+    }
+  }
+}
+
+# Placeholder
+template("js2ark") {
+  group(target_name) {
+    not_needed(invoker, "*", [ "deps" ])
+    forward_variables_from(invoker, [ "deps" ])
+  }
+}

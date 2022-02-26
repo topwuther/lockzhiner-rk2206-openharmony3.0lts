@@ -1,0 +1,99 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/security/permission/permission.gni")
+import("//build/ohos.gni")
+
+config("permission_test_config") {
+  include_dirs = [
+    "//base/notification/ces_standard/cesfwk/kits/native/include",
+    "//base/notification/ces_standard/cesfwk/innerkits/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/include/bundlemgr",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/communication/dsoftbus/interfaces/kits/transport",
+    "//foundation/communication/dsoftbus/interfaces/kits/common",
+    "//foundation/communication/dsoftbus/interfaces/kits/bus_center",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedhardware/devicemanager/interfaces/inner_kits/native_cpp/include",
+    "//third_party/node/src",
+    "//third_party/json/include",
+    "//third_party/json/single_include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/security/permission/frameworks/permission_standard/permissioninfrastructure",
+    "//base/security/permission/frameworks/permission_standard/permissioninfrastructure/main/cpp/include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include/permission",
+    "//base/security/permission/interfaces/innerkits/permission_standard/distributedpermission/include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/distributedpermission/include/permission",
+    "${distributed_permission_record_database_path}/main/cpp/include",
+    "${distributed_permission_services_path}/main/cpp/include",
+    "${distributed_permission_services_path}/main/cpp/include/command",
+    "${distributed_permission_services_path}/main/cpp/include/common",
+    "${distributed_permission_services_path}/main/cpp/include/device",
+    "${distributed_permission_services_path}/main/cpp/include/distributed",
+    "${distributed_permission_services_path}/main/cpp/include/protocol",
+    "${distributed_permission_services_path}/main/cpp/include/record",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/include/permission_using_remind",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind",
+    "${distributed_permission_services_path}/main/cpp/include/remote",
+    "${distributed_permission_services_path}/main/cpp/include/sensitive",
+    "${distributed_permission_services_path}/main/cpp/include/service",
+    "${distributed_permission_services_path}/main/cpp/include/remind",
+    "${distributed_permission_services_path}/test/mock/include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/src/permission",
+    "//base/startup/init_lite/services/log",
+  ]
+
+  defines = [
+    "APP_LOG_TAG = \"DistributedPermissionTest\"",
+    "LOG_DOMAIN = 0xD001025",
+  ]
+  cflags_cc = [ "-DHILOG_ENABLE" ]
+
+  configs = []
+}
+
+group("unittest") {
+  testonly = true
+  deps = [
+    "unittest/add_permission_used_record_test:unittest",
+    "unittest/allocate_duid_test:unittest",
+    "unittest/can_request_permission_from_remote_test:unittest",
+    "unittest/check_caller_permission_test:unittest",
+    "unittest/check_calling_or_self_permission_test:unittest",
+    "unittest/check_calling_permission_test:unittest",
+    "unittest/check_d_permission_test:unittest",
+    "unittest/check_permission_test:unittest",
+    "unittest/check_self_permission_test:unittest",
+    "unittest/command:unittest",
+    "unittest/distributed_data_validator_test:unittest",
+    "unittest/get_permission_used_records_asynch_test:unittest",
+    "unittest/get_permission_used_records_test:unittest",
+    "unittest/grant_sensitive_permission_to_remote_app_test:unittest",
+    "unittest/is_duid_test:unittest",
+    "unittest/notify_sync_permission_test:unittest",
+    "unittest/object_device_permission_manager_func_test:unittest",
+    "unittest/permission_definition_test:unittest",
+    "unittest/permission_name_to_or_from_op_code_test:unittest",
+    "unittest/permission_remind_test:unittest",
+    "unittest/query_duid_test:unittest",
+    "unittest/request_permissions_from_remote_test:unittest",
+    "unittest/sensitive_switch_test:unittest",
+    "unittest/soft_bus_channel_test:unittest",
+    "unittest/verify_permission_from_remote_test:unittest",
+    "unittest/wait_duid_ready_test:unittest",
+  ]
+}

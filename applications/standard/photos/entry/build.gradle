@@ -1,0 +1,11 @@
+apply plugin: 'com.huawei.ohos.hap'
+apply plugin: 'com.huawei.ohos.decctest'
+ohos {
+    compileSdkVersion 6
+    defaultConfig {
+        compatibleSdkVersion 6
+    }
+    supportSystem "standard"
+}
+
+

@@ -1,0 +1,12 @@
+{
+  "string": [
+    {
+      "name": "wificomponent_MainAbility",
+      "value": "wificomponent_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    }
+  ]
+}

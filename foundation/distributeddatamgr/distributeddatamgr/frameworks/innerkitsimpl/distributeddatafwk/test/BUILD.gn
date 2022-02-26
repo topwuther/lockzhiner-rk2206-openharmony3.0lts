@@ -1,0 +1,252 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/test.gni")
+
+module_output_path = "distributeddatamgr/distributeddatafwk"
+
+###############################################################################
+config("module_private_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "../include/",
+    "../../../../interfaces/innerkits/distributeddata/",
+
+    # TEMP MODIFICATION FOR PMS
+    "../../../../services/distributeddataservice/app/include",
+
+    # for ipc_core interfaces.
+    "//utils/native/base/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+  ]
+}
+
+ohos_unittest("DistributedKvDataManagerTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/distributed_kv_data_manager_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("DistributedKvDataManagerEncryptTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/distributed_kv_data_manager_encrypt_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreClientTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "unittest/kvstore_client_test.cpp",
+    "unittest/single_kvstore_client_query_test.cpp",
+    "unittest/single_kvstore_client_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreSnapshotClientTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/kvstore_snapshot_client_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("LocalSubscribeStoreTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/local_subscribe_store_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("BlobTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/blob_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+###############################################################################
+config("app_test_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "../include/",
+    "../../../../interfaces/innerkits/app_distributeddata/include",
+    "//utils/native/base/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+  ]
+}
+
+ohos_unittest("AppDistributedKvStoreTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/app_distributed_kv_store_test.cpp" ]
+
+  configs = [ ":app_test_config" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/:app_distributeddata",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+  ]
+}
+
+ohos_unittest("AppDistributedKvDataManagerTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/app_distributed_kv_data_manager_test.cpp" ]
+
+  configs = [ ":app_test_config" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/:app_distributeddata",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+  ]
+}
+
+ohos_unittest("AppBlobTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/app_blob_test.cpp" ]
+
+  configs = [ ":app_test_config" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/:app_distributeddata",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+  ]
+}
+
+ohos_unittest("AppConflictTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/app_conflict_test.cpp" ]
+
+  configs = [ ":app_test_config" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/:app_distributeddata",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//third_party/googletest:gtest_main",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+
+  deps = []
+
+  deps += [
+    ":AppBlobTest",
+    ":AppConflictTest",
+    ":AppDistributedKvDataManagerTest",
+    ":AppDistributedKvStoreTest",
+    ":BlobTest",
+    ":DistributedKvDataManagerEncryptTest",
+    ":DistributedKvDataManagerTest",
+    ":KvStoreClientTest",
+    ":KvStoreSnapshotClientTest",
+    ":LocalSubscribeStoreTest",
+  ]
+}
+###############################################################################

@@ -1,0 +1,135 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+
+group("build_module") {
+  deps = [ ":distributeddataservice" ]
+  if (build_public_version) {
+    deps += [
+      ":distributeddata_profile",
+    ]
+        if (use_musl) {
+        deps += [
+          ":distributed_data.cfg",
+        ]
+    } else {
+        deps += [
+          ":distributed_data.rc",
+        ]
+    }
+  }
+}
+
+ohos_prebuilt_etc("distributed_data.cfg") {
+  source = "distributed_data.cfg"
+  relative_install_dir = "init"
+  subsystem_name = "distributeddatamgr"
+}
+
+ohos_prebuilt_etc("distributed_data.rc") {
+  source = "distributed_data.rc"
+  relative_install_dir = "init"
+  subsystem_name = "distributeddatamgr"
+}
+
+ohos_sa_profile("distributeddata_profile") {
+  sources = [ "../sa_profile/1301.xml" ]
+
+  subsystem_name = "distributeddatamgr"
+}
+
+config("module_private_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/include",
+    "//utils/system/safwk/native/include",
+    "../adapter/include/account",
+    "../adapter/include/permission",
+    "../adapter/include/uninstaller",
+    "../adapter/include/broadcaster",
+    "../adapter/include/utils",
+    "../adapter/include/security",
+    "../adapter/include",
+
+    # for ipc_core interfaces.
+    "//utils/native/base/include",
+    "include",
+    "src",
+    "//third_party/json/single_include",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include",
+    "//base/security/huks/interfaces/innerkits/huks_standard/main/include",
+  ]
+
+  cflags = [ "-Wno-multichar" ]
+
+  cflags_cc = [ "-fvisibility=hidden" ]
+}
+
+ohos_shared_library("distributeddataservice") {
+  sources = [
+    "src/backup_handler.cpp",
+    "src/device_change_listener_impl.cpp",
+    "src/device_kvstore_impl.cpp",
+    "src/device_kvstore_observer_impl.cpp",
+    "src/device_kvstore_resultset_impl.cpp",
+    "src/kvstore_account_observer.cpp",
+    "src/kvstore_app_accessor.cpp",
+    "src/kvstore_app_manager.cpp",
+    "src/kvstore_data_service.cpp",
+    "src/kvstore_impl.cpp",
+    "src/kvstore_meta_manager.cpp",
+    "src/kvstore_observer_impl.cpp",
+    "src/kvstore_resultset_impl.cpp",
+    "src/kvstore_snapshot_impl.cpp",
+    "src/kvstore_sync_manager.cpp",
+    "src/kvstore_user_manager.cpp",
+    "src/query_helper.cpp",
+    "src/single_kvstore_impl.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+  ldflags = [ "-Wl,--exclude-libs,libcrypto_static.a" ]
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+
+    "battery_manager_native:batterysrv_client",
+    "aafwk_standard:base",
+    "aafwk_standard:intent",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "power_manager_native:powermgr_client",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "startup_l2:syspara",
+    "permission_standard:libpermissionsdk_standard",
+    "huks_standard:libhukssdk",
+  ]
+
+  subsystem_name = "distributeddatamgr"
+}

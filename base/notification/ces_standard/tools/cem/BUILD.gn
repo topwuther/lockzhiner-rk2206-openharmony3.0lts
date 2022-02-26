@@ -1,0 +1,78 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/ohos.gni")
+
+config("tools_cem_config") {
+  include_dirs = [
+    "${aafwk_path}/frameworks/kits/ability/native/include",
+    "${aafwk_path}/interfaces/innerkits/ability_manager/include",
+    "${aafwk_path}/interfaces/innerkits/base/include",
+    "${aafwk_path}/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "${aafwk_path}/services/abilitymgr/include",
+    "${aafwk_path}/services/common/include",
+    "${aafwk_path}/tools/aa/include",
+    "${appexecfwk_path}/interfaces/innerkits/appexecfwk_base/include",
+    "${appexecfwk_path}/interfaces/innerkits/appexecfwk_core/include/bundlemgr",
+    "${appexecfwk_path}/interfaces/innerkits/libeventhandler/include",
+    "//foundation/distributedschedule/safwk/services/safwk/include",
+    "//utils/native/base/include",
+    "include",
+  ]
+}
+
+ohos_source_set("tools_cem_source_set") {
+  public_configs = [
+    "${aafwk_path}/services/abilitymgr:abilityms_config",
+    ":tools_cem_config",
+  ]
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "src/common_event_command.cpp",
+    "src/main.cpp",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_executable("cem") {
+  deps = [ ":tools_cem_source_set" ]
+
+  install_enable = true
+
+  subsystem_name = "notification"
+  part_name = "ces_standard"
+}
+
+group("tools_cem") {
+  deps = [ ":cem" ]
+}

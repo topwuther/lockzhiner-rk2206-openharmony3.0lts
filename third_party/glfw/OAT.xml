@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021 Huawei Device Co., Ltd.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+    This is the configuration file template for OpenHarmony OSS Audit Tool, please copy it to your project root dir and modify it refer to OpenHarmony/tools_oat/README.
+
+-->
+
+<configuration>
+    <oatconfig>
+        <licensefile>COPYING.txt</licensefile>
+        <policylist>
+            <policy name="projectPolicy" desc="">
+                <policyitem type="compatibility" name="zlib License" path=".*" desc="zlib License, compatibility is not affected."/>			
+                <policyitem type="compatibility" name="zlib-acknowledgement" path=".*" desc="zlib-acknowledgement, compatibility is not affected."/>
+            </policy>
+        </policylist>
+        <filefilterlist>
+            <filefilter name="defaultFilter" desc="Files not to check">
+                <filteritem type="filepath" name="docs/main.dox" desc="This is guide file, no need license"/>		
+                <filteritem type="filepath" name="docs/compile.dox" desc="This is guide file, no need license"/>		
+                <filteritem type="filepath" name="tests/vulkan.c" desc="This file is free software"/>
+                <filteritem type="filepath" name="deps/KHR/khrplatform.h" desc="This file is free software"/>
+            </filefilter>
+        </filefilterlist>        
+        <licensematcherlist>
+            <licensematcher name="zlib License" desc="">
+                <licensetext name="
+                    For conditions of distribution and use, see copyright notice in zlib.h" desc=""/>
+                <licensetext name="
+                    * For conditions of distribution and use, see copyright notice in jsimdext.inc
+                " desc=""/>
+                <licensetext name="
+                    This software is provided 'as-is', without any express or implied
+                    warranty. In no event will the authors be held liable for any damages
+                    arising from the use of this software.
+
+                    Permission is granted to anyone to use this software for any purpose,
+                    including commercial applications, and to alter it and redistribute it
+                    freely.
+                " desc=""/>
+            </licensematcher>
+        </licensematcherlist>
+    </oatconfig>
+</configuration>

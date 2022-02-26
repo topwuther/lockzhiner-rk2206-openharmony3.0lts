@@ -1,0 +1,177 @@
+import("//build/ohos.gni")
+
+## Build libinput-third.so {{{
+config("libinput-third_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "src",
+    "include",
+  ]
+
+  cflags = [
+    "-Wno-unused-parameter",
+    "-Wno-implicit-int",
+    "-Wno-return-type",
+    "-Wno-unused-function",
+    "-Wno-string-conversion",
+  ]
+}
+
+config("libinput-third_public_config") {
+  include_dirs = [
+    "export_include",
+  ]
+
+  cflags = [
+  ]
+}
+
+ohos_shared_library("libinput-third") {
+  sources = [
+    "src/util-list.c",
+    "src/util-ratelimit.c",
+    "src/util-strings.c",
+    "src/util-prop-parsers.c",
+    "src/filter.c",
+    "src/filter-flat.c",
+    "src/filter-low-dpi.c",
+    "src/filter-mouse.c",
+    "src/filter-touchpad.c",
+    "src/filter-touchpad-flat.c",
+    "src/filter-touchpad-x230.c",
+    "src/filter-tablet.c",
+    "src/filter-trackpoint.c",
+    "src/quirks.c",
+    "src/libinput.c",
+    "src/evdev.c",
+    "src/evdev-debounce.c",
+    "src/evdev-fallback.c",
+    "src/evdev-totem.c",
+    "src/evdev-middle-button.c",
+    "src/evdev-mt-touchpad.c",
+    "src/evdev-mt-touchpad-tap.c",
+    "src/evdev-mt-touchpad-thumb.c",
+    "src/evdev-mt-touchpad-buttons.c",
+    "src/evdev-mt-touchpad-edge-scroll.c",
+    "src/evdev-mt-touchpad-gestures.c",
+    "src/evdev-tablet.c",
+    "src/evdev-tablet-pad.c",
+    "src/evdev-tablet-pad-leds.c",
+    "src/path-seat.c",
+    "src/udev-seat.c",
+    "src/timer.c",
+#    "src/libinput-util.c",
+  ]
+
+  configs = [
+    ":libinput-third_config",
+  ]
+
+  public_configs = [
+    ":libinput-third_public_config",
+  ]
+
+  deps = [
+  ]
+
+  public_deps = [
+    "//third_party/libevdev:libevdev",
+    "//third_party/eudev:libudev",
+    "//third_party/mtdev:libmtdev",
+  ]
+
+  part_name = "multimodalinput_base"
+}
+## Build libinput-third.so }}}
+
+
+ohos_executable("libinput-debug") {
+  install_enable = true
+
+  sources = [
+    "tools/shared.h",
+    "tools/shared.c",
+    "tools/libinput-debug-events.c",
+  ]
+
+  configs = [
+    ":libinput-third_config",
+  ]
+
+  public_configs = [
+    ":libinput-third_public_config",
+  ]
+
+  deps = [
+    ":libinput-third",
+  ]
+
+  public_deps = [
+    "//third_party/libevdev:libevdev",
+    "//third_party/eudev:libudev",
+    "//third_party/mtdev:libmtdev",
+  ]
+
+  part_name = "multimodalinput_base"
+}
+
+ohos_executable("libinput-list") {
+  install_enable = true
+
+  sources = [
+    "tools/shared.h",
+    "tools/shared.c",
+    "tools/libinput-list-devices.c",
+  ]
+
+  configs = [
+    ":libinput-third_config",
+  ]
+
+  public_configs = [
+    ":libinput-third_public_config",
+  ]
+
+  deps = [
+    ":libinput-third",
+  ]
+
+  public_deps = [
+    "//third_party/libevdev:libevdev",
+    "//third_party/eudev:libudev",
+    "//third_party/mtdev:libmtdev",
+  ]
+
+  part_name = "multimodalinput_base"
+}
+
+ohos_executable("libinput-tablet") {
+  install_enable = true
+
+  sources = [
+    "tools/shared.h",
+    "tools/shared.c",
+    "tools/libinput-debug-tablet.c",
+  ]
+
+  configs = [
+    ":libinput-third_config",
+  ]
+
+  public_configs = [
+    ":libinput-third_public_config",
+  ]
+
+  deps = [
+    ":libinput-third",
+  ]
+
+  public_deps = [
+    "//third_party/libevdev:libevdev",
+    "//third_party/eudev:libudev",
+    "//third_party/mtdev:libmtdev",
+  ]
+
+  part_name = "multimodalinput_base"
+}

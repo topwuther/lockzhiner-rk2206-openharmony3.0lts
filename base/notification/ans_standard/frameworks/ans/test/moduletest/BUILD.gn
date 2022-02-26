@@ -1,0 +1,370 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ans_standard/notification.gni")
+import("//build/ohos.gni")
+import("//build/test.gni")
+
+module_output_path = "ans_standard/moduletest"
+
+config("public_ans_config") {
+  include_dirs = [
+    "${core_path}/common/include",
+    "//utils/native/base/include",
+    "${services_path}/ans/include",
+    "//foundation/appexecfwk/adapter/interfaces/innerkits/libeventhandler/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//base/hiviewdfx/hilog/interfaces/native/innerkits/include",
+    "${core_path}/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content/",
+  ]
+}
+
+ohos_moduletest("ans_fw_module_test") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "include",
+    "${core_path}/include",
+    "${interfaces_path}/ans/native/include",
+    "${frameworks_path}/ans/core/common/include",
+    "${frameworks_path}/ans/core/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/appexecfwk/standard/libs/libeventhandler/src",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/notification/ans_standard/services/ans/include",
+    "//third_party/json/include",
+    "//foundation/communication/utils/include",
+    "//foundation/communication/ipc/ipc/native/src/core/include",
+    "//foundation/communication/ipc/utils/include",
+    "//foundation/communication/ipc/ipc/softbus_temp",
+    "//base/notification/ans_standard/interfaces/innerkits/ans/native/test/moduletest/mock/include",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/communication/ipc/interfaces/innerkits/libdbinder/include",
+    "//base/notification/ces_standard/cesfwk/interfaces/innerkits/native/include",
+    "//base/notification/ans_standard/interfaces/innerkits/ans/native/include",
+    "//base/notification/ans_standard/interfaces/innerkits/wantagent/include",
+    "${core_path}/common/include",
+    "${core_path}/include",
+    "${interfaces_path}/innerkits/ans/native/include",
+    "${interfaces_path}/innerkits/wantAgent/include",
+    "//utils/native/base/include",
+    "//third_party/jsoncpp/include",
+    "//base/notification/ans_standard/frameworks/ans/test/moduletest/mock/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include/",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/autils/",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/log/",
+  ]
+
+  sources = [
+    "//base/notification/ans_standard/frameworks/ans/core/src/ans_manager_proxy.cpp",
+    "//base/notification/ans_standard/frameworks/ans/core/src/ans_manager_stub.cpp",
+    "//base/notification/ans_standard/frameworks/ans/core/src/ans_notification.cpp",
+    "//base/notification/ans_standard/frameworks/ans/core/src/ans_subscriber_proxy.cpp",
+    "//base/notification/ans_standard/frameworks/ans/core/src/ans_subscriber_stub.cpp",
+    "//base/notification/ans_standard/frameworks/ans/native/src/notification.cpp",
+    "ans_fw_module_test.cpp",
+    "mock/blob.cpp",
+    "mock/distributed_kv_data_manager.cpp",
+    "mock/mock_bundle_manager.cpp",
+    "mock/mock_bundle_mgr_proxy.cpp",
+    "mock/mock_ipc.cpp",
+    "mock/mock_single_kv_store.cpp",
+  ]
+
+  configs = [ "//utils/native/base:utils_config" ]
+
+  deps = [
+    "${frameworks_path}/ans/core:ans_core",
+    "${frameworks_path}/ans/native:ans_innerkits",
+    "${frameworks_path}/wantagent:wantagent_innerkits",
+    "${services_path}/ans:libans",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//third_party/googletest:gtest_main",
+    "//third_party/jsoncpp:jsoncpp",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ans_standard"
+}
+
+ohos_moduletest("ans_innerkits_module_publish_test") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "include",
+    "${interfaces_path}/ans/native/include",
+    "${frameworks_path}/ans/core/common/include",
+    "${frameworks_path}/ans/core/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/notification/ans_standard/services/ans/include",
+    "//third_party/json/include",
+    "//foundation/communication/utils/include",
+    "//foundation/communication/ipc/ipc/native/src/core/include",
+    "//foundation/communication/ipc/utils/include",
+    "//foundation/communication/ipc/ipc/softbus_temp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/communication/ipc/interfaces/innerkits/libdbinder/include",
+    "//base/notification/ces_standard/cesfwk/interfaces/innerkits/native/include",
+    "${core_path}/common/include",
+    "${core_path}/include",
+    "${interfaces_path}/innerkits/ans/native/include",
+    "${interfaces_path}/innerkits/wantAgent/include",
+    "//utils/native/base/include",
+    "//base/notification/ans_standard/frameworks/ans/test/moduletest/mock/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/autils",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/log",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/src",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/dfx",
+    "//foundation/multimedia/image_standard/interfaces/innerkits/include",
+    "//developtools/bytrace_standard/interfaces/innerkits/native/include",
+  ]
+
+  sources = [
+    "ans_innerkits_module_publish_test.cpp",
+    "mock/blob.cpp",
+    "mock/distributed_kv_data_manager.cpp",
+    "mock/mock_bundle_manager.cpp",
+    "mock/mock_bundle_mgr_proxy.cpp",
+    "mock/mock_ipc.cpp",
+    "mock/mock_single_kv_store.cpp",
+  ]
+
+  configs = [ "//utils/native/base:utils_config" ]
+
+  deps = [
+    "${frameworks_path}/ans/core:ans_core",
+    "${frameworks_path}/ans/native:ans_innerkits",
+    "${frameworks_path}/wantagent:wantagent_innerkits",
+    "${services_path}/ans:libans",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//foundation/multimedia/image_standard/interfaces/innerkits:image_native",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ans_standard"
+}
+
+ohos_moduletest("ans_innerkits_module_slot_test") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "include",
+    "${interfaces_path}/ans/native/include",
+    "${frameworks_path}/ans/core/common/include",
+    "${frameworks_path}/ans/core/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/notification/ans_standard/services/ans/include",
+    "//third_party/json/include",
+    "//foundation/communication/utils/include",
+    "//foundation/communication/ipc/ipc/native/src/core/include",
+    "//foundation/communication/ipc/utils/include",
+    "//foundation/communication/ipc/ipc/softbus_temp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/communication/ipc/interfaces/innerkits/libdbinder/include",
+    "//base/notification/ces_standard/cesfwk/interfaces/innerkits/native/include",
+    "${core_path}/common/include",
+    "${core_path}/include",
+    "${interfaces_path}/innerkits/ans/native/include",
+    "${interfaces_path}/innerkits/wantAgent/include",
+    "//utils/native/base/include",
+    "//base/notification/ans_standard/frameworks/ans/test/moduletest/mock/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/autils",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/log",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/src",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/dfx",
+    "//developtools/bytrace_standard/interfaces/innerkits/native/include",
+  ]
+
+  sources = [
+    "ans_innerkits_module_slot_test.cpp",
+    "mock/blob.cpp",
+    "mock/distributed_kv_data_manager.cpp",
+    "mock/mock_bundle_manager.cpp",
+    "mock/mock_bundle_mgr_proxy.cpp",
+    "mock/mock_ipc.cpp",
+    "mock/mock_single_kv_store.cpp",
+  ]
+
+  configs = [ "//utils/native/base:utils_config" ]
+
+  deps = [
+    "${frameworks_path}/ans/core:ans_core",
+    "${frameworks_path}/ans/native:ans_innerkits",
+    "${frameworks_path}/wantagent:wantagent_innerkits",
+    "${services_path}/ans:libans",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ans_standard"
+}
+
+ohos_moduletest("ans_innerkits_module_setting_test") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "include",
+    "${interfaces_path}/ans/native/include",
+    "${frameworks_path}/ans/core/common/include",
+    "${frameworks_path}/ans/core/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/notification/ans_standard/services/ans/include",
+    "//third_party/json/include",
+    "//foundation/communication/utils/include",
+    "//foundation/communication/ipc/ipc/native/src/core/include",
+    "//foundation/communication/ipc/utils/include",
+    "//foundation/communication/ipc/ipc/softbus_temp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/communication/ipc/interfaces/innerkits/libdbinder/include",
+    "//base/notification/ces_standard/cesfwk/interfaces/innerkits/native/include",
+    "${core_path}/common/include",
+    "${core_path}/include",
+    "${interfaces_path}/innerkits/ans/native/include",
+    "${interfaces_path}/innerkits/wantAgent/include",
+    "//utils/native/base/include",
+    "//base/notification/ans_standard/frameworks/ans/test/moduletest/mock/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/autils",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/log",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/src",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/dfx",
+    "//developtools/bytrace_standard/interfaces/innerkits/native/include",
+  ]
+
+  sources = [
+    "ans_innerkits_module_setting_test.cpp",
+    "mock/blob.cpp",
+    "mock/distributed_kv_data_manager.cpp",
+    "mock/mock_bundle_manager.cpp",
+    "mock/mock_bundle_mgr_proxy.cpp",
+    "mock/mock_ipc.cpp",
+    "mock/mock_single_kv_store.cpp",
+  ]
+
+  configs = [ "//utils/native/base:utils_config" ]
+
+  deps = [
+    "${frameworks_path}/ans/core:ans_core",
+    "${frameworks_path}/ans/native:ans_innerkits",
+    "${frameworks_path}/wantagent:wantagent_innerkits",
+    "${services_path}/ans:libans",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ans_standard"
+}
+
+group("moduletest") {
+  testonly = true
+  deps = []
+
+  deps += [
+    ":ans_fw_module_test",
+    ":ans_innerkits_module_publish_test",
+    ":ans_innerkits_module_setting_test",
+    ":ans_innerkits_module_slot_test",
+  ]
+}

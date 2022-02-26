@@ -1,0 +1,74 @@
+{
+  "subsystem": "communication",
+  "parts": {
+      "wifi_standard": {
+          "module_list": [
+              "//foundation/communication/wifi/interfaces/innerkits/native_cpp/wifi_standard:wifi_sdk",
+              "//foundation/communication/wifi/services/wifi_standard/wifi_framework:wifi_manage",
+              "//foundation/communication/wifi/services/wifi_standard/wifi_framework:dhcp_manage",
+              "//foundation/communication/wifi/services/wifi_standard/wifi_hal:wifi_hal_service",
+              "//foundation/communication/wifi/services/wifi_standard/wifi_framework:wifi_system_ability",
+              "//foundation/communication/wifi/services/wifi_standard/sa_profile:wifi_standard_sa_profile"
+          ],
+          "wifi_system_ability": {
+              "module_list": [
+                "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage:wifi_device_ability",
+                "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage:wifi_scan_ability",
+                "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage:wifi_hotspot_ability",
+                "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage:wifi_p2p_ability"
+              ]
+          },
+          "wifi_manage": {
+              "module_list": [
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage:wifi_manager_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/idl_client:wifi_idl_client",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/wifi_scan:wifi_scan_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/wifi_sta:wifi_sta_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/wifi_ap:wifi_ap_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/wifi_p2p:wifi_p2p_service"
+              ],
+              "wifi_idl_client": [
+                  {
+                      "type": "so",
+                      "name": "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/idl_client:wifi_idl_client",
+                      "header": {
+                          "header_files": [
+                              "idl_client.h",
+                              "wifi_idl_define.h"
+                          ],
+                          "header_base": "//foundation/communication/wifi/services/wifi_standard/wifi_framework/wifi_manage/idl_client"
+                      }
+                  }
+              ]
+          },
+          "dhcp_manage": {
+              "module_list": [
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/dhcp_manage/mgr_service:dhcp_manager_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/dhcp_manage/dhcp_client:dhcp_client_service",
+                  "//foundation/communication/wifi/services/wifi_standard/wifi_framework/dhcp_manage/dhcp_server:dhcp_server"
+              ]
+          },
+          "wifi_hal_service": [
+              {
+                  "type": "so",
+                  "name": "//foundation/communication/wifi/services/wifi_standard/wifi_hal:wifi_hal_service",
+                  "header": {
+                      "header_files": [
+                          "wifi_hal_define.h",
+                          "wifi_hal_sta_interface.h",
+                          "wifi_hal_ap_interface.h",
+                          "wifi_hal_struct.h"
+                      ],
+                      "header_base": "//foundation/communication/wifi/services/wifi_standard/wifi_hal/"
+                  }
+              }
+          ]
+      },
+
+      "wifi_native_js": {
+          "module_list": [
+              "//foundation/communication/wifi/interfaces/innerkits/native_cpp/napi:wifi_native_js"
+          ]
+      }
+  }
+}

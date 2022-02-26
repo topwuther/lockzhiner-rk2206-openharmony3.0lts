@@ -1,0 +1,72 @@
+{
+  "app": {
+    "bundleName": "com.ohos.launcher",
+    "vendor": "ohos",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.ohos.launcher",
+    "name": ".MyApplication",
+    "deviceType": [
+      "phone"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "phone",
+      "moduleType": "entry",
+      "installationFree": true
+    },
+    "abilities": [
+      {
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home",
+              "flag.home.intent.from.system"
+            ],
+            "actions": [
+              "action.system.home",
+              "com.ohos.action.main"
+            ]
+          }
+        ],
+        "visible": true,
+        "name": "com.ohos.launcher.MainAbility",
+        "icon": "$media:icon",
+        "description": "$string:mainability_description",
+        "label": "$string:entry_MainAbility",
+        "type": "page",
+        "launchType": "singleton",
+        "srcPath": "default",
+        "srcLanguage": "ets",
+        "metaData": {
+          "customizeData": [
+            {
+              "name": "hwc-theme"
+            }
+          ]
+        }
+      }
+    ],
+    "js": [
+      {
+        "mode": {
+          "syntax": "ets",
+          "type": "pageAbility"
+        },
+        "pages": [
+          "pages/EntryView"
+        ],
+        "name": "default",
+        "window": {
+          "designWidth": 720,
+          "autoDesignWidth": false
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,140 @@
+#Copyright (c) 2019-2021 Huawei Device Co., Ltd.
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+
+import("//build/ohos.gni")
+
+iowow_src_dir = "//third_party/iowow/src"
+action("copy_iowow_header") {
+  visibility = [ ":*" ]
+  script = "copy_iowow_header.py"
+  inputs = []
+  outputs = [
+    "$target_gen_dir/ejdb2/iowow/basedefs.h",
+    "$target_gen_dir/ejdb2/iowow/iowow.h",
+    "$target_gen_dir/ejdb2/iowow/iwarr.h",
+    "$target_gen_dir/ejdb2/iowow/iwbits.h",
+    "$target_gen_dir/ejdb2/iowow/iwconv.h",
+    "$target_gen_dir/ejdb2/iowow/iwdlsnr.h",
+    "$target_gen_dir/ejdb2/iowow/iwexfile.h",
+    "$target_gen_dir/ejdb2/iowow/iwfile.h",
+    "$target_gen_dir/ejdb2/iowow/iwfsmfile.h",
+    "$target_gen_dir/ejdb2/iowow/iwhmap.h",
+    "$target_gen_dir/ejdb2/iowow/iwkv.h",
+    "$target_gen_dir/ejdb2/iowow/iwlog.h",
+    "$target_gen_dir/ejdb2/iowow/iwp.h",
+    "$target_gen_dir/ejdb2/iowow/iwpool.h",
+    "$target_gen_dir/ejdb2/iowow/iwrdb.h",
+    "$target_gen_dir/ejdb2/iowow/iwsha2.h",
+    "$target_gen_dir/ejdb2/iowow/iwstree.h",
+    "$target_gen_dir/ejdb2/iowow/iwstw.h",
+    "$target_gen_dir/ejdb2/iowow/iwth.h",
+    "$target_gen_dir/ejdb2/iowow/iwtp.h",
+    "$target_gen_dir/ejdb2/iowow/iwutils.h",
+    "$target_gen_dir/ejdb2/iowow/iwuuid.h",
+    "$target_gen_dir/ejdb2/iowow/iwxstr.h",
+    "$target_gen_dir/ejdb2/iowow/murmur3.h",
+  ]
+  args = [
+    "--src-dir",
+    rebase_path(iowow_src_dir),
+    "--dst-dir",
+    rebase_path("$target_gen_dir/ejdb2/iowow"),
+  ]
+}
+
+config("ejdb_public_config") {
+  include_dirs = [
+    "src",
+    "src/jbi",
+    "src/jbl",
+    "src/jql",
+    "src/util",
+    "$target_gen_dir",
+  ]
+}
+
+config("ejdb_config") {
+  include_dirs = [
+    "src",
+    "src/jbi",
+    "src/jbl",
+    "src/jql",
+    "src/util",
+    "$target_gen_dir",
+  ]
+
+  cflags = [
+    "-DNDEBUG",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wfatal-errors",
+    "-Wno-implicit-fallthrough",
+    "-Wno-missing-braces",
+    "-Wno-missing-field-initializers",
+    "-Wno-shorten-64-to-32",
+    "-Wno-sign-compare",
+    "-Wno-unknown-pragmas",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-fPIC",
+    "-fsigned-char",
+    "-pedantic",
+    "-std=gnu11",
+  ]
+
+  defines = [
+    "IW_64",
+    "IW_API_EXPORTS",
+
+    #"JB_HAVE_QSORT_R",
+    "JB_PTHREADS",
+    "_DEFAULT_SOURCE",
+    "_FILE_OFFSET_BITS=64",
+    "_LARGEFILE_SOURCE",
+    "_XOPEN_SOURCE=600",
+  ]
+}
+
+ohos_shared_library("ejdb") {
+  configs = [ ":ejdb_config" ]
+
+  public_configs = [ ":ejdb_public_config" ]
+
+  sources = [
+    "src/ejdb2.c",
+    "src/jbi/jbi_consumer.c",
+    "src/jbi/jbi_dup_scanner.c",
+    "src/jbi/jbi_full_scanner.c",
+    "src/jbi/jbi_pk_scanner.c",
+    "src/jbi/jbi_selection.c",
+    "src/jbi/jbi_sorter_consumer.c",
+    "src/jbi/jbi_uniq_scanner.c",
+    "src/jbi/jbi_util.c",
+    "src/jbl/binn.c",
+    "src/jbl/jbl.c",
+    "src/jbl/jbl_json.c",
+    "src/jql/jql.c",
+    "src/jql/jqp.c",
+    "src/util/lwre.c",
+    "src/util/utf8proc.c",
+  ]
+
+  deps = [
+    ":copy_iowow_header",
+    "//third_party/iowow:iowow",
+  ]
+
+  part_name = "hiview"
+  subsystem_name = "hiviewdfx"
+}

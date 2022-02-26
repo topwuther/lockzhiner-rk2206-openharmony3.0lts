@@ -1,0 +1,7 @@
+version="1.0"
+event id="" name="UI_BLOCK_3S" action="s,b,pb:1" interval="0"
+event id="" name="UI_BLOCK_6S" action="s,b,pb:0" interval="0"
+event id="" name="FWK_BLOCK" action="b,s" interval="0"
+event id="" name="XCOLLIE" action="b,s" interval="0"
+event id="" name="RESUME" action="s" interval="0"
+event id="" name="VM_WATCHDOG" action="S" interval="0"

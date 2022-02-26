@@ -1,0 +1,19 @@
+{
+    "description": "Config for ActsSamgrTest test cases",
+    "environment": [
+        {
+            "type": "device",
+            "label": "wifiiot"
+        }
+    ],
+    "kits": [
+        {
+            "type": "DeployKit",
+            "timeout": "20000",
+            "burn_file": "distributed_schedule/ActsSamgrTest.bin"
+        }
+    ],
+    "driver": {
+        "type": "CTestLite"
+    }
+}

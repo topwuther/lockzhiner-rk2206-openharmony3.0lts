@@ -1,0 +1,211 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//ark/ts2abc/ts2panda/ts2abc_config.gni")
+import("//build/ohos.gni")
+import("//foundation/ace/ace_engine/ace_config.gni")
+
+prebuilt_js_path =
+    get_label_info(":gen_jsf_c", "target_out_dir") + "/dist/strip.native.min.js"
+
+#snapshot_path =
+#    get_label_info(":gen_snapshot", "target_out_dir") + "/strip.native.min.js"
+
+action("gen_node_modules") {
+  script = "//third_party/jsframework/prebuild_env.sh"
+  args = []
+  inputs = [
+    "package.json",
+    "package-lock.json",
+  ]
+  outputs = [ "$root_out_dir/jsframework/node_modules" ]
+}
+
+action("gen_snapshot") {
+  script = "//third_party/jsframework/js_framework_build.sh"
+
+  #deps = [ ":gen_node_modules" ]
+
+  js_framework = "//third_party/jsframework/runtime"
+  is_mac = "false"
+  node_modules = "//prebuilts/build-tools/common/js-framework/node_modules"
+  nodejs_path = "//prebuilts/build-tools/common/nodejs/node-v12.18.4-linux-x64"
+
+  buildfile = "//third_party/jsframework/build.js"
+
+  package_file = "//third_party/jsframework/package.json"
+  tsconfig = "//third_party/jsframework/tsconfig.json"
+  eslint = "//third_party/jsframework/.eslintrc"
+  babel = "//third_party/jsframework/.babelrc"
+  test_file = "//third_party/jsframework/test"
+
+  args = [
+    rebase_path(buildfile, root_build_dir),
+    rebase_path(nodejs_path, root_build_dir),
+    rebase_path(js_framework, root_build_dir),
+    rebase_path(node_modules, root_build_dir),
+    rebase_path(package_file, root_build_dir),
+    rebase_path(tsconfig, root_build_dir),
+    rebase_path(eslint, root_build_dir),
+    rebase_path(test_file, root_build_dir),
+    rebase_path(target_out_dir, root_build_dir),
+    rebase_path(babel, root_build_dir),
+    is_mac,
+  ]
+
+  inputs = [
+    # app
+    "runtime/main/app/App.ts",
+    "runtime/main/app/bundle.ts",
+    "runtime/main/app/helper.ts",
+    "runtime/main/app/index.ts",
+    "runtime/main/app/map.ts",
+
+    # plugin
+    "runtime/main/extend/dpi/Dpi.ts",
+    "runtime/main/extend/dpi/index.ts",
+    "runtime/main/extend/i18n/I18n.ts",
+    "runtime/main/extend/i18n/index.ts",
+    "runtime/main/extend/mediaquery/mediaQuery.ts",
+    "runtime/main/extend/mediaquery/pluginMediaQuery.ts",
+    "runtime/main/extend/mediaquery/plugins.ts",
+
+    # manage event
+    "runtime/main/manage/event/bridge.ts",
+    "runtime/main/manage/event/callbackIntercept.ts",
+    "runtime/main/manage/event/CallbackManager.ts",
+    "runtime/main/manage/event/TaskCenter.ts",
+
+    # manage instance
+    "runtime/main/manage/instance/life.ts",
+    "runtime/main/manage/instance/misc.ts",
+    "runtime/main/manage/instance/register.ts",
+
+    # vdom
+    "runtime/main/model/compiler.ts",
+    "runtime/main/model/directive.ts",
+    "runtime/main/model/domHelper.ts",
+    "runtime/main/model/events.ts",
+    "runtime/main/model/index.ts",
+    "runtime/main/model/pageLife.ts",
+    "runtime/main/model/selector.ts",
+    "runtime/main/model/vmOptions.ts",
+
+    # page
+    "runtime/main/page/api/Differ.ts",
+    "runtime/main/page/api/index.ts",
+    "runtime/main/page/api/misc.ts",
+    "runtime/main/page/entry/bundle.ts",
+    "runtime/main/page/entry/init.ts",
+    "runtime/main/page/Image.ts",
+    "runtime/main/page/index.ts",
+    "runtime/main/page/Page.ts",
+    "runtime/main/page/register.ts",
+
+    # third reactivity
+    "runtime/main/reactivity/array.js",
+    "runtime/main/reactivity/dep.js",
+    "runtime/main/reactivity/object.js",
+    "runtime/main/reactivity/observer.js",
+    "runtime/main/reactivity/state.js",
+    "runtime/main/reactivity/watcher.js",
+
+    # third util
+    "runtime/main/util/index.js",
+    "runtime/main/util/props.js",
+    "runtime/main/util/shared.js",
+
+    # framework expose
+    "runtime/main/config.ts",
+    "runtime/main/index.ts",
+
+    # preparation of init framework
+    "runtime/preparation/index.ts",
+    "runtime/preparation/init.ts",
+    "runtime/preparation/methods.ts",
+    "runtime/preparation/service.ts",
+
+    # utils
+    "runtime/utils/index.ts",
+    "runtime/utils/utils.ts",
+
+    # vdom
+    "runtime/vdom/Comment.ts",
+    "runtime/vdom/Document.ts",
+    "runtime/vdom/DocumentElement.ts",
+    "runtime/vdom/Element.ts",
+    "runtime/vdom/index.ts",
+    "runtime/vdom/NativeElementClassFactory.ts",
+    "runtime/vdom/Node.ts",
+
+    # global
+    "runtime/lib.d.ts",
+
+    # config of compiler
+    ".babelrc",
+    ".eslintrc",
+    "build.js",
+    "tsconfig.json",
+    "tslint.json",
+  ]
+  outputs = [ prebuilt_js_path ]
+}
+
+jsfc_path = get_label_info(":jsf", "target_out_dir") + "/src/jsf.c"
+
+action("gen_jsf_c") {
+  visibility = [ ":*" ]  # Only targets in this file can depend on this.
+
+  deps = [ ":gen_snapshot" ]
+  deps += [ "//third_party/quickjs:qjsc(${host_toolchain})" ]
+
+  script = get_label_info("//third_party/quickjs:qjsc(${host_toolchain})",
+                          "root_out_dir") + "/ace/ace_engine_full/qjsc"
+
+  args = [
+    "-o",
+    rebase_path(jsfc_path),
+    "-N",
+    "js_framework",
+    "-c",
+    rebase_path(prebuilt_js_path),
+  ]
+
+  inputs = [ prebuilt_js_path ]
+  outputs = [ jsfc_path ]
+}
+
+ohos_static_library("jsf") {
+  deps = [ ":gen_jsf_c" ]
+  sources = [ jsfc_path ]
+}
+
+ark_abc_path =
+    get_label_info(":ark_build", "target_out_dir") + "/strip.native.min.abc"
+
+ts2abc_gen_abc("ark_jsf") {
+  extra_visibility = [ ":*" ]  # Only targets in this file can depend on this
+  extra_dependencies = [ ":gen_snapshot" ]
+
+  src_js = rebase_path(prebuilt_js_path)
+  dst_file = rebase_path(ark_abc_path)
+
+  in_puts = [ prebuilt_js_path ]
+  out_puts = [ ark_abc_path ]
+}
+
+ohos_prebuilt_etc("ark_build") {
+  deps = [ ":ark_jsf" ]
+  source = ark_abc_path
+  part_name = "ace_engine_standard"
+}

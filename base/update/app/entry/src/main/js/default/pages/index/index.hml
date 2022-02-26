@@ -1,0 +1,87 @@
+<!--
+   Copyright (C) 2021 Huawei Device Co., Ltd.
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<div class="container">
+    <div>
+        <text class="sign">
+            &lt
+        </text>
+        <text class="left">
+            升级客户端
+        </text>
+    </div>
+    <div class="banner1" if="{{showBanner==='banner'}}">
+        <div class="banner2" style="width: {{width}};">
+        </div>
+    </div>
+    <text class="percent" if="{{showBanner==='banner'}}">
+        <span>{{width}}</span>
+    </text>
+    <text class="title" if="{{pageType === 'currVersion'}}">
+        当前版本：{{versionName}}
+    </text>
+    <text class="title" if="{{pageType === 'lastVersion'}}">
+        {{title}}
+    </text>
+    <text class="title" if="{{pageType === 'errorPage'}}">
+        {{title}}
+    </text>
+    <text class="title" if="{{pageType === 'downSuccess'}}">
+        {{upgradeInfo}}
+    </text>
+
+    <text class="title1 title1_1" if="{{pageType === 'newVersion'}}">
+        <span>版本号：{{versionName}}</span>
+    </text>
+    <text class="title1" if="{{pageType === 'newVersion'}}">
+        <span>包大小：{{size}}</span>
+    </text>
+    <text class="title1" if="{{pageType === 'newVersion'}}">
+        <span>更新日志：{{journal}}</span>
+    </text>
+    <text class="title1" if="{{pageType === 'newVersion'}}">
+        <span>注意事项: {{matter}}</span>
+    </text>
+    <image src="/common/load.png" class="loadImg" if="{{showLoad==='load'}}">
+    </image>
+
+    <div class="allbutton" if="{{showButton === 'download'}}" onclick="onClick">
+        <text class="button3" >
+            {{button}}
+        </text>
+    </div>
+    <div class="button" if="{{showButton === 'upgrade'}}">
+        <div class="allbutton1" onclick="clickInstall">
+            <text class="button1">
+                安装
+            </text>
+        </div>
+        <div class="allbutton2" onclick="clickCancel">
+            <text class="button2">
+                稍后安装
+            </text>
+        </div>
+    </div>
+    <dialog id="simpledialog" class="dialog-main" oncancel="cancelDialog" if="{{showSimpledialog==='simpledialog'}}">
+        <div class="dialog-div">
+            <div class="inner-txt">
+                <text class="txt">{{dialog}}</text>
+            </div>
+            <div class="inner-btn">
+                <button type="capsule" value="取消" onclick="cancelSchedule" class="btn-txt"></button>
+                <button type="capsule" value="确定" onclick="setSchedule" class="btn-txt"></button>
+            </div>
+        </div>
+    </dialog>
+</div>

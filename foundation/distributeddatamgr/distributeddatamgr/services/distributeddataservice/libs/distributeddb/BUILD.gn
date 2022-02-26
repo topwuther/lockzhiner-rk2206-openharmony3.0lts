@@ -1,0 +1,221 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/ohos.gni")
+
+config("distrdb_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "interfaces/include",
+    "interfaces/src",
+    "common/include",
+    "communicator/include",
+    "storage/include",
+    "storage/src",
+    "storage/src/multiver",
+    "storage/src/operation",
+    "storage/src/sqlite",
+    "storage/src/upgrader",
+    "syncer/include",
+    "syncer/src",
+    "//third_party/openssl/include/",
+  ]
+
+  defines = [
+    "_LARGEFILE64_SOURCE",
+    "_FILE_OFFSET_BITS=64",
+    "SQLITE_HAS_CODEC",
+    "SQLITE_ENABLE_JSON1",
+    "USE_SQLITE_SYMBOLS",
+    "USING_HILOG_LOGGER",
+    "USING_DB_JSON_EXTRACT_AUTOMATICALLY",
+  ]
+}
+
+config("distrdb_public_config") {
+  visibility = [ "*:*" ]
+  include_dirs = [
+    "interfaces/include",
+    "include",
+  ]
+}
+
+group("build_module") {
+  deps = [ ":distributeddb" ]
+}
+
+ohos_shared_library("distributeddb") {
+  sources = [
+    "common/src/auto_launch.cpp",
+    "common/src/db_common.cpp",
+    "common/src/db_constant.cpp",
+    "common/src/evloop/src/event_impl.cpp",
+    "common/src/evloop/src/event_loop_epoll.cpp",
+    "common/src/evloop/src/event_loop_impl.cpp",
+    "common/src/evloop/src/event_loop_select.cpp",
+    "common/src/evloop/src/ievent.cpp",
+    "common/src/evloop/src/ievent_loop.cpp",
+    "common/src/flatbuffer_schema.cpp",
+    "common/src/hash.cpp",
+    "common/src/json_object.cpp",
+    "common/src/lock_status_observer.cpp",
+    "common/src/log_print.cpp",
+    "common/src/notification_chain.cpp",
+    "common/src/param_check_utils.cpp",
+    "common/src/parcel.cpp",
+    "common/src/performance_analysis.cpp",
+    "common/src/platform_specific.cpp",
+    "common/src/query.cpp",
+    "common/src/query_expression.cpp",
+    "common/src/ref_object.cpp",
+    "common/src/runtime_context.cpp",
+    "common/src/runtime_context_impl.cpp",
+    "common/src/schema_object.cpp",
+    "common/src/schema_utils.cpp",
+    "common/src/semaphore.cpp",
+    "common/src/task_pool.cpp",
+    "common/src/task_pool_impl.cpp",
+    "common/src/task_queue.cpp",
+    "common/src/time_tick_monitor.cpp",
+    "common/src/types_export.cpp",
+    "common/src/value_object.cpp",
+    "communicator/src/combine_status.cpp",
+    "communicator/src/communicator.cpp",
+    "communicator/src/communicator_aggregator.cpp",
+    "communicator/src/communicator_linker.cpp",
+    "communicator/src/frame_combiner.cpp",
+    "communicator/src/frame_retainer.cpp",
+    "communicator/src/header_converter.cpp",
+    "communicator/src/message_transform.cpp",
+    "communicator/src/network_adapter.cpp",
+    "communicator/src/protocol_proto.cpp",
+    "communicator/src/send_task_scheduler.cpp",
+    "communicator/src/serial_buffer.cpp",
+    "interfaces/src/kv_store_changed_data_impl.cpp",
+    "interfaces/src/kv_store_delegate_impl.cpp",
+    "interfaces/src/kv_store_delegate_manager.cpp",
+    "interfaces/src/kv_store_errno.cpp",
+    "interfaces/src/kv_store_nb_conflict_data_impl.cpp",
+    "interfaces/src/kv_store_nb_delegate_impl.cpp",
+    "interfaces/src/kv_store_result_set_impl.cpp",
+    "interfaces/src/kv_store_snapshot_delegate_impl.cpp",
+    "storage/src/default_factory.cpp",
+    "storage/src/generic_kvdb.cpp",
+    "storage/src/generic_kvdb_connection.cpp",
+    "storage/src/generic_single_ver_kv_entry.cpp",
+    "storage/src/ikvdb_factory.cpp",
+    "storage/src/kvdb_commit_notify_filterable_data.cpp",
+    "storage/src/kvdb_manager.cpp",
+    "storage/src/kvdb_observer_handle.cpp",
+    "storage/src/kvdb_properties.cpp",
+    "storage/src/kvdb_utils.cpp",
+    "storage/src/kvdb_windowed_result_set.cpp",
+    "storage/src/multiver/generic_multi_ver_kv_entry.cpp",
+    "storage/src/multiver/multi_ver_commit.cpp",
+    "storage/src/multiver/multi_ver_kvdata_storage.cpp",
+    "storage/src/multiver/multi_ver_natural_store.cpp",
+    "storage/src/multiver/multi_ver_natural_store_commit_notify_data.cpp",
+    "storage/src/multiver/multi_ver_natural_store_commit_storage.cpp",
+    "storage/src/multiver/multi_ver_natural_store_connection.cpp",
+    "storage/src/multiver/multi_ver_natural_store_snapshot.cpp",
+    "storage/src/multiver/multi_ver_natural_store_transfer_data.cpp",
+    "storage/src/multiver/multi_ver_storage_engine.cpp",
+    "storage/src/multiver/multi_ver_storage_executor.cpp",
+    "storage/src/multiver/multi_ver_vacuum.cpp",
+    "storage/src/multiver/multi_ver_vacuum_executor_impl.cpp",
+    "storage/src/multiver/multi_ver_value_object.cpp",
+    "storage/src/operation/database_oper.cpp",
+    "storage/src/operation/local_database_oper.cpp",
+    "storage/src/operation/multi_ver_database_oper.cpp",
+    "storage/src/operation/single_ver_database_oper.cpp",
+    "storage/src/package_file.cpp",
+    "storage/src/result_entries_window.cpp",
+    "storage/src/single_ver_natural_store_commit_notify_data.cpp",
+    "storage/src/sqlite/query_object.cpp",
+    "storage/src/sqlite/sqlite_local_kvdb.cpp",
+    "storage/src/sqlite/sqlite_local_kvdb_connection.cpp",
+    "storage/src/sqlite/sqlite_local_kvdb_snapshot.cpp",
+    "storage/src/sqlite/sqlite_local_storage_engine.cpp",
+    "storage/src/sqlite/sqlite_local_storage_executor.cpp",
+    "storage/src/sqlite/sqlite_multi_ver_data_storage.cpp",
+    "storage/src/sqlite/sqlite_multi_ver_transaction.cpp",
+    "storage/src/sqlite/sqlite_single_ver_database_upgrader.cpp",
+    "storage/src/sqlite/sqlite_single_ver_forward_cursor.cpp",
+    "storage/src/sqlite/sqlite_single_ver_natural_store.cpp",
+    "storage/src/sqlite/sqlite_single_ver_natural_store_connection.cpp",
+    "storage/src/sqlite/sqlite_single_ver_result_set.cpp",
+    "storage/src/sqlite/sqlite_single_ver_schema_database_upgrader.cpp",
+    "storage/src/sqlite/sqlite_single_ver_storage_engine.cpp",
+    "storage/src/sqlite/sqlite_single_ver_storage_executor.cpp",
+    "storage/src/sqlite/sqlite_single_ver_storage_executor_cache.cpp",
+    "storage/src/sqlite/sqlite_storage_engine.cpp",
+    "storage/src/sqlite/sqlite_storage_executor.cpp",
+    "storage/src/sqlite/sqlite_utils.cpp",
+    "storage/src/storage_engine.cpp",
+    "storage/src/storage_engine_manager.cpp",
+    "storage/src/storage_executor.cpp",
+    "storage/src/sync_able_kvdb.cpp",
+    "storage/src/sync_able_kvdb_connection.cpp",
+    "storage/src/upgrader/single_ver_database_upgrader.cpp",
+    "storage/src/upgrader/single_ver_schema_database_upgrader.cpp",
+    "syncer/src/ability_sync.cpp",
+    "syncer/src/commit_history_sync.cpp",
+    "syncer/src/device_manager.cpp",
+    "syncer/src/generic_syncer.cpp",
+    "syncer/src/meta_data.cpp",
+    "syncer/src/multi_ver_data_sync.cpp",
+    "syncer/src/multi_ver_sync_engine.cpp",
+    "syncer/src/multi_ver_sync_state_machine.cpp",
+    "syncer/src/multi_ver_sync_task_context.cpp",
+    "syncer/src/multi_ver_syncer.cpp",
+    "syncer/src/single_ver_data_sync.cpp",
+    "syncer/src/single_ver_data_sync_with_sliding_window.cpp",
+    "syncer/src/single_ver_sync_engine.cpp",
+    "syncer/src/single_ver_sync_state_machine.cpp",
+    "syncer/src/single_ver_sync_target.cpp",
+    "syncer/src/single_ver_sync_task_context.cpp",
+    "syncer/src/single_ver_syncer.cpp",
+    "syncer/src/sliding_window_receiver.cpp",
+    "syncer/src/sliding_window_sender.cpp",
+    "syncer/src/sync_engine.cpp",
+    "syncer/src/sync_operation.cpp",
+    "syncer/src/sync_state_machine.cpp",
+    "syncer/src/sync_target.cpp",
+    "syncer/src/sync_task_context.cpp",
+    "syncer/src/syncer_factory.cpp",
+    "syncer/src/syncer_proxy.cpp",
+    "syncer/src/time_helper.cpp",
+    "syncer/src/time_sync.cpp",
+    "syncer/src/value_slice_sync.cpp",
+  ]
+
+  configs = [ ":distrdb_config" ]
+  public_configs = [ ":distrdb_public_config" ]
+
+  deps = [
+    "//third_party/flatbuffers:flatbuffers_mini",
+    "//third_party/sqlite:sqlite",
+    "//utils/native/base:utils",
+  ]
+
+  configs += [ "//third_party/jsoncpp:jsoncpp_config" ]
+  ldflags = [ "-Wl,--exclude-libs,ALL" ]
+  deps += [
+    "//third_party/jsoncpp:jsoncpp",
+    "//third_party/openssl:libcrypto_static",
+  ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  subsystem_name = "distributeddatamgr"
+}

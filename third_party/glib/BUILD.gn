@@ -1,0 +1,258 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+
+import("//build/ohos.gni")
+
+group("glib_packages") {
+    deps = [
+        ":glib",
+        ":gmodule",
+        ":gobject",
+    ]
+}
+
+config("glib_config") {
+    visibility = [ ":*" ]
+    include_dirs = [
+        ".",
+        "glib/libcharset",
+        "glib/pcre",
+        "glib",
+        "glib/deprecated",
+    ]
+    cflags = [
+        "-DG_LOG_DOMAIN=\"GLib\"",
+        "-DGLIB_CHARSETALIAS_DIR=\"system/lib64\"",
+        "-DHAVE_MEMMOVE",
+        "-DSUPPORT_UCP",
+        "-DSUPPORT_UTF",
+        "-DSUPPORT_UTF8",
+        "-DNEWLINE=-1",
+        "-DMATCH_LIMIT=10000000",
+        "-DMATCH_LIMIT_RECURSION=8192",
+        "-DMAX_NAME_SIZE=32",
+        "-DMAX_NAME_COUNT=10000",
+        "-DMAX_DUPLENGTH=30000",
+        "-DLINK_SIZE=2",
+        "-DPOSIX_MALLOC_THRESHOLD=10",
+        "-DPCRE_STATIC",
+        "-UBSR_ANYCRLF",
+        "-UEBCDIC",
+        "-DGLIB_COMPILATION",
+        "-Wno-sign-compare",
+        "-Wno-unused-value",
+        "-Wno-unused-function",
+        "-Wno-int-conversion",
+    ]
+}
+
+ohos_source_set("glib_source") {
+    sources = [
+        "glib/libcharset/localcharset.c",
+        "glib/pcre/pcre_byte_order.c",
+        "glib/pcre/pcre_chartables.c",
+        "glib/pcre/pcre_compile.c",
+        "glib/pcre/pcre_config.c",
+        "glib/pcre/pcre_dfa_exec.c",
+        "glib/pcre/pcre_exec.c",
+        "glib/pcre/pcre_fullinfo.c",
+        "glib/pcre/pcre_get.c",
+        "glib/pcre/pcre_globals.c",
+        "glib/pcre/pcre_jit_compile.c",
+        "glib/pcre/pcre_newline.c",
+        "glib/pcre/pcre_ord2utf8.c",
+        "glib/pcre/pcre_string_utils.c",
+        "glib/pcre/pcre_study.c",
+        "glib/pcre/pcre_tables.c",
+        "glib/pcre/pcre_valid_utf8.c",
+        "glib/pcre/pcre_version.c",
+        "glib/pcre/pcre_xclass.c",
+        "glib/deprecated/gallocator.c",
+        "glib/deprecated/gcache.c",
+        "glib/deprecated/gcompletion.c",
+        "glib/deprecated/grel.c",
+        "glib/deprecated/gthread-deprecated.c",
+        "glib/garcbox.c",
+        "glib/garray.c",
+        "glib/gasyncqueue.c",
+        "glib/gatomic.c",
+        "glib/gbacktrace.c",
+        "glib/gbase64.c",
+        "glib/gbitlock.c",
+        "glib/gbookmarkfile.c",
+        "glib/gbytes.c",
+        "glib/gcharset.c",
+        "glib/gchecksum.c",
+        "glib/gconvert.c",
+        "glib/gdataset.c",
+        "glib/gdate.c",
+        "glib/gdatetime.c",
+        "glib/gdir.c",
+        "glib/genviron.c",
+        "glib/gerror.c",
+        "glib/gfileutils.c",
+        "glib/ggettext.c",
+        "glib/ghash.c",
+        "glib/ghmac.c",
+        "glib/ghook.c",
+        "glib/ghostutils.c",
+        "glib/giochannel.c",
+        "glib/gkeyfile.c",
+        "glib/glib-init.c",
+        "glib/glib-private.c",
+        "glib/glist.c",
+        "glib/gmain.c",
+        "glib/gmappedfile.c",
+        "glib/gmarkup.c",
+        "glib/gmem.c",
+        "glib/gmessages.c",
+        "glib/gnode.c",
+        "glib/goption.c",
+        "glib/gpattern.c",
+        "glib/gpoll.c",
+        "glib/gprimes.c",
+        "glib/gqsort.c",
+        "glib/gquark.c",
+        "glib/gqueue.c",
+        "glib/grand.c",
+        "glib/grcbox.c",
+        "glib/grefcount.c",
+        "glib/grefstring.c",
+        "glib/gregex.c",
+        "glib/gscanner.c",
+        "glib/gsequence.c",
+        "glib/gshell.c",
+        "glib/gslice.c",
+        "glib/gslist.c",
+        "glib/gstdio.c",
+        "glib/gstrfuncs.c",
+        "glib/gstring.c",
+        "glib/gstringchunk.c",
+        "glib/gtestutils.c",
+        "glib/gthread.c",
+        "glib/gthreadpool.c",
+        "glib/gtimer.c",
+        "glib/gtimezone.c",
+        "glib/gtranslit.c",
+        "glib/gtrashstack.c",
+        "glib/gtree.c",
+        "glib/guniprop.c",
+        "glib/gutf8.c",
+        "glib/gunibreak.c",
+        "glib/gunicollate.c",
+        "glib/gunidecomp.c",
+        "glib/gurifuncs.c",
+        "glib/gutils.c",
+        "glib/gutilsprivate.h",
+        "glib/guuid.c",
+        "glib/gvariant.c",
+        "glib/gvariant-core.c",
+        "glib/gvariant-parser.c",
+        "glib/gvariant-serialiser.c",
+        "glib/gvarianttypeinfo.c",
+        "glib/gvarianttype.c",
+        "glib/gversion.c",
+        "glib/gwakeup.c",
+        "glib/gprintf.c",
+        "glib/glib-unix.c",
+        "glib/gspawn.c",
+        "glib/giounix.c",
+        "glib/gthread-posix.c",
+    ]
+
+    configs = [
+        ":glib_config",
+    ]
+}
+ohos_shared_library("glib") {
+    deps = [
+        ":glib_source",
+    ]
+    part_name = "multimedia_histreamer"
+    subsystem_name = "multimedia"
+}
+
+
+config("gmodule_config") {
+    visibility = [ ":*" ]
+    include_dirs = [
+        ".",
+        "gmodule",
+        "glib",
+    ]
+    cflags = [
+        "-DG_LOG_DOMAIN=\"GModule\""
+    ]
+}
+
+ohos_source_set("gmodule_source") {
+    sources = [
+        "gmodule/gmodule.c",
+    ]
+
+    configs = [
+        ":gmodule_config",
+    ]
+}
+ohos_shared_library("gmodule") {
+    deps = [
+        ":gmodule_source",
+        ":glib",
+    ]
+    part_name = "multimedia_histreamer"
+    subsystem_name = "multimedia"
+}
+
+
+config("gobject_config") {
+    visibility = [ ":*" ]
+    include_dirs = [
+        ".",
+        "gobject",
+        "glib",
+        "//third_party/libffi/include",
+    ]
+    cflags = [
+        "-DG_LOG_DOMAIN=\"GObject\"",
+        "-DGOBJECT_COMPILATION",
+        "-Wno-sign-compare",
+        "-Wno-unused-function",
+        "-Wno-int-conversion",
+    ]
+}
+
+ohos_source_set("gobject_source") {
+    sources = [
+        "gobject/gatomicarray.c",
+        "gobject/gbinding.c",
+        "gobject/gboxed.c",
+        "gobject/gclosure.c",
+        "gobject/genums.c",
+        "gobject/gmarshal.c",
+        "gobject/gobject.c",
+        "gobject/gparam.c",
+        "gobject/gparamspecs.c",
+        "gobject/gsignal.c",
+        "gobject/gsourceclosure.c",
+        "gobject/gtype.c",
+        "gobject/gtypemodule.c",
+        "gobject/gtypeplugin.c",
+        "gobject/gvalue.c",
+        "gobject/gvaluearray.c",
+        "gobject/gvaluetransform.c",
+        "gobject/gvaluetypes.c",
+    ]
+
+    configs = [
+        ":gobject_config",
+    ]
+}
+
+ohos_shared_library("gobject") {
+    deps = [
+        ":gobject_source",
+        ":glib",
+        "//third_party/libffi:ffi",
+    ]
+    part_name = "multimedia_histreamer"
+    subsystem_name = "multimedia"
+}

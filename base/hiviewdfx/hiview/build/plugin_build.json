@@ -1,0 +1,56 @@
+{
+    "plugins": {
+        "SysEventSource": {
+            "path": "core",
+            "name": "sysevent_source"
+        },
+        "SysEventService": {
+            "path": "plugins/eventservice",
+            "name": "sys_event_service"
+        },
+        "Faultlogger": {
+            "path": "plugins/faultlogger",
+            "name": "faultlogger"
+        }
+    },
+    "rules": [
+        {
+            "rule": [
+                {
+                    "rom": "1G",
+                    "ram": "1G"
+                }
+            ],
+            "info": {
+                "loadorder": {
+                    "SysEventSource": {
+                        "loadtime": 0
+                    },
+                    "Faultlogger": {
+                        "loadtime": 0
+                    },
+                    "SysEventService": {
+                        "loadtime": 0
+                    }
+                },
+                "pipelines": {
+                    "SysEventPipeline": [
+                        "SysEventService",
+                        "Faultlogger"
+                    ]
+                },
+                "pipelinegroups": {
+                    "SysEventSource": [
+                        "SysEventPipeline"
+                    ]
+                },
+                "threads": {
+                    "singledthread": {
+                        "SysEventSource": "sysevent_source",
+                        "SysEventService": "sysevent_service"
+                    }
+                }
+            }
+        }
+    ]
+}

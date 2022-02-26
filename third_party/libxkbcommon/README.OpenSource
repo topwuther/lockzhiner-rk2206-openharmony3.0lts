@@ -1,0 +1,11 @@
+[
+  {
+   "Name":"libxkbcommon",
+   "License":"MIT License",
+   "License File":"COPYING",
+   "Version Number":"1.0.3",
+   "Owner":"pengfei.hou@huawei.com",
+   "Upstream URL":"https://github.com/xkbcommon/libxkbcommon",
+   "Description": "libxkbcommon is a keyboard keymap compiler and support library which processes a reduced subset of keymaps as defined by the XKB (X Keyboard Extension) specification. It also contains a module for handling Compose and dead keys and a separate library for listing available keyboard layouts."
+  }
+]

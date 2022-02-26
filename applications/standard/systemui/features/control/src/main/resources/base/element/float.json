@@ -1,0 +1,87 @@
+{
+  "float": [
+    {
+      "name": "plane_border_radius",
+      "value": "15"
+    },{
+      "name": "plane_margin_left",
+      "value": "10"
+    },{
+      "name": "control_common_font_size",
+      "value": "20"
+    },{
+      "name": "slider_size_width",
+      "value": "300"
+    },{
+      "name": "brightness_border_radius",
+      "value": "15"
+    },{
+      "name": "center_item_margin_top",
+      "value": "20"
+    },{
+      "name": "center_item_margin_left",
+      "value": "10"
+    },{
+      "name": "center_item_margin_right",
+      "value": "10"
+    },{
+      "name": "title_font_size",
+      "value": "35"
+    },{
+      "name": "notification_settings_width",
+      "value": "60"
+    },{
+      "name": "notification_settings_height",
+      "value": "60"
+    },{
+      "name": "volume_border_radius",
+      "value": "15"
+    },
+    {
+      "name": "uniform_icon_width",
+      "value": "50"
+    },
+    {
+      "name": "uniform_icon_height",
+      "value": "50"
+    },
+    {
+      "name": "uniform_icon_bg_height",
+      "value": "80"
+    },
+    {
+      "name": "uniform_icon_bg_width",
+      "value": "80"
+    },
+    {
+      "name": "icon_stack_common_margin",
+      "value": "10"
+    },
+
+    {
+      "name": "icon_circle_width",
+      "value": "80"
+    },{
+      "name": "icon_circle_height",
+      "value": "80"
+    },
+    {
+      "name": "wifi_border_radius",
+      "value": "15"
+    },
+    {
+      "name": "wifi_text_margin",
+      "value": "10"
+    },
+    {
+      "name": "icon_component_width",
+      "value": "15"
+    },{
+      "name": "slider_text_padding_left",
+      "value": "5"
+    },{
+      "name": "wifi_and_air_height",
+      "value": "120"
+    }
+  ]
+}

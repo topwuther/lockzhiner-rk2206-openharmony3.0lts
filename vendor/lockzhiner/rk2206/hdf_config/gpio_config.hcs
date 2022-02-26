@@ -1,0 +1,15 @@
+root {
+    platform {
+        gpio_config {
+            controller_0x41010000 {
+                match_attr = "lockzhiner_rk2206_gpio"; //【必要】必须和device_info.hcs中的deviceMatchAttr值一致
+                groupNum = 1;        //【必要】GPIO组索引 需要根据设备情况填写
+                bitNum = 32;         //【必要】每组GPIO管脚数 
+                regBase = 0x41010000;//【必要】物理基地址
+                regStep = 0x10000;   //【必要】寄存器偏移步进
+                irqStart = 49;       //【必要】开启中断
+                irqShare = 0;        //【必要】共享中断
+            }
+        }
+    }
+}

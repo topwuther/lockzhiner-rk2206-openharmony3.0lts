@@ -1,0 +1,280 @@
+# Copyright (c) 2013-2019 Huawei Technologies Co., Ltd. All rights reserved.
+# Copyright (c) 2020-2021 Huawei Device Co., Ltd. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this list of
+#    conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice, this list
+#    of conditions and the following disclaimer in the documentation and/or other materials
+#    provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors may be used
+#    to endorse or promote products derived from this software without specific prior written
+#    permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import("//build/lite/config/component/lite_component.gni")
+import("//drivers/adapter/khdf/liteos/hdf.gni")
+
+module_switch = defined(LOSCFG_DRIVERS_HDF)
+module_name = "hdf"
+hdf_driver(module_name) {
+  sources = [
+    "$HDF_FRAMEWORKS_PATH/ability/config/device_resource_if.c",
+    "$HDF_FRAMEWORKS_PATH/ability/config/hcs_parser/src/hcs_blob_if.c",
+    "$HDF_FRAMEWORKS_PATH/ability/config/hcs_parser/src/hcs_generate_tree.c",
+    "$HDF_FRAMEWORKS_PATH/ability/config/hcs_parser/src/hcs_parser.c",
+    "$HDF_FRAMEWORKS_PATH/ability/config/hcs_parser/src/hcs_tree_if.c",
+    "$HDF_FRAMEWORKS_PATH/ability/sbuf/src/hdf_sbuf.c",
+    "$HDF_FRAMEWORKS_PATH/ability/sbuf/src/hdf_sbuf_impl_raw.c",
+    "$HDF_FRAMEWORKS_PATH/core/adapter/vnode/src/hdf_vnode_adapter.c",
+    "$HDF_FRAMEWORKS_PATH/core/common/src/devlite_object_config.c",
+    "$HDF_FRAMEWORKS_PATH/core/common/src/devmgr_service_start.c",
+    "$HDF_FRAMEWORKS_PATH/core/common/src/hdf_attribute.c",
+    "$HDF_FRAMEWORKS_PATH/core/common/src/hdf_device_node_ext.c",
+    "$HDF_FRAMEWORKS_PATH/core/common/src/load_driver_entry.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/devhost_service.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/devmgr_service_clnt.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/devsvc_manager_clnt.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_device.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_device_node.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_device_object.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_device_token.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_driver_loader.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_observer_record.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_service_observer.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/hdf_service_subscriber.c",
+    "$HDF_FRAMEWORKS_PATH/core/host/src/power_state_token.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/devhost_service_clnt.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/device_token_clnt.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/devmgr_service.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/devsvc_manager.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/hdf_driver_installer.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/hdf_host_info.c",
+    "$HDF_FRAMEWORKS_PATH/core/manager/src/power_state_token_clnt.c",
+    "$HDF_FRAMEWORKS_PATH/core/shared/src/hdf_device_info.c",
+    "$HDF_FRAMEWORKS_PATH/core/shared/src/hdf_io_service.c",
+    "$HDF_FRAMEWORKS_PATH/core/shared/src/hdf_object_manager.c",
+    "$HDF_FRAMEWORKS_PATH/core/shared/src/hdf_service_record.c",
+    "$HDF_FRAMEWORKS_PATH/utils/src/hdf_cstring.c",
+    "$HDF_FRAMEWORKS_PATH/utils/src/hdf_map.c",
+    "$HDF_FRAMEWORKS_PATH/utils/src/hdf_slist.c",
+    "$HDF_FRAMEWORKS_PATH/utils/src/hdf_sref.c",
+    "osal/src/osal_cdev.c",
+    "osal/src/osal_file.c",
+    "osal/src/osal_firmware.c",
+    "osal/src/osal_irq.c",
+    "osal/src/osal_mem.c",
+    "osal/src/osal_mutex.c",
+    "osal/src/osal_sem.c",
+    "osal/src/osal_spinlock.c",
+    "osal/src/osal_thread.c",
+    "osal/src/osal_time.c",
+    "osal/src/osal_timer.c",
+    "osal/src/osal_workqueue.c",
+  ]
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/common/platform_common.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/common/platform_device.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/common/platform_manager.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/common/platform_queue.c",
+      "platform/src/plat_common.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_I2C)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/i2c_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/i2c_if.c",
+      "platform/src/i2c_dev.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_ADC)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/adc_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/adc_if.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_GPIO)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/gpio_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/gpio_if.c",
+      "platform/src/gpio_dev.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_WATCHDOG)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/watchdog_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/watchdog_if.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_SPI)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/spi_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/spi_if.c",
+      "platform/src/spi_dev.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_PWM)) {
+    sources += [ "$HDF_FRAMEWORKS_PATH/support/platform/src/pwm_core.c" ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_MMC)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_block.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_dispatch.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_emmc.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_if.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_protocol.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/mmc_sdio.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_SDIO)) {
+    sources += [ "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/sdio_if.c" ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_EMMC)) {
+    sources += [ "$HDF_FRAMEWORKS_PATH/support/platform/src/mmc/emmc_if.c" ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_RTC)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/rtc_base.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/rtc_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/rtc_if.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_MIPI_DSI)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mipi_dsi_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/mipi_dsi_if.c",
+
+      #"platform/src/mipi_tx_dev.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_DMAC)) {
+    sources += [ "$HDF_FRAMEWORKS_PATH/support/platform/src/dmac_core.c" ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_UART)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/uart_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/uart_if.c",
+      "platform/src/uart_dev.c",
+    ]
+  }
+
+  if (defined(LOSCFG_DRIVERS_HDF_PLATFORM_I2S)) {
+    sources += [
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/i2s_core.c",
+      "$HDF_FRAMEWORKS_PATH/support/platform/src/i2s_if.c",
+    ]
+  }
+
+  if (defined(LOSCFG_NET_LWIP_SACK)) {
+    sources += [ "network/src/netbuf_adapter.c" ]
+
+    if (defined(LOSCFG_DRIVERS_HDF_WIFI)) {
+      sources += [ "network/src/net_device_adapter.c" ]
+    }
+  }
+
+  public_configs = [ ":public" ]
+}
+
+group("liteos") {
+  public_deps = [ ":$module_name" ]
+  deps = [
+    "model/bus/usb",
+    "model/display",
+    "model/input",
+    "model/misc/vibrator",
+    "model/network/ethernet",
+    "model/network/wifi",
+    "model/sensor",
+    "model/storage",
+    "model/usb/device",
+    "model/usb/host",
+  ]
+
+  if (defined(LOSCFG_DRIVERS_HDF_TEST)) {
+    deps += [ "test" ]
+  }
+}
+
+config("public") {
+  include_dirs = [
+    "$HDF_FRAMEWORKS_PATH/core/common/include/manager",
+    "$HDF_FRAMEWORKS_PATH/support/platform/include",
+    "$HDF_FRAMEWORKS_PATH/support/platform/include/common",
+    "$HDF_FRAMEWORKS_PATH/support/platform/include/mmc",
+    "$HDF_FRAMEWORKS_PATH/include/platform",
+    "$HDF_FRAMEWORKS_PATH/include/utils",
+  ]
+
+  configs = [
+    "model/bus/usb:public",
+    "model/usb/host:public",
+  ]
+}
+
+config("hdf_config") {
+  include_dirs = [
+    "$HDF_FRAMEWORKS_PATH/include",
+    "$HDF_FRAMEWORKS_PATH/include/osal",
+    "$HDF_FRAMEWORKS_PATH/include/utils",
+    "$HDF_FRAMEWORKS_PATH/utils/include",
+    "$HDF_FRAMEWORKS_PATH/include/platform",
+    "$HDF_FRAMEWORKS_PATH/include/core",
+    "$HDF_FRAMEWORKS_PATH/include/net",
+    "$HDF_FRAMEWORKS_PATH/include/wifi",
+    "$HDF_FRAMEWORKS_PATH/model/network/common/netdevice",
+    "$HDF_FRAMEWORKS_PATH/model/storage/include/common",
+    "$HDF_FRAMEWORKS_PATH/model/storage/include/mtd",
+    "$HDF_FRAMEWORKS_PATH/ability/sbuf/include",
+    "$HDF_FRAMEWORKS_PATH/support/platform/include",
+    "$HDF_FRAMEWORKS_PATH/core/host/include",
+    "$HDF_FRAMEWORKS_PATH/core/manager/include",
+    "$HDF_FRAMEWORKS_PATH/core/shared/include",
+    "$HDF_FRAMEWORKS_PATH/core/common/include/manager",
+    "$HDF_FRAMEWORKS_PATH/core/common/include/host",
+    "network/include",
+    "osal/include",
+    "platform/include",
+    "model/storage/include",
+    "$HDF_FRAMEWORKS_PATH/core/adapter/vnode/include",
+    "$HDF_FRAMEWORKS_PATH/core/adapter/syscall/include",
+    "$HDF_FRAMEWORKS_PATH/include/config",
+    "$HDF_FRAMEWORKS_PATH/ability/config/hcs_parser/include",
+  ]
+}
+
+build_ext_component("build_hc_gen") {
+  exec_path = rebase_path("//drivers/framework/tools/hc-gen", root_build_dir)
+  command = "make"
+}

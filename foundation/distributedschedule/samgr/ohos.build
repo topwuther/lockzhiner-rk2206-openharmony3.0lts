@@ -1,0 +1,32 @@
+{
+    "parts": {
+        "samgr_L2": {
+            "variants": ["phone", "wearable"],
+            "inner_kits": [
+                {
+                    "header": {
+                        "header_base": "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include/",
+                        "header_files": [
+                            "iservice_registry.h",
+                            "if_system_ability_manager.h",
+                            "system_ability_manager_proxy.h",
+                            "sam_log.h",
+                            "system_ability_info.h",
+                            "if_system_ability_connection_callback.h"
+                        ]
+                    },
+                    "name": "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy"
+                }
+            ],
+            "module_list": [
+                "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+                "//foundation/distributedschedule/samgr/services/samgr/native:samgr",
+                "//foundation/distributedschedule/samgr/services/samgr/native:etc",
+                "//third_party/libxml2:libxml2"
+            ],
+            "test_list": ["//foundation/distributedschedule/samgr/services/samgr/native/test:unittest"],
+            "system_kits": []
+        }
+    },
+    "subsystem": "distributedschedule"
+}

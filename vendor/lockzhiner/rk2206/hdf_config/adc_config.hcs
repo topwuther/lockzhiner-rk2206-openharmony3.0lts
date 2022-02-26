@@ -1,0 +1,25 @@
+root {
+    platform {
+        adc_config {
+            template adc_device {
+                serviceName = "";
+                match_attr = "";    // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                deviceNum = 0;      // 【必要】设备号
+                dataWidth = 10;     // ADC采集位长，一般为10，即bit[0~9]有效
+                gpio = 16;          // gpio引脚序号，GPIO0_PC0 ~ GPIO0_PC7（即序号为16 ~ 23）
+                channelId = 0;      // 采集通道号0~7
+                selectVoltage = 0;  // ADC参考电压信号，0为外部参考电压，1为内部参考电压
+            }
+
+            device_adc0  :: adc_device {
+                serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_ADC0";
+                match_attr = "lockzhiner_rk2206_adc0";      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                deviceNum = 0;
+                dataWidth = 10;
+                gpio = 21;
+                channelId = 5;
+                selectVoltage = 0;
+            }
+        }
+    }
+}

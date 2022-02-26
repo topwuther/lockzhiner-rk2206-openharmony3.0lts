@@ -1,0 +1,412 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/services"
+
+config("cesfwk_services_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/aafwk/standard/services/abilitymgr/include/",
+    "//foundation/aafwk/standard/services/common/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/appexecfwk/standard/services/bundlemgr/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/include/bundlemgr",
+    "//foundation/communication/ipc/ipc/dnetwork_temp",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/include",
+    "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
+    "//foundation/distributedschedule/dmsfwk/utils/native/include",
+    "//foundation/distributedschedule/safwk/services/safwk/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedschedule/samgr/services/lsamgr/include",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/distributedschedule/samgr/utils/native/include",
+    "${services_path}/include",
+    "${services_path}/test/unittest/mock/include",
+    "//third_party/json/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+  ]
+
+  cflags = []
+
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+}
+
+ohos_unittest("common_event_publish_system_event_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_publish_system_event_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+    "samgr_L2:samgr_proxy",
+  ]
+}
+
+ohos_unittest("common_event_dump_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_dump_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_freeze_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_freeze_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_sticky_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_sticky_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_subscribe_unit_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_subscribe_unit_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_unsubscribe_unit_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_unsubscribe_unit_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_publish_ordered_event_unit_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_publish_ordered_event_unit_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_publish_permission_event_unit_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_publish_permission_event_unit_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+ohos_unittest("common_event_publish_manager_event_unit_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${services_path}/test/unittest/mock/src/iservice_registry.cpp",
+    "${services_path}/test/unittest/mock/src/mock_bundle_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_ipc.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager.cpp",
+    "${services_path}/test/unittest/mock/src/mock_system_ability_manager_stub.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_host.cpp",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/src/bundlemgr/bundle_mgr_proxy.cpp",
+    "common_event_publish_manager_event_unit_test.cpp",
+  ]
+
+  configs = [ ":cesfwk_services_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "ipc:libdbinder",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = []
+
+  deps += [
+    ":common_event_dump_test",
+    ":common_event_freeze_test",
+    ":common_event_publish_manager_event_unit_test",
+    ":common_event_publish_ordered_event_unit_test",
+    ":common_event_publish_permission_event_unit_test",
+    ":common_event_publish_system_event_test",
+    ":common_event_sticky_test",
+    ":common_event_subscribe_unit_test",
+    ":common_event_unsubscribe_unit_test",
+  ]
+}

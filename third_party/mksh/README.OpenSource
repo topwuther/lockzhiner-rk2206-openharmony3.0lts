@@ -1,0 +1,11 @@
+[
+    {
+        "Name"                  : "mksh",
+        "License"               : "MirOS License",
+        "License File"          : "COPYRIGHT",
+        "Version Number"        : "R57",
+        "Owner"                 : "maguangyao@huawei.com",
+        "Upstream URL"          : "https://www.mirbsd.org/mksh.htm",
+        "Description"           : "a secure operating system from the BSD family for 32-bit i386 and sparc systems"
+    }
+]

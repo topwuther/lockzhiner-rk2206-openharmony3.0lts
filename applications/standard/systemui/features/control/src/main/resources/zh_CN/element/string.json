@@ -1,0 +1,21 @@
+{
+  "string": [
+    {
+      "name": "control_library",
+      "value": "control_library"
+    },{
+      "name": "flight_mode",
+      "value": "飞行模式"
+    },
+    {
+      "name": "brightness_text",
+      "value": "亮度："
+    },{
+      "name": "control_center",
+      "value": "控制中心"
+    },{
+      "name": "volume_control",
+      "value": "声音："
+    }
+  ]
+}

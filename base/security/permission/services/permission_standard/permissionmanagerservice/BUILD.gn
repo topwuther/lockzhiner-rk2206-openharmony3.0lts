@@ -1,0 +1,58 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+ohos_shared_library("permission_manager_service_standard") {
+  subsystem_name = "security"
+  part_name = "permission_standard"
+
+  include_dirs = [
+    "include",
+    "//utils/system/safwk/native/include",
+    "//base/security/permission/frameworks/permission_standard/permissioninfrastructure",
+    "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include/permission",
+  ]
+
+  sources = [
+    "main/cpp/src/data_storage.cpp",
+    "main/cpp/src/data_translator.cpp",
+    "main/cpp/src/generic_values.cpp",
+    "main/cpp/src/permission_definition_cache.cpp",
+    "main/cpp/src/permission_definition_manager.cpp",
+    "main/cpp/src/permission_manager_service.cpp",
+    "main/cpp/src/permission_manager_stub.cpp",
+    "main/cpp/src/permission_state_cache.cpp",
+    "main/cpp/src/permission_state_manager.cpp",
+    "main/cpp/src/sqlite_helper.cpp",
+    "main/cpp/src/sqlite_storage.cpp",
+    "main/cpp/src/statement.cpp",
+    "main/cpp/src/variant_value.cpp",
+  ]
+
+  cflags_cc = [ "-DHILOG_ENABLE" ]
+
+  deps = [
+    "//base/security/permission/frameworks/permission_standard/permissioncommunicationadapter:permission_standard_communication_adapter_cxx",
+    "//base/security/permission/frameworks/permission_standard/permissioninfrastructure:permission_standard_infrastructure_cxx",
+    "//third_party/sqlite:sqlite",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+}

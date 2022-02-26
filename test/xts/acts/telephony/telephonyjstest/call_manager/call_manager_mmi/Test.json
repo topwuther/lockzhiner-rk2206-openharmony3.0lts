@@ -1,0 +1,19 @@
+{
+    "description": "Configuration for callmanager Tests",
+    "driver": {
+        "type": "JSUnitTest",
+        "test-timeout": "1200000",
+        "package": "com.ohos.callmanager",
+        "shell-timeout": "1200000",
+        "native-test-timeout":"1200000"
+    },
+    "kits": [
+        {
+            "test-file-name": [
+                "$module.hap"
+            ],
+            "type": "AppInstallKit",
+            "cleanup-apps": true
+        }
+    ]
+}

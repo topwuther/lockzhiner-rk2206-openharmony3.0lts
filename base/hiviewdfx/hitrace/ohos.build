@@ -1,0 +1,27 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "hitrace_native": {
+      "module_list": [
+        "//base/hiviewdfx/hitrace/interfaces/native/innerkits:libhitrace"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/hiviewdfx/hitrace/interfaces/native/innerkits:libhitrace",
+          "header": {
+            "header_base": "//base/hiviewdfx/hitrace/interfaces/native/innerkits/include/",
+            "header_files": [
+              "hitrace/trace.h",
+              "hitrace/hitracec.h",
+              "hitrace/hitraceid.h",
+              "hitrace/hitrace.h"
+            ]
+          }
+        }
+      ],
+      "test_list": [
+        "//base/hiviewdfx/hitrace/frameworks/native/test:unittest"
+      ]
+    }
+  }
+}

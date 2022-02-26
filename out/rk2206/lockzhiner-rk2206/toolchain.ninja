@@ -1,0 +1,325 @@
+rule cxx
+  command = arm-none-eabi-g++ ${defines} ${include_dirs} ${cflags_cc} -c ${in} -o ${out}
+  description = gcc CXX ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule alink
+  command = arm-none-eabi-ar cr ${out} @"${out}.rsp"
+  description = AR ${out}
+  rspfile = ${out}.rsp
+  rspfile_content = ${in}
+rule link
+  command = arm-none-eabi-gcc ${ldflags}  -Wl,--start-group ${in} ${libs} -Wl,--end-group -o ${output_dir}/unstripped/bin/${target_output_name}${output_extension}  && arm-none-eabi-strip --strip-unneeded "${output_dir}/unstripped/bin/${target_output_name}${output_extension}" -o "${output_dir}/bin/${target_output_name}${output_extension}"
+  description = LINK ${output_dir}/bin/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/bin/${target_output_name}${output_extension}.rsp
+  rspfile_content = ${in}
+rule solink
+  command = arm-none-eabi-gcc -shared ${ldflags}  -Wl,--start-group ${in} ${libs} -Wl,--end-group -o ${output_dir}/unstripped/usr/lib/${target_output_name}${output_extension} && arm-none-eabi-strip --strip-unneeded "${output_dir}/unstripped/usr/lib/${target_output_name}${output_extension}" -o "${output_dir}/${target_output_name}${output_extension}"
+  description = SOLINK ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = ${in}
+rule stamp
+  command = /usr/bin/touch ${out}
+  description = STAMP ${out}
+rule asm
+  command = arm-none-eabi-gcc ${defines} ${include_dirs} ${asmflags} ${in} -c -o ${out}
+  description = gcc cross compiler ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule cc
+  command = arm-none-eabi-gcc ${defines} ${include_dirs} ${cflags} ${cflags_c} -c ${in} -o ${out}
+  description = gcc cross compiler ${out}
+rule copy
+  command = cp -afd ${in} ${out}
+  description = COPY ${in} ${out}
+
+build obj/applications/sample/wifi-iot/app/app.stamp: stamp obj/applications/sample/wifi-iot/app/startup/startup.stamp
+subninja obj/applications/sample/wifi-iot/app/startup/startup.ninja
+subninja obj/base/hiviewdfx/blackbox/blackbox.ninja
+subninja obj/base/hiviewdfx/hidumper_lite/mini/hidumper_mini.ninja
+subninja obj/base/hiviewdfx/hievent_lite/hievent_lite.ninja
+subninja obj/base/hiviewdfx/hilog_lite/frameworks/mini/hilog_lite.ninja
+build obj/base/hiviewdfx/hilog_lite/frameworks/mini/hilog_lite_ndk.stamp: stamp ./libs/libhilog_lite.a
+subninja obj/base/hiviewdfx/hiview_lite/hiview_lite.ninja
+build obj/base/iot_hardware/peripheral/iothardware.stamp: stamp ./libs/libhal_iothardware.a
+build obj/base/iot_hardware/peripheral/iothardware_ndk.stamp: stamp ./libs/libhal_iothardware.a
+build obj/base/security/deviceauth/frameworks/deviceauth_lite/hichainsdk.stamp: stamp ./libs/libhichainsdk.a
+subninja obj/base/security/deviceauth/frameworks/deviceauth_lite/source/hichainsdk.ninja
+build obj/base/security/huks/frameworks/huks_lite/huks_sdk.stamp: stamp ./libs/libhuks_3.0_sdk.a
+subninja obj/base/security/huks/interfaces/innerkits/huks_lite/huks_3.0_sdk.ninja
+subninja obj/base/startup/bootstrap_lite/services/source/bootstrap.ninja
+build obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp: stamp ./libs/libsysparam.a
+build obj/base/startup/syspara_lite/frameworks/parameter/parameter_notes.stamp: stamp ./libs/libsysparam.a
+subninja obj/base/startup/syspara_lite/frameworks/parameter/src/sysparam.ninja
+build obj/base/startup/syspara_lite/frameworks/token/token.stamp: stamp ./libs/libtoken_static.a
+build obj/base/startup/syspara_lite/frameworks/token/token_notes.stamp: stamp
+subninja obj/base/startup/syspara_lite/frameworks/token/token_static.ninja
+subninja obj/base/update/ota_lite/frameworks/source/hota.ninja
+build obj/build/lite/mark_as_prebuilts.stamp: stamp
+build obj/build/lite/ndk.stamp: stamp
+build obj/build/lite/ohos.stamp: stamp obj/applications/sample/wifi-iot/app/app.stamp obj/base/iot_hardware/peripheral/iothardware.stamp ./libs/libhilog_lite.a ./libs/libhievent_lite.a ./libs/libblackbox.a ./libs/libhidumper_mini.a obj/foundation/distributedschedule/samgr_lite/samgr.stamp obj/base/security/deviceauth/frameworks/deviceauth_lite/hichainsdk.stamp obj/base/security/huks/frameworks/huks_lite/huks_sdk.stamp ./libs/libbootstrap.a obj/base/startup/syspara_lite/frameworks/parameter/parameter.stamp obj/base/startup/syspara_lite/frameworks/token/token.stamp obj/foundation/communication/wifi_lite/wifi.stamp obj/foundation/communication/softbus_lite/softbus.stamp ./libs/libwifiaware.a obj/domains/iot/link/link.stamp obj/utils/native/lite/file/file.stamp obj/utils/native/lite/kv_store/kv_store.stamp obj/utils/native/lite/os_dump/utils_os_dump.stamp obj/device/rockchip/rk2206/sdk_liteos/wifiiot_sdk.stamp obj/test/xts/acts/build_lite/acts.stamp obj/test/xts/tools/lite/tools.stamp obj/device/rockchip/rk2206/rk2206.stamp
+build obj/build/lite/prebuilts.stamp: stamp obj/prebuilts/lite/sysroot/sysroot.stamp
+build obj/build/lite/product.stamp: stamp obj/vendor/lockzhiner/rk2206/rk2206.stamp
+build obj/build/lite/config/component/cJSON/cjson_ndk.stamp: stamp obj/build/lite/config/component/cJSON/cjson_shared.stamp
+build obj/build/lite/config/component/cJSON/cjson_shared.stamp: stamp
+subninja obj/build/lite/config/component/cJSON/cjson_static.ninja
+rule __device_rockchip_hardware_hardware___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../build/lite/run_shell_cmd.py cp -f /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/device/rockchip/hardware/libhardware.a /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/
+  description = ACTION //device/rockchip/hardware:hardware(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build libs/: __device_rockchip_hardware_hardware___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../build/lite/run_shell_cmd.py ../../../device/rockchip/hardware/libhardware.a obj/build/lite/prebuilts.stamp
+
+build obj/device/rockchip/hardware/hardware.stamp: stamp libs/
+build obj/device/rockchip/rk2206/rk2206.stamp: stamp
+subninja obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiaware/hal_wifiaware.ninja
+subninja obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice/wifiservice.ninja
+build obj/device/rockchip/rk2206/adapter/hals/communication/wifi_lite/wifiservice/wifiservice_ndk.stamp: stamp ./libs/libwifiservice.a
+subninja obj/device/rockchip/rk2206/adapter/hals/iot_hardware/wifiiot_lite/hal_iothardware.ninja
+subninja obj/device/rockchip/rk2206/adapter/hals/update/hal_update_static.ninja
+subninja obj/device/rockchip/rk2206/adapter/hals/utils/file/hal_file_static.ninja
+rule __device_rockchip_rk2206_sdk_liteos_liteos___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../build/lite/build_ext_components.py --path=../../../device/rockchip/rk2206/sdk_liteos --command=sh\$ ./build.sh\$ /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206 --target_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/obj/device/rockchip/rk2206/sdk_liteos/build.log --out_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/error.log
+  description = ACTION //device/rockchip/rk2206/sdk_liteos:liteos(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build obj/device/rockchip/rk2206/sdk_liteos/liteos_build_ext_components.txt: __device_rockchip_rk2206_sdk_liteos_liteos___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../build/lite/build_ext_components.py obj/build/lite/ohos.stamp obj/build/lite/prebuilts.stamp obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp
+
+build obj/device/rockchip/rk2206/sdk_liteos/liteos.stamp: stamp obj/device/rockchip/rk2206/sdk_liteos/liteos_build_ext_components.txt
+build obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp: stamp ./libs/libboard.a obj/device/rockchip/hardware/hardware.stamp ./libs/libhal_update_static.a ./libs/libhota.a ./libs/liblittlefs.a ./libs/libcjson_static.a obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp ./libs/liblwip.a obj/vendor/lockzhiner/rk2206/samples/app.stamp ./libs/libpahomqtt_static.a ./libs/libhdf_config.a obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp ./libs/libsample_driver.a ./libs/libboard.a obj/device/rockchip/hardware/hardware.stamp ./libs/libhal_update_static.a ./libs/libhota.a ./libs/liblittlefs.a ./libs/libcjson_static.a obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp ./libs/liblwip.a obj/vendor/lockzhiner/rk2206/samples/app.stamp ./libs/libpahomqtt_static.a ./libs/libhdf_config.a obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp ./libs/libsample_driver.a
+build obj/device/rockchip/rk2206/sdk_liteos/wifiiot_sdk.stamp: stamp obj/device/rockchip/rk2206/sdk_liteos/sdk.stamp
+subninja obj/device/rockchip/rk2206/sdk_liteos/board/board.ninja
+rule __device_rockchip_rk2206_third_party_lwip_rk2206_lwip___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../build/lite/build_ext_components.py --path=../../../device/rockchip/rk2206/third_party/lwip --command=sh\$ ./build.sh\$ /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/kernel/liteos_m/components/net/lwip-2.1/porting/include/lwip/ --target_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/obj/device/rockchip/rk2206/third_party/lwip/build.log --out_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/error.log
+  description = ACTION //device/rockchip/rk2206/third_party/lwip:rk2206_lwip(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip_build_ext_components.txt: __device_rockchip_rk2206_third_party_lwip_rk2206_lwip___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../build/lite/build_ext_components.py obj/build/lite/prebuilts.stamp
+
+build obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip.stamp: stamp obj/device/rockchip/rk2206/third_party/lwip/rk2206_lwip_build_ext_components.txt
+build obj/domains/iot/link/iot.stamp: stamp obj/domains/iot/link/link.stamp
+build obj/domains/iot/link/link.stamp: stamp
+subninja obj/drivers/adapter/khdf/liteos_m/core/hdf_core.ninja
+subninja obj/drivers/adapter/khdf/liteos_m/osal/hdf_osal_lite.ninja
+subninja obj/drivers/adapter/khdf/liteos_m/platform/hdf_platform_lite.ninja
+subninja obj/drivers/adapter/khdf/liteos_m/test/sample_driver/sample_driver.ninja
+build obj/foundation/communication/softbus_lite/discovery_ndk.stamp: stamp ./libs/libdiscovery.a
+build obj/foundation/communication/softbus_lite/softbus.stamp: stamp ./libs/libdiscovery.a ./libs/libauthmanager.a ./libs/libtrans_service.a
+build obj/foundation/communication/softbus_lite/softbus_lite_ndk.stamp: stamp obj/foundation/communication/softbus_lite/discovery_ndk.stamp obj/foundation/communication/softbus_lite/trans_service_ndk.stamp
+build obj/foundation/communication/softbus_lite/trans_service_ndk.stamp: stamp ./libs/libtrans_service.a
+subninja obj/foundation/communication/softbus_lite/authmanager/authmanager.ninja
+subninja obj/foundation/communication/softbus_lite/discovery/discovery.ninja
+subninja obj/foundation/communication/softbus_lite/trans_service/trans_service.ninja
+subninja obj/foundation/communication/wifi_aware/wifiaware.ninja
+build obj/foundation/communication/wifi_lite/wifi.stamp: stamp ./libs/libwifiservice.a
+build obj/foundation/distributedschedule/samgr_lite/config/system_capability.json: copy ../../../foundation/distributedschedule/samgr_lite/config/system_capability.json
+
+build obj/foundation/distributedschedule/samgr_lite/ConfigFiles.stamp: stamp obj/foundation/distributedschedule/samgr_lite/config/system_capability.json
+build obj/foundation/distributedschedule/samgr_lite/samgr.stamp: stamp ./libs/libsamgr.a ./libs/libbroadcast.a
+build obj/foundation/distributedschedule/samgr_lite/samgr_lite_ndk.stamp: stamp ./libs/libbroadcast.a ./libs/libsamgr.a
+subninja obj/foundation/distributedschedule/samgr_lite/communication/broadcast/broadcast.ninja
+subninja obj/foundation/distributedschedule/samgr_lite/samgr/samgr.ninja
+subninja obj/foundation/distributedschedule/samgr_lite/samgr/adapter/samgr_adapter.ninja
+subninja obj/foundation/distributedschedule/samgr_lite/samgr/source/samgr_source.ninja
+build obj/kernel/liteos_m/kernel.stamp: stamp ./libs/libkernel.a ./libs/libutils.a ./libs/libsec_static.a ./libs/libcppsupport.a ./libs/libcpup.a ./libs/libexchook.a ./libs/libbacktrace.a obj/kernel/liteos_m/components/fs/fs.stamp ./libs/libpm.a obj/kernel/liteos_m/kal/kal.stamp ./libs/libshell.a ./libs/liblwip.a
+subninja obj/kernel/liteos_m/components/backtrace/backtrace.ninja
+subninja obj/kernel/liteos_m/components/cppsupport/cppsupport.ninja
+subninja obj/kernel/liteos_m/components/cpup/cpup.ninja
+subninja obj/kernel/liteos_m/components/exchook/exchook.ninja
+build obj/kernel/liteos_m/components/fs/fs.stamp: stamp ./libs/libfs_operations.a ./libs/libfatfs.a ./libs/liblittlefs.a
+subninja obj/kernel/liteos_m/components/fs/fs_operations.ninja
+subninja obj/kernel/liteos_m/components/fs/fatfs/fatfs.ninja
+subninja obj/kernel/liteos_m/components/fs/littlefs/littlefs.ninja
+subninja obj/kernel/liteos_m/components/net/lwip-2.1/lwip.ninja
+subninja obj/kernel/liteos_m/components/power/pm.ninja
+subninja obj/kernel/liteos_m/components/shell/shell.ninja
+build obj/kernel/liteos_m/kal/kal.stamp: stamp ./libs/libcmsis.a ./libs/libposix.a
+subninja obj/kernel/liteos_m/kal/cmsis/cmsis.ninja
+subninja obj/kernel/liteos_m/kal/posix/posix.ninja
+subninja obj/kernel/liteos_m/kernel/kernel.ninja
+subninja obj/kernel/liteos_m/kernel/arch/arm/cortex-m4/gcc/arch.ninja
+subninja obj/kernel/liteos_m/utils/utils.ninja
+build obj/prebuilts/lite/sysroot/sysroot.stamp: stamp
+rule __test_xts_acts_build_lite_acts___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py archive_suite --suite_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts --build_enabled true
+  description = ACTION //test/xts/acts/build_lite:acts(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts.zip: __test_xts_acts_build_lite_acts___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp obj/test/xts/acts/build_lite/acts_component.stamp obj/test/xts/acts/build_lite/acts_generate_module_data.stamp obj/test/xts/acts/build_lite/acts_xdevice.stamp
+
+build obj/test/xts/acts/build_lite/acts.stamp: stamp suites/acts.zip
+build obj/test/xts/acts/build_lite/acts_component.stamp: stamp obj/test/xts/acts/communication_lite/lwip_hal/ActsLwipTest.stamp obj/test/xts/acts/communication_lite/wifiservice_hal/ActsWifiServiceTest.stamp obj/test/xts/acts/utils_lite/file_hal/ActsUtilsFileTest.stamp obj/test/xts/acts/startup_lite/syspara_hal/ActsParameterTest.stamp obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/ActsWifiIotTest.stamp obj/test/xts/acts/utils_lite/kv_store_hal/ActsKvStoreTest.stamp obj/test/xts/acts/security_lite/securitytest.stamp obj/test/xts/acts/hiviewdfx_lite/hilog_hal/ActsDfxFuncTest.stamp obj/test/xts/acts/hiviewdfx_lite/hievent_hal/ActsHieventLiteTest.stamp obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/ActsSamgrTest.stamp obj/test/xts/acts/update_lite/dupdate_hal/ActsUpdaterFuncTest.stamp obj/test/xts/acts/startup_lite/bootstrap_hal/ActsBootstrapTest.stamp
+rule __test_xts_acts_build_lite_acts_generate_module_data___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/utils.py --method_name record_test_component_info --arguments out_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases\#version=OpenHarmony-ACTS-1.0.1
+  description = ACTION //test/xts/acts/build_lite:acts_generate_module_data(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/module_info.json: __test_xts_acts_build_lite_acts_generate_module_data___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/utils.py obj/build/lite/prebuilts.stamp obj/test/xts/acts/build_lite/acts_component.stamp obj/test/xts/acts/build_lite/acts_xdevice.stamp
+
+build obj/test/xts/acts/build_lite/acts_generate_module_data.stamp: stamp suites/acts/testcases/module_info.json
+rule __test_xts_acts_build_lite_acts_xdevice___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_xdevice --project_dir /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xdevice --output_dirs /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/tools,
+  description = ACTION //test/xts/acts/build_lite:acts_xdevice(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/tools: __test_xts_acts_build_lite_acts_xdevice___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp
+
+build obj/test/xts/acts/build_lite/acts_xdevice.stamp: stamp suites/acts/tools
+rule __test_xts_acts_communication_lite_lwip_hal_ActsLwipTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsLwipTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsLwipTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/communication_lite/lwip_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/communication_lite/lwip_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/communication, --suite_filename libActsLwipTest.a --subsystem_name communication --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/communication_lite/lwip_hal:ActsLwipTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/communication/libActsLwipTest.a: __test_xts_acts_communication_lite_lwip_hal_ActsLwipTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsLwipTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/communication_lite/lwip_hal/ActsLwipTest.stamp: stamp suites/acts/testcases/communication/libActsLwipTest.a
+subninja obj/test/xts/acts/communication_lite/lwip_hal/module_ActsLwipTest.ninja
+rule __test_xts_acts_communication_lite_wifiservice_hal_ActsWifiServiceTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsWifiServiceTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsWifiServiceTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/communication_lite/wifiservice_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/communication_lite/wifiservice_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/communication, --suite_filename libActsWifiServiceTest.a --subsystem_name communication --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/communication_lite/wifiservice_hal:ActsWifiServiceTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/communication/libActsWifiServiceTest.a: __test_xts_acts_communication_lite_wifiservice_hal_ActsWifiServiceTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsWifiServiceTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/communication_lite/wifiservice_hal/ActsWifiServiceTest.stamp: stamp suites/acts/testcases/communication/libActsWifiServiceTest.a
+subninja obj/test/xts/acts/communication_lite/wifiservice_hal/module_ActsWifiServiceTest.ninja
+rule __test_xts_acts_distributed_schedule_lite_system_ability_manager_hal_ActsSamgrTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsSamgrTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsSamgrTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/distributed_schedule, --suite_filename libActsSamgrTest.a --subsystem_name distributed_schedule --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/distributed_schedule_lite/system_ability_manager_hal:ActsSamgrTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/distributed_schedule/libActsSamgrTest.a: __test_xts_acts_distributed_schedule_lite_system_ability_manager_hal_ActsSamgrTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsSamgrTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/ActsSamgrTest.stamp: stamp suites/acts/testcases/distributed_schedule/libActsSamgrTest.a
+subninja obj/test/xts/acts/distributed_schedule_lite/system_ability_manager_hal/module_ActsSamgrTest.ninja
+rule __test_xts_acts_hiviewdfx_lite_hievent_hal_ActsHieventLiteTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsHieventLiteTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsHieventLiteTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/hiviewdfx_lite/hievent_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/hiviewdfx_lite/hievent_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/hiviewdfx, --suite_filename libActsHieventLiteTest.a --subsystem_name hiviewdfx --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/hiviewdfx_lite/hievent_hal:ActsHieventLiteTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/hiviewdfx/libActsHieventLiteTest.a: __test_xts_acts_hiviewdfx_lite_hievent_hal_ActsHieventLiteTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsHieventLiteTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/hiviewdfx_lite/hievent_hal/ActsHieventLiteTest.stamp: stamp suites/acts/testcases/hiviewdfx/libActsHieventLiteTest.a
+subninja obj/test/xts/acts/hiviewdfx_lite/hievent_hal/module_ActsHieventLiteTest.ninja
+rule __test_xts_acts_hiviewdfx_lite_hilog_hal_ActsDfxFuncTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsDfxFuncTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsDfxFuncTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/hiviewdfx_lite/hilog_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/hiviewdfx_lite/hilog_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/hiviewdfx, --suite_filename libActsDfxFuncTest.a --subsystem_name hiviewdfx --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/hiviewdfx_lite/hilog_hal:ActsDfxFuncTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/hiviewdfx/libActsDfxFuncTest.a: __test_xts_acts_hiviewdfx_lite_hilog_hal_ActsDfxFuncTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsDfxFuncTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/hiviewdfx_lite/hilog_hal/ActsDfxFuncTest.stamp: stamp suites/acts/testcases/hiviewdfx/libActsDfxFuncTest.a
+subninja obj/test/xts/acts/hiviewdfx_lite/hilog_hal/module_ActsDfxFuncTest.ninja
+rule __test_xts_acts_iot_hardware_lite_iot_controller_hal_ActsWifiIotTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsWifiIotTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsWifiIotTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/iot_hardware_lite/iot_controller_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/iot_hardware_lite/iot_controller_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/iot_hardware, --suite_filename libActsWifiIotTest.a --subsystem_name iot_hardware --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/iot_hardware_lite/iot_controller_hal:ActsWifiIotTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/iot_hardware/libActsWifiIotTest.a: __test_xts_acts_iot_hardware_lite_iot_controller_hal_ActsWifiIotTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsWifiIotTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/ActsWifiIotTest.stamp: stamp suites/acts/testcases/iot_hardware/libActsWifiIotTest.a
+subninja obj/test/xts/acts/iot_hardware_lite/iot_controller_hal/module_ActsWifiIotTest.ninja
+build obj/test/xts/acts/security_lite/securitytest.stamp: stamp obj/test/xts/acts/security_lite/huks/liteos_m_adapter/ActsHuksHalFunctionTest.stamp
+subninja obj/test/xts/acts/security_lite/huks/common/huks_test_common.ninja
+rule __test_xts_acts_security_lite_huks_liteos_m_adapter_ActsHuksHalFunctionTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsHuksHalFunctionTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsHuksHalFunctionTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/security_lite/huks/liteos_m_adapter --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/security_lite/huks/liteos_m_adapter/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/security, --suite_filename libActsHuksHalFunctionTest.a --subsystem_name security --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/security_lite/huks/liteos_m_adapter:ActsHuksHalFunctionTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/security/libActsHuksHalFunctionTest.a: __test_xts_acts_security_lite_huks_liteos_m_adapter_ActsHuksHalFunctionTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libhuks_test_common.a ./libs/libmodule_ActsHuksHalFunctionTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/security_lite/huks/liteos_m_adapter/ActsHuksHalFunctionTest.stamp: stamp suites/acts/testcases/security/libActsHuksHalFunctionTest.a
+subninja obj/test/xts/acts/security_lite/huks/liteos_m_adapter/module_ActsHuksHalFunctionTest.ninja
+rule __test_xts_acts_startup_lite_bootstrap_hal_ActsBootstrapTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsBootstrapTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsBootstrapTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/startup_lite/bootstrap_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/startup_lite/bootstrap_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/startup, --suite_filename libActsBootstrapTest.a --subsystem_name startup --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/startup_lite/bootstrap_hal:ActsBootstrapTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/startup/libActsBootstrapTest.a: __test_xts_acts_startup_lite_bootstrap_hal_ActsBootstrapTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsBootstrapTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/startup_lite/bootstrap_hal/ActsBootstrapTest.stamp: stamp suites/acts/testcases/startup/libActsBootstrapTest.a
+subninja obj/test/xts/acts/startup_lite/bootstrap_hal/module_ActsBootstrapTest.ninja
+rule __test_xts_acts_startup_lite_syspara_hal_ActsParameterTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsParameterTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsParameterTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/startup_lite/syspara_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/startup_lite/syspara_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/startup, --suite_filename libActsParameterTest.a --subsystem_name startup --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/startup_lite/syspara_hal:ActsParameterTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/startup/libActsParameterTest.a: __test_xts_acts_startup_lite_syspara_hal_ActsParameterTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsParameterTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/startup_lite/syspara_hal/ActsParameterTest.stamp: stamp suites/acts/testcases/startup/libActsParameterTest.a
+subninja obj/test/xts/acts/startup_lite/syspara_hal/module_ActsParameterTest.ninja
+rule __test_xts_acts_update_lite_dupdate_hal_ActsUpdaterFuncTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsUpdaterFuncTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsUpdaterFuncTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/update_lite/dupdate_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/update_lite/dupdate_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/update, --suite_filename libActsUpdaterFuncTest.a --subsystem_name update --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/update_lite/dupdate_hal:ActsUpdaterFuncTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/update/libActsUpdaterFuncTest.a: __test_xts_acts_update_lite_dupdate_hal_ActsUpdaterFuncTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsUpdaterFuncTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/update_lite/dupdate_hal/ActsUpdaterFuncTest.stamp: stamp suites/acts/testcases/update/libActsUpdaterFuncTest.a
+subninja obj/test/xts/acts/update_lite/dupdate_hal/module_ActsUpdaterFuncTest.ninja
+rule __test_xts_acts_utils_lite_file_hal_ActsUtilsFileTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsUtilsFileTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsUtilsFileTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/utils_lite/file_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/utils_lite/file_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/utils, --suite_filename libActsUtilsFileTest.a --subsystem_name utils --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/utils_lite/file_hal:ActsUtilsFileTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/utils/libActsUtilsFileTest.a: __test_xts_acts_utils_lite_file_hal_ActsUtilsFileTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsUtilsFileTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/utils_lite/file_hal/ActsUtilsFileTest.stamp: stamp suites/acts/testcases/utils/libActsUtilsFileTest.a
+subninja obj/test/xts/acts/utils_lite/file_hal/module_ActsUtilsFileTest.ninja
+rule __test_xts_acts_utils_lite_kv_store_hal_ActsKvStoreTest___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../test/xts/tools/lite/build/suite.py build_module --build_target_name ActsKvStoreTest --target_file /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs/libmodule_ActsKvStoreTest.a --project_path /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/utils_lite/kv_store_hal --test_xml /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/test/xts/acts/utils_lite/kv_store_hal/Test.json --project_type hctest --suite_out_paths /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/suites/acts/testcases/utils, --suite_filename libActsKvStoreTest.a --subsystem_name utils --hap_name , --hap_sign ,
+  description = ACTION //test/xts/acts/utils_lite/kv_store_hal:ActsKvStoreTest(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build suites/acts/testcases/utils/libActsKvStoreTest.a: __test_xts_acts_utils_lite_kv_store_hal_ActsKvStoreTest___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../test/xts/tools/lite/build/suite.py obj/build/lite/prebuilts.stamp ./libs/libmodule_ActsKvStoreTest.a ./libs/libhctest.a
+
+build obj/test/xts/acts/utils_lite/kv_store_hal/ActsKvStoreTest.stamp: stamp suites/acts/testcases/utils/libActsKvStoreTest.a
+subninja obj/test/xts/acts/utils_lite/kv_store_hal/module_ActsKvStoreTest.ninja
+build obj/test/xts/tools/lite/tools.stamp: stamp ./libs/libhctest.a
+subninja obj/test/xts/tools/lite/hctest/hctest.ninja
+build obj/third_party/bounds_checking_function/libsec_ndk.stamp: stamp obj/third_party/bounds_checking_function/sec_shared.stamp
+build obj/third_party/bounds_checking_function/libsec_shared.stamp: stamp
+subninja obj/third_party/bounds_checking_function/libsec_static.ninja
+build obj/third_party/bounds_checking_function/sec_shared.stamp: stamp obj/third_party/bounds_checking_function/libsec_shared.stamp
+build obj/third_party/mbedtls/mbedtls.stamp: stamp ./libs/libmbedtls.a
+build obj/third_party/mbedtls/mbedtls_ndk.stamp: stamp obj/third_party/mbedtls/mbedtls.stamp
+build obj/third_party/mbedtls/mbedtls_shared.stamp: stamp
+subninja obj/third_party/mbedtls/mbedtls_static.ninja
+build obj/third_party/musl/porting/liteos_m/kernel/kernel.stamp: stamp ./libs/libmusl-c.a ./libs/libmusl-m.a
+subninja obj/third_party/musl/porting/liteos_m/kernel/musl-c.ninja
+subninja obj/third_party/musl/porting/liteos_m/kernel/musl-m.ninja
+subninja obj/third_party/paho_mqtt/pahomqtt_static.ninja
+build obj/utils/native/lite/file/file.stamp: stamp ./libs/libnative_file.a
+subninja obj/utils/native/lite/file/native_file.ninja
+build obj/utils/native/lite/kv_store/kv_store.stamp: stamp ./libs/libutils_kv_store.a
+subninja obj/utils/native/lite/kv_store/src/utils_kv_store.ninja
+subninja obj/utils/native/lite/os_dump/dump_static.ninja
+build obj/utils/native/lite/os_dump/utils_os_dump.stamp: stamp ./libs/libdump_static.a
+build obj/vendor/lockzhiner/rk2206/rk2206.stamp: stamp
+subninja obj/vendor/lockzhiner/rk2206/hals/utils/sys_param/hal_sysparam.ninja
+subninja obj/vendor/lockzhiner/rk2206/hals/utils/token/hal_token_static.ninja
+rule __vendor_lockzhiner_rk2206_hdf_config_hc_gen___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../drivers/framework/tools/hc-gen/build_hcs.py -i -o /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/gen/vendor/lockzhiner/rk2206/hdf_config/${source_name_part} ${in}
+  description = ACTION //vendor/lockzhiner/rk2206/hdf_config:hc_gen(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build gen/vendor/lockzhiner/rk2206/hdf_config/hdf_hex.c: __vendor_lockzhiner_rk2206_hdf_config_hc_gen___build_lite_toolchain_arm-none-eabi-gcc__rule ../../../vendor/lockzhiner/rk2206/hdf_config/hdf.hcs | ../../../drivers/framework/tools/hc-gen/build_hcs.py obj/build/lite/prebuilts.stamp
+  source_name_part = hdf
+
+build obj/vendor/lockzhiner/rk2206/hdf_config/hc_gen.stamp: stamp gen/vendor/lockzhiner/rk2206/hdf_config/hdf_hex.c
+subninja obj/vendor/lockzhiner/rk2206/hdf_config/hdf_config.ninja
+build obj/vendor/lockzhiner/rk2206/hdf_drivers/hdf_drivers.stamp: stamp obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn.stamp ./libs/libgpio_driver.a ./libs/libi2c_driver.a ./libs/libpwm_driver.a ./libs/libadc_driver.a ./libs/libspi_driver.a
+rule __vendor_lockzhiner_rk2206_hdf_drivers_khdf_platform_gn___build_lite_toolchain_arm-none-eabi-gcc__rule
+  command = /usr/bin/python3 ../../../build/lite/build_ext_components.py --path=../../../vendor/lockzhiner/rk2206/hdf_drivers --command=sh\$ /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206/hdf_drivers/copy.sh\$ /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_BUILD.gn\$ /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/drivers/adapter/khdf/liteos_m/platform/BUILD.gn --target_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/obj/vendor/lockzhiner/rk2206/hdf_drivers/build.log --out_dir=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/error.log
+  description = ACTION //vendor/lockzhiner/rk2206/hdf_drivers:khdf_platform_gn(//build/lite/toolchain:arm-none-eabi-gcc)
+  restat = 1
+
+build obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn_build_ext_components.txt: __vendor_lockzhiner_rk2206_hdf_drivers_khdf_platform_gn___build_lite_toolchain_arm-none-eabi-gcc__rule | ../../../build/lite/build_ext_components.py obj/build/lite/prebuilts.stamp
+
+build obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn.stamp: stamp obj/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_gn_build_ext_components.txt
+subninja obj/vendor/lockzhiner/rk2206/hdf_drivers/adc/adc_driver.ninja
+subninja obj/vendor/lockzhiner/rk2206/hdf_drivers/gpio/gpio_driver.ninja
+subninja obj/vendor/lockzhiner/rk2206/hdf_drivers/i2c/i2c_driver.ninja
+subninja obj/vendor/lockzhiner/rk2206/hdf_drivers/pwm/pwm_driver.ninja
+subninja obj/vendor/lockzhiner/rk2206/hdf_drivers/spi/spi_driver.ninja
+build obj/vendor/lockzhiner/rk2206/samples/app.stamp: stamp

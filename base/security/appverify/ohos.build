@@ -1,0 +1,39 @@
+{
+  "subsystem": "security",
+  "parts": {
+    "appverify": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "module_list": [
+        "//base/security/appverify/interfaces/innerkits/appverify:libhapverify",
+        "//base/security/appverify/interfaces/innerkits/appverify/config:trusted_apps_sources",
+        "//base/security/appverify/interfaces/innerkits/appverify/config:trusted_apps_sources_test",
+        "//base/security/appverify/interfaces/innerkits/appverify/config:trusted_root_ca",
+        "//base/security/appverify/interfaces/innerkits/appverify/config:trusted_root_ca_test"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/security/appverify/interfaces/innerkits/appverify:libhapverify",
+          "header": {
+            "header_files": [
+              "interfaces/hap_verify_result.h",
+              "interfaces/hap_verify.h",
+              "common/hap_byte_buffer.h",
+              "common/export_define.h",
+              "provision/provision_info.h"
+            ],
+            "header_base": "//base/security/appverify/interfaces/innerkits/appverify/include"
+          }
+        }
+      ],
+      "test_list": [
+        "//base/security/appverify:testcase_packages"
+      ],
+      "system_capabilities": [
+        "SystemCapability.Security.AppVerify"
+      ]
+    }
+  }
+}

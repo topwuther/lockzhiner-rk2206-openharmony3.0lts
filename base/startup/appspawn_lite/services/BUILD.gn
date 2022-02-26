@@ -1,0 +1,84 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/lite/config/component/lite_component.gni")
+import("//build/lite/config/subsystem/aafwk/config.gni")
+
+lite_component("appspawn_lite") {
+  features = [ ":appspawn" ]
+}
+
+# feature: appspawn
+executable("appspawn") {
+  sources = [
+    "src/appspawn_adapter.c",
+    "src/appspawn_message.c",
+    "src/appspawn_process.c",
+    "src/appspawn_service.c",
+    "src/main.c",
+  ]
+
+  ldflags = [
+    "-lstdc++",
+    "-ldl",
+  ]
+
+  cflags = [
+    "-Wall",
+    "-Wno-format",
+    "-Wno-format-extra-args",
+  ]
+
+  include_dirs = [
+    "include",
+    "//utils/native/lite/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/registry",
+    "${aafwk_lite_path}/interfaces/innerkits/abilitymgr_lite",
+    "//third_party/bounds_checking_function/include/",
+    "//third_party/cJSON",
+  ]
+
+  deps = [
+    "${aafwk_lite_path}/frameworks/ability_lite:aafwk_abilitykit_lite",
+    "//build/lite/config/component/cJSON:cjson_shared",
+    "//foundation/communication/ipc_lite:liteipc_adapter",
+    "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+    "//third_party/bounds_checking_function:libsec_shared",
+    "//utils/native/lite/kv_store:kv_store",
+  ]
+
+  if (enable_ohos_appexecfwk_feature_ability == true) {
+    deps += [
+      "//foundation/ace/ace_engine_lite/frameworks:ace_lite",
+      "//foundation/graphic/surface:lite_surface",
+      "//foundation/graphic/ui:lite_ui",
+      "//foundation/graphic/utils:lite_graphic_utils",
+    ]
+  }
+
+  if (ohos_kernel_type == "liteos_a") {
+    deps += [ "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared" ]
+  }
+
+  if (ohos_kernel_type == "linux") {
+    include_dirs += []
+  }
+}
+
+if (ohos_build_type == "debug") {
+  group("unittest") {
+    deps = [
+      "//base/startup/appspawn_lite/services/test/unittest/common:unittest",
+    ]
+  }
+}

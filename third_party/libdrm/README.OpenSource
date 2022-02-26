@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "libdrm",
+        "License": "MIT license",
+        "License File": "meson.build",
+        "Version Number": "2.4.102",
+        "Owner": "lizheng2@huawei.com",
+        "Upstream URL": "https://dri.freedesktop.org/libdrm/libdrm-2.4.102.tar.xz",
+        "Description": "This is libdrm, a userspace library for accessing the DRM, direct rendering manager, on Linux, BSD and other operating systems that support the ioctl interface."
+    }
+]

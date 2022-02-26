@@ -1,0 +1,21 @@
+{
+  "string": [
+    {
+      "name": "control_library",
+      "value": "control_library"
+    },{
+      "name": "flight_mode",
+      "value": "Flight Mode"
+    },
+    {
+      "name": "brightness_text",
+      "value": "Brightness:"
+    },{
+      "name": "control_center",
+      "value": "Control Center"
+    },{
+      "name": "volume_control",
+      "value": "Volume:"
+    }
+  ]
+}

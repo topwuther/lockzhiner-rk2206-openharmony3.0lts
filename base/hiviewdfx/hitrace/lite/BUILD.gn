@@ -1,0 +1,43 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.                                                                                                             
+# Licensed under the Apache License, Version 2.0 (the "License");                                                                                        
+# you may not use this file except in compliance with the License.          
+# You may obtain a copy of the License at                                                                                                                
+#                                                                                                                                                        
+#     http://www.apache.org/licenses/LICENSE-2.0                                                                                                         
+#                                                                           
+# Unless required by applicable law or agreed to in writing, software                                                                                    
+# distributed under the License is distributed on an "AS IS" BASIS,                                                                                      
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+# See the License for the specific language governing permissions and                                                                                    
+# limitations under the License.                                                                                                                         
+                                                                            
+import("//build/lite/config/component/lite_component.gni")                  
+import("//build/lite/ndk/ndk.gni")                                          
+                                                                            
+hitrace_sources = [                                                         
+    "//base/hiviewdfx/hitrace/frameworks/native/hitrace.cpp",                                                                                            
+    "//base/hiviewdfx/hitrace/frameworks/native/hitracec.c",                
+    "//base/hiviewdfx/hitrace/frameworks/native/hitraceid.cpp"              
+]                                                                           
+                                                                            
+config("hitrace_config") {                                                  
+    include_dirs = [                                                        
+        "//base/hiviewdfx/hitrace/interfaces/native/innerkits",                                                                                          
+        "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",          
+        "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",    
+        "//base/hiviewdfx/hitrace/interfaces/native/innerkits/include",                                                                                  
+        "//third_party/bounds_checking_function/include",                   
+    ]                                                                       
+}                                                                           
+                                                                            
+lite_library("hitrace") {                                                   
+    target_type = "shared_library"                                                                                                                       
+    sources = hitrace_sources                                               
+    public_configs = [":hitrace_config"]                                                                                                                 
+    public_deps = [
+        "//third_party/bounds_checking_function:libsec_shared",
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared"
+    ]
+    cflags = [ "-Wall" ]
+}
+

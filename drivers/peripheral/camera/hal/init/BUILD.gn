@@ -1,0 +1,109 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+import("//build/ohos.gni")
+import("//drivers/adapter/uhdf2/uhdf.gni")
+import("../camera.gni")
+
+config("ohos_camera_demo_config") {
+  visibility = [ ":*" ]
+}
+
+ohos_executable("ohos_camera_demo") {
+  install_enable = true
+  sources = [
+    "./3516_demo.cpp",
+    "./demo_main.cpp",
+    "./stream_customer.cpp",
+  ]
+
+  include_dirs = [
+    "./include",
+    "$camera_path/../interfaces/include",
+    "$camera_path/../interfaces/include/client",
+    "$camera_path/../interfaces/include/server",
+    "$camera_path/../interfaces/include/callback/host",
+    "$camera_path/../interfaces/include/callback/device",
+    "$camera_path/../interfaces/include/callback/operator",
+    "$camera_path/include",
+    "$camera_path/hdi_impl",
+    "$camera_path/hdi_impl/include",
+    "$camera_path/hdi_impl/include/camera_host",
+    "$camera_path/hdi_impl/include/camera_device",
+    "$camera_path/hdi_impl/include/stream_operator",
+    "$camera_path/hdi_impl/include/offline_stream_operator",
+    "$camera_path/device_manager/include/",
+    "$camera_path/device_manager/include/mpi",
+    "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
+    "$camera_path/utils/event",
+    "//foundation/multimedia/camera_standard/frameworks/innerkitsimpl/metadata/include",
+
+    #producer
+    "//utils/native/base/include",
+    "//foundation/graphic/standard/prebuilts/librarys/display_gralloc/include",
+    "//foundation/communication/ipc/ipc/native/src/core/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "$camera_path/pipeline_core/utils",
+    "$camera_path/pipeline_core/include",
+    "$camera_path/pipeline_core/host_stream/include",
+    "$camera_path/pipeline_core/nodes/include",
+    "$camera_path/pipeline_core/nodes/src/node_base",
+    "$camera_path/pipeline_core/nodes/src/dummy_node",
+    "$camera_path/pipeline_core/pipeline_impl/src/strategy/config",
+    "$camera_path/pipeline_core/pipeline_impl/include",
+    "$camera_path/pipeline_core/pipeline_impl/src",
+    "$camera_path/pipeline_core/pipeline_impl/src/builder",
+    "$camera_path/pipeline_core/pipeline_impl/src/dispatcher",
+    "$camera_path/pipeline_core/pipeline_impl/src/parser",
+    "$camera_path/pipeline_core/pipeline_impl/src/strategy",
+    "$camera_path/pipeline_core/ipp/include",
+
+    # HCS
+    "//drivers/framework/include/config",
+    "//drivers/framework/include/osal",
+    "//drivers/framework/include/utils",
+    "//drivers/adapter/uhdf2/include/config",
+    "//drivers/adapter/uhdf2/osal/include",
+    "//drivers/framework/ability/config/hcs_parser/include",
+    "//system/core/include/cutils",
+    "$hdf_framework_path/ability/sbuf/include",
+    "$hdf_uhdf_path/manager/include",
+    "$hdf_uhdf_path/include/hdi",
+    "$hdf_uhdf_path/devhost/include",
+    "$hdf_uhdf_path/devmgr/include",
+    "$hdf_uhdf_path/host/include",
+  ]
+
+  deps = [
+    "$camera_path/../interfaces/include/client:libcamera_client",
+    "$camera_path/buffer_manager:camera_buffer_manager",
+    "$camera_path/device_manager:camera_device_manager",
+    "$camera_path/hdi_impl:camera_hdi_impl",
+    "$camera_path/pipeline_core:camera_pipeline_core",
+    "$hdf_uhdf_path/config:libhdf_hcs",
+    "$hdf_uhdf_path/hdi:libhdi",
+    "$hdf_uhdf_path/osal:libhdf_utils",
+    "//drivers/adapter/uhdf2/host:libhdf_host",
+    "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+    "//drivers/peripheral/display/hal:hdi_display_gralloc",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core:ipc_core",
+    "//foundation/graphic/standard:libsurface",
+    "//foundation/multimedia/camera_standard/frameworks/innerkitsimpl/metadata:metadata",
+    "//utils/native/base:utils",
+  ]
+
+  if (is_standard_system) {
+    external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  } else {
+    external_deps = [ "hilog:libhilog" ]
+  }
+
+  external_deps += [
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  public_configs = [ ":ohos_camera_demo_config" ]
+  install_enable = true
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}

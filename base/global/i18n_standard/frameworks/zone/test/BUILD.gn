@@ -1,0 +1,55 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+module_output_path = "i18n_standard/zone_util_test"
+
+ohos_unittest("zone_util_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "//third_party/googletest/googletest/src/gtest-death-test.cc",
+    "//third_party/googletest/googletest/src/gtest-filepath.cc",
+    "//third_party/googletest/googletest/src/gtest-port.cc",
+    "//third_party/googletest/googletest/src/gtest-printers.cc",
+    "//third_party/googletest/googletest/src/gtest-test-part.cc",
+    "//third_party/googletest/googletest/src/gtest-typed-test.cc",
+    "//third_party/googletest/googletest/src/gtest.cc",
+    "//third_party/googletest/googletest/src/gtest_main.cc",
+    "//third_party/googletest/googletest/src/hwext/gtest-ext.cc",
+    "//third_party/googletest/googletest/src/hwext/gtest-filter.cc",
+    "//third_party/googletest/googletest/src/hwext/gtest-tag.cc",
+    "//third_party/googletest/googletest/src/hwext/gtest-utils.cc",
+    "unittest/zone_util_performance_test.cpp",
+    "unittest/zone_util_test.cpp",
+  ]
+  remove_configs = [ "//build/config/compiler:no_rtti" ]
+  cflags_cc = [ "-frtti" ]
+  include_dirs = [
+    "//third_party/googletest/googletest/include",
+    "//third_party/googletest/googletest",
+    "//base/global/i18n_standard/interfaces/native/innerkits/zone/include",
+    "//third_party/icu/icu4c/source/common/unicode",
+    "//third_party/icu/icu4c/source/common",
+    "//third_party/libphonenumber/cpp/src",
+    "//third_party/protobuf/src",
+    "//third_party/protobuf/src/google",
+    "//third_party/protobuf/src/google/protobuf",
+  ]
+  deps = [
+    "//base/global/i18n_standard/frameworks/zone:zone_util",
+    "//third_party/libphonenumber/cpp:phonenumber_standard",
+    "//utils/native/base:utils",
+  ]
+}

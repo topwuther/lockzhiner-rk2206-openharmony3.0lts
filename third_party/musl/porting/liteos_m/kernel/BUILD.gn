@@ -1,0 +1,177 @@
+# Copyright (c) 2013-2019 Huawei Technologies Co., Ltd. All rights reserved.
+# Copyright (c) 2020-2021 Huawei Device Co., Ltd. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this list of
+#    conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice, this list
+#    of conditions and the following disclaimer in the documentation and/or other materials
+#    provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors may be used
+#    to endorse or promote products derived from this software without specific prior written
+#    permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+libc = "musl-c"
+libm = "musl-m"
+
+config("include") {
+  include_dirs = [
+    "include",
+  ]
+}
+
+static_library(libc) {
+  sources = [
+    #"src/errno/strerror.c",
+    "src/internal/shgetc.c",
+    "src/internal/intscan.c",
+    "src/internal/inet_addr.c",
+    "src/internal/inet_aton.c",
+    "src/internal/syscall_ret.c",
+    "src/stdlib/atoi.c",
+    #"src/stdlib/strtol.c",
+    "src/stdlib/atol.c",
+    "src/stdlib/atoll.c",
+    "src/stdlib/abs.c",
+    "src/unistd/getuid.c",
+    "src/network/h_errno.c",
+    "src/network/htonl.c",
+    "src/network/htons.c",
+    "src/network/ntohl.c",
+    "src/network/ntohs.c",
+    "src/network/inet_ntoa.c",
+    "src/exit/abort.c",
+    "src/exit/assert.c",
+    "src/ctype/isascii.c",
+    "src/ctype/isxdigit.c",
+    "src/ctype/isdigit.c",
+    "src/ctype/isupper.c",
+    "src/ctype/isspace.c",
+    "src/ctype/isalnum.c",
+    "src/ctype/islower.c",
+    "src/ctype/tolower.c",
+    "src/ctype/toupper.c",
+    "src/ctype/isprint.c",
+    "src/ctype/__ctype_get_mb_cur_max.c",
+    "src/misc/dirname.c",
+    "src/locale/__lctrans.c",
+    "src/locale/langinfo.c",
+    "src/locale/c_locale.c",
+    "src/stdio/fputs.c",
+    "src/stdio/__stdio_close.c",
+    "src/stdio/fflush.c",
+    "src/stdio/__toread.c",
+    "src/stdio/ofl_add.c",
+    "src/stdio/__stdio_seek.c",
+    "src/stdio/__uflow.c",
+    "src/stdio/ftell.c",
+    "src/stdio/__stdio_read.c",
+    "src/stdio/fwrite.c",
+    "src/stdio/fread.c",
+    "src/stdio/fclose.c",
+    "src/stdio/stderr.c",
+    "src/stdio/fileno.c",
+    "src/stdio/perror.c",
+    "src/stdio/__lockfile.c",
+    "src/stdio/fgets.c",
+    "src/stdio/clearerr.c",
+    "src/stdio/__stdio_write.c",
+    "src/stdio/__fmodeflags.c",
+    "src/stdio/__fdopen.c",
+    "src/stdio/ofl.c",
+    "src/stdio/fseek.c",
+    "src/stdio/__stdout_write.c",
+    "src/stdio/rewind.c",
+    "src/stdio/__towrite.c",
+    "src/stdio/feof.c",
+    "src/stdio/fopen.c",
+    "src/stdio/stdout.c",
+    "src/stdio/stdin.c",
+    "src/time/strptime.c",
+    "src/time/strftime.c",
+    "src/time/__year_to_secs.c",
+    "src/time/__month_to_secs.c",
+    "src/time/__tz.c",
+    "src/time/__tm_to_secs.c",
+    "src/prng/random.c",
+    "src/regex/regexec.c",
+    "src/regex/regcomp.c",
+    "src/regex/tre-mem.c",
+    "src/string/strrchr.c",
+    "src/string/memcmp.c",
+    "src/string/strcspn.c",
+    "src/string/strstr.c",
+    "src/string/strchrnul.c",
+    "src/string/strchr.c",
+    "src/string/memcpy.c",
+    "src/string/strncmp.c",
+    "src/string/strcasecmp.c",
+    "src/string/strcmp.c",
+    "src/string/strncasecmp.c",
+    "src/string/memchr.c",
+    "src/string/memrchr.c",
+    "src/string/strdup.c",
+    "src/string/wcslen.c",
+    "src/string/memset.c",
+    "src/string/strlen.c",
+    "src/string/wcschr.c",
+    "src/sched/sched_yield.c",
+    "src/mman/mmap.c",
+    "src/mman/munmap.c",
+  ]
+
+  include_dirs = [
+    "src/include",
+    "src/internal",
+  ]
+
+  include_dirs += [
+    "//kernel/liteos_m/kernel/arch/include",
+    "//kernel/liteos_m/kernel/include",
+    "//kernel/liteos_m/utils",
+  ]
+
+  public_configs = [ ":include" ]
+}
+
+static_library(libm) {
+  sources = [
+    "src/math/pow.c",
+    "src/math/log.c",
+    "src/math/sqrt.c",
+    "src/math/pow_data.c",
+    "src/math/log_data.c",
+    "src/math/exp_data.c",
+    "src/math/round.c",
+  ]
+
+  include_dirs = [
+    "src/include",
+    "src/internal",
+  ]
+
+  public_configs = [ ":include" ]
+}
+
+group("kernel") {
+  public_deps = [
+    ":$libc",
+    ":$libm",
+  ]
+}

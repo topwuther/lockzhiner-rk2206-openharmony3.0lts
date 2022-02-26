@@ -1,0 +1,380 @@
+# 小凌派-RK2206开发板OpenHarmonyOS开发-华为云IoT智慧农业
+
+## 实验内容
+
+本例程演示如何在小凌派-RK2206开发板上使用智慧农业模块，开发基于华为云IoT的智慧农业应用。
+
+![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.png)
+
+## 程序设计
+
+### API分析
+
+#### device_info_init()
+
+```c
+void device_info_init(char *client_id, char *username, char *password);
+```
+
+**描述：**
+
+初始化华为云设备信息。
+
+**参数：**
+
+|名字|描述|
+|:--|:------| 
+| client_id | 客户端ID |
+| username | 用户名 |
+| password | 密码 |
+
+**返回值：**
+
+无
+
+#### oc_mqtt_init()
+
+```c
+int oc_mqtt_init(void);
+```
+
+**描述：**
+
+初始化MQTT客户端。
+
+**参数：**
+
+无
+
+**返回值：**
+
+|返回值|描述|
+|:--|:------| 
+| 0 | 初始化成功 |
+| -1 | 获取设备信息失败 |
+| -2 | 初始化失败 |
+
+#### oc_mqtt_profile_propertyreport()
+
+```c
+int oc_mqtt_profile_propertyreport(char *deviceid, oc_mqtt_profile_service_t *payload);
+```
+
+**描述：**
+
+按照华为云上产品模型中定义的格式，将设备的属性数据上报到华为云。
+
+**参数：**
+
+|名字|描述|
+|:--|:------| 
+| deviceid | 设备ID |
+| payload | 需要上传的消息指针 |
+
+**返回值：**
+
+|返回值|描述|
+|:--|:------| 
+| 0 | 上传成功 |
+| 1 | 上传失败 |
+
+### 主要代码分析
+
+在iot_cloud_ia_example函数中，通过LOS_QueueCreate函数创建消息队列，用于线程间传递信息；通过LOS_TaskCreate创建e53_ia_thread和iot_cloud_ia_thread两个线程。其中，e53_ia_thread线程周期获取智慧农业模块采集的信息；iot_cloud_ia_thread线程处理消息队列里的信息。
+
+```c
+void iot_cloud_ia_example()
+{
+    unsigned int ret = LOS_OK;
+    unsigned int thread_id1;
+    unsigned int thread_id2;
+    TSK_INIT_PARAM_S task1 = {0};
+    TSK_INIT_PARAM_S task2 = {0};
+
+    ret = LOS_QueueCreate("queue", MSG_QUEUE_LENGTH, &m_ia_MsgQueue, 0, BUFFER_LEN);
+    if (ret != LOS_OK)
+    {
+        printf("Falied to create Message Queue ret:0x%x\n", ret);
+        return;
+    }
+
+    task1.pfnTaskEntry = (TSK_ENTRY_FUNC)iot_cloud_ia_thread;
+    task1.uwStackSize = 10240;
+    task1.pcName = "iot_cloud_ia_thread";
+    task1.usTaskPrio = 24;
+    ret = LOS_TaskCreate(&thread_id1, &task1);
+    if (ret != LOS_OK)
+    {
+        printf("Falied to create iot_cloud_ia_thread ret:0x%x\n", ret);
+        return;
+    }
+
+    task2.pfnTaskEntry = (TSK_ENTRY_FUNC)e53_ia_thread;
+    task2.uwStackSize = 2048;
+    task2.pcName = "e53_ia_thread";
+    task2.usTaskPrio = 25;
+    ret = LOS_TaskCreate(&thread_id2, &task2);
+    if (ret != LOS_OK)
+    {
+        printf("Falied to create e53_ia_thread ret:0x%x\n", ret);
+        return;
+    }
+}
+```
+
+e53_ia_thread线程每5s获取一次智慧农业模块采集的信息，包括湿度、亮度和温度；获取到的数据通过消息队列发送到iot_cloud_ia_thread线程处理。
+
+```c
+void e53_ia_thread()
+{
+    ia_msg_t *app_msg = NULL;
+    e53_ia_data_t data;
+
+    e53_ia_init();
+
+    while (1)
+    {
+        e53_ia_read_data(&data);
+        printf("Luminance:%.2f temperature:%.2f humidity:%.2f\n", data.luminance, data.temperature, data.humidity);
+
+        app_msg = malloc(sizeof(ia_msg_t));
+        if (app_msg != NULL)
+        {
+            app_msg->msg_type = en_msg_report;
+            app_msg->report.hum = (int)data.humidity;
+            app_msg->report.lum = (int)data.luminance;
+            app_msg->report.temp = (int)data.temperature;
+            if (LOS_OK != LOS_QueueWrite(m_ia_MsgQueue, (void *)app_msg, sizeof(ia_msg_t), 0))
+            {
+                printf("%s LOS_QueueWrite fail\n", __func__);
+                free(app_msg);
+            }
+        }
+        LOS_Msleep(5000);
+    }
+}
+```
+
+iot_cloud_ia_thread线程主要处理消息队列里的信息。线程启动后，通过SetWifiModeOn连接WIFI；WIFI连接成功后，初始化MQTT协议栈，连接到华为云IoT服务器；成功连接华为云IoT服务器后，线程开始处理消息队列里的消息。消息队列里有两种消息格式，一种是e53_ia_thread线程传输过来的智慧农业模块的数据，线程直接通过MQTT协议传输到华为云IoT平台上，此时平台上可以查看到最新上报的智慧农业模块数据；一种是华为云IoT服务器下发的命令格式，线程根据命令格式做相应的操作。
+
+```c
+void iot_cloud_ia_thread()
+{
+    ia_msg_t *app_msg = NULL;
+    unsigned int addr;
+    int ret;
+
+    SetWifiModeOn();
+
+    device_info_init(CLIENT_ID, USERNAME, PASSWORD);
+    ret = oc_mqtt_init();
+    if (ret != LOS_OK)
+    {
+        printf("oc_mqtt_init fail ret:%d\n", ret);
+    }
+    oc_set_cmd_rsp_cb(ia_cmd_response_callback);
+
+    while (1)
+    {
+        ret = LOS_QueueRead(m_ia_MsgQueue, (void *)&addr, BUFFER_LEN, LOS_WAIT_FOREVER);
+        if (ret == LOS_OK)
+        {
+            app_msg = addr;
+            switch (app_msg->msg_type)
+            {
+                case en_msg_cmd:
+                    ia_deal_cmd_msg(&app_msg->cmd);
+                    break;
+                case en_msg_report:
+                    ia_deal_report_msg(&app_msg->report);
+                    break;
+                default:
+                    break;
+            }
+            free(app_msg);
+            app_msg = NULL;
+        }
+        else
+        {
+            LOS_Msleep(100);
+        }
+    }
+}
+```
+
+## 编译调试
+
+### 登录华为云
+
+设备连接华为云前，需要做一些准备工作，请在华为云平台注册个人用户账号，并且需要实名认证后才可以正常使用。华为云IotDM地址：https://www.huaweicloud.com/product/iotdm.html
+
+![登录华为云](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/huaweicloud_login.png)
+
+### 华为云接入协议
+
+选择侧边栏总览页面，点击平台接入地址。
+
+![华为云协议地址](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/cloud_mqtt.png)
+
+这里显示华为云平台接入的协议与域名信息，选择MQTT协议作为设备接入协议。
+
+接入协议（端口号）：MQTT 1883
+
+域名：a161b173a6.iot-mqtts.cn-north-4.myhuaweicloud.com
+
+![华为云协议地址](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/cloud_address.png)
+
+WIN + R键打开PC命令行CMD，执行如下命令获取接入域名的IP地址。
+
+```c
+ping a161b173a6.iot-mqtts.cn-north-4.myhuaweicloud.com
+```
+
+通过ping命令可以查询到接入域名的IP地址为121.36.42.100
+
+![华为云IP地址](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/ping.png)
+
+IP地址对应例程代码中的OC_SERVER_IP，端口号1883对于例程代码中的OC_SERVER_PORT。
+
+```c
+#define OC_SERVER_IP                    "121.36.42.100"
+#define OC_SERVER_PORT                  1883
+```
+
+### 创建产品
+
+选择侧边栏产品页面，点击右上角创建产品，添加智慧农业产品
+
+![创建产品](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/create_product.png)
+
+单击产品详情页的自定义模型，在弹出页面中添加服务
+
+服务ID：智慧农业(必须与代码一致)
+
+![添加服务](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_server.png)
+
+选择智慧农业服务，点击添加属性，添加温度属性
+
+![添加属性](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_temperature.png)
+
+选择智慧农业服务，点击添加属性，添加湿度属性
+
+![添加属性](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_humidity.png)
+
+选择智慧农业服务，点击添加属性，添加亮度属性
+
+![添加属性](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_luminance.png)
+
+选择智慧农业服务，点击添加属性，添加紫光灯状态属性
+
+![添加属性](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_light_status.png)
+
+选择智慧农业服务，点击添加属性，添加电机状态属性
+
+![添加属性](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_motor_status.png)
+
+选择智慧农业服务，点击添加命令，添加紫光灯控制命令
+
+命令名称：紫光灯控制
+
+参数名称：Light
+
+数据类型：string
+
+长度：3
+
+枚举值：ON,OFF
+
+![添加紫光灯控制命令](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_cmd_light.png)
+
+选择智慧农业服务，点击添加命令，添加电机控制命令
+
+命令名称：电机控制
+
+参数名称：Motor
+
+数据类型：string
+
+长度：3
+
+枚举值：ON,OFF
+
+![添加电机控制命令](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/add_cmd_motor.png)
+
+### 注册设备
+
+选择侧边栏所有设备页面，点击右上角注册设备，注册智慧农业设备，勾选对应所属资源空间并选中刚刚创建的智慧农业产品，注意设备认证类型选择“秘钥”，并按要求填写秘钥。
+
+![注册设备](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/device.png)
+
+注册完成后，选择侧边栏所有设备页面，可以看到注册完成的设备。
+
+![设备信息](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/all_device.png)
+
+在连接华为云前需要获取CLIENT_ID、USERNAME、PASSWORD，访问[华为云iot工具](https://iot-tool.obs-website.cn-north-4.myhuaweicloud.com/)；填写注册设备时生成的设备ID和设备密钥，生成连接信息（ClientId、Username、Password），并修改代码中对应的CLIENT_ID、USERNAME、PASSWORD。
+
+点击进入智慧农业设备，可以查看设备ID。
+
+![设备ID](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/device_id.png)
+
+输入设备ID和设备密匙，点击Generate生成ClientId、Username和Password。
+
+![连接信息](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/id.png)
+
+修改例程代码中的CLIENT_ID、USERNAME和PASSWORD为生成的ClientId、Username和Password。
+
+```c
+#define CLIENT_ID                       "61c69349078a93029b83ceff_E53_IA_0_0_2021122504"
+#define USERNAME                        "61c69349078a93029b83ceff_E53_IA"
+#define PASSWORD                        "82933df2133618cad436234d88fde06a196dd8ebc0d5c8cf2ee065968a469546"
+```
+
+### WIFI连接
+
+修改例程代码中的WIFI_SSID和WIFI_PASSWORD为使用WIFI的SSID和密匙，用于连接网络，设备通过WIFI访问华为云。
+
+```c
+#define WIFI_SSID                       "lzdz"
+#define WIFI_PASSWORD                   "12345678"
+```
+
+### 修改 BUILD.gn 文件
+
+修改 `vendor/lockzhiner/rk2206/sample` 路径下 BUILD.gn 文件，指定 `d7_iot_cloud_intelligent_agriculture` 参与编译。
+
+```r
+"./d7_iot_cloud_intelligent_agriculture:iot_cloud_ia_example",
+```
+
+修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-liot_cloud_ia_example` 参与编译。
+
+```r
+hardware_LIBS = -lhal_iothardware -lhardware -liot_cloud_ia_example
+```
+
+### 运行结果
+
+例程代码编译烧写到开发板后，按下开发板的RESET按键，通过串口软件查看日志，串口会打印温度、湿度及光照强度信息；用手遮挡智慧农业模块，紫光灯会自动开启；控制温度或者湿度超标，电机会自动开启。
+
+```
+Luminance is 153.33
+Humidity is 37.69
+Temperature is 21.30
+light on
+motor off
+Luminance is 726.67
+Humidity is 61.02
+Temperature is 20.79
+light off
+motor on
+Luminance is 697.50
+Humidity is 58.78
+Temperature is 20.94
+light off
+motor off
+```
+
+登录华为云平台，选择侧边栏所有设备页面，点击进入智慧农业设备查看开发板上报的数据。
+
+![华为云](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IA/iot_ia.png)
+

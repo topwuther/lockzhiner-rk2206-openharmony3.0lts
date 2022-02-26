@@ -1,0 +1,53 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/ohos.gni")
+
+ohos_static_library("distributeddata_dfx_static") {
+  sources = [
+    "src/dds_trace.cpp",
+    "src/fault/communication_fault_impl.cpp",
+    "src/fault/database_fault_impl.cpp",
+    "src/fault/runtime_fault_impl.cpp",
+    "src/fault/service_fault_impl.cpp",
+    "src/hiview_adapter.cpp",
+    "src/reporter.cpp",
+    "src/statistic/api_performance_statistic_impl.cpp",
+    "src/statistic/database_statistic_impl.cpp",
+    "src/statistic/traffic_statistic_impl.cpp",
+    "src/statistic/visit_statistic_impl.cpp",
+  ]
+
+  include_dirs = [
+    "./src",
+    "./src/fault",
+    "./src/statistic",
+    "../include/dfx",
+    "../include/log",
+    "../include/autils",
+    "//utils/native/base/include",
+    "//third_party/openssl/include/",
+  ]
+
+  cflags_cc = [ "-fvisibility=hidden" ]
+
+  deps = [
+    "../autils:distributeddata_autils_static",
+    "//third_party/openssl:libcrypto_static",
+    "//utils/native/base:utils",
+  ]
+  external_deps = [
+    "bytrace_standard:bytrace_core",
+    "hisysevent_native:libhisysevent",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
+}

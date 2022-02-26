@@ -1,0 +1,19 @@
+{
+  "platforms": {
+    "phone": [
+      {
+        "target_os": "ohos",
+        "target_cpu": "arm64",
+        "toolchain": "//build/toolchain/ohos:ohos_clang_arm64",
+        "parts_config": "./parts.json"
+      },
+      {
+        "target_os": "ohos",
+        "target_cpu": "arm",
+        "toolchain": "//build/toolchain/ohos:ohos_clang_arm",
+        "parts_config": "./parts.json"
+      }
+    ]
+  }
+}
+

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "recents_MainAbility",
+      "value": "recents_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "No_running_apps_recently",
+      "value": "最近无运行应用"
+    }
+  ]
+}

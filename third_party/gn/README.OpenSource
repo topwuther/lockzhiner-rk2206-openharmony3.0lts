@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "gn",
+    "License": "BSD-style License",
+    "License File": "LICENSE",
+    "Version Number": "5e43d016589db2c613c98f9916afd729a36e781a",
+    "Owner": "wangweichao2@huawei.com",
+    "Upstream URL": "https://gn.googlesource.com/gn",
+    "Description": "GN is a meta-build system that generates build files for Ninja."
+  }
+]

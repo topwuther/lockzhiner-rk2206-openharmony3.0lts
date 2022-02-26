@@ -1,0 +1,419 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/test.gni")
+
+module_output_path = "distributeddatamgr/distributeddataservice"
+
+###############################################################################
+config("module_private_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/src",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/permission",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/account",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/broadcaster",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/utils",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "../include",
+    "../src",
+    "../src/uninstaller",
+    "../src/flowctrl_manager",
+    "../../../../interfaces/innerkits/distributeddata",
+    "//third_party/json/single_include",
+    "//base/powermgr/power_manager/interfaces/innerkits/native/include",
+  ]
+}
+
+ohos_unittest("KvStoreImplLogicalIsolationTest") {
+  module_out_path = module_output_path
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_app_manager.cpp",
+    "../src/kvstore_data_service.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+    "unittest/kvstore_impl_logical_isolation_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreImplPhysicalIsolationTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_app_manager.cpp",
+    "../src/kvstore_data_service.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+    "unittest/kvstore_impl_physical_isolation_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreDataServiceTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_app_manager.cpp",
+    "../src/kvstore_data_service.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+    "unittest/kvstore_data_service_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreBackupTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+    "unittest/kvstore_app_manager.cpp",
+    "unittest/kvstore_backup_test.cpp",
+    "unittest/kvstore_data_service.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  resource_config_file = "//foundation/distributeddatamgr/distributeddatamgr/test/resource/distributeddataservice/ohos_test.xml"
+}
+
+ohos_unittest("KvStoreFlowCtrlManagerTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/kvstore_flowctrl_manager_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreSyncManagerTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_app_manager.cpp",
+    "../src/kvstore_data_service.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  external_deps = [
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+ohos_unittest("KvStoreUninstallerTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "../src/backup_handler.cpp",
+    "../src/device_change_listener_impl.cpp",
+    "../src/device_kvstore_impl.cpp",
+    "../src/device_kvstore_observer_impl.cpp",
+    "../src/device_kvstore_resultset_impl.cpp",
+    "../src/kvstore_account_observer.cpp",
+    "../src/kvstore_app_accessor.cpp",
+    "../src/kvstore_app_manager.cpp",
+    "../src/kvstore_data_service.cpp",
+    "../src/kvstore_impl.cpp",
+    "../src/kvstore_meta_manager.cpp",
+    "../src/kvstore_observer_impl.cpp",
+    "../src/kvstore_resultset_impl.cpp",
+    "../src/kvstore_snapshot_impl.cpp",
+    "../src/kvstore_sync_manager.cpp",
+    "../src/kvstore_user_manager.cpp",
+    "../src/query_helper.cpp",
+    "../src/single_kvstore_impl.cpp",
+    "unittest/uninstaller_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/broadcaster:distributeddata_broadcaster_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/flowctrl_manager:distributeddata_flowctrl_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app/src/uninstaller:distributeddata_uninstaller_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:base",
+    "aafwk_standard:intent",
+    "battery_manager_native:batterysrv_client",
+    "power_manager_native:powermgr_client",
+    "hiviewdfx_hilog_native:libhilog",
+    "huks_standard:libhukssdk",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "permission_standard:libpermissionsdk_standard",
+  ]
+}
+
+###############################################################################
+
+group("unittest") {
+  testonly = true
+  deps = []
+
+  deps += [
+    ":KvStoreBackupTest",
+    ":KvStoreDataServiceTest",
+    ":KvStoreFlowCtrlManagerTest",
+    ":KvStoreImplLogicalIsolationTest",
+    ":KvStoreImplPhysicalIsolationTest",
+    ":KvStoreUninstallerTest",
+  ]
+}
+
+###############################################################################
+group("moduletest") {
+  testonly = true
+  deps = [
+    "//third_party/googletest:gmock",
+    "//third_party/googletest:gtest_main",
+    "//third_party/sqlite:sqlite",
+    "//utils/native/base:utils",
+  ]
+
+  deps += [
+    #":DistributedDataAccountEventModuleTest",
+    #":DistributedDataFlowCtrlManagerTest",
+  ]
+}
+###############################################################################

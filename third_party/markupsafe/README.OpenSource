@@ -1,0 +1,11 @@
+[
+    {
+        "Name"                  : "MarkupSafe",
+        "License"               : "BSD 3-clause License",
+        "License File"          : "LICENSE.rst",
+        "Version Number"        : "1.1.1",
+        "Owner"                 : "yaoxiaoyu1@huawei.com",
+        "Upstream URL"          : "https://palletsprojects.com/p/markupsafe/",
+        "Description"           : "MarkupSafe implements a text object that escapes characters so it is safe to use in HTML and XML. Characters that have special meanings are replaced so that they display as the actual characters. This mitigates injection attacks, meaning untrusted user input can safely be displayed on a page. Escaping is implemented in C so it is as efficient as possible."
+    }
+]

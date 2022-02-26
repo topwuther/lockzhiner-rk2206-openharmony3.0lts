@@ -1,0 +1,12 @@
+[
+    {
+    "Name": "ThrowTheSwitch/Unity",
+    "License": "MIT License",
+    "License File": "LICENSE.txt",
+    "Version Number": "2.5.0",
+    "Owner": "chenliangxing@huawei.com",
+    "Upstream URL": "https://github.com/ThrowTheSwitch/Unity/tree/v2.5.0",
+    "Description": "Simple Unit Testing for C"
+    }
+]
+

@@ -1,0 +1,110 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+
+if (defined(ohos_lite)) {
+  FWK_ROOT_DIR = "//drivers/framework"
+  shared_library("wifi_hal") {
+    output_name = "wifi_hal"
+    sources = [
+      "src/wifi_hal.c",
+      "src/wifi_hal_ap_feature.c",
+      "src/wifi_hal_base_feature.c",
+      "src/wifi_hal_cmd.c",
+      "src/wifi_hal_sta_feature.c",
+      "src/wifi_hal_util.c",
+    ]
+
+    include_dirs = [
+      "include",
+      "//drivers/peripheral/wlan/interfaces/include",
+      "//drivers/peripheral/wlan/client/include",
+      "$FWK_ROOT_DIR/core/shared/include",
+      "$FWK_ROOT_DIR/include/core",
+      "$FWK_ROOT_DIR/include",
+      "$FWK_ROOT_DIR/include/wifi",
+      "$FWK_ROOT_DIR/include/utils",
+      "$FWK_ROOT_DIR/ability/sbuf/include",
+      "//drivers/adapter/uhdf/posix/include",
+      "//third_party/bounds_checking_function/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
+    ]
+
+    deps = [
+      "//drivers/adapter/uhdf/posix:hdf_posix_osal",
+      "//third_party/bounds_checking_function:libsec_shared",
+    ]
+
+    defines = [ "__USER__" ]
+
+    cflags = [
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsigned-char",
+      "-fno-common",
+      "-fno-strict-aliasing",
+      "-Wno-format",
+      "-Wno-format-extra-args",
+    ]
+  }
+
+  lite_component("wifi_hal_interface") {
+    features = [ ":wifi_hal" ]
+  }
+} else {
+  HAL_ROOT_DIR = "//drivers/peripheral/wlan"
+
+  ohos_shared_library("wifi_hal") {
+    sources = [
+      "$HAL_ROOT_DIR/hal/src/wifi_hal.c",
+      "$HAL_ROOT_DIR/hal/src/wifi_hal_ap_feature.c",
+      "$HAL_ROOT_DIR/hal/src/wifi_hal_base_feature.c",
+      "$HAL_ROOT_DIR/hal/src/wifi_hal_cmd.c",
+      "$HAL_ROOT_DIR/hal/src/wifi_hal_sta_feature.c",
+      "$HAL_ROOT_DIR/hal/src/wifi_hal_util.c",
+    ]
+    include_dirs = [
+      "$HAL_ROOT_DIR/hal/include",
+      "$HAL_ROOT_DIR/interfaces/include",
+      "//third_party/bounds_checking_function/include",
+      "//drivers/peripheral/wlan/client/include",
+      "//base/hiviewdfx/hilog/interfaces/native/innerkits/include",
+    ]
+    deps = [
+      "//drivers/adapter/uhdf2/osal:libhdf_utils",
+      "//drivers/peripheral/wlan/client:wifi_driver_client",
+      "//utils/native/base:utils",
+    ]
+    defines = [ "__OHOS__USER__" ]
+    cflags = [
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsigned-char",
+      "-fno-common",
+      "-fno-strict-aliasing",
+    ]
+    subsystem_name = "hdf"
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+  }
+}

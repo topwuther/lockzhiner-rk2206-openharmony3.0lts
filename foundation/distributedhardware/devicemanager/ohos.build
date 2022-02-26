@@ -1,0 +1,35 @@
+{
+    "parts": {
+        "device_manager_base": {
+            "variants": ["phone", "wearable", "ivi"],
+            "inner_kits": [
+                {
+                    "type": "so",
+                    "name": "//foundation/distributedhardware/devicemanager/interfaces/inner_kits/native_cpp:devicemanagersdk",
+                    "header": {
+                        "header_base": "//foundation/distributedhardware/devicemanager/interfaces/inner_kits/native_cpp/include",
+                        "header_files": [
+                            "device_manager.h",
+                            "device_manager_callback.h",
+                            "dm_device_info.h",
+                            "dm_subscribe_info.h",
+                            "dm_app_image_info.h"
+                        ]
+                    }
+                }
+            ],
+            "module_list": [
+                "//foundation/distributedhardware/devicemanager/utils:devicemanagerutils",
+                "//foundation/distributedhardware/devicemanager/interfaces/inner_kits/native_cpp:devicemanagersdk",
+                "//foundation/distributedhardware/devicemanager/interfaces/kits/js:devicemanager_native_js",
+                "//foundation/distributedhardware/devicemanager/services/devicemanagerservice:devicemanagerservice",
+                "//foundation/distributedhardware/devicemanager/sa_profile:dm_sa_profile"
+            ],
+            "test_list": [
+                "//foundation/distributedhardware/devicemanager/test:test"
+            ],
+            "system_kits": []
+        }
+    },
+    "subsystem": "distributedhardware"
+}

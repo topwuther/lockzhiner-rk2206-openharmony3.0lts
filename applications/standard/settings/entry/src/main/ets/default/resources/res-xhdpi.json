@@ -1,0 +1,10 @@
+{
+  "image": {
+    "icLoading01": "res/image/xhdpi/ic_loading01.png",
+    "icLoading02": "res/image/xhdpi/ic_loading02.png",
+    "icLoading03": "res/image/xhdpi/ic_loading03.png",
+    "icLoading04": "res/image/xhdpi/ic_loading04.png",
+    "icLoading05": "res/image/xhdpi/ic_loading05.png",
+    "icLoading06": "res/image/xhdpi/ic_loading06.png"
+  }
+}

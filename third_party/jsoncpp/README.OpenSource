@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "jsonCpp",
+        "License": "MIT License",
+        "License File": "LICENSE",
+        "Version Number": "00.11.0",
+        "Upstream URL": "https://github.com/open-source-parsers/jsoncpp/archive/00.11.0.tar.gz",
+        "Description": "JsonCpp is a C++ library that allows manipulating JSON values, including serialization and deserialization to and from strings. It can also preserve existing comment in unserialization/serialization steps, making it a convenient format to store user input files."
+    }
+]
+

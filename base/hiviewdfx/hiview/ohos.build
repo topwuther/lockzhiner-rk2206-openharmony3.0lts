@@ -1,0 +1,23 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "hiview": {
+      "variants": [
+        "phone",
+        "ivi",
+        "wearable",
+        "intellitv"
+      ],
+      "module_list": [
+        "//base/hiviewdfx/hiview:hiview_package"
+      ],
+      "test_list": [
+        "//base/hiviewdfx/hiview:hiview_test_package"
+      ],
+      "system_capabilities":[
+        "SystemCapability.HiviewDFX.Hiview",
+        "SystemCapability.HiviewDFX.Hiview.FaultLogger"
+      ]
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+    "product_name": "lockzhiner-rk2206",
+    "ohos_version": "OpenHarmony 3.0",
+    "device_company": "rockchip",
+    "board": "rk2206",
+    "kernel_type": "liteos_m",
+    "kernel_version": "1.0.1",
+    "subsystems": [
+      {
+        "subsystem": "applications",
+        "components": [
+          { "component": "wifi_iot_sample_app", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "iot_hardware",
+        "components": [
+          { "component": "iot_controller", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "hiviewdfx",
+        "components": [
+          { "component": "hilog_lite", "features":[] },
+          { "component": "hievent_lite", "features":[] },
+          { "component": "blackbox", "features":[] },
+          { "component": "hidumper_mini", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "distributed_schedule",
+        "components": [
+          { "component": "samgr_lite", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "security",
+        "components": [
+          { "component": "hichainsdk", "features":[] },
+          { "component": "huks", "features":
+            [
+              "disable_huks_binary = false",
+              "disable_authenticate = false",
+              "huks_use_lite_storage = true",
+              "huks_use_hardware_root_key = true",
+              "huks_config_file = \"hks_config_lite.h\""
+            ]
+          }
+        ]
+      },
+      {
+        "subsystem": "startup",
+        "components": [
+          { "component": "bootstrap_lite", "features":[] },
+          { "component": "syspara_lite", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "communication",
+        "components": [
+          { "component": "wifi_lite", "features":[] },
+          { "component": "softbus_lite", "features":[] },
+          { "component": "wifi_aware", "features":[]}
+        ]
+      },
+      {
+        "subsystem": "iot",
+        "components": [
+          { "component": "iot_link", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "utils",
+        "components": [
+          { "component": "file", "features":[] },
+          { "component": "kv_store", "features":[] },
+          { "component": "os_dump", "features":[] }
+        ]
+      },
+      {
+        "subsystem": "vendor",
+        "components": [
+		{ "component": "rk2206_sdk", "target": "//device/rockchip/rk2206/sdk_liteos:wifiiot_sdk", "features":[] }
+        ]
+      },
+      {
+       "subsystem": "test",
+       "components": [
+         { "component": "xts_acts", "features":[] },
+         { "component": "xts_tools", "features":[] }
+        ]
+      }
+    ],
+    "vendor_adapter_dir": "//device/rockchip/rk2206/adapter",
+    "third_party_dir": "//third_party",
+    "rk_third_party_dir": "//device/rockchip/rk2206/third_party",
+    "product_adapter_dir": "//vendor/lockzhiner/rk2206/hals",
+    "ohos_product_type":"",
+    "ohos_manufacture":"",
+    "ohos_brand":"",
+    "ohos_market_name":"",
+    "ohos_product_series":"",
+    "ohos_product_model":"",
+    "ohos_software_model":"",
+    "ohos_hardware_model":"",
+    "ohos_hardware_profile":"",
+    "ohos_serial":"",
+    "ohos_bootloader_version":"",
+    "ohos_secure_patch_level":"",
+    "ohos_abi_list":""
+
+  }

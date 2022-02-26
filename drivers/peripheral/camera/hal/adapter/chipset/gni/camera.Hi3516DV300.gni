@@ -1,0 +1,14 @@
+hispark_taurus_path = "//device/hisilicon/hispark_taurus"
+
+if (!defined(defines)) {
+  defines = []
+}
+
+is_support_mpi = true
+if (is_support_mpi) {
+  is_support_v4l2 = false
+  defines += [ "SUPPORT_MPI" ]
+  chipset_build_deps = "adapter/chipset/hispark_taurus:hispark_taurus_build"
+  camera_device_manager_deps = "//drivers/peripheral/camera/hal/adapter/chipset/hispark_taurus/src/device_manager:camera_device_manager"
+  camera_pipeline_core_deps = "//drivers/peripheral/camera/hal/adapter/chipset/hispark_taurus/src/pipeline_core:camera_pipeline_core"
+}

@@ -1,0 +1,192 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+import("//build/ohos.gni")
+
+common_source = [
+  "src/fs-poll.c",
+  "src/idna.c",
+  "src/inet.c",
+  "src/random.c",
+  "src/strscpy.c",
+  "src/threadpool.c",
+  "src/timer.c",
+  "src/uv-common.c",
+  "src/uv-data-getter-setters.c",
+  "src/version.c",
+]
+if (!is_mingw && !is_win) {
+  nonwin_srcs = [
+    "src/unix/async.c",
+    "src/unix/core.c",
+    "src/unix/dl.c",
+    "src/unix/fs.c",
+    "src/unix/getaddrinfo.c",
+    "src/unix/getnameinfo.c",
+    "src/unix/loop.c",
+    "src/unix/loop-watcher.c",
+    "src/unix/pipe.c",
+    "src/unix/poll.c",
+    "src/unix/process.c",
+    "src/unix/random-devurandom.c",
+    "src/unix/signal.c",
+    "src/unix/stream.c",
+    "src/unix/tcp.c",
+    "src/unix/thread.c",
+    "src/unix/tty.c",
+    "src/unix/udp.c",
+  ]
+}
+
+# This is the configuration needed to use libuv.
+config("libuv_config") {
+  include_dirs = [
+    "include",
+    "src",
+    "src/unix",
+  ]
+  cflags = [ "-Wno-unused-parameter" ]
+  if (is_linux || is_ohos) {
+    cflags += [
+      "-Wno-incompatible-pointer-types",
+      "-D_GNU_SOURCE",
+      "-D_POSIX_C_SOURCE=200112",
+    ]
+  } else if (is_mingw || is_win) {
+    cflags += [
+      "-Wno-missing-braces",
+      "-Wno-implicit-function-declaration",
+      "-Wno-error=return-type",
+      "-Wno-error=sign-compare",
+      "-Wno-error=unused-variable",
+      "-Wno-error=unknown-pragmas",
+      "-Wno-unused-variable",
+    ]
+    defines = [
+      "WIN32_LEAN_AND_MEAN",
+      "_WIN32_WINNT=0x0600",
+    ]
+
+    libs = [
+      "psapi",
+      "user32",
+      "advapi32",
+      "iphlpapi",
+      "userenv",
+      "ws2_32",
+    ]
+  }
+}
+
+# This is the configuration used to build libuv itself.
+# It should not be needed outside of this library.
+config("libuv_private_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "src",
+    "src/unix",
+  ]
+}
+
+ohos_source_set("libuv_source") {
+  configs = [ ":libuv_config" ]
+  sources = common_source
+
+  if (is_mac) {
+    sources += nonwin_srcs + [
+                 "src/unix/bsd-ifaddrs.c",
+                 "src/unix/kqueue.c",
+                 "src/unix/random-getentropy.c",
+                 "src/unix/darwin-proctitle.c",
+                 "src/unix/darwin.c",
+                 "src/unix/fsevents.c",
+               ]
+  } else if (is_mingw || is_win) {
+    sources += [
+      "src/win/async.c",
+      "src/win/core.c",
+      "src/win/detect-wakeup.c",
+      "src/win/dl.c",
+      "src/win/error.c",
+      "src/win/fs-event.c",
+      "src/win/fs.c",
+      "src/win/getaddrinfo.c",
+      "src/win/getnameinfo.c",
+      "src/win/handle.c",
+      "src/win/loop-watcher.c",
+      "src/win/pipe.c",
+      "src/win/poll.c",
+      "src/win/process-stdio.c",
+      "src/win/process.c",
+      "src/win/signal.c",
+      "src/win/snprintf.c",
+      "src/win/stream.c",
+      "src/win/tcp.c",
+      "src/win/thread.c",
+      "src/win/tty.c",
+      "src/win/udp.c",
+      "src/win/util.c",
+      "src/win/winapi.c",
+      "src/win/winsock.c",
+    ]
+  } else if (is_ohos) {
+    sources += nonwin_srcs + [
+                 "src/unix/linux-core.c",
+                 "src/unix/linux-inotify.c",
+                 "src/unix/linux-syscalls.c",
+                 "src/unix/procfs-exepath.c",
+                 "src/unix/pthread-fixes.c",
+                 "src/unix/random-getentropy.c",
+                 "src/unix/random-getrandom.c",
+                 "src/unix/random-sysctl-linux.c",
+                 "src/unix/proctitle.c",
+               ]
+  } else if (is_linux) {
+    sources += nonwin_srcs + [
+                 "src/unix/linux-core.c",
+                 "src/unix/linux-inotify.c",
+                 "src/unix/linux-syscalls.c",
+                 "src/unix/procfs-exepath.c",
+                 "src/unix/random-getrandom.c",
+                 "src/unix/random-sysctl-linux.c",
+                 "src/unix/proctitle.c",
+               ]
+  } else {
+    sources += nonwin_srcs + [
+                 "src/unix/linux-core.c",
+                 "src/unix/linux-inotify.c",
+                 "src/unix/linux-syscalls.c",
+                 "src/unix/procfs-exepath.c",
+                 "src/unix/random-getrandom.c",
+                 "src/unix/random-sysctl-linux.c",
+                 "src/unix/proctitle.c",
+               ]
+  }
+}
+
+ohos_static_library("uv_static") {
+  deps = [ ":libuv_source" ]
+  public_configs = [ ":libuv_config" ]
+}
+ohos_shared_library("uv") {
+  deps = [ ":libuv_source" ]
+  public_configs = [ ":libuv_config" ]
+}

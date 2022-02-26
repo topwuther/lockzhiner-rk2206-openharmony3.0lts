@@ -1,0 +1,20 @@
+{
+  "color": [
+    {
+      "name":"notificationitem_background",
+      "value":"#ffffff"
+    },
+    {
+      "name":"title_text_color",
+      "value":"#222D37"
+    },
+    {
+      "name":"content_text_color",
+      "value":"#FF435563"
+    },
+    {
+      "name":"name_text_color",
+      "value":"#435563"
+    }
+  ]
+}

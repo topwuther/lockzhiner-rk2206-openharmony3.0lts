@@ -1,0 +1,47 @@
+import("//build/ohos.gni")
+
+## Build expat.a {{{
+config("expat_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+  ]
+
+  cflags = [
+    "-DXML_POOR_ENTROPY",
+    "-Wno-sign-compare",
+  ]
+}
+
+config("expat_public_config") {
+  include_dirs = [
+    ".",
+    "lib",
+  ]
+
+  defines = [ "XML_STATIC" ]
+}
+
+ohos_static_library("expat") {
+  sources = [
+    "lib/expat.h",
+    "lib/xmlparse.c",
+    "lib/xmlrole.c",
+    "lib/xmltok.c",
+  ]
+
+  configs = [
+    ":expat_config",
+  ]
+
+  public_configs = [
+    ":expat_public_config",
+  ]
+
+  deps = [
+  ]
+
+  public_deps = [
+  ]
+}
+## Build expat.a }}}

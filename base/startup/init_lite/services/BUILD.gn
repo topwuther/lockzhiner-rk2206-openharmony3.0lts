@@ -1,0 +1,196 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+if (defined(ohos_lite)) {
+  # feature: init
+  executable("init_lite") {
+    output_name = "init"
+    defines = [
+      "_GNU_SOURCE",  #syscall function need this macro definition
+      "OHOS_LITE",
+    ]
+    sources = [
+      "log/init_log.c",
+      "src/init_adapter.c",
+      "src/init_capability.c",
+      "src/init_cmds.c",
+      "src/init_import.c",
+      "src/init_jobs.c",
+      "src/init_read_cfg.c",
+      "src/init_reboot.c",
+      "src/init_service.c",
+      "src/init_service_manager.c",
+      "src/init_service_socket.c",
+      "src/init_signal_handler.c",
+      "src/init_utils.c",
+      "src/main.c",
+    ]
+
+    include_dirs = [
+      "//base/startup/init_lite/services/include",
+      "//base/startup/init_lite/services/param/include",
+      "//base/startup/init_lite/services/log",
+      "//third_party/cJSON",
+      "//third_party/bounds_checking_function/include",
+      "//base/startup/syspara_lite/interfaces/kits",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/kits",
+    ]
+
+    cflags = [ "-Wall" ]
+
+    deps = [
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//base/startup/init_lite/initsync:initsync",
+      "//base/startup/syspara_lite/frameworks/parameter:parameter",
+      "//build/lite/config/component/cJSON:cjson_shared",
+      "//third_party/bounds_checking_function:libsec_shared",
+    ]
+    ldflags = []
+    if (ohos_kernel_type == "liteos_a") {
+      include_dirs += [
+        "//kernel/liteos_a/syscall",
+        "//base/startup/init_lite/interfaces/kits",
+        "//base/startup/init_lite/initsync/include",
+      ]
+      deps += [ "//base/startup/init_lite/initsync:initsync" ]
+    }
+    if (ohos_kernel_type == "linux") {
+      defines += [ "NEED_EXEC_RCS_LINUX" ]
+      ldflags += [
+        "-lm",
+        "-lpthread",
+      ]
+      deps += [
+        "//third_party/mksh",
+        "//third_party/toybox",
+      ]
+    }
+  }
+
+  if (ohos_build_type == "debug") {
+    group("unittest") {
+      deps =
+          [ "//base/startup/init_lite/services/test/unittest/common:unittest" ]
+    }
+  }
+} else {
+  import("//build/ohos.gni")
+
+  ohos_executable("init") {
+    sources = [
+      "src/device.c",
+      "src/init_adapter.c",
+      "src/init_capability.c",
+      "src/init_cmds.c",
+      "src/init_import.c",
+      "src/init_jobs.c",
+      "src/init_read_cfg.c",
+      "src/init_reboot.c",
+      "src/init_service.c",
+      "src/init_service_manager.c",
+      "src/init_service_socket.c",
+      "src/init_signal_handler.c",
+      "src/init_utils.c",
+      "src/main.c",
+    ]
+    include_dirs = [
+      "//base/startup/init_lite/services/include/param",
+      "//base/startup/init_lite/services/include",
+      "//base/startup/init_lite/services/log",
+      "//third_party/cJSON",
+      "//third_party/bounds_checking_function/include",
+      "//third_party/libuv/include",
+    ]
+    deps = [
+      "//base/startup/init_lite/services/log:init_log",
+      "//base/startup/init_lite/services/param:paramservice",
+      "//third_party/bounds_checking_function:libsec_static",
+      "//third_party/cJSON:cjson_static",
+    ]
+    if (use_musl) {
+      deps += [
+        "//third_party/mksh:sh",
+        "//third_party/toybox:toybox",
+      ]
+    }
+    install_images = [
+      "system",
+      "updater",
+    ]
+    install_enable = true
+    part_name = "init"
+  }
+
+  group("startup_init") {
+    deps = [
+      ":init",
+      ":init_etc",
+      "//base/startup/init_lite/interfaces/innerkits/socket:libsocket",
+      "//base/startup/init_lite/services/cmds/reboot:reboot",
+      "//base/startup/init_lite/services/cmds/service_control:service_control",
+      "//base/startup/init_lite/services/param:getparam",
+      "//base/startup/init_lite/services/param:paramclient",
+      "//base/startup/init_lite/services/param:paramservice",
+      "//base/startup/init_lite/services/param:setparam",
+    ]
+  }
+
+  # init etc files group
+  ohos_prebuilt_etc("init.cfg") {
+    source = "//base/startup/init_lite/services/etc/init.cfg"
+    part_name = "init"
+  }
+
+  ohos_prebuilt_etc("passwd") {
+    source = "//base/startup/init_lite/services/etc/passwd"
+    install_images = [
+      "system",
+      "updater",
+    ]
+    part_name = "init"
+  }
+
+  ohos_prebuilt_etc("group") {
+    source = "//base/startup/init_lite/services/etc/group"
+    install_images = [
+      "system",
+      "updater",
+    ]
+    part_name = "init"
+  }
+
+  ohos_prebuilt_etc("init.usb.cfg") {
+    source = "//base/startup/init_lite/services/etc/init.usb.cfg"
+    part_name = "init"
+  }
+
+  ohos_prebuilt_etc("init.usb.configfs.cfg") {
+    source = "//base/startup/init_lite/services/etc/init.usb.configfs.cfg"
+    part_name = "init"
+  }
+
+  ohos_prebuilt_etc("ohos.para") {
+    source = "//base/startup/init_lite/services/etc/ohos.para"
+    part_name = "init"
+  }
+
+  group("init_etc") {
+    deps = [
+      ":group",
+      ":init.cfg",
+      ":init.usb.cfg",
+      ":init.usb.configfs.cfg",
+      ":ohos.para",
+      ":passwd",
+    ]
+  }
+}

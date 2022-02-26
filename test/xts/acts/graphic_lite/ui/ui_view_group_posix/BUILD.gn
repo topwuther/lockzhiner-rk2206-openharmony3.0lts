@@ -1,0 +1,46 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//test/xts/tools/lite/build/suite_lite.gni")
+
+hcpptest_suite("ActsUIViewGroupTest") {
+  suite_name = "acts"
+  sources = [ "src/ui_view_group_test.cpp" ]
+
+  include_dirs = [
+    "//third_party/bounds_checking_function/include",
+    "//third_party/cJSON",
+    "//third_party/libpng",
+    "//third_party/libjpeg",
+    "//utils/native/lite/include",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/registry",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+    "//foundation/distributedschedule/samgr_lite/interfaces/kits/communication/broadcast",
+  ]
+  ldflags = [ "-Wl,-Map=toggleButtonTest.map" ]
+
+  deps = [
+    "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+    "//foundation/communication/ipc_lite:liteipc_adapter",
+    "//foundation/distributedschedule/samgr_lite/communication/broadcast",
+    "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+    "//foundation/distributedschedule/samgr_lite/samgr_client:client",
+    "//foundation/graphic/surface:lite_surface",
+    "//foundation/graphic/ui:lite_ui",
+    "//foundation/graphic/utils:lite_graphic_hals",
+    "//foundation/graphic/wms:lite_wms",
+    "//third_party/bounds_checking_function:libsec_shared",
+  ]
+
+  cflags = [ "-fno-rtti" ]
+}

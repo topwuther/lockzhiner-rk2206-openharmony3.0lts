@@ -1,0 +1,667 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/test.gni")
+
+module_output_path = "distributeddatamgr/distributeddb"
+
+###############################################################################
+config("module_private_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "./unittest/common/common",
+    "./unittest/common/syncer",
+    "./unittest/common/storage",
+    "./unittest/common/interfaces",
+    "../include",
+    "../interfaces/include",
+    "../interfaces/src",
+    "../storage/include",
+    "../storage/src",
+    "../storage/src/multiver",
+    "../storage/src/operation",
+    "../storage/src/sqlite",
+    "../storage/src/upgrader",
+    "../common/include",
+    "../common/src",
+    "../communicator/include",
+    "../communicator/src",
+    "../syncer/include",
+    "../syncer/src",
+    "//third_party/openssl/include/",
+  ]
+
+  defines = [
+    "SQLITE_ENABLE_SNAPSHOT",
+    "_LARGEFILE64_SOURCE",
+    "_FILE_OFFSET_BITS=64",
+    "SQLITE_HAS_CODEC",
+    "SQLITE_ENABLE_JSON1",
+    "USING_HILOG_LOGGER",
+    "USE_SQLITE_SYMBOLS",
+    "USING_DB_JSON_EXTRACT_AUTOMATICALLY",
+    "LOW_LEVEL_MEM_DEV",
+  ]
+}
+
+###############################################################################
+ohos_source_set("src_file") {
+  testonly = true
+
+  sources = [
+    "../common/src/auto_launch.cpp",
+    "../common/src/db_common.cpp",
+    "../common/src/db_constant.cpp",
+    "../common/src/evloop/src/event_impl.cpp",
+    "../common/src/evloop/src/event_loop_epoll.cpp",
+    "../common/src/evloop/src/event_loop_impl.cpp",
+    "../common/src/evloop/src/event_loop_select.cpp",
+    "../common/src/evloop/src/ievent.cpp",
+    "../common/src/evloop/src/ievent_loop.cpp",
+    "../common/src/flatbuffer_schema.cpp",
+    "../common/src/hash.cpp",
+    "../common/src/json_object.cpp",
+    "../common/src/lock_status_observer.cpp",
+    "../common/src/log_print.cpp",
+    "../common/src/notification_chain.cpp",
+    "../common/src/param_check_utils.cpp",
+    "../common/src/parcel.cpp",
+    "../common/src/performance_analysis.cpp",
+    "../common/src/platform_specific.cpp",
+    "../common/src/query.cpp",
+    "../common/src/query_expression.cpp",
+    "../common/src/ref_object.cpp",
+    "../common/src/runtime_context.cpp",
+    "../common/src/runtime_context_impl.cpp",
+    "../common/src/schema_object.cpp",
+    "../common/src/schema_utils.cpp",
+    "../common/src/semaphore.cpp",
+    "../common/src/task_pool.cpp",
+    "../common/src/task_pool_impl.cpp",
+    "../common/src/task_queue.cpp",
+    "../common/src/time_tick_monitor.cpp",
+    "../common/src/types_export.cpp",
+    "../common/src/value_object.cpp",
+    "../communicator/src/combine_status.cpp",
+    "../communicator/src/communicator.cpp",
+    "../communicator/src/communicator_aggregator.cpp",
+    "../communicator/src/communicator_linker.cpp",
+    "../communicator/src/frame_combiner.cpp",
+    "../communicator/src/frame_retainer.cpp",
+    "../communicator/src/header_converter.cpp",
+    "../communicator/src/message_transform.cpp",
+    "../communicator/src/network_adapter.cpp",
+    "../communicator/src/protocol_proto.cpp",
+    "../communicator/src/send_task_scheduler.cpp",
+    "../communicator/src/serial_buffer.cpp",
+    "../interfaces/src/kv_store_changed_data_impl.cpp",
+    "../interfaces/src/kv_store_delegate_impl.cpp",
+    "../interfaces/src/kv_store_delegate_manager.cpp",
+    "../interfaces/src/kv_store_errno.cpp",
+    "../interfaces/src/kv_store_nb_conflict_data_impl.cpp",
+    "../interfaces/src/kv_store_nb_delegate_impl.cpp",
+    "../interfaces/src/kv_store_result_set_impl.cpp",
+    "../interfaces/src/kv_store_snapshot_delegate_impl.cpp",
+    "../storage/src/default_factory.cpp",
+    "../storage/src/generic_kvdb.cpp",
+    "../storage/src/generic_kvdb_connection.cpp",
+    "../storage/src/generic_single_ver_kv_entry.cpp",
+    "../storage/src/ikvdb_factory.cpp",
+    "../storage/src/kvdb_commit_notify_filterable_data.cpp",
+    "../storage/src/kvdb_manager.cpp",
+    "../storage/src/kvdb_observer_handle.cpp",
+    "../storage/src/kvdb_properties.cpp",
+    "../storage/src/kvdb_utils.cpp",
+    "../storage/src/kvdb_windowed_result_set.cpp",
+    "../storage/src/multiver/generic_multi_ver_kv_entry.cpp",
+    "../storage/src/multiver/multi_ver_commit.cpp",
+    "../storage/src/multiver/multi_ver_kvdata_storage.cpp",
+    "../storage/src/multiver/multi_ver_natural_store.cpp",
+    "../storage/src/multiver/multi_ver_natural_store_commit_notify_data.cpp",
+    "../storage/src/multiver/multi_ver_natural_store_commit_storage.cpp",
+    "../storage/src/multiver/multi_ver_natural_store_connection.cpp",
+    "../storage/src/multiver/multi_ver_natural_store_snapshot.cpp",
+    "../storage/src/multiver/multi_ver_natural_store_transfer_data.cpp",
+    "../storage/src/multiver/multi_ver_storage_engine.cpp",
+    "../storage/src/multiver/multi_ver_storage_executor.cpp",
+    "../storage/src/multiver/multi_ver_vacuum.cpp",
+    "../storage/src/multiver/multi_ver_vacuum_executor_impl.cpp",
+    "../storage/src/multiver/multi_ver_value_object.cpp",
+    "../storage/src/operation/database_oper.cpp",
+    "../storage/src/operation/local_database_oper.cpp",
+    "../storage/src/operation/multi_ver_database_oper.cpp",
+    "../storage/src/operation/single_ver_database_oper.cpp",
+    "../storage/src/package_file.cpp",
+    "../storage/src/result_entries_window.cpp",
+    "../storage/src/single_ver_natural_store_commit_notify_data.cpp",
+    "../storage/src/sqlite/query_object.cpp",
+    "../storage/src/sqlite/sqlite_local_kvdb.cpp",
+    "../storage/src/sqlite/sqlite_local_kvdb_connection.cpp",
+    "../storage/src/sqlite/sqlite_local_kvdb_snapshot.cpp",
+    "../storage/src/sqlite/sqlite_local_storage_engine.cpp",
+    "../storage/src/sqlite/sqlite_local_storage_executor.cpp",
+    "../storage/src/sqlite/sqlite_multi_ver_data_storage.cpp",
+    "../storage/src/sqlite/sqlite_multi_ver_transaction.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_database_upgrader.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_forward_cursor.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_natural_store.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_natural_store_connection.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_result_set.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_schema_database_upgrader.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_storage_engine.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_storage_executor.cpp",
+    "../storage/src/sqlite/sqlite_single_ver_storage_executor_cache.cpp",
+    "../storage/src/sqlite/sqlite_storage_engine.cpp",
+    "../storage/src/sqlite/sqlite_storage_executor.cpp",
+    "../storage/src/sqlite/sqlite_utils.cpp",
+    "../storage/src/storage_engine.cpp",
+    "../storage/src/storage_engine_manager.cpp",
+    "../storage/src/storage_executor.cpp",
+    "../storage/src/sync_able_kvdb.cpp",
+    "../storage/src/sync_able_kvdb_connection.cpp",
+    "../storage/src/upgrader/single_ver_database_upgrader.cpp",
+    "../storage/src/upgrader/single_ver_schema_database_upgrader.cpp",
+    "../syncer/src/ability_sync.cpp",
+    "../syncer/src/commit_history_sync.cpp",
+    "../syncer/src/device_manager.cpp",
+    "../syncer/src/generic_syncer.cpp",
+    "../syncer/src/meta_data.cpp",
+    "../syncer/src/multi_ver_data_sync.cpp",
+    "../syncer/src/multi_ver_sync_engine.cpp",
+    "../syncer/src/multi_ver_sync_state_machine.cpp",
+    "../syncer/src/multi_ver_sync_task_context.cpp",
+    "../syncer/src/multi_ver_syncer.cpp",
+    "../syncer/src/single_ver_data_sync.cpp",
+    "../syncer/src/single_ver_data_sync_with_sliding_window.cpp",
+    "../syncer/src/single_ver_sync_engine.cpp",
+    "../syncer/src/single_ver_sync_state_machine.cpp",
+    "../syncer/src/single_ver_sync_target.cpp",
+    "../syncer/src/single_ver_sync_task_context.cpp",
+    "../syncer/src/single_ver_syncer.cpp",
+    "../syncer/src/sliding_window_receiver.cpp",
+    "../syncer/src/sliding_window_sender.cpp",
+    "../syncer/src/sync_engine.cpp",
+    "../syncer/src/sync_operation.cpp",
+    "../syncer/src/sync_state_machine.cpp",
+    "../syncer/src/sync_target.cpp",
+    "../syncer/src/sync_task_context.cpp",
+    "../syncer/src/syncer_factory.cpp",
+    "../syncer/src/syncer_proxy.cpp",
+    "../syncer/src/time_helper.cpp",
+    "../syncer/src/time_sync.cpp",
+    "../syncer/src/value_slice_sync.cpp",
+    "unittest/common/common/distributeddb_data_generate_unit_test.cpp",
+    "unittest/common/common/distributeddb_tools_unit_test.cpp",
+    "unittest/common/interfaces/process_system_api_adapter_impl.cpp",
+    "unittest/common/syncer/virtual_multi_ver_sync_db_interface.cpp",
+    "unittest/common/syncer/virtual_single_ver_sync_db_Interface.cpp",
+    "unittest/common/syncer/vitural_communicator.cpp",
+    "unittest/common/syncer/vitural_communicator_aggregator.cpp",
+    "unittest/common/syncer/vitural_device.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//third_party/flatbuffers:flatbuffers_mini",
+    "//third_party/googletest:gtest_main",
+    "//third_party/sqlite:sqlite",
+    "//utils/native/base:utils",
+  ]
+
+  configs += [ "//third_party/jsoncpp:jsoncpp_config" ]
+  ldflags = [ "-Wl,--exclude-libs,ALL" ]
+  deps += [
+    "//third_party/jsoncpp:jsoncpp",
+    "//third_party/openssl:libcrypto_static",
+  ]
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+}
+
+template("distributeddb_unittest") {
+  ohos_unittest(target_name) {
+    forward_variables_from(invoker, "*")
+    module_out_path = module_output_path
+    if (!defined(deps)) {
+      deps = []
+    }
+    if (!defined(external_deps)) {
+      external_deps = []
+    }
+    configs = [ ":module_private_config" ]
+    deps += [
+      ":src_file",
+      "//third_party/flatbuffers:flatbuffers_mini",
+      "//third_party/googletest:gtest_main",
+      "//third_party/sqlite:sqlite",
+      "//utils/native/base:utils",
+    ]
+    configs += [ "//third_party/jsoncpp:jsoncpp_config" ]
+    ldflags = [ "-Wl,--exclude-libs,ALL" ]
+    deps += [
+      "//third_party/jsoncpp:jsoncpp",
+      "//third_party/openssl:libcrypto_static",
+    ]
+    external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  }
+}
+
+distributeddb_unittest("DistributedDBSchemalTest") {
+  sources = [ "unittest/common/common/distributeddb_schema_unit_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesDatabaseTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_database_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesDataOperationTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_data_operation_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesEncryptDatabaseTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_encrypt_database_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesEncryptDelegateTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_encrypt_delegate_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesImportAndExportTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_import_and_export_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageDataOperationTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_data_operation_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBStorageRegisterConflictTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_register_conflict_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesTransactionTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_transaction_test.cpp",
+    "unittest/common/interfaces/distributeddb_interfaces_transaction_testcase.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBStorageTransactionDataTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_transaction_data_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBStorageTransactionRecordTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_transaction_record_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBNotificationChainTest") {
+  sources =
+      [ "unittest/common/common/distributeddb_notification_chain_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageCommitStorageTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_commit_storage_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesDataOperationSyncDBTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_data_operation_syncdb_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesRegisterSyncDBTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_register_syncdb_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesTransactionSyncDBTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_transaction_syncdb_test.cpp",
+    "unittest/common/interfaces/distributeddb_interfaces_transaction_testcase.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBSingleVerP2PSyncTest") {
+  sources =
+      [ "unittest/common/syncer/distributeddb_single_ver_p2p_sync_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBDelegateTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_nb_delegate_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBDelegateLocalBatchTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_nb_delegate_local_batch_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesTransactionOptimizationTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_transaction_optimization_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesQueryDBTest") {
+  sources =
+      [ "unittest/common/interfaces/distributeddb_interfaces_query_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBDelegateSchemaPutTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_nb_delegate_schema_put_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBTransactionTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_nb_transaction_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBPublishTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_nb_publish_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBUnpublishTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_nb_unpublish_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesSpaceManagementTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_space_management_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageRegisterObserverTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_register_observer_test.cpp",
+  ]
+}
+
+ohos_unittest("DistributedDBStorageEncryptTest") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "../include",
+    "../common/include",
+    "//third_party/sqlite/include",
+    "//utils/native/base/include",
+  ]
+
+  sources = [
+    "../common/src/log_print.cpp",
+    "//third_party/sqlite/src/sqlite3.c",
+    "unittest/common/storage/distributeddb_storage_encrypt_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  defines = [
+    "NDEBUG=1",
+    "HAVE_USLEEP=1",
+    "SQLITE_HAVE_ISNAN",
+    "SQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576",
+    "SQLITE_THREADSAFE=2",
+    "SQLITE_TEMP_STORE=3",
+    "SQLITE_POWERSAFE_OVERWRITE=1",
+    "SQLITE_DEFAULT_FILE_FORMAT=4",
+    "SQLITE_DEFAULT_AUTOVACUUM=1",
+    "SQLITE_ENABLE_MEMORY_MANAGEMENT=1",
+    "SQLITE_ENABLE_FTS3",
+    "SQLITE_ENABLE_FTS4",
+    "SQLITE_OMIT_COMPILEOPTION_DIAGS",
+    "SQLITE_OMIT_LOAD_EXTENSION",
+    "SQLITE_DEFAULT_FILE_PERMISSIONS=0600",
+    "SQLITE_SECURE_DELETE",
+    "SQLITE_ENABLE_BATCH_ATOMIC_WRITE",
+    "USE_PREAD64",
+    "fdatasync=fdatasync",
+    "HAVE_MALLOC_H=1",
+    "HAVE_MALLOC_USABLE_SIZE",
+    "SQLITE_DIRECT_OVERFLOW_READ",
+    "SQLITE_HAS_CODEC",
+    "SQLITE_CODEC_ATTACH_CHANGED",
+  ]
+  ldflags = [ "-Wl,--exclude-libs,ALL" ]
+  deps = [
+    "//third_party/openssl:libcrypto_static",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+}
+
+distributeddb_unittest("DistributedDBCommunicatorTest") {
+  sources = [
+    "unittest/common/communicator/adapter_stub.cpp",
+    "unittest/common/communicator/distributeddb_communicator_common.cpp",
+    "unittest/common/communicator/distributeddb_communicator_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBCommunicatorSendReceiveTest") {
+  sources = [
+    "unittest/common/communicator/adapter_stub.cpp",
+    "unittest/common/communicator/distributeddb_communicator_common.cpp",
+    "unittest/common/communicator/distributeddb_communicator_send_receive_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBCommunicatorDeepTest") {
+  sources = [
+    "unittest/common/communicator/adapter_stub.cpp",
+    "unittest/common/communicator/distributeddb_communicator_common.cpp",
+    "unittest/common/communicator/distributeddb_communicator_deep_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBSyncerDeviceManagerTest") {
+  sources =
+      [ "unittest/common/syncer/distributeddb_syncer_device_manager_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBMultiVerP2PSyncTest") {
+  sources =
+      [ "unittest/common/syncer/distributeddb_multi_ver_p2p_sync_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageSQLiteSingleVerNaturalStoreTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_single_ver_natural_store_testcase.cpp",
+    "unittest/common/storage/distributeddb_storage_sqlite_single_ver_natural_store_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBStorageMemorySingleVerNaturalStoreTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_memory_single_ver_naturall_store_test.cpp",
+    "unittest/common/storage/distributeddb_storage_single_ver_natural_store_testcase.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBEventLoopTimerTest") {
+  sources = [ "unittest/common/common/evloop_timer_unit_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBTimeSyncTest") {
+  sources = [
+    "unittest/common/syncer/distributeddb_time_sync_test.cpp",
+    "unittest/common/syncer/virtual_time_sync_communicator.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBDeviceIdentifierTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_device_identifier_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBSingleVersionResultSetTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_single_version_result_set_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesDatabaseCorruptTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_database_corrupt_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBFilePackageTest") {
+  sources = [ "unittest/common/storage/distributeddb_file_package_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBMultiVerVacuumTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_multi_ver_vacuum_test.cpp",
+    "unittest/common/storage/multi_ver_vacuum_executor_stub.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBParcelTest") {
+  sources = [ "unittest/common/common/distributeddb_parcel_unit_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBAbilitySyncTest") {
+  sources = [ "unittest/common/syncer/distributeddb_ability_sync_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBSchemaObjectTest") {
+  sources = [ "unittest/common/common/distributeddb_schema_object_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageSingleVerUpgradeTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_single_ver_upgrade_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBSqliteRegisterTest") {
+  sources = [ "unittest\common\storage\distributeddb_sqlite_register_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesAutoLaunchTest") {
+  sources = [
+    "unittest/common/interfaces/distributeddb_interfaces_auto_launch_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesIndexUnitTest") {
+  sources = [
+    "unittest\common\interfaces\distributeddb_interfaces_index_unit_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBAutoLaunchUnitTest") {
+  sources = [ "unittest/common/common/distributeddb_auto_launch_test.cpp" ]
+}
+
+###############################################################################
+distributeddb_unittest("DistributedDBJsonPrecheckUnitTest") {
+  sources =
+      [ "unittest/common/common/distributeddb_json_precheck_unit_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesNBResultsetPerfTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_resultset_performance.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageResultAndJsonOptimizeTest") {
+  sources = [ "unittest/common/storage/distributeddb_storage_resultset_and_json_optimize.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBStorageIndexOptimizeTest") {
+  sources = [
+    "unittest/common/storage/distributeddb_storage_index_optimize_test.cpp",
+  ]
+}
+
+distributeddb_unittest("DistributedDBSingleVerP2PSyncCheckTest") {
+  sources = [
+    "unittest/common/syncer/distributeddb_single_ver_p2p_sync_check_test.cpp",
+  ]
+}
+
+distributeddb_unittest("RuntimeContextProcessSystemApiAdapterImplTest") {
+  sources = [ "unittest/common/interfaces/runtime_context_process_system_api_adapter_impl_test.cpp" ]
+}
+
+distributeddb_unittest("DistributedDBInterfacesSchemaDatabaseUpgradeTest") {
+  sources = [ "unittest/common/interfaces/distributeddb_interfaces_schema_database_upgrade_test.cpp" ]
+}
+
+###############################################################################
+group("unittest") {
+  testonly = true
+  deps = [ "//third_party/googletest:gmock" ]
+
+  deps += [
+    ":DistributedDBAbilitySyncTest",
+    ":DistributedDBAutoLaunchUnitTest",
+    ":DistributedDBCommunicatorDeepTest",
+    ":DistributedDBCommunicatorSendReceiveTest",
+    ":DistributedDBCommunicatorTest",
+    ":DistributedDBDeviceIdentifierTest",
+    ":DistributedDBEventLoopTimerTest",
+    ":DistributedDBFilePackageTest",
+    ":DistributedDBInterfacesAutoLaunchTest",
+    ":DistributedDBInterfacesDataOperationSyncDBTest",
+    ":DistributedDBInterfacesDataOperationTest",
+    ":DistributedDBInterfacesDatabaseCorruptTest",
+    ":DistributedDBInterfacesDatabaseTest",
+    ":DistributedDBInterfacesEncryptDatabaseTest",
+    ":DistributedDBInterfacesEncryptDelegateTest",
+    ":DistributedDBInterfacesImportAndExportTest",
+    ":DistributedDBInterfacesIndexUnitTest",
+    ":DistributedDBInterfacesNBDelegateLocalBatchTest",
+    ":DistributedDBInterfacesNBDelegateSchemaPutTest",
+    ":DistributedDBInterfacesNBDelegateTest",
+    ":DistributedDBInterfacesNBPublishTest",
+    ":DistributedDBInterfacesNBResultsetPerfTest",
+    ":DistributedDBInterfacesNBTransactionTest",
+    ":DistributedDBInterfacesNBUnpublishTest",
+    ":DistributedDBInterfacesQueryDBTest",
+    ":DistributedDBInterfacesRegisterSyncDBTest",
+    ":DistributedDBInterfacesSchemaDatabaseUpgradeTest",
+    ":DistributedDBInterfacesSpaceManagementTest",
+    ":DistributedDBInterfacesTransactionOptimizationTest",
+    ":DistributedDBInterfacesTransactionSyncDBTest",
+    ":DistributedDBInterfacesTransactionTest",
+    ":DistributedDBJsonPrecheckUnitTest",
+    ":DistributedDBMultiVerP2PSyncTest",
+    ":DistributedDBMultiVerVacuumTest",
+    ":DistributedDBNotificationChainTest",
+    ":DistributedDBParcelTest",
+    ":DistributedDBSchemaObjectTest",
+    ":DistributedDBSchemalTest",
+    ":DistributedDBSingleVerP2PSyncCheckTest",
+    ":DistributedDBSingleVerP2PSyncTest",
+    ":DistributedDBSingleVersionResultSetTest",
+    ":DistributedDBSqliteRegisterTest",
+    ":DistributedDBStorageCommitStorageTest",
+    ":DistributedDBStorageDataOperationTest",
+    ":DistributedDBStorageEncryptTest",
+    ":DistributedDBStorageIndexOptimizeTest",
+    ":DistributedDBStorageMemorySingleVerNaturalStoreTest",
+    ":DistributedDBStorageRegisterConflictTest",
+    ":DistributedDBStorageRegisterObserverTest",
+    ":DistributedDBStorageResultAndJsonOptimizeTest",
+    ":DistributedDBStorageSQLiteSingleVerNaturalStoreTest",
+    ":DistributedDBStorageSingleVerUpgradeTest",
+    ":DistributedDBStorageTransactionDataTest",
+    ":DistributedDBStorageTransactionRecordTest",
+    ":DistributedDBSyncerDeviceManagerTest",
+    ":DistributedDBTimeSyncTest",
+    ":RuntimeContextProcessSystemApiAdapterImplTest",
+  ]
+}
+###############################################################################

@@ -1,0 +1,11 @@
+{
+  "Groups": [
+    { "id": 1,
+    "Components": ["signal", "wifi", "notification"]
+    },
+    {
+      "id": 2,
+      "Components": ["battery", "clock"]
+    }
+  ]
+}

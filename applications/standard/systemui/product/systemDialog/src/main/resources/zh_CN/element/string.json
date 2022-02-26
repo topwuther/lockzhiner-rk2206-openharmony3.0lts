@@ -1,0 +1,24 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "Dialog"
+    },
+    {
+      "name": "mainability_description",
+      "value": "JS_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "access_request",
+      "value": "权限申请"
+    },
+    {
+      "name": "access_sure",
+      "value": "确定"
+    },
+    {
+      "name": "access_cancel",
+      "value": "取消"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<T1 section="OutputSetting">
+		<T1 property="BtsnoopOutput">true</T1>
+		<T1 property="BtsnoopOutputPath">/data/log/snoop.log</T1>
+		<T1 property="HciLogOutput">false</T1>
+		<T1 property="Desensitization">false</T1>
+	</T1>
+	<T1 section="BleAdapter">
+		<T1 property="GattClientService">true</T1>
+		<T1 property="GattServerService">true</T1>
+		<T1 property="IsValid">true</T1>
+	</T1>
+	<T1 section="ClassicAdapter">
+		<T1 property="A2dpSnkService">true</T1>
+		<T1 property="A2dpSrcService">true</T1>
+		<T1 property="AvrcpCtService">true</T1>
+		<T1 property="AvrcpTgService">true</T1>
+		<T1 property="GattClientService">true</T1>
+		<T1 property="GattServerService">true</T1>
+		<T1 property="HfpAgService">true</T1>
+		<T1 property="HfpHfService">true</T1>
+		<T1 property="IsValid">true</T1>
+		<T1 property="MapMceService">true</T1>
+		<T1 property="MapMseService">true</T1>
+		<T1 property="PbapPceService">true</T1>
+		<T1 property="PbapPseService">true</T1>
+		<T1 property="SocketService">true</T1>
+		<T1 property="DIService">true</T1>
+	</T1>
+	<T1 section="A2dpSrcService">
+		<T1 property="MaxConnectedDevices">0x06</T1>
+		<T1 property="CodecSbc">0x01</T1>
+		<T1 property="CodecAac">0x02</T1>
+	</T1>
+	<T1 section="A2dpSnkService">
+		<T1 property="CodecSbc">0x01</T1>
+		<T1 property="CodecAac">0x02</T1>
+	</T1>
+	<T1 section="GattService">
+		<T1 property="GattProfileMaxMtu">0x0200</T1>
+		<T1 property="BleMaxConnectedDevices">0x07</T1>
+		<T1 property="BleMinConnectionInterval">0x06</T1>
+		<T1 property="BleMaxConnectionInterval">0x54</T1>
+		<T1 property="BleConnectionLatency">0x00</T1>
+		<T1 property="BleConnectionSupervisionTimeout">0xFC</T1>
+		<T1 property="BleGattServerExchangeMtu">0x0200</T1>
+		<T1 property="ClassicMaxConnectedDevices">0x07</T1>
+		<T1 property="ClassicConnectionMtu">0x0200</T1>
+		<T1 property="ClassicConnectionMode">0x00</T1>
+		<T1 property="ClassicConnectionFlushTimeout">0xFFFF</T1>
+		<T1 property="ClassicConnectionSecurityMode">0x24</T1>
+		<T1 property="HighPriorityMinInterval">0x9</T1>
+		<T1 property="BalancedPriorityMinInterval">0x18</T1>
+		<T1 property="LowPowerMinInterval">0x50</T1>
+		<T1 property="HighPriorityMaxInterval">0xC</T1>
+		<T1 property="BalancedPriorityMaxInterval">0x28</T1>
+		<T1 property="LowPowerMaxInterval">0x64</T1>
+		<T1 property="HighPriorityLatency">0x0</T1>
+		<T1 property="BalancedPriorityLatency">0x0</T1>
+		<T1 property="LowPowerLatency">0x2</T1>
+		<T1 property="HighPriorityTimeout">0x1F4</T1>
+		<T1 property="BalancedPriorityTimeout">0x1F4</T1>
+		<T1 property="LowPowerTimeout">0x1F4</T1>
+	</T1>
+    <T1 section="AvrcpCtService">
+        <T1 property="MaxConnectedDevices">0x07</T1>
+        <T1 property="ControlMtu">0x200</T1>
+        <T1 property="BrowseMtu">0x1000</T1>
+    </T1>
+    <T1 section="AvrcpTgService">
+        <T1 property="MaxConnectedDevices">0x01</T1>
+        <T1 property="ControlMtu">0x200</T1>
+        <T1 property="BrowseMtu">0x1000</T1>
+    </T1>
+    <T1 section="HfpAgService">
+        <T1 property="MaxConnectedDevices">0x06</T1>
+    </T1>
+    <T1 section="HfpHfService">
+        <T1 property="MaxConnectedDevices">0x06</T1>
+    </T1>
+    <T1 section="SocketService">
+        <T1 property="MaxConnectedDevices">0x06</T1>
+    </T1>
+    <T1 section="MapMseService">
+		<T1 property="L2capMtu">0x0400</T1>
+		<T1 property="RfcommMtu">0x0400</T1>
+		<T1 property="SrmEnable">true</T1>
+    </T1>
+	<T1 section="PbapPseService">
+		<T1 property="L2capMtu">0x0400</T1>
+		<T1 property="RfcommMtu">0x0400</T1>
+		<T1 property="SrmEnable">true</T1>
+    </T1>
+	<T1 section="PbapPceService">
+        <T1 property="L2capMtu">0x0400</T1>
+        <T1 property="RfcommMtu">0x0400</T1>
+		<T1 property="SrmEnable">true</T1>
+		<T1 property="MaxConnectedDevices">0x06</T1>
+    </T1>
+	<T1 section="MapMceService">
+        <T1 property="MaxConnectedDevices">0x04</T1>
+		<T1 property="MaxOfGetUreadMessage">0x64</T1>
+		<T1 property="L2capMtu">0x0400</T1>
+		<T1 property="RfcommMtu">0x0400</T1>
+		<T1 property="SrmEnable">true</T1>
+	</T1>
+</config>

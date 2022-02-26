@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "libcoap: C-Implementation of CoAP",
+    "License": "BSD 3-Clause License",
+    "License File": "LICENSE",
+    "Version Number": "4.2.1",
+    "Upstream URL": "https://github.com/obgm/libcoap",
+    "Description": "libcoap is a C implementation of a lightweight application-protocol for devices that are constrained their resources such as computing power, RF range, memory, bandwidth, or network packet sizes. This protocol, CoAP, is standardized by the IETF as RFC 7252. For further information related to CoAP, see http://coap.technology."
+  }
+]

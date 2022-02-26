@@ -1,0 +1,43 @@
+{
+  "string": [
+    {
+      "name": "signalcomponent",
+      "value": "signalcomponent"
+    },
+    {
+      "name": "mainability_description",
+      "value": "JS_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "china_mobile",
+      "value": "中国移动"
+    },
+    {
+      "name": "china_telecom",
+      "value": "中国电信"
+    },
+    {
+      "name": "china_unicom",
+      "value": "中国联通"
+    },{
+      "name": "net_null",
+      "value": "没有 SIM 卡"
+    },
+    {
+      "name": "2G",
+      "value": "2G"
+    },
+    {
+      "name": "3G",
+      "value": "3G"
+    },
+    {
+      "name": "4G",
+      "value": "4G"
+    },
+    {
+      "name": "5G",
+      "value": "5G"
+    }
+  ]
+}

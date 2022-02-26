@@ -1,0 +1,15 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+import("//build/ohos.gni")
+import("//drivers/adapter/uhdf2/uhdf.gni")
+import("//drivers/peripheral/camera/hal/camera.gni")
+
+ohos_prebuilt_etc("driver_adapter") {
+  if (use_musl) {
+    source = "//device/hisilicon/hardware/media/hal/camera/libs/hispark_taurus/libdriver_adapter.z.so"
+  } else {
+    source = "//device/hisilicon/hardware/media/hal/camera/libs/hispark_taurus/std/libdriver_adapter.z.so"
+  }
+  module_install_dir = "lib/"
+  part_name = "hdf"
+  subsystem_name = "hdf"
+}

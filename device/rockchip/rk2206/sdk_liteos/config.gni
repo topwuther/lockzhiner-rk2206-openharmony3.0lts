@@ -1,0 +1,106 @@
+# Copyright (c) 2020-2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Kernel type, e.g. "linux", "liteos_a", "liteos_m".
+kernel_type = "liteos_m"
+
+# Kernel version.
+kernel_version = "1.0.1"
+
+# Board CPU type, e.g. "cortex-a7", "riscv32".
+board_cpu = "cortex-m4"
+
+# Board arch, e.g.  "armv7-a", "rv32imac".
+board_arch = ""
+
+# Toolchain name used for system compiling.
+# E.g. gcc-arm-none-eabi, arm-linux-harmonyeabi-gcc, ohos-clang,  riscv32-unknown-elf.
+# Note: The default toolchain is "ohos-clang". It's not mandatory if you use the default toolchain.
+board_toolchain = "arm-none-eabi-gcc"
+
+use_board_toolchain = true
+
+# The toolchain path installed, it's not mandatory if you have added toolchain path to your ~/.bashrc.
+board_toolchain_path = ""
+
+# Compiler prefix.
+board_toolchain_prefix = "arm-none-eabi-"
+
+# Compiler type, "gcc" or "clang".
+board_toolchain_type = "gcc"
+
+# Board related common compile flags.
+board_cflags = [
+  "-mcpu=cortex-m4",
+  "-mthumb",
+  "-Wall",
+  "-fdata-sections",
+  "-ffunction-sections",
+  "-DUSE_HAL_DRIVER",
+  "-D_STORAGE_LITE_",
+  "-D__LITEOS_M__",
+  "-D_BSD_SOURCE",
+  "-D_GNU_SOURCE",
+  # "-DCONFIG_PWM_SUPPORT",
+  # "-DCONFIG_I2C_SUPPORT",
+]
+
+board_cxx_flags = board_cflags
+
+board_ld_flags = board_cflags
+
+# Board related headfiles search path.
+board_include_dirs = [
+    "//device/rockchip/rk2206/sdk_liteos/include",
+    "//device/rockchip/rk2206/adapter/include",
+    "//device/rockchip/rk2206/sdk_liteos/board/fs",
+    "//device/rockchip/hardware/lib/CMSIS/Device/RK2206/Include",
+    "//third_party/cmsis/CMSIS/Core/Include",
+    "//kernel/liteos_m/kal/posix/include",
+    "//kernel/liteos_m/components/fs/fatfs",
+    "//kernel/liteos_m/kernel/include",
+    "//kernel/liteos_m/kernel/arch/include",
+    "//kernel/liteos_m/kernel/arch/arm/cortex-m4/gcc",
+    "//kernel/liteos_m/utils",
+    "//kernel/liteos_m/kal/cmsis",
+    "//kernel/liteos_m/components/net/lwip-2.1/porting/include",
+    "//third_party/FatFs/source",
+#    "//third_party/musl/porting/liteos_m/kernel/include",
+    "//third_party/musl/arch/arm",
+    "//third_party/lwip/src/include",
+    "//utils/native/lite/include",
+    "//foundation/communication/wifi_aware/interfaces/kits",
+    "//foundation/communication/wifi_lite/interfaces/wifiservice",
+    "//foundation/communication/ipc_lite/interfaces/kits",
+    "//foundation/communication/softbus_lite/interfaces/kits/discovery/",
+    "//foundation/communication/softbus_lite/interfaces/kits/transport/",
+    "//base/startup/syspara_lite/interfaces/kits",
+    "//base/security/huks/interfaces/innerkits/huks_lite",
+    "//utils/native/lite/include",
+    "//base/hiviewdfx/hilog_lite/interfaces/native/kits",
+    "//third_party/openssl/crypto/ec",
+    "//third_party/openssl/include",
+    "//kernel/liteos_m/components",
+    "//third_party/bounds_checking_function/include",
+]
+
+# Board adapter dir for OHOS components.
+board_adapter_dir = ""
+
+# Sysroot path.
+board_configed_sysroot = ""
+
+# Board storage type, it used for file system generation.
+storage_type = "spinor"
+
+rk_third_party_dir = product_config.rk_third_party_dir

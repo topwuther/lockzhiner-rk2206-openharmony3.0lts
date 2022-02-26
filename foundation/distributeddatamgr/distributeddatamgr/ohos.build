@@ -1,0 +1,70 @@
+{
+  "subsystem": "distributeddatamgr",
+  "parts": {
+    "distributeddatamgr": {
+      "variants": [
+        "phone",
+        "wearable",
+        "ivi"
+      ],
+      "module_list": [
+        "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata:app_distributeddata",
+        "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:build_module",
+        "//foundation/distributeddatamgr/distributeddatamgr/interfaces/jskits/distributeddata:build_module",
+        "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/app:build_module",
+        "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:build_module"
+      ],
+      "inner_kits": [
+        {
+          "name": "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata:distributeddata_inner",
+          "header": {
+            "header_files": [
+              "blob.h",
+              "change_notification.h",
+              "distributed_kv_data_manager.h",
+              "kvstore.h",
+              "kvstore_death_recipient.h",
+              "kvstore_observer.h",
+              "kvstore_result_set.h",
+              "kvstore_snapshot.h",
+              "kvstore_sync_callback.h",
+              "single_kvstore.h",
+              "types.h",
+              "visibility.h",
+              "data_query.h",
+              "device_status_change_listener.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include"
+          }
+        },
+        {
+          "name": "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata:app_distributeddata",
+          "header": {
+            "header_files": [
+              "app_blob.h",
+              "app_change_notification.h",
+              "app_distributed_kv_data_manager.h",
+              "app_kvstore.h",
+              "app_kvstore_conflict_data.h",
+              "app_kvstore_observer.h",
+              "app_kvstore_result_set.h",
+              "app_device_status_change_listener.h",
+              "app_types.h",
+              "app_kvstore_corruption_observer.h",
+              "visibility.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/include"
+          }
+        }
+      ],
+      "system_kits": [],
+      "test_list": [
+        "//foundation/distributeddatamgr/distributeddatamgr:build_native_test"
+      ],
+      "system_capabilities":[
+        "SystemCapability.Data.DATA_DISTRIBUTEDDATAMGR"
+      ]
+    }
+  }
+}
+

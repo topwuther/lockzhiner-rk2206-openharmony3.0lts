@@ -1,0 +1,100 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+import("//build/ohos.gni")
+import("../camera.gni")
+
+print("${target_cpu}")
+target_product = getenv("TARGET_PRODUCT")
+target_product =
+    exec_script("/usr/bin/python3",
+                [
+                  "-c",
+                  "import sys; print('${target_product}'.lower(), end='')",
+                ],
+                "string")
+print("buffer manager use target: ${target_product}")
+
+config("buffer_manager_config") {
+  visibility = [ ":*" ]
+
+  cflags = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DGST_DISABLE_DEPRECATED",
+    "-DHAVE_CONFIG_H",
+    "-fno-strict-aliasing",
+    "-Wno-sign-compare",
+    "-Wno-builtin-requires-header",
+    "-Wno-implicit-function-declaration",
+    "-Wno-format",
+    "-Wno-int-conversion",
+    "-Wno-unused-function",
+    "-Wno-thread-safety-attributes",
+    "-Wno-inconsistent-missing-override",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-ffunction-sections",
+    "-fdata-sections",
+  ]
+
+  ldflags = [ "-Wl" ]
+
+  if (enable_camera_device_utest) {
+    cflags += [
+      "-fprofile-arcs",
+      "-ftest-coverage",
+    ]
+
+    ldflags += [ "--coverage" ]
+  }
+}
+
+ohos_shared_library("camera_buffer_manager") {
+  sources = [
+    "src/buffer_adapter.cpp",
+    "src/buffer_allocator.cpp",
+    "src/buffer_allocator_factory.cpp",
+    "src/buffer_allocator_utils.cpp",
+    "src/buffer_loop_tracking.cpp",
+    "src/buffer_manager.cpp",
+    "src/buffer_pool.cpp",
+    "src/buffer_tracking.cpp",
+    "src/gralloc_buffer_allocator/gralloc_buffer_allocator.cpp",
+    "src/heap_buffer_allocator/heap_buffer_allocator.cpp",
+    "src/image_buffer.cpp",
+  ]
+
+  include_dirs = [
+    "include",
+    "$camera_path/include",
+    "//utils/native/base/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
+    "//drivers/framework/include/utils",
+    "//drivers/adapter/uhdf2/osal/include",
+  ]
+
+  libs = []
+
+  defines = []
+
+  deps = [
+    "//drivers/peripheral/display/hal:hdi_display_gralloc",
+    "//foundation/graphic/standard:libsurface",
+    "//utils/native/base:utils",
+  ]
+
+  if (enable_camera_device_utest) {
+    defines += [ "CAMERA_DEVICE_UTEST" ]
+  }
+
+  if (is_standard_system) {
+    external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  } else {
+    external_deps = [ "hilog:libhilog" ]
+  }
+
+  public_configs = [ ":buffer_manager_config" ]
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}

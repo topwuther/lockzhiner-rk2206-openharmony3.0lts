@@ -1,0 +1,4 @@
+aa start -d 2 -a CesSTPermissionAndAB -b com.ohos.cesst.cesSTPermissionAndAB
+aa start -d 6 -a CesSTPermissionDefaultA -b com.ohos.cesst.cesSTPermissionDefaultA
+aa start -d 7 -a CesSTPermissionOrAB -b com.ohos.cesst.cesSTPermissionOrAB
+aa start -d 8 -a CesSTPermissionOrAX -b com.ohos.cesst.cesSTPermissionOrAX

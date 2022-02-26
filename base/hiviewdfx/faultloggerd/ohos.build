@@ -1,0 +1,16 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "faultloggerd": {
+      "module_list": [
+        "//base/hiviewdfx/faultloggerd/interfaces/innerkits/signal_handler:dfx_signalhandler",
+        "//base/hiviewdfx/faultloggerd/interfaces/innerkits/faultloggerd_client:libfaultloggerd",
+        "//base/hiviewdfx/faultloggerd/tools/process_dump:processdump",
+        "//base/hiviewdfx/faultloggerd/services:faultloggerd"
+      ],
+      "test_list": [
+        "//base/hiviewdfx/faultloggerd/tools/crasher:crasher"
+      ]
+    }
+  }
+}

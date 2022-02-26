@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 96 96"
+     version="1.1"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic/add/ic_add</title>
+    <g
+        id="ic/add/ic_add"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd">
+        <path
+            d="M48,8 C49.6568542,8 51,9.34314575 51,11 L51,45 L85,45 C86.6568542,45 88,46.3431458 88,48 C88,49.6568542 86.6568542,51 85,51 L51,51 L51,85 C51,86.6568542 49.6568542,88 48,88 C46.3431458,88 45,86.6568542 45,85 L45,51 L11,51 C9.34314575,51 8,49.6568542 8,48 C8,46.3431458 9.34314575,45 11,45 L45,45 L45,11 C45,9.34314575 46.3431458,8 48,8 Z"
+            id="路径"
+            fill="#000000"
+            fill-rule="nonzero"></path>
+    </g>
+</svg>

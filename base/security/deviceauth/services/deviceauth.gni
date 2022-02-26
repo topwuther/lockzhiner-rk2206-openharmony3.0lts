@@ -1,0 +1,192 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/security/deviceauth/deviceauth_env.gni")
+
+inc_path = [
+  "${innerkits_path}",
+  "${frameworks_path}/inc",
+  "${services_path}/common/inc",
+  "${services_path}/common/inc/broadcast_manager",
+  "${services_path}/common/inc/callback_manager",
+  "${services_path}/common/inc/channel_manager",
+  "${services_path}/common/inc/channel_manager/soft_bus_channel",
+  "${services_path}/common/inc/data_base",
+  "${services_path}/common/inc/task_manager",
+  "${services_path}/group_auth/inc",
+  "${services_path}/group_auth/inc/account_unrelated_group_auth",
+  "${services_path}/group_auth/inc/account_related_group_auth",
+  "${services_path}/group_manager/inc",
+  "${services_path}/group_manager/inc/account_unrelated",
+  "${services_path}/group_manager/inc/account_related",
+  "${services_path}/module/inc",
+  "${services_path}/module/inc/tcis_module",
+  "${services_path}/module/inc/tcis_module/tcis_auth_token_manager",
+  "${services_path}/module/inc/das_module",
+  "${services_path}/module/inc/das_module/iso_task",
+  "${services_path}/module/inc/das_module/iso_task/iso_protocol_task",
+  "${services_path}/module/inc/das_module/iso_task/lite_exchange_task",
+  "${services_path}/module/inc/das_module/pake_task",
+  "${services_path}/module/inc/das_module/pake_task/new_pake_task",
+  "${services_path}/module/inc/das_module/pake_task/pake_task",
+  "${services_path}/module/inc/protocol",
+  "${services_path}/module/inc/protocol/pake_protocol",
+  "${services_path}/module/inc/protocol/pake_protocol/pake_protocol",
+  "${services_path}/module/inc/protocol/pake_protocol/new_pake_protocol",
+  "${services_path}/module/inc/protocol/iso_protocol",
+  "${services_path}/session/inc",
+  "${services_path}/session/inc/auth_session",
+  "${services_path}/session/inc/auth_session_lite",
+  "${services_path}/session/inc/bind_session",
+  "${services_path}/session/inc/bind_session_lite",
+  "${services_path}/session/inc/key_agree_session",
+]
+
+module_only_iso_files = [
+  "${services_path}/module/src/das_module/iso_task/iso_client_task.c",
+  "${services_path}/module/src/das_module/iso_task/iso_server_task.c",
+  "${services_path}/module/src/das_module/iso_task/iso_task_common.c",
+  "${services_path}/module/src/das_module/iso_task/iso_task_main.c",
+  "${services_path}/module/src/das_module/iso_task/iso_protocol_task/iso_client_protocol_task.c",
+  "${services_path}/module/src/das_module/iso_task/iso_protocol_task/iso_server_protocol_task.c",
+  "${services_path}/module/src/das_module/iso_task/lite_exchange_task/iso_client_bind_exchange_task.c",
+  "${services_path}/module/src/das_module/iso_task/lite_exchange_task/iso_client_unbind_exchange_task.c",
+  "${services_path}/module/src/das_module/iso_task/lite_exchange_task/iso_server_bind_exchange_task.c",
+  "${services_path}/module/src/das_module/iso_task/lite_exchange_task/iso_server_unbind_exchange_task.c",
+
+  "${services_path}/module/src/das_module/pake_task/pake_task_common.c",
+  "${services_path}/module/src/das_module/pake_task/pake_message_util.c",
+  "${services_path}/module/src/das_module/pake_task/new_pake_task_mock/new_pake_task_main_mock.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task_mock/pake_task_main_mock.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task_mock/standard_exchange_task_mock.c",
+
+  "${services_path}/module/src/protocol/protocol_common.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_common.c",
+  "${services_path}/module/src/protocol/iso_protocol/iso_protocol_common.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_ec_mock/pake_protocol_ec_mock.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_dl_mock/pake_protocol_dl_mock.c",
+  "${services_path}/module/src/protocol/new_pake_protocol/new_pake_protocol_ec_mock/new_pake_protocol_ec_mock.c",
+  "${services_path}/module/src/protocol/new_pake_protocol/new_pake_protocol_dl_mock/new_pake_protocol_dl_mock.c",
+
+  "${services_path}/module/src/tcis_module_mock/tcis_module_mock.c",
+]
+
+module_only_pake_files = [
+  "${services_path}/module/src/das_module/iso_task_mock/iso_task_main_mock.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task_common.c",
+  "${services_path}/module/src/das_module/pake_task/pake_message_util.c",
+  "${services_path}/module/src/das_module/pake_task/new_pake_task_mock/new_pake_task_main_mock.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_task_main.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_client_task.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_server_task.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_protocol_task/pake_client_protocol_task.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_protocol_task/pake_server_protocol_task.c",
+  "${services_path}/module/src/das_module/pake_task/pake_task/pake_protocol_task/pake_protocol_task_common.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/common_standard_bind_exchange.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/common_standard_unbind_exchange.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/standard_client_bind_exchange_task.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/standard_client_unbind_exchange_task.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/standard_server_bind_exchange_task.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/standard_server_unbind_exchange_task.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/das_asy_token_manager.c",
+  "${services_path}/module/src/das_module/pake_task/standard_exchange_task/standard_exchange_message_util.c",
+  "${services_path}/module/src/tcis_module_mock/tcis_module_mock.c",
+  "${services_path}/module/src/protocol/protocol_common.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_common.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_ec/pake_protocol_ec.c",
+  "${services_path}/module/src/protocol/pake_protocol/pake_protocol_dl/pake_protocol_dl.c",
+  "${services_path}/module/src/protocol/new_pake_protocol/new_pake_protocol_ec_mock/new_pake_protocol_ec_mock.c",
+  "${services_path}/module/src/protocol/new_pake_protocol/new_pake_protocol_dl_mock/new_pake_protocol_dl_mock.c",
+]
+
+channel_with_soft_bus_files = ["${services_path}/common/src/channel_manager/soft_bus_channel/soft_bus_channel.c"]
+
+channel_without_soft_bus_files = ["${services_path}/common/src/channel_manager/soft_bus_channel_mock/soft_bus_channel_mock.c"]
+
+deviceauth_base_files = [
+  "${services_path}/device_auth.c",
+  "${services_path}/common/src/broadcast_manager/broadcast_manager.c",
+  "${services_path}/common/src/callback_manager/callback_manager.c",
+  "${services_path}/common/src/channel_manager/channel_manager.c",
+  "${services_path}/common/src/data_base/database_manager.c",
+  "${services_path}/common/src/task_manager/task_manager.c",
+
+  "${services_path}/group_auth/src/group_auth_manager/group_auth_manager.c",
+  "${services_path}/group_auth/src/group_auth_manager/account_unrelated_group_auth/account_unrelated_group_auth.c",
+  "${services_path}/group_auth/src/group_auth_manager/account_related_group_auth_mock/account_related_group_auth_mock.c",
+
+  "${services_path}/group_manager/src/group_manager/group_common.c",
+  "${services_path}/group_manager/src/group_manager/group_manager.c",
+  "${services_path}/group_manager/src/group_manager/account_unrelated/peer_to_peer_group/peer_to_peer_group.c",
+  "${services_path}/group_manager/src/group_manager/account_unrelated/account_unrelated_group_manager/account_unrelated_group_manager.c",
+  "${services_path}/group_manager/src/group_manager/account_related/across_account_group_mock/across_account_group_mock.c",
+  "${services_path}/group_manager/src/group_manager/account_related/identical_account_group_mock/identical_account_group_mock.c",
+  "${services_path}/group_manager/src/group_manager/account_related/account_related_group_manager_mock/account_related_group_manager_mock.c",
+
+  "${services_path}/session/src/auth_session/auth_session_client.c",
+  "${services_path}/session/src/auth_session/auth_session_common.c",
+  "${services_path}/session/src/auth_session/auth_session_server.c",
+  "${services_path}/session/src/auth_session/auth_session_util.c",
+  "${services_path}/session/src/auth_session_lite/auth_session_client_lite.c",
+  "${services_path}/session/src/auth_session_lite/auth_session_server_lite.c",
+  "${services_path}/session/src/auth_session_lite/auth_session_common_lite.c",
+  "${services_path}/session/src/bind_session/bind_session_client.c",
+  "${services_path}/session/src/bind_session/bind_session_common.c",
+  "${services_path}/session/src/bind_session/bind_session_server.c",
+  "${services_path}/session/src/bind_session_lite/bind_session_client_lite.c",
+  "${services_path}/session/src/bind_session_lite/bind_session_common_lite.c",
+  "${services_path}/session/src/bind_session_lite/bind_session_server_lite.c",
+  "${services_path}/session/src/key_agree_session_mock/key_agree_session_client_mock.c",
+  "${services_path}/session/src/key_agree_session_mock/key_agree_session_server_mock.c",
+  "${services_path}/session/src/auth_session_common_util.c",
+  "${services_path}/session/src/session_common.c",
+  "${services_path}/session/src/session_manager.c",
+
+  "${services_path}/module/src/dev_auth_module_manager.c",
+  "${services_path}/module/src/module_common.c",
+  "${services_path}/module/src/version_util.c",
+  "${services_path}/module/src/das_module/das_common.c",
+  "${services_path}/module/src/das_module/das_module.c",
+  "${services_path}/module/src/das_module/task_main.c",
+  "${services_path}/module/src/das_module/das_version_util.c",
+]
+
+deviceauth_files = deviceauth_base_files
+deviceauth_files += module_only_pake_files
+deviceauth_files += channel_with_soft_bus_files
+
+deviceauth_lite0_files = deviceauth_base_files
+deviceauth_lite0_files += module_only_iso_files
+deviceauth_lite0_files += channel_without_soft_bus_files
+
+#build_flags = [ "-Wrestrict" ]
+build_flags = [ "-Werror" ]
+
+if (target_os == "linux") {
+  build_flags += [ "-D__LINUX__" ]
+}
+
+ipc_src_suffix = "cpp"
+ipc_adapt_path = "standard"
+if (defined(ohos_lite)) {
+  ipc_src_suffix = "c"
+  ipc_adapt_path = "lite"
+}
+
+deviceauth_ipc_files = [
+  "${frameworks_path}/src/${ipc_adapt_path}/ipc_adapt.${ipc_src_suffix}",
+  "${frameworks_path}/src/${ipc_adapt_path}/ipc_dev_auth_proxy.${ipc_src_suffix}",
+  "${frameworks_path}/src/${ipc_adapt_path}/ipc_dev_auth_stub.${ipc_src_suffix}",
+  "${frameworks_path}/src/${ipc_adapt_path}/ipc_callback_proxy.${ipc_src_suffix}",
+  "${frameworks_path}/src/${ipc_adapt_path}/ipc_callback_stub.${ipc_src_suffix}",
+]

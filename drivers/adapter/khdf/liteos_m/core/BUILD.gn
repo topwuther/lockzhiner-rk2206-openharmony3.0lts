@@ -1,0 +1,105 @@
+#
+# Copyright (c) 2021, Huawei Device Co., Ltd. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this list of
+#    conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice, this list
+#    of conditions and the following disclaimer in the documentation and/or other materials
+#    provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors may be used
+#    to endorse or promote products derived from this software without specific prior written
+#    permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import("//drivers/adapter/khdf/liteos_m/hdf.gni")
+
+config("libhdf_core_pub_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "$hdf_fwk_path/include",
+    "$hdf_fwk_path/include/osal",
+    "$hdf_fwk_path/include/utils",
+    "$hdf_fwk_path/utils/include",
+    "$hdf_fwk_path/include/platform",
+    "$hdf_fwk_path/include/core",
+    "$hdf_fwk_path/include/net",
+    "$hdf_fwk_path/include/wifi",
+    "$hdf_fwk_path/model/network/common/netdevice",
+    "$hdf_fwk_path/ability/sbuf/include",
+    "$hdf_fwk_path/support/platform/include",
+    "$hdf_fwk_path/core/host/include",
+    "$hdf_fwk_path/core/manager/include",
+    "$hdf_fwk_path/core/shared/include",
+    "$hdf_fwk_path/core/common/include/manager",
+    "$hdf_fwk_path/core/common/include/host",
+    "$hdf_fwk_path/core/adapter/vnode/include",
+    "$hdf_fwk_path/core/adapter/syscall/include",
+    "$hdf_fwk_path/include/config",
+    "$hdf_fwk_path/ability/config/hcs_parser/include",
+    "//kernel/liteos_m/components",
+  ]
+}
+
+static_library("hdf_core") {
+  sources = [
+    "$hdf_fwk_path/ability/config/device_resource_if.c",
+    "$hdf_fwk_path/ability/config/hcs_parser/src/hcs_blob_if.c",
+    "$hdf_fwk_path/ability/config/hcs_parser/src/hcs_generate_tree.c",
+    "$hdf_fwk_path/ability/config/hcs_parser/src/hcs_parser.c",
+    "$hdf_fwk_path/ability/config/hcs_parser/src/hcs_tree_if.c",
+    "$hdf_fwk_path/ability/sbuf/src/hdf_sbuf.c",
+    "$hdf_fwk_path/ability/sbuf/src/hdf_sbuf_impl_raw.c",
+    "$hdf_fwk_path/core/common/src/devlite_object_config.c",
+    "$hdf_fwk_path/core/common/src/hdf_attribute.c",
+    "$hdf_fwk_path/core/common/src/load_driver_entry.c",
+    "$hdf_fwk_path/core/host/src/devhost_service.c",
+    "$hdf_fwk_path/core/host/src/devmgr_service_clnt.c",
+    "$hdf_fwk_path/core/host/src/devsvc_manager_clnt.c",
+    "$hdf_fwk_path/core/host/src/hdf_device.c",
+    "$hdf_fwk_path/core/host/src/hdf_device_node.c",
+    "$hdf_fwk_path/core/host/src/hdf_device_object.c",
+    "$hdf_fwk_path/core/host/src/hdf_device_token.c",
+    "$hdf_fwk_path/core/host/src/hdf_driver_loader.c",
+    "$hdf_fwk_path/core/host/src/hdf_observer_record.c",
+    "$hdf_fwk_path/core/host/src/hdf_service_observer.c",
+    "$hdf_fwk_path/core/host/src/hdf_service_subscriber.c",
+    "$hdf_fwk_path/core/host/src/power_state_token.c",
+    "$hdf_fwk_path/core/manager/src/devhost_service_clnt.c",
+    "$hdf_fwk_path/core/manager/src/device_token_clnt.c",
+    "$hdf_fwk_path/core/manager/src/devmgr_service.c",
+    "$hdf_fwk_path/core/manager/src/devsvc_manager.c",
+    "$hdf_fwk_path/core/manager/src/hdf_driver_installer.c",
+    "$hdf_fwk_path/core/manager/src/hdf_host_info.c",
+    "$hdf_fwk_path/core/manager/src/power_state_token_clnt.c",
+    "$hdf_fwk_path/core/shared/src/hdf_device_info.c",
+    "$hdf_fwk_path/core/shared/src/hdf_object_manager.c",
+    "$hdf_fwk_path/core/shared/src/hdf_service_record.c",
+    "$hdf_fwk_path/utils/src/hdf_cstring.c",
+    "$hdf_fwk_path/utils/src/hdf_map.c",
+    "$hdf_fwk_path/utils/src/hdf_slist.c",
+    "$hdf_fwk_path/utils/src/hdf_sref.c",
+    "common/src/devmgr_service_start.c",
+    "common/src/hdf_device_node_ext.c",
+  ]
+
+  include_dirs = []
+  public_configs = [ ":libhdf_core_pub_config" ]
+  deps = [ "$khdf_path/osal:hdf_osal_lite" ]
+}

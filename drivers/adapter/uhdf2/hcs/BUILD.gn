@@ -1,0 +1,50 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//drivers/adapter/uhdf2/uhdf.gni")
+
+action("build_hcs") {
+  gadget = "acm"
+  hcs_source = "/hdf.hcs"
+  if (gadget == "acm") {
+    hcs_source = "/hdf.hcs"
+  } else if (gadget == "ecm") {
+    hcs_source = "/hdf_ecm.hcs"
+  } else if (gadget == "ecm_acm") {
+    hcs_source = "/hdf_ecm_acm.hcs"
+  }
+
+  if (product_company == "openharmony") {
+    hcs_config_path = "default"
+  } else {
+    hcs_config_path = "//vendor/$product_company/$product_name/hdf_config/uhdf/"
+  }
+  script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  sources = [ rebase_path(hcs_config_path + hcs_source) ]
+  outputs = [ "$target_gen_dir/hdf_default.hcb" ]
+  args = [
+    "-o",
+    rebase_path(outputs[0]),
+    sources[0],
+  ]
+}
+
+ohos_prebuilt_etc("hdf_default.hcb") {
+  deps = [ ":build_hcs" ]
+  hcs_outputs = get_target_outputs(":build_hcs")
+  source = hcs_outputs[0]
+  relative_install_dir = "hdfconfig"
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}

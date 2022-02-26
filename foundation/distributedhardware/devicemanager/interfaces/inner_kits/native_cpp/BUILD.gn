@@ -1,0 +1,122 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+import("//foundation/distributedhardware/devicemanager/devicemanager.gni")
+
+if (defined(ohos_lite)) {
+  shared_library("devicemanagersdk") {
+    include_dirs = [
+      "include",
+      "include/ipc",
+      "include/ipc/lite",
+      "include/notify",
+      "${utils_path}/include/log",
+      "${utils_path}/include/ipc/lite",
+      "${common_path}/include/ipc",
+      "${common_path}/include/ipc/model",
+      "${common_path}/include",
+    ]
+    include_dirs += [
+      "//utils/native/lite/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+      "//third_party/bounds_checking_function/include",
+      "//foundation/communication/ipc_lite/interfaces/kits",
+      "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+      "//third_party/json/include",
+    ]
+
+    sources = [
+      "src/device_manager.cpp",
+      "src/device_manager_impl.cpp",
+      "src/ipc/ipc_client_proxy.cpp",
+      "src/ipc/lite/ipc_client_manager.cpp",
+      "src/ipc/lite/ipc_client_server_proxy.cpp",
+      "src/ipc/lite/ipc_client_stub.cpp",
+      "src/ipc/lite/ipc_cmd_parser.cpp",
+      "src/notify/device_manager_notify.cpp",
+    ]
+
+    defines = [
+      "LITE_DEVICE",
+      "HI_LOG_ENABLE",
+      "DH_LOG_TAG=\"devicemanagerkit\"",
+      "LOG_DOMAIN=0xD004100",
+    ]
+
+    deps = [
+      "${utils_path}:devicemanagerutils",
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//foundation/communication/ipc_lite:liteipc_adapter",
+      "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+      "//third_party/bounds_checking_function:libsec_shared",
+      "//utils/native/lite:utils",
+    ]
+  }
+} else {
+  ohos_shared_library("devicemanagersdk") {
+    include_dirs = [
+      "//utils/native/base/include",
+      "//utils/system/safwk/native/include",
+      "include",
+      "include/ipc/standard",
+      "include/ipc",
+      "include/notify",
+      "${utils_path}/include/log",
+      "${common_path}/include/ipc",
+      "${common_path}/include/ipc/model",
+      "${utils_path}/include/ipc/standard",
+      "${common_path}/include",
+      "//third_party/json/include",
+    ]
+
+    sources = [
+      "src/device_manager.cpp",
+      "src/device_manager_impl.cpp",
+      "src/ipc/ipc_client_proxy.cpp",
+      "src/ipc/standard/ipc_client_manager.cpp",
+      "src/ipc/standard/ipc_client_server_proxy.cpp",
+      "src/ipc/standard/ipc_client_stub.cpp",
+      "src/ipc/standard/ipc_cmd_parser.cpp",
+      "src/notify/device_manager_notify.cpp",
+    ]
+
+    deps = [
+      "${utils_path}:devicemanagerutils",
+      "//utils/native/base:utils",
+    ]
+
+    defines = [
+      "HI_LOG_ENABLE",
+      "DH_LOG_TAG=\"devicemanagerkit\"",
+      "LOG_DOMAIN=0xD004100",
+    ]
+
+    external_deps = [
+      "appexecfwk_standard:appexecfwk_base",
+      "appexecfwk_standard:appexecfwk_core",
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+      "safwk:system_ability_fwk",
+      "samgr_L2:samgr_proxy",
+    ]
+
+    subsystem_name = "distributedhardware"
+
+    part_name = "device_manager_base"
+  }
+}

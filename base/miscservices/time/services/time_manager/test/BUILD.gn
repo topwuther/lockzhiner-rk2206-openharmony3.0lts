@@ -1,0 +1,68 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+config("module_private_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "//base/miscservices/time/interfaces/innerkits/include",
+    "unittest/include",
+    "//foundation/ace/napi/interfaces/kits/napi",
+    ]
+}
+
+module_output_path = "time_native/time_service"
+
+ohos_unittest("TimeServiceTest") {
+  module_out_path = module_output_path
+
+  sources = [ "unittest/src/time_service_test.cpp" ]
+
+  configs = [
+    ":module_private_config",
+  ]
+
+  deps = [
+    "//base/miscservices/time/services:time_service",
+    "//base/notification/ans_standard/frameworks/wantagent:wantagent_innerkits",
+    "//foundation/ace/napi:ace_napi",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr:distributedschedsvr",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:base",
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "hisysevent_native:libhisysevent",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+
+  deps = []
+
+  deps += [ ":TimeServiceTest" ]
+}

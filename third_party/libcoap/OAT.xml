@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021 Huawei Device Co., Ltd.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- OAT(OSS Audit Tool) configuration guide:
+basedir: Root dir, the basedir + project path is the real source file location.
+licensefile:
+1.If the project don't have "LICENSE" in root dir, please define all the license files in this project in , OAT will check license files according to this rule.
+
+tasklist(only for batch mode):
+1. task: Define oat check thread, each task will start a new thread.
+2. task name: Only an name, no practical effect.
+3. task policy: Default policy for projects under this task, this field is required and the specified policy must defined in policylist.
+4. task filter: Default filefilter for projects under this task, this field is required and the specified filefilter must defined in filefilterlist.
+5. task project: Projects to be checked, the path field define the source root dir of the project.
+
+
+policyList:
+1. policy: All policyitems will be merged to default OAT.xml rules, the name of policy doesn't affect OAT check process.
+2. policyitem: The fields type, name, path, desc is required, and the fields rule, group, filefilter is optional,the default value is:
+<policyitem type="" name="" path="" desc="" rule="may" group="defaultGroup" filefilter="defaultPolicyFilter"/>
+3. policyitem type:
+    "compatibility" is used to check license compatibility in the specified path;
+    "license" is used to check source license header in the specified path;
+    "copyright" is used to check source copyright header in the specified path;
+    "import" is used to check source dependency in the specified path, such as import ... ,include ...
+    "filetype" is used to check file type in the specified path, supported file types: archive, binary
+    "filename" is used to check whether the specified file exists in the specified path(support projectroot in default OAT.xml), supported file names: LICENSE, README, README.OpenSource
+
+4. policyitem name: This field is used for define the license, copyright, "*" means match all, the "!" prefix means could not match this value. For example, "!GPL" means can not use GPL license.
+5. policyitem path: This field is used for define the source file scope to apply this policyitem, the "!" prefix means exclude the files. For example, "!.*/lib/.*" means files in lib dir will be exclude while process this policyitem.
+6. policyitem rule and group: These two fields are used together to merge policy results. "may" policyitems in the same group means any one in this group passed, the result will be passed.
+7. policyitem filefilter: Used to bind filefilter which define filter rules.
+8. filefilter: Filter rules, the type filename is used to filter file name, the type filepath is used to filter file path.
+
+Note:If the text contains special characters, please escape them according to the following rules:
+" == &gt;
+& == &gt;
+' == &gt;
+< == &gt;
+> == &gt;
+-->
+<configuration>
+    <oatconfig>
+        <licensefile></licensefile>
+        <filefilterlist>
+            <filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
+                <filteritem type="filename" name="CONTRIBUTE" desc="Contributions made up to 2017-06-01 have been made under the dual license model BSD 2-Clause and GPL v2+ (The GNU General Public License 2.0 or later). We just use use BSD."/>
+                <filteritem type="filename" name="COPYING" desc="We just use use BSD. getopt.c, OpenSSL, GnuTLS or tinyDTLS are not be used."/>
+                <filteritem type="filename" name="LICENSE" desc="We just use use BSD. getopt.c, OpenSSL, GnuTLS or tinyDTLS are not be used."/>
+                <filteritem type="filename" name="Makefile.am" desc="We not use this automake script file."/>
+                <filteritem type="filename" name="BUILDING" desc="无license头。该文件为构建说明文档。"/>
+                <filteritem type="filepath" name="m4/ac_check_cryptolibs.m4" desc="We do not need this file to check the version of GNUTLS|OPENSSL. Copying and distribution of this file, with or without modification, are permitted in any medium without royalty provided the copyright notice and this notice are preserved. This file is offered as-is, without any warranty."/>
+                <filteritem type="filepath" name="m4/ax_check_a2x_to_man.m4" desc="We do not need this file to check if have installed a2x or not. This file is part of the CoAP library libcoap, following BSD License."/>
+                <filteritem type="filepath" name="m4/ax_check_compile_flag.m4" desc="You need not follow the terms of the GPL when using or distributing Autoconf scripts. Futher more, we not use this Autoconf script file."/>
+                <filteritem type="filepath" name="m4/ax_check_link_flag.m4" desc="You need not follow the terms of the GPL when using or distributing Autoconf scripts. Futher more, we not use this Autoconf script file."/>
+                <filteritem type="filepath" name="doc/Doxyfile.in" desc="无license头。该文件为API文档生产脚本。"/>
+            </filefilter>
+        </filefilterlist>
+    <licensematcherlist>
+        <licensematcher name="BSD 2-Clause License" desc="如果工具扫描是InvalidLicense，可在此定义匹配规则，注意引号要转义" >
+            <licensetext name="
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED" desc="匹配此条目的为BSD 2-Clause License"/>
+        </licensematcher>
+        <licensematcher name="BSD 3-Clause License" desc="如果工具扫描是InvalidLicense，可在此定义匹配规则，注意引号要转义" >
+            <licensetext name="
+Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED" desc="匹配此条目的为BSD 3-Clause License"/>
+        </licensematcher>
+        <licensematcher name="BSD 3-Clause License" desc="如果工具扫描是InvalidLicense，可在此定义匹配规则，注意引号要转义" >
+            <licensetext name="
+Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED" desc="匹配此条目的为BSD 3-Clause License"/>
+        </licensematcher>
+    </licensematcherlist>
+    </oatconfig>
+</configuration>

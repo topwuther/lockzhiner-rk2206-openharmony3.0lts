@@ -1,0 +1,11 @@
+import("//build/lite/config/component/lite_component.gni")
+
+copy("hdf_audio_json") {
+  sources = [ "//drivers/peripheral/audio/config/adapter_config.json" ]
+  outputs = [ "${root_out_dir}/etc/adapter_config.json" ]
+}
+
+copy("hdf_audio_path_json") {
+  sources = [ "//drivers/peripheral/audio/config/parse.json" ]
+  outputs = [ "${root_out_dir}/etc/parse.json" ]
+}

@@ -1,0 +1,330 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+
+  executable("usbhost_ddk_test") {
+    sources = [
+      "src/usbhost_ddk_test.c",
+      "src/usbhost_test.c",
+    ]
+
+    include_dirs = [
+      "//drivers/adapter/uhdf/posix/include",
+      "//drivers/adapter/khdf/liteos/osal/include",
+      "//drivers/adapter/khdf/liteos/model/usb/host/include",
+      "//drivers/framework/include/utils",
+      "//drivers/framework/include/osal",
+      "//drivers/framework/core/adapter/syscall/include",
+      "//drivers/framework/include/core",
+      "//drivers/framework/ability/sbuf/include",
+      "//drivers/framework/core/shared/include",
+      "//drivers/framework/core/common/include/host",
+      "//drivers/framework/utils/include",
+      "//drivers/framework/include",
+      "//third_party/bounds_checking_function/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
+      "//drivers/peripheral/usb/sample/host/include",
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/device/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "//drivers/peripheral/usb/gadget/function/include",
+    ]
+
+    deps = [
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//drivers/adapter/uhdf/manager:hdf_core",
+      "//drivers/adapter/uhdf/posix:hdf_posix_osal",
+    ]
+
+    defines = [ "__LITEOS_USB_HOST_DDK_TEST__" ]
+  }
+} else {
+  import("//build/ohos.gni")
+  import("//drivers/adapter/uhdf2/uhdf.gni")
+
+  ohos_executable("usbhost_ddk_test") {
+    include_dirs = [
+      "//utils/native/base/include",
+      "$hdf_framework_path/core/manager/include",
+      "$hdf_framework_path/core/host/include",
+      "$hdf_framework_path/core/shared/include",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/include/config",
+      "$hdf_framework_path/ability/config/hcs_parser/include",
+      "$hdf_uhdf_path/ipc/include",
+      "$hdf_uhdf_path/osal/include",
+      "$hdf_uhdf_path/include/config",
+      "$hdf_uhdf_path/include/host",
+      "$hdf_uhdf_path/shared/include",
+      "$hdf_uhdf_path/manager/include",
+      "include",
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/device/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "//drivers/peripheral/usb/gadget/function/include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    sources = [
+      "src/usbhost_ddk_test.c",
+      "src/usbhost_test.c",
+    ]
+
+    deps = [
+      "$hdf_uhdf_path/config:uhdf_hcs_pkg",
+      "$hdf_uhdf_path/hdi:libhdi",
+      "$hdf_uhdf_path/host:libhdf_host",
+      "$hdf_uhdf_path/ipc:libhdf_ipc_adapter",
+      "$hdf_uhdf_path/osal:libhdf_utils",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+
+  group("usb_pnp_sample_driver") {
+    deps = [ ":libusb_pnp_sample_driver" ]
+  }
+
+  ohos_shared_library("libusb_pnp_sample_driver") {
+    sources = [ "src/usb_pnp_sample.c" ]
+
+    include_dirs = [
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    deps = [
+      "//drivers/adapter/uhdf2/host:libhdf_host",
+      "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+      "//drivers/adapter/uhdf2/osal:libhdf_utils",
+      "//drivers/peripheral/usb/ddk:libusb_core",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    subsystem_name = "hdf"
+  }
+
+  ohos_executable("usbhost_pnp_test") {
+    include_dirs = [
+      "//utils/native/base/include",
+      "$hdf_framework_path/core/manager/include",
+      "$hdf_framework_path/core/host/include",
+      "$hdf_framework_path/core/shared/include",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/include/config",
+      "$hdf_framework_path/ability/config/hcs_parser/include",
+      "$hdf_uhdf_path/ipc/include",
+      "$hdf_uhdf_path/osal/include",
+      "$hdf_uhdf_path/include/config",
+      "$hdf_uhdf_path/include/host",
+      "$hdf_uhdf_path/shared/include",
+      "$hdf_uhdf_path/manager/include",
+      "include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    sources = [ "src/usbhost_pnp_test.c" ]
+
+    deps = [
+      "$hdf_uhdf_path/config:uhdf_hcs_pkg",
+      "$hdf_uhdf_path/hdi:libhdi",
+      "$hdf_uhdf_path/host:libhdf_host",
+      "$hdf_uhdf_path/ipc:libhdf_ipc_adapter",
+      "$hdf_uhdf_path/osal:libhdf_utils",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+
+  ohos_executable("usbhost_sdkapi_speed_test") {
+    sources = [ "src/usbhost_sdkapi_speed.c" ]
+
+    include_dirs = [
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "//drivers/peripheral/usb/gadget/function/include",
+      "include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    deps = [
+      "//drivers/adapter/uhdf2/host:libhdf_host",
+      "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+      "//drivers/adapter/uhdf2/osal:libhdf_utils",
+      "//drivers/peripheral/usb/ddk:libusb_core",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+
+  ohos_executable("usbhost_sdkraw_speed_test") {
+    sources = [ "src/usbhost_sdkraw_speed.c" ]
+
+    include_dirs = [
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/gadget/function/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    deps = [
+      "//drivers/adapter/uhdf2/host:libhdf_host",
+      "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+      "//drivers/adapter/uhdf2/osal:libhdf_utils",
+      "//drivers/peripheral/usb/ddk:libusb_core",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+
+  ohos_executable("usbhost_nosdk_speed_test") {
+    include_dirs = [
+      "//utils/native/base/include",
+      "$hdf_framework_path/core/manager/include",
+      "$hdf_framework_path/core/host/include",
+      "$hdf_framework_path/core/shared/include",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/include/config",
+      "$hdf_framework_path/ability/config/hcs_parser/include",
+      "$hdf_uhdf_path/ipc/include",
+      "$hdf_uhdf_path/osal/include",
+      "$hdf_uhdf_path/include/config",
+      "$hdf_uhdf_path/include/host",
+      "$hdf_uhdf_path/shared/include",
+      "$hdf_uhdf_path/manager/include",
+      "include",
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/device/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "//drivers/peripheral/usb/gadget/function/include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    sources = [ "src/usbhost_nosdk_speed.c" ]
+
+    deps = [
+      "$hdf_uhdf_path/config:uhdf_hcs_pkg",
+      "$hdf_uhdf_path/hdi:libhdi",
+      "$hdf_uhdf_path/host:libhdf_host",
+      "$hdf_uhdf_path/ipc:libhdf_ipc_adapter",
+      "$hdf_uhdf_path/osal:libhdf_utils",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+
+  ohos_executable("usbhost_sdk_test") {
+    include_dirs = [
+      "//drivers/peripheral/usb/ddk/common/include",
+      "//drivers/peripheral/usb/ddk/host/include",
+      "//drivers/peripheral/usb/interfaces/ddk/common",
+      "//drivers/peripheral/usb/interfaces/ddk/host",
+      "//drivers/peripheral/usb/gadget/function/include",
+      "include",
+      "//drivers/peripheral/usb/serial/include",
+    ]
+
+    sources = [ "src/usbhost_sdk_test.c" ]
+
+    deps = [
+      "//drivers/adapter/uhdf2/host:libhdf_host",
+      "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+      "//drivers/adapter/uhdf2/osal:libhdf_utils",
+      "//drivers/peripheral/usb/ddk:libusb_core",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    install_enable = false
+    subsystem_name = "hdf"
+  }
+}

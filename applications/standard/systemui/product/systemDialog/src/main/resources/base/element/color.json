@@ -1,0 +1,20 @@
+{
+  "color": [
+    {
+      "name": "dialog_bg",
+      "value": "#AAFFFF"
+    },
+    {
+      "name": "divider_line",
+      "value": "#BEBEBE"
+    },
+    {
+      "name": "button_font_color",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "title_font_color",
+      "value": "#000000"
+    }
+  ]
+}

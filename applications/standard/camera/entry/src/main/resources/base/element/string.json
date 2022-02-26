@@ -1,0 +1,12 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "相机"
+    },
+    {
+      "name": "mainability_description",
+      "value": "Camera main feature ability"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//drivers/adapter/khdf/liteos_m/hdf.gni")
+import("//device/rockchip/rk2206/sdk_liteos/board.gni")
+
+config("pahomqtt_config") {
+    include_dirs = [
+        "MQTTPacket/src",
+        "MQTTClient-C/src",
+        "MQTTClient-C/src/liteOS",
+        "//third_party/iot_link/network/mqtt/mqtt_al",
+        "//third_party/iot_link/inc",
+        "//third_party/musl/porting/liteos_m/kernel/include",
+        "//kernel/liteos_m/components/cmsis/2.0",
+    ]
+}
+    cflags = [ "-Wno-unused-variable" ]
+    cflags += [ "-Wno-unused-but-set-variable" ]
+    cflags += [ "-Wno-unused-parameter" ]
+    cflags += [ "-Wno-sign-compare" ]
+    cflags += [ "-Wno-unused-function" ]
+    cflags += [ "-Wno-return-type" ]
+pahomqtt_sources = [
+"MQTTClient-C/src/liteOS/MQTTLiteOS.c",
+"MQTTClient-C/src/MQTTClient.c",
+
+"MQTTPacket/src/MQTTConnectClient.c",
+"MQTTPacket/src/MQTTConnectServer.c",
+"MQTTPacket/src/MQTTDeserializePublish.c",
+"MQTTPacket/src/MQTTFormat.c",
+"MQTTPacket/src/MQTTPacket.c",
+"MQTTPacket/src/MQTTSerializePublish.c",
+"MQTTPacket/src/MQTTSubscribeClient.c",
+"MQTTPacket/src/MQTTSubscribeServer.c",
+"MQTTPacket/src/MQTTUnsubscribeClient.c",
+"MQTTPacket/src/MQTTUnsubscribeServer.c",
+"MQTTPacket/samples/transport.c",
+]
+
+
+static_library("pahomqtt_static") {
+    sources = pahomqtt_sources
+
+    public_configs = [ ":pahomqtt_config" ]
+
+    deps = [
+
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "description": "Configuration for sim state manager function Tests",
+    "driver": {
+        "type": "JSUnitTest",
+        "test-timeout": "240000",
+        "package": "com.ohos.simstatemanagerfunction",
+        "shell-timeout": "240000",
+        "native-test-timeout":"240000"
+    },
+    "kits": [
+        {
+            "test-file-name": [
+                "$module.hap"
+            ],
+            "type": "AppInstallKit",
+            "cleanup-apps": true
+        }
+    ]
+}

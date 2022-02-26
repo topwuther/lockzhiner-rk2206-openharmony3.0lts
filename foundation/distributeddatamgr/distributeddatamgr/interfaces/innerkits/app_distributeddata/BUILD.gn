@@ -1,0 +1,99 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/ohos.gni")
+
+group("build_module") {
+  deps = [ ":app_distributeddata" ]
+}
+
+config("distributeddata_test_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [ "include" ]
+}
+
+config("distributeddatafwk_config") {
+  visibility = [ ":*" ]
+
+  cflags = [ "-Wno-multichar" ]
+
+  cflags_cc = [ "-fvisibility=hidden" ]
+
+  include_dirs = [
+    "include",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//utils/native/base/include",
+  ]
+}
+
+config("distributeddatafwk_public_config") {
+  visibility = [ "//foundation/distributeddatamgr/distributeddatamgr:*" ]
+
+  include_dirs = [
+    "include",
+    "//utils/native/base/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/permission",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/account",
+    "//foundation/distributeddatamgr/distributeddatamgr/frameworks/innerkitsimpl/distributeddatafwk/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/distributeddata/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/include/utils",
+  ]
+}
+
+ohos_shared_library("app_distributeddata") {
+  part_name = "distributeddatamgr"
+  sources = [
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_blob.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_change_notification.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_distributed_kv_data_manager.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_distributed_kv_data_manager_impl.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_distributed_kv_data_manager_impl.h",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_kvstore_conflict_data_impl.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_kvstore_impl.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_kvstore_impl.h",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/app_kvstore_result_set_impl.cpp",
+    "include/app_types.h",
+  ]
+
+  configs = [ ":distributeddatafwk_config" ]
+  ldflags = [ "-Wl,--exclude-libs,libcrypto_static.a" ]
+  deps = [
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/account:distributeddata_account_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/permission:distributeddata_permission_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter/utils:distributeddata_utils_static",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/libs/distributeddb:distributeddb",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+
+  public_configs = [ ":distributeddatafwk_public_config" ]
+
+  subsystem_name = "distributeddatamgr"
+}
+
+config("distributeddatafwk_communication_config") {
+  visibility = [ ":*" ]
+
+  cflags = [ "-Wno-multichar" ]
+
+  include_dirs = [
+    "include",
+    "//utils/native/base/include",
+  ]
+}

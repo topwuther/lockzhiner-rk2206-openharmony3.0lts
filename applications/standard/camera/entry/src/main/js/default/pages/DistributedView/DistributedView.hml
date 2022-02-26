@@ -1,0 +1,57 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<element name="deviceListDialog" src="../../common/component/DeviceListDialog/DeviceListDialog.hml"></element>
+
+<div class="Container">
+    <div class="CameraView" style="width : {{ previewAreaWidth }} px; height : {{ previewAreaHeight }} px;">
+        <image style="width : {{ cameraViewImageWidth }} px; height : {{ cameraViewImageHeight }} px;"
+               src="../../common/media/camera.svg"></image>
+    </div>
+    <div class="DistributedFooter" style="margin-left : {{ footerWrapMargin }} px;">
+        <div class="RemoteTitle" style="width : {{ previewAreaWidth }} px; height : {{ modeSwitchHeight }} px;">
+            <text class="RemoteTitleText" style="font-size : {{ remoteTitleTextFontSize }} px;">
+                {{ $t('strings.remote_camera_in_use') }}</text>
+        </div>
+        <div class="RemoteBar" style="width : {{ previewAreaWidth }} px; height : {{ footBarHeight }} px;">
+            <image class="ImageStyle ShadowTwo" src="../../common/media/ic_camera_thumbnail_default_white.svg"
+                   style="width : {{ imageStyleWidth }} px; height : {{ imageStyleHeight }} px;
+                       border-radius : {{ imageStyleBorderRadius }} px;"></image>
+            <button class="Shoot ShadowTwo {{ isTouchPhoto ? 'DisableStyle' : 'EnableStyle' }}"
+                    style="width : {{ shootWidth }} px; height : {{ shootHeight }} px;
+                        icon-width : {{ shootWidth }} px; icon-height : {{ shootHeight }} px;
+                        border-radius : {{ shootBorderRadius }} px;"
+                    ontouchstart="onTouchStart" ontouchend="onTouchEnd" type="circle"
+                    icon="/common/media/take_photo_normal.svg"></button>
+            <stack class="SwitchCameraWrap">
+                <button class="SmallSwitchCamera ShadowTwo" type="circle" icon="/common/media/small_switch_camera.svg"
+                        style="width : {{ smallSwitchCameraWidth }} px; height : {{ smallSwitchCameraHeight }} px;
+                            icon-width : {{ smallSwitchCameraWidth }} px;
+                            icon-height : {{ smallSwitchCameraHeight }} px;
+                            border-radius : {{ smallSwitchCameraBorderRadius }} px;">
+                </button>
+                <div class="SwitchCameraCircle BorderStyle" onclick="switchCamera"
+                     style="width : {{ switchCameraCircleWidth }} px; height : {{ switchCameraCircleHeight }} px;
+                         border-radius : {{ switchCameraCircleBorderRadius }} px;
+                         border-width : {{ borderStyleBorder }} px;"></div>
+            </stack>
+            <deviceListDialog if="{{ previewAreaWidth !== 0 }}" open-device-list-dialog="{{ isDeviceListDialogOpen }}"
+                              @device-list-dialog-cancel="deviceListDialogCancel"
+                              @device-list-radio-change="deviceListRadioChange"></deviceListDialog>
+        </div>
+    </div>
+</div>

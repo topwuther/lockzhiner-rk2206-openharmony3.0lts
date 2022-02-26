@@ -1,0 +1,11 @@
+[
+  {
+   "Name":"mtdev",
+   "License":"MIT License",
+   "License File":"COPYING",
+   "Version Number":"1.1.6",
+   "Owner":"pengfei.hou@huawei.com",
+   "Upstream URL":"https://github.com/rydberg/mtdev",
+   "Description": "The mtdev library transforms all variants of kernel MT events to the slotted type B protocol"
+  }
+]

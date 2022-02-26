@@ -1,0 +1,89 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+module_output_path = "hiviewdfx/hicollie"
+hicollie_part_path = "//base/hiviewdfx/hicollie"
+
+###############################################################################
+config("module_private_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    ".",
+    "${hicollie_part_path}/frameworks/native",
+    "${hicollie_part_path}/frameworks/native/test",
+    "${hicollie_part_path}/interfaces/native/innerkits/include/xcollie",
+    "//utils/native/base/include",
+  ]
+  if (is_ohos) {
+    cflags_cc = [ "-D__XCOLLIE_OHOS__" ]
+  }
+}
+
+##############################unittest##########################################
+ohos_moduletest("XCollieModuleTest") {
+  module_out_path = module_output_path
+  sources = [
+    "${hicollie_part_path}/frameworks/native/test/xcollie_checker_test.cpp",
+    "${hicollie_part_path}/frameworks/native/timer_ring.cpp",
+    "${hicollie_part_path}/frameworks/native/xcollie.cpp",
+    "${hicollie_part_path}/frameworks/native/xcollie_inner.cpp",
+    "xcollie_watchdog_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hilog_native:libhilog",
+    "hisysevent_native:libhisysevent",
+  ]
+}
+
+ohos_moduletest("XCollieTimeoutModuleTest") {
+  module_out_path = module_output_path
+  sources = [
+    "${hicollie_part_path}/frameworks/native/timer_ring.cpp",
+    "${hicollie_part_path}/frameworks/native/xcollie.cpp",
+    "${hicollie_part_path}/frameworks/native/xcollie_inner.cpp",
+    "xcollie_timeout_test.cpp",
+  ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hilog_native:libhilog",
+    "hisysevent_native:libhisysevent",
+  ]
+}
+
+###############################################################################
+group("moduletest") {
+  testonly = true
+  deps = [
+    # deps file
+    ":XCollieModuleTest",
+    ":XCollieTimeoutModuleTest",
+  ]
+}
+###############################################################################

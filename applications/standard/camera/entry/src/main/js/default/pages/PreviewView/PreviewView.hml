@@ -1,0 +1,109 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<element name="deviceListDialog" src="../../common/component/DeviceListDialog/DeviceListDialog.hml"></element>
+
+<stack class="Container">
+    <div if="{{ previewAreaWidth !== 0 }}" class="PreviewArea"
+         style="width : {{ previewAreaWidth }} px; height : {{ previewAreaHeight }} px;">
+        <camera if="{{ isCreateCamera }}" id="CameraId" style="width : {{ previewAreaWidth }} px;
+            height : {{ previewAreaHeight }} px;"></camera>
+        <image if="{{ isShowHazyPicture }}" style="width : {{ previewAreaWidth }} px;
+            height : {{ previewAreaHeight }} px;" class="CameraPic" src="{{ hazyPictureUri }}"></image>
+    </div>
+    <div show="{{ isShowFlashingState }}" class="FlashingStyle" style="width : {{ previewAreaWidth }} px;
+        height : {{ previewAreaHeight }} px"></div>
+    <div class="ModeSwitch" style="width : {{ previewAreaWidth }} px; height : {{ modeSwitchHeight }} px;
+        bottom : {{ footBarHeight }} px; margin-left : {{ footerWrapMargin }} px;">
+        <list if="{{ whichPage === 'ResponderPreview' }}" class="List" id="List"
+              nitialindex="0" itemcenter="true" scrolleffect="no">
+            <list-item class="ListItem ListItemWidth">
+                <text style="font-weight : {{ photoFontWeight }} px; font-size : {{ modeText }} px;"
+                      class="ModeText ShadowTwo">{{ $t('strings.photoMode') }}</text>
+            </list-item>
+        </list>
+        <list if="{{ whichPage !== 'ResponderPreview' && isVideoShoot }}" class="List" id="List"
+              ontouchend="listTouchEnd" onscroll="scroll" nitialindex="0" itemcenter="true" scrolleffect="no">
+            <list-item class="ListItem" onclick="jumpToPhoto" style="margin-left : {{ listItemMargin }} px;">
+                <text style="font-weight : {{ photoFontWeight }} px; font-size : {{ modeText }} px;"
+                      class="ModeText ShadowTwo">{{ $t('strings.photoMode') }}</text>
+            </list-item>
+            <list-item class="ListItem" onclick="jumpToVideo" style="margin-right : {{ listItemMargin }} px;">
+                <text style="font-weight : {{ videoFontWeight }} px; font-size : {{ modeText }} px;"
+                      class="ModeText ShadowTwo">{{ $t('strings.videoMode') }}</text>
+            </list-item>
+        </list>
+        <div if="{{ isVideoShoot }}" class="SpotWrap">
+            <div class="Spot ShadowTwo"></div>
+        </div>
+    </div>
+    <div class="FootBar"
+         style="width : {{ previewAreaWidth }} px; height : {{ footBarHeight }} px;
+             margin-left : {{ footerWrapMargin }} px;">
+        <stack class="ImageStyle" style="width : {{ imageStyleWidth }} px; height : {{ imageStyleHeight }} px;
+            border-radius : {{ imageStyleBorderRadius }} px;">
+            <div show="{{ isVideoStop && isVideoShootButton }}" class="ImageStyle
+                {{ isVideoStop ? 'CloseRecorderThumbnail' : '' }} {{ animationClassName }}"
+                 style="width : {{ imageStyleWidth }} px; height : {{ imageStyleHeight }} px;
+                     border-radius : {{ imageStyleBorderRadius }} px;"
+                 onclick="jumpToAlbum">
+            </div>
+            <div if="{{ isVideoShoot && ! isVideoStop }}"
+                 class="{{ photoUri === '/common/media/ic_camera_thumbnail_default_white.svg' ? '' : 'BorderStyle' }}"
+                 style="border-width : {{ borderStyleBorder }} px; border-radius : {{ imageStyleBorderRadius }} px;">
+                <image class="ImageStyle ShadowTwo {{ animationClassName }}" src="{{ photoUri }}"
+                       style="width : {{ imageStyleWidth }} px; height : {{ imageStyleHeight }} px;
+                           border-radius : {{ imageStyleBorderRadius }} px;" onclick="jumpToAlbum"></image>
+            </div>
+        </stack>
+        <button class="Shoot ShadowTwo {{ isTouchPhoto ? 'DisableStyle' : 'EnableStyle' }}"
+                style="width : {{ shootWidth }} px; height : {{ shootHeight }} px; icon-width : {{ shootWidth }} px;
+                    icon-height : {{ shootHeight }} px; border-radius : {{ shootBorderRadius }} px;"
+                ontouchstart="onTouchStartPhoto" ontouchend="onTouchEndPhoto" type="circle"
+                if="{{ isPhotoShootButton }}" icon="/common/media/take_photo_normal.svg"></button>
+        <button class="Shoot ShadowTwo" if="{{ isVideoShootButton }}"
+                style="width : {{ shootWidth }} px; height : {{ shootHeight }} px; icon-width : {{ shootWidth }} px;
+                    icon-height : {{ shootHeight }} px; border-radius : {{ shootBorderRadius }} px;"
+                ontouchend="onTouchEndVideoStart" type="circle" icon="/common/media/take_video_normal.svg"></button>
+        <button class="Shoot ShadowTwo" if="{{ isVideoStopButton }}" ontouchend="onTouchEndVideoStop" type="circle"
+                style="width : {{ shootWidth }} px; height : {{ shootHeight }} px; icon-width : {{ shootWidth }} px;
+                    icon-height : {{ shootHeight }} px; border-radius : {{ shootBorderRadius }} px;"
+                icon="/common/media/take_video_stop.svg"></button>
+        <div if="{{ mode === 'video' }}" class="SwitchCameraCircle"
+             style="width : {{ switchCameraCircleWidth }} px; height : {{ switchCameraCircleHeight }} px;
+                 border-radius : {{ switchCameraCircleBorderRadius }} px;"></div>
+        <stack if="{{ mode === 'photo' }}"
+               class="SwitchCameraWrap {{ whichPage === 'ResponderPreview' ? 'DisableStyle' : '' }}">
+            <button class="SmallSwitchCamera ShadowTwo" type="circle" icon="/common/media/small_switch_camera.svg"
+                    style="width : {{ smallSwitchCameraWidth }} px; height : {{ smallSwitchCameraHeight }} px;
+                        icon-width : {{ smallSwitchCameraWidth }} px; icon-height : {{ smallSwitchCameraHeight }} px;
+                        border-radius : {{ smallSwitchCameraBorderRadius }} px;">
+            </button>
+            <div if="{{ whichPage === 'ResponderPreview' }}" class="SwitchCameraCircle BorderStyle"
+                 style="width : {{ switchCameraCircleWidth }} px; height : {{ switchCameraCircleHeight }} px;
+                     border-radius : {{ switchCameraCircleBorderRadius }} px;
+                     border-width : {{ borderStyleBorder }} px;"></div>
+            <div else class="SwitchCameraCircle BorderStyle" onclick="switchCamera"
+                 style="width : {{ switchCameraCircleWidth }} px; height : {{ switchCameraCircleHeight }} px;
+                     border-radius : {{ switchCameraCircleBorderRadius }} px;
+                     border-width : {{ borderStyleBorder }} px;"></div>
+        </stack>
+        <deviceListDialog if="{{ previewAreaWidth !== 0 }}" open-device-list-dialog="{{ isDeviceListDialogOpen }}"
+                          @device-list-dialog-cancel="deviceListDialogCancel"
+                          @device-list-radio-change="deviceListRadioChange"></deviceListDialog>
+    </div>
+</stack>

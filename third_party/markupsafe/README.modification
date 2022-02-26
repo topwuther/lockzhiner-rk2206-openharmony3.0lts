@@ -1,0 +1,21 @@
+Name: MarkupSafe
+Version: 1.1.1
+License: BSD 3-clause License
+
+Website: https://palletsprojects.com/p/markupsafe/
+
+Description:(from Website)
+MarkupSafe implements a text object that escapes characters so it is safe to
+use in HTML and XML. Characters that have special meanings are replaced so that
+they display as the actual characters. This mitigates injection attacks,
+meaning untrusted user input can safely be displayed on a page.
+Escaping is implemented in C so it is as efficient as possible
+
+
+Source:
+https://files.pythonhosted.org/packages/b9/2e/64db92e53b86efccfaea71321f597fa2e1b2bd3853d8ce658568f7a13094/MarkupSafe-1.1.1.tar.gz
+MD5: 43fd756864fe42063068e092e220c57b
+
+Local Modifications:
+Only includes the markup directory from the tarball and the LICENSE and
+AUTHORS files, create soft link NOTICE to LICENSE, removing other stuff.

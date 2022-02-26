@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic/gallery/public/back</title>
+    <defs>
+        <path d="M12.5303301,2.21966991 C12.8232233,2.51256313 12.8232233,2.98743687 12.5303301,3.28033009 L4.559,11.25 L21.25,11.25 C21.6642136,11.25 22,11.5857864 22,12 C22,12.4142136 21.6642136,12.75 21.25,12.75 L4.561,12.75 L12.5303301,20.7196699 C12.8232233,21.0125631 12.8232233,21.4874369 12.5303301,21.7803301 C12.2374369,22.0732233 11.7625631,22.0732233 11.4696699,21.7803301 L2.21966991,12.5303301 C1.9267767,12.2374369 1.9267767,11.7625631 2.21966991,11.4696699 L11.4696699,2.21966991 C11.7625631,1.9267767 12.2374369,1.9267767 12.5303301,2.21966991 Z" id="path-1"></path>
+    </defs>
+    <g id="ic/gallery/public/back" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="合并形状" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        <g id="编组" mask="url(#mask-2)" fill="#FFFFFF" fill-opacity="0.1">
+            <g id="矩形">
+                <rect x="0" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

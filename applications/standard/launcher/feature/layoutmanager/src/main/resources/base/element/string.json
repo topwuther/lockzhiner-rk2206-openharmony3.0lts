@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "layoutmanager_MainAbility",
+      "value": "layoutmanager_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "intoSettings",
+      "value": "Launcher settings"
+    },
+    {
+      "name": "addBlankPage",
+      "value": "Add Blank Page"
+    },
+    {
+      "name": "deleteBlankPage",
+      "value": "Delete Blank Page"
+    },
+    {
+      "name": "uninstall",
+      "value": "Uninstall"
+    },
+    {
+      "name": "submit",
+      "value": "Submit"
+    },
+    {
+      "name": "cancel",
+      "value": "Cancel"
+    }
+  ]
+}

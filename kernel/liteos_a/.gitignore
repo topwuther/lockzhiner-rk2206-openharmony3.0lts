@@ -1,0 +1,24 @@
+# General ignored file types
+*.o
+*.a
+*.so
+*.swp
+
+# IDE settings
+.vscode
+.idea
+.settings
+.cproject
+.project
+
+# VIM files
+cscope*
+tags
+
+# Menuconfig temp files
+/config.h
+/.config
+/.config.old
+
+# Build temp files
+/out

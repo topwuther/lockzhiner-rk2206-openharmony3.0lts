@@ -1,0 +1,41 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+  import("//build/lite/config/test.gni")
+  lite_component("hdf_test_usb_device") {
+    if (ohos_build_type == "debug") {
+      deps = [
+        "moduletest:hdf_peripheral_usb_test_module",
+        "performance:hdf_usb_device_sdk_io_test",
+        "unittest:hdf_usb_device_sdk_if_test",
+      ]
+    }
+    features = []
+  }
+  lite_component("hdf_test_usb_host") {
+    if (ohos_build_type == "debug") {
+      deps = [ "unittest:usb_host_sdk_test" ]
+    }
+    features = []
+  }
+} else {
+  group("hdf_test_usb") {
+    testonly = true
+    deps = [
+      "moduletest:hdf_moduletest_usb",
+      "unittest:hdf_unittest_usb",
+    ]
+  }
+}

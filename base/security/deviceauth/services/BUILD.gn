@@ -1,0 +1,264 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+import("//base/security/deviceauth/hals/deviceauth_hals.gni")
+import("deviceauth.gni")
+
+if (defined(ohos_lite)) {
+  static_library("deviceauth") {
+    include_dirs = inc_path
+    include_dirs += hals_inc_path
+    include_dirs += [
+      "//third_party/cJSON",
+      "//utils/native/lite/include",
+      "//third_party/bounds_checking_function/include",
+    ]
+
+    defines = [ "HILOG_ENABLE" ]
+    cflags = build_flags
+
+    if (ohos_kernel_type == "linux" || ohos_kernel_type == "liteos_a") {
+      include_dirs += [
+        "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+        "//foundation/communication/dsoftbus/interfaces/kits/common",
+        "//foundation/communication/dsoftbus/interfaces/kits/transport",
+        "//foundation/communication/dsoftbus/interfaces/inner_kits/transport",
+      ]
+      sources = deviceauth_files
+    } else {
+      include_dirs += [ "//base/hiviewdfx/hilog_lite/interfaces/native/kits/hilog_lite" ]
+      sources = deviceauth_lite0_files
+    }
+
+    deps = [
+      "${hals_path}:${hal_module_name}",
+      "//build/lite/config/component/cJSON:cjson_shared",
+      "//utils/native/lite:utils",
+    ]
+    if (ohos_kernel_type == "linux" || ohos_kernel_type == "liteos_a") {
+      deps += [
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+        "//foundation/communication/dsoftbus/sdk:softbus_client",
+        "//third_party/bounds_checking_function:libsec_shared",
+      ]
+    } else {
+      deps += [ "//base/hiviewdfx/hilog_lite/frameworks/mini:hilog_lite" ]
+    }
+  }
+
+  if (ohos_kernel_type == "linux" || ohos_kernel_type == "liteos_a") {
+    executable("deviceauth_service") {
+      include_dirs = inc_path
+      include_dirs += hals_inc_path
+      include_dirs += [
+        "//third_party/cJSON",
+        "//utils/native/lite/include",
+        "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+        "//third_party/bounds_checking_function/include",
+        "${frameworks_path}/inc/lite",
+        "//foundation/communication/ipc_lite/interfaces/kits",
+        "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr"
+      ]
+
+      sources = deviceauth_ipc_files
+      sources += [
+        "${frameworks_path}/src/lite/ipc_service_init.c",
+        "${frameworks_path}/src/ipc_service.c"
+      ]
+
+      defines = [ "HILOG_ENABLE" ]
+      if (ohos_kernel_type == "linux") {
+        defines += [ "__LINUX__" ]
+      }
+      ldflags = [ "-pthread" ]
+
+      deps = [
+        ":deviceauth",
+        "${hals_path}:${hal_module_name}",
+        "//utils/native/lite:utils",
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+        "//foundation/communication/ipc_lite:liteipc_adapter",
+        "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+        "//third_party/bounds_checking_function:libsec_shared",
+        "//build/lite/config/component/cJSON:cjson_shared",
+      ]
+    }
+
+    shared_library("deviceauth_sdk") {
+      include_dirs = inc_path
+      include_dirs += hals_inc_path
+      include_dirs += [
+        "//third_party/cJSON",
+        "//utils/native/lite/include",
+        "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+        "//third_party/bounds_checking_function/include",
+        "${frameworks_path}/inc/lite",
+        "//foundation/communication/ipc_lite/interfaces/kits",
+        "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr"
+      ]
+
+      sources = deviceauth_ipc_files
+      sources += [ "${frameworks_path}/src/ipc_sdk.c" ]
+
+      defines = [ "HILOG_ENABLE" ]
+      if (ohos_kernel_type == "linux") {
+        defines += [ "__LINUX__" ]
+      }
+      cflags = build_flags
+      cflags += [ "-fPIC" ]
+
+      deps = [
+        "${hals_path}:${hal_module_name}",
+        "//utils/native/lite:utils",
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+        "//foundation/communication/ipc_lite:liteipc_adapter",
+        "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+        "//third_party/bounds_checking_function:libsec_shared",
+      ]
+    }
+  }
+} else {
+  ohos_static_library("deviceauth") {
+    subsystem_name = "security"
+    part_name = "deviceauth_standard"
+
+    include_dirs = inc_path
+    include_dirs += hals_inc_path
+    include_dirs += [
+      "//third_party/cJSON",
+      "//utils/native/base/include",
+      "${frameworks_path}/inc/standard",
+      "//foundation/communication/dsoftbus/interfaces/kits/common",
+      "//foundation/communication/dsoftbus/interfaces/kits/transport",
+      "//foundation/communication/dsoftbus/interfaces/inner_kits/transport",
+    ]
+
+    sources = deviceauth_files
+
+    cflags = [ "-DHILOG_ENABLE" ]
+    cflags += build_flags
+    if (target_cpu == "arm") {
+      cflags += [ "-DBINDER_IPC_32BIT" ]
+    }
+
+    deps = [
+      "${hals_path}:${hal_module_name}",
+      "//third_party/cJSON:cjson_static",
+      "//utils/native/base:utils",
+    ]
+
+    external_deps = [
+      "hiviewdfx_hilog_native:libhilog",
+      "dsoftbus_standard:softbus_client",
+    ]
+  }
+
+  ohos_prebuilt_etc("auth_service.rc") {
+    if (use_musl) {
+      source = "${frameworks_path}/src/standard/deviceauth_service.cfg"
+    } else {
+      source = "${frameworks_path}/src/standard/deviceauth_service.rc"
+    }
+    relative_install_dir = "init"
+    subsystem_name = "security"
+    part_name = "deviceauth_standard"
+  }
+
+  group("etc") {
+    deps = [ ":auth_service.rc" ]
+  }
+
+  ohos_executable("deviceauth_service") {
+    subsystem_name = "security"
+    part_name = "deviceauth_standard"
+    install_enable = true
+
+    include_dirs = inc_path
+    include_dirs += hals_inc_path
+    include_dirs += [
+      "//third_party/cJSON",
+      "//utils/native/base/include",
+      "${frameworks_path}/inc/standard",
+      "//utils/system/safwk/native/include"
+    ]
+
+    sources = deviceauth_ipc_files
+    sources += [ "${frameworks_path}/src/ipc_service.c" ]
+
+    cflags = [ "-DHILOG_ENABLE" ]
+    if (target_cpu == "arm") {
+      cflags += [ "-DBINDER_IPC_32BIT" ]
+    }
+
+    deps = [
+      ":auth_service.rc",
+      ":deviceauth",
+      "${hals_path}:${hal_module_name}",
+      "//third_party/cJSON:cjson_static",
+      "//utils/native/base:utils",
+    ]
+
+    external_deps = [
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+      "safwk:system_ability_fwk",
+      "samgr_L2:samgr_proxy",
+    ]
+  }
+
+  ohos_shared_library("deviceauth_sdk") {
+    subsystem_name = "security"
+    part_name = "deviceauth_standard"
+
+    include_dirs = inc_path
+    include_dirs += hals_inc_path
+    include_dirs += [
+      "//third_party/cJSON",
+      "//utils/native/base/include",
+      "${frameworks_path}/inc/standard",
+      "//utils/system/safwk/native/include",
+      "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+      "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include"
+    ]
+
+    sources = deviceauth_ipc_files
+    sources += [ "${frameworks_path}/src/ipc_sdk.c" ]
+
+    defines = [
+        "__LINUX__",
+        "HILOG_ENABLE"
+    ]
+    cflags = [ "-fPIC" ]
+    cflags += build_flags
+    if (target_cpu == "arm") {
+      cflags += [ "-DBINDER_IPC_32BIT" ]
+    }
+
+    deps = [
+      "${hals_path}:${hal_module_name}",
+      "//third_party/cJSON:cjson_static",
+      "//utils/native/base:utils",
+    ]
+
+    external_deps = [
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+      "samgr_L2:samgr_proxy"
+    ]
+  }
+}

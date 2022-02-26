@@ -1,0 +1,16 @@
+{
+  "color": [
+    {
+      "name": "index_background",
+      "value": "#66000000"
+    },
+    {
+      "name": "button_default_background",
+      "value": "#00000000"
+    },
+    {
+      "name": "button_click_background",
+      "value": "#DCDCDC"
+    }
+  ]
+}

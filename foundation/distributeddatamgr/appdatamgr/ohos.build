@@ -1,0 +1,100 @@
+{
+  "subsystem": "distributeddatamgr",
+  "parts": {
+    "native_appdatamgr": {
+      "variants": [
+        "phone",
+        "wearable",
+        "ivi"
+      ],
+      "module_list": [
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_appdatafwk:native_appdatafwk",
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_preferences:native_preferences",
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_dataability:native_dataability",
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_rdb:native_rdb"
+      ],
+      "system_capabilities":[
+        "SystemCapability.Data.DATA_APPDATAMGR"
+      ],
+      "inner_kits": [
+        {
+          "name": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_rdb:native_rdb",
+          "header": {
+            "header_files": [
+              "abs_rdb_predicates.h",
+              "abs_result_set.h",
+              "abs_shared_result_set.h",
+              "raw_rdb_predicates.h",
+              "rdb_errno.h",
+              "rdb_helper.h",
+              "rdb_open_callback.h",
+              "rdb_predicates.h",
+              "rdb_store.h",
+              "rdb_store_config.h",
+              "result_set.h",
+              "shared_result_set.h",
+              "transaction_observer.h",
+              "value_object.h",
+              "values_bucket.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_rdb/include"
+          }
+        },
+        {
+          "name": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_preferences:native_preferences",
+          "header": {
+            "header_files": [
+              "preferences.h",
+              "preferences_observer.h",
+              "preferences_helper.h",
+              "preferences_errno.h",
+              "preferences_xml_utils.h",
+              "preferences_value.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_preferences/include"
+          }
+        },
+        {
+          "name": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_appdatafwk:native_appdatafwk",
+          "header": {
+            "header_files": [
+              "shared_block.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_appdatafwk/include"
+          }
+        },
+        {
+          "name": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_dataability:native_dataability",
+          "header": {
+            "header_files": [
+              "data_ability_predicates.h",
+              "predicates_utils.h"
+            ],
+            "header_base": "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_dataability/include"
+          }
+        }
+      ],
+      "test_list": [
+        "//foundation/distributeddatamgr/appdatamgr/frameworks/innerkitsimpl/native_preferences/test:unittest",
+        "//foundation/distributeddatamgr/appdatamgr/frameworks/innerkitsimpl/native_dataability/test:unittest",
+        "//foundation/distributeddatamgr/appdatamgr/frameworks/innerkitsimpl/native_rdb/test:unittest"
+      ]
+    },
+    "appdatamgr_jskits": {
+      "variants": [
+        "phone",
+        "wearable",
+        "ivi"
+      ],
+      "module_list": [
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/jskits:dataability",
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/jskits:storage",
+        "//foundation/distributeddatamgr/appdatamgr/interfaces/jskits:rdb"
+      ],
+      "system_capabilities":[
+        "SystemCapability.Data.DATA_APPDATAMGR"
+      ]
+    }
+  }
+}
+

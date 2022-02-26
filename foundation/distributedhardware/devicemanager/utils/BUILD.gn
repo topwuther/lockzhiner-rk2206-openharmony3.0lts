@@ -1,0 +1,123 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+
+import("//foundation/distributedhardware/devicemanager/devicemanager.gni")
+
+if (defined(ohos_lite)) {
+  shared_library("devicemanagerutils") {
+    include_dirs = [
+      "${common_path}/include",
+      "${common_path}/include/ipc",
+      "${common_path}/include/ipc/model",
+      "include",
+      "include/log",
+      "include/cipher",
+      "include/ipc/lite",
+    ]
+
+    include_dirs += [
+      "//base/security/deviceauth/interfaces/innerkits",
+      "//base/startup/syspara_lite/interfaces/innerkits/native/syspara/include",
+      "//utils/native/lite/include",
+      "//utils/system/safwk/native/include",
+      "//third_party/json/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+      "//third_party/bounds_checking_function/include",
+      "//foundation/communication/ipc_lite/interfaces/kits",
+      "//foundation/communication/dsoftbus/interfaces/kits/bus_center",
+      "//foundation/communication/dsoftbus/interfaces/kits/common",
+      "//foundation/communication/dsoftbus/interfaces/kits/discovery",
+      "//foundation/communication/dsoftbus/interfaces/kits/transport",
+      "//foundation/communication/dsoftbus/interfaces/inner_kits/transport",
+      "//foundation/distributedschedule/samgr_lite/interfaces/kits/samgr",
+    ]
+
+    sources = [
+      "src/anonymous_string.cpp",
+      "src/cipher/encrypt_utils.cpp",
+      "src/ipc/lite/ipc_cmd_register.cpp",
+      "src/log/dm_log.cpp",
+    ]
+
+    defines = [
+      "HI_LOG_ENABLE",
+      "DH_LOG_TAG=\"devicemanagerutils\"",
+      "LOG_DOMAIN=0xD004100",
+    ]
+
+    deps = [
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//base/startup/syspara_lite/frameworks/parameter/src:sysparam",
+      "//foundation/communication/dsoftbus/sdk:softbus_client",
+      "//foundation/communication/ipc_lite:liteipc_adapter",
+      "//foundation/distributedschedule/samgr_lite/samgr:samgr",
+      "//third_party/bounds_checking_function:libsec_shared",
+      "//third_party/mbedtls:mbedtls_shared",
+      "//utils/native/lite:utils",
+    ]
+  }
+} else {
+  ohos_shared_library("devicemanagerutils") {
+    include_dirs = [
+      "//utils/native/base/include",
+      "//utils/system/safwk/native/include",
+      "${common_path}/include",
+      "${common_path}/include/ipc",
+      "${common_path}/include/ipc/model",
+      "include",
+      "include/cipher",
+      "include/log",
+      "include/ipc/standard",
+      "//base/security/deviceauth/interfaces/innerkits",
+      "//base/startup/syspara_lite/adapter/native/syspara/include",
+      "//third_party/json/include",
+    ]
+
+    sources = [
+      "src/anonymous_string.cpp",
+      "src/cipher/encrypt_utils.cpp",
+      "src/ipc/standard/ipc_cmd_register.cpp",
+      "src/log/dm_log.cpp",
+    ]
+
+    deps = [ "//utils/native/base:utils" ]
+
+    defines = [
+      "HI_LOG_ENABLE",
+      "DH_LOG_TAG=\"devicemanagerutils\"",
+      "LOG_DOMAIN=0xD004100",
+    ]
+
+    external_deps = [
+      "appexecfwk_standard:appexecfwk_base",
+      "appexecfwk_standard:appexecfwk_core",
+      "appexecfwk_standard:libeventhandler",
+      "dsoftbus_standard:softbus_client",
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+      "safwk:system_ability_fwk",
+      "samgr_L2:samgr_proxy",
+      "startup_l2:syspara",
+    ]
+
+    subsystem_name = "distributedhardware"
+
+    part_name = "device_manager_base"
+  }
+}

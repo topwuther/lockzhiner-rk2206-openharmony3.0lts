@@ -1,0 +1,182 @@
+{
+  "ace": {
+    "project": "hmf/ace",
+    "path": "foundation/ace",
+    "name": "ace",
+    "dir": "foundation"
+  },
+  "account": {
+    "project": "hmf/account",
+    "path": "base/account",
+    "name": "account",
+    "dir": "base"
+  },
+  "distributeddatamgr": {
+    "project": "hmf/distributeddatamgr",
+    "path": "foundation/distributeddatamgr",
+    "name": "distributeddatamgr",
+    "dir": "foundation"
+  },
+  "security": {
+    "project": "hmf/security",
+    "path": "base/security",
+    "name": "security",
+    "dir": "base"
+  },
+  "startup": {
+    "project": "hmf/startup",
+    "path": "base/startup",
+    "name": "startup",
+    "dir": "base"
+  },
+  "hiviewdfx": {
+    "project": "hmf/hiviewdfx",
+    "path": "base/hiviewdfx",
+    "name": "hiviewdfx",
+    "dir": "base"
+  },
+  "utils": {
+    "project": "hmf/utils",
+    "path": "utils",
+    "name": "utils",
+    "dir": "utils"
+  },
+  "appexecfwk": {
+    "project": "hmf/appexecfwk",
+    "path": "foundation/appexecfwk",
+    "name": "appexecfwk",
+    "dir": "foundation"
+  },
+  "aafwk": {
+    "project": "hmf/aafwk",
+    "path": "foundation/aafwk",
+    "name": "aafwk",
+    "dir": "foundation"
+  },
+  "notification": {
+    "project": "hmf/notification",
+    "path": "base/notification",
+    "name": "notification",
+    "dir": "base"
+  },
+  "communication": {
+    "project": "hmf/communication",
+    "path": "foundation/communication",
+    "name": "communication",
+    "dir": "foundation"
+  },
+  "distributedschedule": {
+    "project": "hmf/distributedschedule",
+    "path": "foundation/distributedschedule",
+    "name": "distributedschedule",
+    "dir": "foundation"
+  },
+  "hdf": {
+    "project": "hmf/drivers/adapter_uhdf2",
+    "path": "drivers/adapter/uhdf2",
+    "name": "hdf",
+    "dir": "uhdf2"
+  },
+  "updater": {
+    "project": "hmf/updater",
+    "path": "base/update/updater",
+    "name": "updater",
+    "dir": "base/update"
+  },
+  "developtools": {
+    "project": "hmf/developtools",
+    "path": "developtools",
+    "name": "developtools",
+    "dir": "developtools"
+  },
+  "sensors": {
+    "project": "hmf/sensors",
+    "path": "base/sensors",
+    "name": "sensors",
+    "dir": "base"
+  },
+  "graphic": {
+    "project": "hmf/graphic",
+    "path": "foundation/graphic",
+    "name": "graphic",
+    "dir": "foundation"
+  },
+  "miscservices": {
+    "project": "hmf/miscservices",
+    "path": "base/miscservices",
+    "name": "miscservices",
+    "dir": "base"
+  },
+  "multimedia": {
+    "project": "hmf/multimedia",
+    "path": "foundation/multimedia",
+    "name": "multimedia",
+    "dir": "foundation"
+  },
+  "multimodalinput": {
+    "project": "hmf/multimodalinput",
+    "path": "foundation/multimodalinput",
+    "name": "multimodalinput",
+    "dir": "foundation"
+  },
+  "telephony": {
+    "project": "hmf/telephony",
+    "path": "base/telephony",
+    "name": "telephony",
+    "dir": "base"
+  },
+  "global": {
+    "project": "hmf/global",
+    "path": "base/global",
+    "name": "global",
+    "dir": "base"
+  },
+  "powermgr": {
+    "project": "hmf/powermgr",
+    "path": "base/powermgr",
+    "name": "powermgr",
+    "dir": "base"
+  },
+  "applications":{
+    "project": "hmf/applications/standard/hap",
+    "path": "applications/standard",
+    "name": "applications",
+    "dir": "applications"
+  },
+  "wpa_supplicant-2.9": {
+    "project": "hmf/wpa_supplicant-2.9",
+    "path": "third_party/wpa_supplicant/wpa_supplicant-2.9_standard",
+    "name": "wpa_supplicant-2.9",
+    "dir": "wpa_supplicant-2.9"
+  },
+  "xts": {
+    "project": "hmf/xts",
+    "path": "test/xts",
+    "name": "xts",
+    "dir": "test"
+  },
+  "distributedhardware": {
+    "project": "hmf/distributedhardware",
+    "path": "foundation/distributedhardware",
+    "name": "distributedhardware",
+    "dir": "foundation"
+  },
+  "ark": {
+    "project": "hmf/ark",
+    "path": "ark",
+    "name": "ark",
+    "dir": "ark"
+  },
+  "ccruntime": {
+    "project": "hmf/js_util_module",
+    "path": "base/compileruntime",
+    "name": "ccruntime",
+    "dir": "base"
+  },
+  "kernel": {
+    "project":"hmf/kernel",
+    "path": "kernel/linux/build",
+    "name": "kernel",
+    "dir": "kernel/linux"
+  }
+}

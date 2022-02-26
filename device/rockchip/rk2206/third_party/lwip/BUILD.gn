@@ -1,0 +1,11 @@
+# Copyright (c) 2020-2021 Lockzhiner Electronics Co., Ltd.
+
+import("//build/lite/config/component/lite_component.gni")
+import("//build/lite/config/subsystem/lite_subsystem.gni")
+import("//device/rockchip/rk2206/sdk_liteos/board.gni")
+
+build_ext_component("rk2206_lwip") {
+  exec_path = rebase_path(".", root_build_dir)
+  outdir = rebase_path("//kernel/liteos_m/components/net/lwip-2.1/porting/include/lwip/")
+  command = "sh ./build.sh $outdir"
+}

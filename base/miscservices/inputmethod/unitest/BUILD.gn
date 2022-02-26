@@ -1,0 +1,89 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+config("module_private_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [ "include" ]
+}
+
+module_output_path = "inputmethod_native/inputmethod_service"
+
+ohos_unittest("InputMethodControllerTest") {
+  module_out_path = module_output_path
+
+  sources = [ "src/input_method_controller_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//base/miscservices/inputmethod/frameworks/inputmethod_ability:inputmethod_ability",
+    "//base/miscservices/inputmethod/frameworks/inputmethod_controller:inputmethod_client",
+    "//base/miscservices/inputmethod/services:inputmethod_service",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager:ability_manager",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/ace/napi/:ace_napi",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core:ipc_core",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_single:ipc_single",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+}
+
+ohos_unittest("InputMethodAbilityTest") {
+  module_out_path = module_output_path
+
+  sources = [ "src/input_method_ability_test.cpp" ]
+
+  configs = [ ":module_private_config" ]
+
+  deps = [
+    "//base/miscservices/inputmethod/frameworks/inputmethod_ability:inputmethod_ability",
+    "//base/miscservices/inputmethod/frameworks/inputmethod_controller:inputmethod_client",
+    "//base/miscservices/inputmethod/services:inputmethod_service",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager:ability_manager",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/ace/napi/:ace_napi",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core:ipc_core",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_single:ipc_single",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+}
+
+group("unittest") {
+  testonly = true
+
+  deps = []
+
+  deps += [
+    ":InputMethodAbilityTest",
+    ":InputMethodControllerTest",
+  ]
+}

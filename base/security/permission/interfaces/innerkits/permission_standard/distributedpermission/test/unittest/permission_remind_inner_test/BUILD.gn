@@ -1,0 +1,92 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/security/permission/permission.gni")
+import("//build/test.gni")
+
+module_output_path = "permission_standard/permissiontest"
+
+ohos_unittest("PermissionRemindInnerTest") {
+  module_out_path = module_output_path
+  include_dirs = [
+    "${distributed_permission_services_path}/main/cpp/include/common",
+    "${distributed_permission_services_path}/main/cpp/include/record",
+    "${distributed_permission_frameworks_log_path}/main/cpp/include",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/include",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/include/distributed_permission",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/include/permission_using_remind",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind",
+    "${distributed_permission_services_path}/main/cpp/include/distributed",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//third_party/json/single_include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//third_party/json/include",
+    "//third_party/zlib",
+    "//base/notification/ans_standard/frameworks/wantagent:wantagent_innerkits",
+    "//base/notification/ans_standard/frameworks/ans/core:ans_core",
+  ]
+
+  sources = [
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/src/app_id_info.cpp",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/src/distributed_permission_death_recipient.cpp",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/src/distributed_permission_kit.cpp",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/src/distributed_permission_manager_client.cpp",
+    "${distributed_permission_innerkits_distributed_path}/main/cpp/src/distributed_permission_stub.cpp",
+    "${distributed_permission_innerkits_distributed_path}/test/mock/mock_distributed_permission_proxy.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/on_using_permission_reminder_proxy.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/on_using_permission_reminder_stub.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/permission_reminder_info.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/base64_util.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/zip_util.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/bundle_permission_used_record.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/permission_used_record.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/query_permission_used_request.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/query_permission_used_result.cpp",
+    "permission_remind_inner_test.cpp",
+  ]
+
+  configs =
+      [ "${distributed_permission_services_path}/test:permission_test_config" ]
+
+  deps = [
+    "${distributed_permission_frameworks_log_path}:permission_standard_infrastructure_cxx",
+    "${distributed_permission_innerkits_distributed_path}:distributed_permission_innerkits",
+    "${permission_path}/frameworks/permission_standard/permissioncommunicationadapter:permission_standard_communication_adapter_cxx",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//foundation/aafwk/standard/interfaces/innerkits/base:base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/communication/dsoftbus/core/frame/standard/client:softbus_client",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/sqlite:sqlite",
+    "//third_party/zlib:libz",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+
+  deps = [ ":PermissionRemindInnerTest" ]
+}

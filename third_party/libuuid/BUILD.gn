@@ -1,0 +1,38 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2020-2020. All rights reserved.
+
+import("//build/lite/config/component/lite_component.gni")
+
+config("libuuid_config") {
+  include_dirs = [ "//third_party/libuuid/uuid" ]
+}
+
+libuuid_sources = [
+  "uuid/clear.c",
+  "uuid/compare.c",
+  "uuid/copy.c",
+  "uuid/gen_uuid.c",
+  "uuid/isnull.c",
+  "uuid/pack.c",
+  "uuid/parse.c",
+  "uuid/randutils.c",
+  "uuid/unpack.c",
+  "uuid/unparse.c",
+  "uuid/uuid_time.c",
+]
+
+static_library("libuuid_static") {
+  sources = libuuid_sources
+  output_name = "uuid"
+  public_configs = [ ":libuuid_config" ]
+  defines = [ "HAVE_CONFIG_H" ]
+  cflags_c = [
+    "-Os",
+    "-g",
+    "-ffunction-sections",
+    "-fdata-sections",
+  ]
+  ldflags = [
+    "-Wl",
+    "--gc-sections",
+  ]
+}

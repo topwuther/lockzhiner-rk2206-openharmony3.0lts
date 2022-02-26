@@ -1,0 +1,140 @@
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import "../../common/css/app.css";
+
+.photo-detail-container {
+    position: relative;
+    background-color: #fff;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    transition-enter: enter;
+    transition-exit: exit;
+}
+
+.photo-detail-div {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.photo-detail-swiper {
+    display: flex;
+    align-content: center;
+}
+
+.shared-transition-style {
+    object-fit: contain;
+    shared-transition-effect: exchange;
+    shared-transition-name: shared-transition;
+}
+
+.detail-dialog {
+    width: 100%;
+    margin: 24px;
+    background-color: #fff;
+    border-radius: 16px;
+}
+
+.detail-dialog-div {
+    flex-direction: column;
+    display: flex;
+}
+
+.detail-dialog-title {
+    font-size: 35px;
+    padding: 25px 15px 15px 30px;
+    color: #000;
+}
+
+.detail-dialog-text {
+    font-size: 30px;
+    padding: 25px 15px 15px 35px;
+    color: #000;
+}
+
+.detail-dialog-btn {
+    padding: 20px 0 30px 0;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+.scale-div {
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    height: 162px;
+    width: 64px;
+    background-color: #fff;
+    right: 48px;
+    bottom: 48px;
+    z-index: 10000;
+    border-radius: 48px;
+    border-color: #c9c9c9;
+    border-width: 1px;
+}
+
+.scale-top {
+    flex: 1;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: #c9c9c9;
+    padding: 6px 6px 3px 6px;
+}
+
+.scale-bottom {
+    flex: 1;
+    align-items: center;
+    padding: 6px 6px 3px 6px;
+}
+
+.scale-image {
+    padding: 12px;
+    width: 48px;
+    height: 48px;
+}
+
+.video-player {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes exit {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}

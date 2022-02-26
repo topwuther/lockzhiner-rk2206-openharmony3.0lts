@@ -1,0 +1,35 @@
+{
+  "color": [
+    {
+      "name": "default_background",
+      "value": "#66000000"
+    },
+    {
+      "name": "index_background",
+      "value": "#66000000"
+    },
+    {
+      "name": "statusbar_background",
+      "value": "#66000000"
+    },
+    {
+      "name": "quicklysetting_time_fontcolor",
+      "value": "#ffffffff"
+    },
+    {
+      "name": "quicklysetting_date_fontcolor",
+      "value": "#ffffffff"
+    },
+    {
+      "name": "quicklysetting_background",
+      "value": "#292830"
+    },
+    {
+      "name": "nonotification_text_color",
+      "value": "#ffffffff"
+    },{
+      "name": "twogroup_layout_background",
+      "value": "#66000000"
+    }
+  ]
+}

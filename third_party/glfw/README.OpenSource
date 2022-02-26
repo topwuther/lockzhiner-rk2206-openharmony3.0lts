@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "glfw",
+        "License": "zlib License",
+        "License File": "COPYING.txt",
+        "Version Number": "3.2.1",
+        "Owner": "lanshouren@huawei.com",
+        "Upstream URL": "https://github.com/glfw/glfw",
+        "Description": "GLFW is an Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development."
+    }
+]

@@ -1,0 +1,60 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+module_output_path = "samgr/samgr"
+samgr_dir = "//foundation/distributedschedule/samgr"
+samgr_services_dir = "${samgr_dir}/services/samgr/native"
+
+config("sam_test_config") {
+  visibility = [ ":*" ]
+  include_dirs = [ "${samgr_services_dir}/test/unittest/include" ]
+}
+
+ohos_unittest("SystemAbilityMgrTest") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${samgr_services_dir}/test/unittest/src/itest_transaction_service.cpp",
+    "${samgr_services_dir}/test/unittest/src/system_ability_mgr_test.cpp",
+  ]
+
+  configs = [
+    ":sam_test_config",
+    "${samgr_dir}/interfaces/innerkits/lsamgr:config_samgr",
+    "${samgr_dir}/services/samgr/native:sam_config",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${samgr_dir}/interfaces/innerkits/lsamgr:lsamgr",
+    "${samgr_dir}/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = [ ":SystemAbilityMgrTest" ]
+}

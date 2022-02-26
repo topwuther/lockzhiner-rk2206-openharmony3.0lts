@@ -1,0 +1,105 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+import("//build/ohos.gni")
+
+common_source = [
+  "libusb/core.c",
+  "libusb/descriptor.c",
+  "libusb/hotplug.c",
+  "libusb/io.c",
+  "libusb/sync.c",
+  "libusb/strerror.c",
+]
+
+# Configuration for libusb itself.
+config("libusb_config") {
+  include_dirs = [
+    "include",
+    "libusb",
+    "libusb/os",
+  ]
+  cflags = [
+    "-U__ANDROID__",
+    "-UUSE_UDEV",
+    "-Wno-#warnings",
+    "-Wno-error=sign-compare",
+    "-Wno-error=switch",
+    "-Wno-error=pragma-pack",
+  ]
+  if (is_linux) {
+    include_dirs += [ "linux" ]
+  } else if (is_mingw || is_win) {
+    cflags += [
+      "-Werror",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+    ]
+    include_dirs += [ "windows" ]
+  } else if (is_mac) {
+    cflags += [
+      "-Wno-unused-parameter",
+      "-Wno-deprecated-declarations",
+    ]
+    include_dirs += [ "darwin" ]
+    libs = [
+      "CoreFoundation.framework",
+      "IOKit.framework",
+      "objc",
+    ]
+  }
+}
+
+ohos_source_set("libusb_source") {
+  configs = [ ":libusb_config" ]
+  sources = common_source
+
+  if (is_mac) {
+    sources += [
+      "libusb/os/darwin_usb.c",
+      "libusb/os/poll_posix.c",
+      "libusb/os/threads_posix.c",
+    ]
+  } else if (is_mingw || is_win) {
+    sources += [
+      "libusb/os/poll_windows.c",
+      "libusb/os/threads_windows.c",
+      "libusb/os/windows_nt_common.c",
+      "libusb/os/windows_usbdk.c",
+      "libusb/os/windows_winusb.c",
+    ]
+  } else if (is_linux) {
+    sources += [
+      "libusb/os/linux_netlink.c",
+      "libusb/os/linux_usbfs.c",
+      "libusb/os/poll_posix.c",
+      "libusb/os/threads_posix.c",
+    ]
+  }
+}
+
+config("libusb_public_config") {
+  include_dirs = [ "./" ]
+}
+
+ohos_static_library("libusb") {
+  deps = [ ":libusb_source" ]
+  public_configs = [ ":libusb_public_config" ]
+}

@@ -1,0 +1,16 @@
+import("//build/ohos.gni")
+if (is_standard_system) {
+  ohos_prebuilt_etc("hdf_audio_json") {
+    source = "//drivers/peripheral/audio/config/adapter_config.json"
+    relative_install_dir = "hdfconfig"
+    subsystem_name = "hdf"
+    part_name = "hdf"
+  }
+
+  ohos_prebuilt_etc("hdf_audio_path_json") {
+    source = "//drivers/peripheral/audio/config/parse.json"
+    relative_install_dir = "hdfconfig"
+    subsystem_name = "hdf"
+    part_name = "hdf"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "app": {
+    "bundleName": "com.ohos.systemui",
+    "vendor": "ohos",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.ohos.systemui.batterycomponent",
+    "deviceType": [
+      "phone"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "batterycomponent",
+      "moduleType": "har"
+    }
+  }
+}

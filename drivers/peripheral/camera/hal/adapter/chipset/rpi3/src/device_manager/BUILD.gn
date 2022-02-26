@@ -1,0 +1,79 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+import("//build/ohos.gni")
+import("//drivers/peripheral/camera/hal/camera.gni")
+
+config("device_manager_config") {
+  visibility = [ ":*" ]
+
+  cflags_cc = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wno-error",
+    "-DGST_DISABLE_DEPRECATED",
+    "-DHAVE_CONFIG_H",
+    "-DCOLORSPACE=\"videoconvert\"",
+    "-fno-strict-aliasing",
+    "-Wno-sign-compare",
+    "-Wno-builtin-requires-header",
+    "-Wno-unused-variable",
+    "-Wno-unused-label",
+    "-Wno-implicit-function-declaration",
+    "-Wno-format",
+    "-Wno-int-conversion",
+    "-Wno-unused-function",
+    "-Wno-thread-safety-attributes",
+    "-Wno-inconsistent-missing-override",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-ffunction-sections",
+    "-fdata-sections",
+  ]
+}
+
+ohos_shared_library("camera_device_manager") {
+  sources = [
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/bm2835.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/enumerator_manager.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/flash_controller.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/flash_manager.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/idevice_manager.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/isp_controller.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/isp_manager.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/sensor_controller.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/sensor_manager.cpp",
+    "$camera_path/adapter/chipset/rpi3/src/device_manager/v4l2_device_manager.cpp",
+    "$camera_path/device_manager/src/icontroller.cpp",
+    "$camera_path/device_manager/src/imanager.cpp",
+    "$camera_path/device_manager/src/isensor.cpp",
+  ]
+
+  include_dirs = [
+    "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
+    "$camera_path/include",
+    "$camera_path/utils/event",
+    "$camera_path/device_manager/include",
+    "$camera_path/adapter/chipset/rpi3/include/device_manager",
+    "$camera_path/adapter/platform/v4l2/src/driver_adapter/include/",
+    "//utils/native/base/include",
+    "//drivers/framework/include/utils",
+    "//drivers/adapter/uhdf2/osal/include",
+    "//foundation/multimedia/camera_standard/frameworks/innerkitsimpl/metadata/include",
+  ]
+
+  deps = [
+    "$camera_path/adapter/platform/v4l2/src/driver_adapter:camera_v4l2_adapter",
+    "//foundation/multimedia/camera_standard/frameworks/innerkitsimpl/metadata:metadata",
+    "//utils/native/base:utils",
+  ]
+
+  if (is_standard_system) {
+    external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  } else {
+    external_deps = [ "hilog:libhilog" ]
+  }
+
+  public_configs = [ ":device_manager_config" ]
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}

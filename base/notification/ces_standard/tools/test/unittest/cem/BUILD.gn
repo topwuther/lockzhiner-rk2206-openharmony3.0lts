@@ -1,0 +1,157 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/tools"
+
+config("tools_cem_config_mock") {
+  include_dirs = [
+    "//third_party/googletest/googlemock/include",
+    "${tools_path}/test/mock",
+  ]
+}
+
+tools_cem_mock_sources =
+    [ "${tools_path}/test/mock/mock_common_event_stub.cpp" ]
+
+ohos_unittest("common_event_command_test") {
+  module_out_path = module_output_path
+
+  include_dirs = []
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "${tools_path}/cem/src/common_event_command.cpp",
+    "common_event_command_test.cpp",
+  ]
+  sources += tools_cem_mock_sources
+
+  configs = [
+    "${tools_path}/cem:tools_cem_config",
+    ":tools_cem_config_mock",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${appexecfwk_path}/services/bundlemgr:libbms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gmock_main",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_unittest("common_event_command_dump_test") {
+  module_out_path = module_output_path
+
+  include_dirs = []
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "${tools_path}/cem/src/common_event_command.cpp",
+    "common_event_command_dump_test.cpp",
+  ]
+  sources += tools_cem_mock_sources
+
+  configs = [
+    "${tools_path}/cem:tools_cem_config",
+    ":tools_cem_config_mock",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/interfaces/innerkits/want:want",
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${appexecfwk_path}/services/bundlemgr:libbms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gmock_main",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_unittest("common_event_command_publish_test") {
+  module_out_path = module_output_path
+
+  include_dirs = []
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "${tools_path}/cem/src/common_event_command.cpp",
+    "common_event_command_publish_test.cpp",
+  ]
+  sources += tools_cem_mock_sources
+
+  configs = [
+    "${tools_path}/cem:tools_cem_config",
+    ":tools_cem_config_mock",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/interfaces/innerkits/want:want",
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${appexecfwk_path}/services/bundlemgr:libbms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gmock_main",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+
+  deps = [
+    ":common_event_command_dump_test",
+    ":common_event_command_publish_test",
+    ":common_event_command_test",
+  ]
+}

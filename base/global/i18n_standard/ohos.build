@@ -1,0 +1,45 @@
+{
+  "subsystem":"global",
+  "parts": {
+    "i18n_standard": {
+      "module_list": [
+        "//base/global/i18n_standard/frameworks/zone:zone_util",
+        "//base/global/i18n_standard/frameworks/intl:intl_util",
+        "//base/global/i18n_standard/interfaces/js/kits:intl",
+        "//base/global/i18n_standard/interfaces/js/kits:i18n",
+        "//third_party/icu/icu4c:shared_icuuc",
+        "//third_party/icu/icu4c:shared_icui18n",
+        "//third_party/icu/icu4c:ohos_icudat",
+        "//third_party/libphonenumber/cpp:phonenumber_standard",
+        "//third_party/protobuf/src:protobuf_standard"
+
+      ],
+      "inner_kits": [
+        {
+          "header": {
+            "header_base": "//base/global/i18n_standard/interfaces/native/innerkits/zone/include",
+            "header_files": [
+                "zone_util.h"
+              ]
+            },
+            "name": "//base/global/i18n_standard/frameworks/zone:zone_util"
+        },
+        {
+          "header": {
+            "header_base": "//third_party/libphonenumber",
+            "header_files": [
+                "cpp/src/phonenumbers/phonenumber.pb.h",
+                "cpp/src/phonenumbers/phonenumberutil.h"
+              ]
+            },
+            "name": "//third_party/libphonenumber/cpp:phonenumber_standard"
+        }
+      ],
+      "test_list": [
+        "//base/global/i18n_standard/frameworks/zone/test:zone_util_test",
+        "//third_party/libphonenumber/cpp/test:libphonenumber_test",
+        "//base/global/i18n_standard/frameworks/intl/test:intl_test"
+      ]
+    }
+  }
+}

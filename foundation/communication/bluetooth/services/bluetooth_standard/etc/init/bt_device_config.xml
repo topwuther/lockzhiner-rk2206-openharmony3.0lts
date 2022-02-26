@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <T1 section="Host">
+        <T1 property="Address">00:00:00:00:00:00</T1>
+        <T1 property="DeviceName">BluetoothDevice</T1>
+        <T1 property="ClassOfDevice">0x2A0104</T1>
+        <T1 property="IOCapability">0x04</T1>
+        <T1 property="LocalPasskey">0x0000</T1>
+        <T1 property="SecurityMode">0x01</T1>
+        <T1 property="Appearance">0x02</T1>
+        <T1 property="BleRoles">0x0F</T1>
+        <T1 property="BleModel1Level">0x01</T1>
+        <T1 property="BleModel2Level">0x00</T1>
+        <T1 property="BleSecurity">true</T1>
+        <T1 property="BleScanMode">0x03</T1>
+        <T1 property="LocalAddrType">0x00</T1>
+        <T1 property="LocalIrk"></T1>
+        <T1 property="BleAddrType">0x00</T1>
+        <T1 property="LocalIdentityAddr"></T1>
+    </T1>
+    
+    <T2 section="Classic Paired Device List">
+    </T2>
+    <T3 section="Ble Paired Device List">
+    </T3>
+    <T1 section = "Generic Attribute Service">
+    </T1>
+</config>

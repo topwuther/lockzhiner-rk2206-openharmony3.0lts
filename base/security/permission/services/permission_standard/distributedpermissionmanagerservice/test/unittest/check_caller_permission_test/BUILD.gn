@@ -1,0 +1,160 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/security/permission/permission.gni")
+import("//build/test.gni")
+
+module_output_path = "permission_standard/permissiontest"
+
+config("private_config") {
+  cflags_cc = [ "-fexceptions" ]
+}
+
+ohos_unittest("check_caller_permission_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "${distributed_permission_services_path}/main/cpp/src/command/base_remote_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/delete_uid_permission_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/get_uid_permission_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/request_remote_permission_callback_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/request_remote_permission_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/sync_uid_permission_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/command/sync_uid_state_command.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/base64_util.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/constant.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/time_util.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/common/zip_util.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/device/device_info_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/device/device_info_repository.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_callback.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remind/remind_info.cpp",
+
+    # "${distributed_permission_services_path}/main/cpp/src/distributed/app_id_info.cpp",
+    # "${distributed_permission_services_path}/main/cpp/src/distributed/app_id_info_helper.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/on_using_permission_reminder_proxy.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/on_using_permission_reminder_stub.cpp",
+    "${distributed_permission_innerkits_sdk_path}/main/cpp/src/permission_using_remind/permission_reminder_info.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/data_storage.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/data_translator.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/generic_values.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/sqlite_helper.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/sqlite_storage.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/statement.cpp",
+    "${distributed_permission_record_database_path}/main/cpp/src/variant_value.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/app_info_fetcher.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/distributed_data_validator.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/distributed_uid_allocator.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/monitor_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/object_device_json.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/object_device_permission_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/object_device_permission_repository.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_change_receiver.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_definition.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_fetcher.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_listener.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/permission_re_granter.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/request_permissions_info.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/subject_device_permission_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/distributed/user_handle_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/bundle_permission_used_record.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/on_permission_used_record_proxy.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/on_permission_used_record_stub.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/permission_record.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/permission_record_manager.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/permission_used_record.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/permission_visitor.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/query_permission_used_request.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/record/query_permission_used_result.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/sensitive/resource_switch.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/sensitive/resource_switch_cache.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/sensitive/resource_switch_local.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/sensitive/resource_switch_remote.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/sensitive/sensitive_resource_switch_setting.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/service/distributed_permission_event_handler.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/service/distributed_permission_manager_service.cpp",
+
+    # dependency: softbus
+    "${distributed_permission_services_path}/main/cpp/src/remote/remote_command_executor.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remote/remote_command_factory.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remote/soft_bus_channel.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remote/soft_bus_device_connection_listener.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remote/soft_bus_service_connection_listener.cpp",
+    "${distributed_permission_services_path}/main/cpp/src/remote/soft_bus_session_listener.cpp",
+
+    # softbus mock begin
+    "../../mock/src/soft_bus_center_mock.cpp",
+    "../../mock/src/soft_bus_session_mock.cpp",
+
+    # softbus mock end
+
+    # mock begin
+    "${distributed_permission_services_path}/main/cpp/src/common/external_deps.cpp",
+
+    #"${distributed_permission_services_path}/main/cpp/src/remote/remote_command_manager.cpp",
+    #"${distributed_permission_services_path}/main/cpp/src/remote/soft_bus_manager.cpp",
+    #"${distributed_permission_services_path}/main/cpp/src/distributed/permission_bms_manager.cpp",
+    #"${distributed_permission_services_path}/main/cpp/src/distributed/request_remote_permission.cpp",
+    # mock end
+
+    "${distributed_permission_services_path}/test/mock/src/mock_bundle_mgr.cpp",
+    "${distributed_permission_services_path}/test/mock/src/mock_is_not_sensitive_resource.cpp",
+    "${distributed_permission_services_path}/test/mock/src/mock_permission_mgr.cpp",
+    "check_caller_permission_test.cpp",
+  ]
+
+  configs = [
+    ":private_config",
+    "${distributed_permission_services_path}/test:permission_test_config",
+  ]
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+  deps = [
+    "${distributed_permission_frameworks_log_path}:permission_standard_infrastructure_cxx",
+    "${distributed_permission_innerkits_distributed_path}:distributed_permission_innerkits",
+    "${distributed_permission_innerkits_sdk_path}:libpermissionsdk_standard",
+    "${permission_path}/frameworks/permission_standard/permissioncommunicationadapter:permission_standard_communication_adapter_cxx",
+    "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr",
+    "//base/notification/ans_standard/frameworks/ans/core:ans_core",
+    "//base/notification/ans_standard/frameworks/wantagent:wantagent_innerkits",
+    "//base/startup/init_lite/services/log:init_log",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//foundation/aafwk/standard/interfaces/innerkits/base:base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributedhardware/devicemanager/interfaces/inner_kits/native_cpp:devicemanagersdk",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//third_party/sqlite:sqlite",
+    "//third_party/zlib:libz",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "ces_standard:cesfwk_core",
+    "ces_standard:cesfwk_innerkits",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = [ ":check_caller_permission_test" ]
+}

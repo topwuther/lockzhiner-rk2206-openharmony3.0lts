@@ -1,0 +1,62 @@
+root {
+    platform {
+        spi_config {
+            template device_spi {       //模板公共参数
+                serviceName = "";
+                match_attr = "";        // 需要与设备hcs文件中的 match_attr 匹配
+                deviceNum = 0;          // 设备号
+                busNum = 0;             // 总线号，0为SPI_BUS_0，1为SPI_BUS_1
+                numCs = 1;              // cs线数量，一般都是1
+                maxSpeedHz = 50000000;  // 最大传输速率
+                mode = 0;               // 定义参考spi_if.h的struct SpiCfg结构体定义，下同
+                transferMode = 0;       // SPI数据传输方式，0为中断，1为轮询方式，2为DMA
+                bitsPerWord = 0;        // 传输位宽，8为8bit，16为16bit
+                gpioCs = 0;             // CS线的GPIO定义
+                gpioClk = 0;            // Clk线的GPIO定义
+                gpioMosi = 0;           // Mosi线的GPIO定义
+                gpioMiso = 0;           // Miso线的GPIO定义
+                csM = 0;                // cs变换模式，0为立刻，1为半周期，2为一周期
+                speed = 50000000;       // 默认传输速率
+                isSlave = 0;            // 是否是从设备，0为主设备，1为从设备
+            }
+
+            device_spi0 :: device_spi {
+                serviceName = "service_spi_driver_rk2206_spi0";
+                match_attr = "device_drvice_rk2206_spi0";
+                deviceNum = 0;
+                busNum = 0;
+                numCs = 1;
+                maxSpeedHz = 50000000;
+                mode = 67;
+                transferMode = 0;
+                bitsPerWord = 8;
+                gpioCs = 16;
+                gpioClk = 17;
+                gpioMosi = 18;
+                gpioMiso = 160;           // 表示无效引脚
+                csM = 2;
+                speed = 50000000;
+                isSlave = 0;
+            }
+
+            device_spi1 :: device_spi {
+                serviceName = "service_spi_driver_rk2206_spi1";
+                match_attr = "device_drvice_rk2206_spi1";
+                deviceNum = 1;
+                busNum = 1;
+                numCs = 1;
+                maxSpeedHz = 50000000;
+                mode = 67;
+                transferMode = 0;
+                bitsPerWord = 8;
+                gpioCs = 8;
+                gpioClk = 9;
+                gpioMosi = 10;
+                gpioMiso = 11;
+                csM = 2;
+                speed = 50000000;
+                isSlave = 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,68 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//base/miscservices/inputmethod/inputmethod.gni")
+import("//build/ohos.gni")
+
+config("inputmethod_ability_native_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "${inputmethod_path}/frameworks/inputmethod_controller/include",
+  ]
+}
+config("inputmethod_ability_native_public_config") {
+  visibility = []
+  include_dirs = [ "include" ]
+}
+
+ohos_shared_library("inputmethod_ability") {
+  sources = [
+    "../inputmethod_controller/src/input_method_system_ability_proxy.cpp",
+    "src/event_target.cpp",
+    "src/input_method_ability.cpp",
+    "src/input_method_agent_proxy.cpp",
+    "src/input_method_agent_stub.cpp",
+    "src/input_method_core_proxy.cpp",
+    "src/input_method_core_stub.cpp",
+  ]
+
+  configs = [ ":inputmethod_ability_native_config" ]
+
+  deps = [
+    "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr",
+    "//base/miscservices/inputmethod/services:inputmethod_service",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager:ability_manager",
+    "//foundation/aafwk/standard/interfaces/innerkits/base:base",
+    "//foundation/aafwk/standard/interfaces/innerkits/intent:intent",
+    "//foundation/aafwk/standard/interfaces/innerkits/want:want",
+    "//foundation/ace/napi/:ace_napi",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base:appexecfwk_base",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core:appexecfwk_core",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core:ipc_core",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_single:ipc_single",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//foundation/multimodalinput/input/interfaces/native/innerkits/event:mmi_event",
+    "//foundation/multimodalinput/input/interfaces/native/innerkits/event:mmi_event",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  public_configs = [ ":inputmethod_ability_native_config" ]
+
+  subsystem_name = "miscservices"
+  part_name = "inputmethod_native"
+}

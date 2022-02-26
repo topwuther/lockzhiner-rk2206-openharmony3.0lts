@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "miniz",
+    "License": "MIT License",
+    "License File": "LICENSE",
+    "Version Number": "2.1.0",
+    "Owner": "liwentao20@huawei.com",
+    "Upstream URL": "https://github.com/richgel999/miniz/archive/2.1.0.tar.gz",
+    "Description": "miniz: Single C source file zlib-replacement library, originally from code.google.com/p/miniz"
+  }
+]

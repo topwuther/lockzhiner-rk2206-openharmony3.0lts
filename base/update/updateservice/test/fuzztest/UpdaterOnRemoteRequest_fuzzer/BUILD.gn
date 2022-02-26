@@ -1,0 +1,80 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+module_output_path = "updater/updater_on_remote_request"
+
+#####################hydra-fuzz###################
+import("//build/config/features.gni")
+import("//build/test.gni")
+
+##############################fuzztest##########################################
+ohos_fuzztest("UpdaterOnRemoteRequestFuzzTest") {
+  module_out_path = module_output_path
+
+  include_dirs = [
+    "//base/update/updater/utils/include",
+    "//base/update/updater/interfaces/kits/include/",
+    "//base/update/updater/services/include/log",
+    "//base/update/updater/services",
+    "//base/update/updater/services/ui",
+    "//base/update/updater/services/include",
+    "//base/update/updateservice/interfaces/innerkits/include",
+    "//base/update/updateservice/engine/include",
+    "//base/update/updateservice/callback/include",
+    "//third_party/cJSON",
+    "//third_party/libxml2/include",
+    "//third_party/curl/include",
+    "//third_party/openssl/include",
+    "//third_party/bounds_checking_function/include",
+  ]
+
+  deps = [
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//base/update/updater/interfaces/kits/misc_info:libmiscinfo",
+    "//base/update/updater/interfaces/kits/packages:libpackageExt",
+    "//base/update/updater/interfaces/kits/updaterkits:libupdaterkits",
+    "//base/update/updater/services/log:libupdaterlog",
+    "//base/update/updater/utils:libutils",
+    "//base/update/updateservice/engine:updateservice",
+    "//third_party/bounds_checking_function:libsec_static",
+    "//third_party/cJSON:cjson_static",
+    "//third_party/curl:curl",
+    "//third_party/libxml2:xml2",
+    "//third_party/openssl:crypto_source",
+    "//third_party/openssl:ssl_source",
+    "//utils/native/base:utils",
+ ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "startup_l2:syspara",
+  ]
+
+  cflags = ["-g","-O0","-Wno-unused-variable","-fno-omit-frame-pointer"]
+  sources = [
+    "UpdaterOnRemoteRequest_fuzzer.cpp",
+  ]
+}
+###############################################################################
+group("fuzztest") {
+  testonly = true
+  deps = []
+  deps += [
+    # deps file
+    ":UpdaterOnRemoteRequestFuzzTest",
+  ]
+}
+###############################################################################

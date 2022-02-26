@@ -1,0 +1,50 @@
+# Copyright (c) 2020-2021 Lockzhiner Electronics Co., Ltd.
+
+import("//build/lite/config/component/lite_component.gni")
+import("//build/lite/config/subsystem/lite_subsystem.gni")
+
+declare_args() {
+  enable_hos_vendor_wifiiot_xts = false
+}
+
+lite_subsystem("wifiiot_sdk") {
+  subsystem_components = [ ":sdk" ]
+}
+
+build_ext_component("liteos") {
+  exec_path = rebase_path(".", root_build_dir)
+  outdir = rebase_path(root_out_dir)
+  command = "sh ./build.sh $outdir"
+  deps = [
+    ":sdk",
+    "//build/lite:ohos",
+  ]
+  if (enable_hos_vendor_wifiiot_xts) {
+    deps += [ "//build/lite/config/subsystem/xts:xts" ]
+  }
+}
+
+lite_component("sdk") {
+  features = []
+
+  deps = [
+    "//device/rockchip/rk2206/sdk_liteos/board:board",
+    "//device/rockchip/hardware:hardware",
+    # xts
+    "//device/rockchip/rk2206/adapter/hals/update:hal_update_static",
+    # xts
+    "//base/update/ota_lite/frameworks/source:hota",
+    "//kernel/liteos_m/components/fs/littlefs:littlefs",
+    "//build/lite/config/component/cJSON:cjson_static",
+    "../third_party/lwip:rk2206_lwip",
+    "//kernel/liteos_m/components/net/lwip-2.1:lwip",
+    "//vendor/lockzhiner/rk2206/samples:app",
+    "//third_party/paho_mqtt:pahomqtt_static",
+    "//vendor/lockzhiner/rk2206/hdf_config:hdf_config",
+    "//vendor/lockzhiner/rk2206/hdf_drivers:hdf_drivers",
+    "//drivers/adapter/khdf/liteos_m/test/sample_driver:sample_driver",
+    #"//drivers/adapter/uhdf/manager:hdf_manager",
+    #"//drivers/adapter/uhdf/posix:hdf_posix",
+  ]
+}
+

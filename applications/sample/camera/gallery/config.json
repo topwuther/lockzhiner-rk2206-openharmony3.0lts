@@ -1,0 +1,99 @@
+{
+    "app": {
+        "bundleName": "com.huawei.gallery",
+        "vendor": "huawei",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+        "apiVersion": {
+            "compatible": 3,
+            "target": 4
+        }
+    },
+    "deviceConfig": {
+        "default": {
+        }
+    },
+    "module": {
+        "package": "com.huawei.gallery",
+        "name": ".MyHarmonyAbilityPackage",
+        "deviceType": [
+            "phone",
+            "tv",
+            "tablet",
+            "pc",
+            "car",
+            "smartWatch",
+            "sportsWatch",
+            "smartVision"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "gallery",
+            "moduleType": "entry"
+        },
+        "abilities": [
+            {
+                "name": "GalleryAbility",
+                "icon": "assets/gallery/resources/drawable/com.huawei.photos.png",
+                "label": "test app 1",
+                "launchType": "standard",
+                "type": "page",
+                "visible": true
+            }
+        ],
+        "reqPermissions": [
+            {
+                "name": "ohos.permission.MODIFY_AUDIO_SETTINGS",
+                "reason": "SYSTEM_GRANT",
+                "usedScene": {
+                    "ability": [
+                        ".FormAbility"
+                    ],
+                    "when": "inuse"
+                }
+            },
+            {
+                "name": "ohos.permission.READ_MEDIA",
+                "reason": "USER_GRANT",
+                "usedScene": {
+                    "ability": [
+                        ".FormAbility"
+                    ],
+                    "when": "inuse"
+                }
+            },
+            {
+                "name": "ohos.permission.READ_MEDIA_AUDIO",
+                "reason": "USER_GRANT",
+                "usedScene": {
+                    "ability": [
+                        ".FormAbility"
+                    ],
+                    "when": "inuse"
+                }
+            },
+            {
+                "name": "ohos.permission.READ_MEDIA_IMAGES",
+                "reason": "USER_GRANT",
+                "usedScene": {
+                    "ability": [
+                        ".FormAbility"
+                    ],
+                    "when": "inuse"
+                }
+            },
+            {
+                "name": "ohos.permission.READ_MEDIA_VIDEO",
+                "reason": "USER_GRANT",
+                "usedScene": {
+                    "ability": [
+                        ".FormAbility"
+                    ],
+                    "when": "inuse"
+                }
+            }
+        ]
+    }
+}

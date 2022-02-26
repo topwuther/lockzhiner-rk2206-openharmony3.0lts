@@ -1,0 +1,64 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ans_standard/notification.gni")
+import("//build/ohos.gni")
+
+ohos_shared_library("wantagent") {
+  include_dirs = [
+    "//foundation/ace/napi/interfaces/kits",
+    "//third_party/node/src",
+    "//foundation/aafwk/standard/services/common/include",
+    "//utils/system/safwk/native/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include",
+    "//foundation/aafwk/standard/interfaces/kits/napi/aafwk/context",
+    "//third_party/libuv/include",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/aafwk/standard/services/abilitymgr/include",
+    "//foundation/aafwk/standard/interfaces/kits/napi/aafwk/inner/napi_common",
+    "//foundation/aafwk/standard/services/common/include",
+    "./",
+  ]
+
+  sources = [
+    "napi_want_agent.cpp",
+    "native_module.cpp",
+  ]
+
+  deps = [
+    "${frameworks_path}/wantagent:wantagent_innerkits",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/interfaces/innerkits/base:base",
+    "//foundation/aafwk/standard/interfaces/kits/napi/aafwk/inner/napi_common:napi_common",
+    "//foundation/ace/napi:ace_napi",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+
+  relative_install_dir = "module"
+  subsystem_name = "notification"
+  part_name = "ans_standard"
+}

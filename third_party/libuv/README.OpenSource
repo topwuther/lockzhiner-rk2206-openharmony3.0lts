@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "libuv",
+    "License": "MIT License",
+    "License File": "LICENSE",
+    "Version Number": "v1.35.0",
+    "Owner": "sunbingxin@huawei.com",
+    "Upstream URL": "https://github.com/libuv/libuv",
+    "Description": "libuv is a multi-platform support library with a focus on asynchronous I/O."
+  }
+]

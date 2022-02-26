@@ -1,0 +1,32 @@
+{
+  "subsystem": "security",
+  "parts": {
+    "deviceauth_standard": {
+      "variants": [
+         "phone",
+         "wearable"
+      ],
+      "module_list": [
+         "//base/security/deviceauth:deviceauth_build",
+         "//base/security/deviceauth:deviceauth_service_build",
+         "//base/security/deviceauth:deviceauth_sdk_build"
+      ],
+      "inner_kits": [
+        {
+          "type": "so",
+          "name": "//base/security/deviceauth/services:deviceauth_sdk",
+          "header": {
+            "header_files": [
+              "device_auth_defines.h",
+              "device_auth.h"
+            ],
+            "header_base": "//base/security/deviceauth/interfaces/innerkits"
+          }
+        }
+      ],
+      "test_list": [
+          "//base/security/deviceauth:deviceauth_test_build"
+      ]
+    }
+  }
+}

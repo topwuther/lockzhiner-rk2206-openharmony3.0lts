@@ -1,0 +1,20 @@
+{
+  "color": [
+    {
+      "name": "battery_low_color",
+      "value": "#ff0000"
+    },{
+      "name": "battery_default_color",
+      "value": "#ffffff"
+    },{
+      "name": "battery_charging_color",
+      "value": "#00ff21"
+    },{
+      "name": "battery_border",
+      "value": "#fff"
+    },{
+      "name": "battery_background",
+      "value": "#00000000"
+    }
+  ]
+}

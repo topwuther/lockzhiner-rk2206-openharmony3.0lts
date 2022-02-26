@@ -1,0 +1,70 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/ohos.gni")
+
+SUBDEMOSYSTEM_DIR = "${ces_standard_path}/test/systemtest/common/resource/cesSTPermissionDefaultA"
+
+group("cesSTPermissionDefaultA") {
+  deps = [ ":libraryCesSTPermissionDefaultA" ]
+}
+
+config("cesSTPermissionDefaultAConfig") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "${SUBDEMOSYSTEM_DIR}/include",
+    "//third_party/jsoncpp/include",
+    "//foundation/appexecfwk/standard/kits/appkit/native/app",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/appexecfwk/standard/services/bundlemgr/include",
+    "//foundation/aafwk/standard/services/abilitymgr/include",
+    "//foundation/appexecfwk/standard/common/log/include",
+    "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
+  ]
+
+  defines = [
+    "APP_LOG_TAG = \"cesSTPermissionDefaultA\"",
+    "LOG_DOMAIN = 0xD002200",
+  ]
+}
+
+ohos_shared_library("libraryCesSTPermissionDefaultA") {
+  sources = [ "${SUBDEMOSYSTEM_DIR}/src/ces_st_permission_default_A.cpp" ]
+
+  configs = [ ":cesSTPermissionDefaultAConfig" ]
+
+  deps = [
+    "${ces_native_path}:cesfwk_innerkits",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/appexecfwk/standard/common:libappexecfwk_common",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+    "//foundation/appexecfwk/standard/services/bundlemgr:libbms",
+    "//third_party/jsoncpp:jsoncpp",
+    "//utils/native/base:utilsbase",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ces_standard"
+}

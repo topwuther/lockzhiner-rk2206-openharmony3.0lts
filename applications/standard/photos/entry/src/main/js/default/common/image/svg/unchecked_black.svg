@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic/gallery/public/checkbox2</title>
+    <defs>
+        <path d="M18.00077,2 C20.2094838,2 22,3.79246765 22,5.99922997 L22,18.00077 C22,20.2094838 20.2075324,22 18.00077,22 L5.99922997,22 C3.79051625,22 2,20.2075324 2,18.00077 L2,5.99922997 C2,3.79051625 3.79246765,2 5.99922997,2 L18.00077,2 Z M18.00077,3 L5.99922997,3 C4.40311826,3 3.09639718,4.24929602 3.00509582,5.82307706 L3,5.99922997 L3,18.00077 C3,19.5968817 4.24929602,20.9036028 5.82307706,20.9949042 L5.99922997,21 L18.00077,21 C19.5968817,21 20.9036028,19.750704 20.9949042,18.1769229 L21,18.00077 L21,5.99922997 C21,4.40311826 19.750704,3.09639718 18.1769229,3.00509582 L18.00077,3 Z" id="path-1"></path>
+    </defs>
+    <g id="ic/gallery/public/checkbox2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="black">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Rectangle-210-Copy-6" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        <g id="编组" mask="url(#mask-2)" fill-opacity="0">
+            <g transform="translate(0.000000, 0.000000)">
+                <rect id="矩形" fill="#FFFFFF" x="-2.27373675e-13" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

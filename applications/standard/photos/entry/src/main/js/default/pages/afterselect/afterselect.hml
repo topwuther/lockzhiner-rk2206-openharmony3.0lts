@@ -1,0 +1,50 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<element src="../../common/component/custom_list/custom_list.hml"></element>
+<element src="../../common/component/top_bar/top_bar.hml"></element>
+<element src="../dialog/progress_dialog/progress_dialog.hml"></element>
+
+<div class="after-select-container">
+    <top_bar
+            id="topBar"
+            data-source="{{ topBarSource }}"
+            @left-click="topBarLeftClick">
+    </top_bar>
+    <list class="list-animation" onscrollbottom="scrollBottom">
+        <list-item clickeffect="false">
+            <div class="grid-content" if="{{ list && list.length > 0 }}">
+                <div for="{{ (index, item) in list }}">
+                    <stack class="grid-content-stack" style="width : {{ gridItemWidth }};">
+                        <image if="{{ item.mediaType == photoType }}"
+                               class="shared-transition-style"
+                               src="{{ item.src }}">
+                        </image>
+                        <div class="grid-video" if="{{ item.mediaType == videoType }}"
+                             onclick="itemClick({{ item }},{{ index }})">
+                            <image src="/common/image/icon/video_poster.png"></image>
+                        </div>
+                    </stack>
+                </div>
+            </div>
+        </list-item>
+    </list>
+    <progress_dialog id="progress_dialog"
+                     progress="{{ progress }}"
+                     title="{{ progressTitle }}"
+                     operate-type="{{ operateType }}"></progress_dialog>
+</div>

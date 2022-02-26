@@ -1,0 +1,32 @@
+{
+  "float": [
+    {
+      "name": "fontSize_network_state",
+      "value": "16"
+    },
+    {
+      "name": "whole_container_width",
+      "value": "100"
+    },
+    {
+      "name": "whole_container_margin",
+      "value": "2"
+    },
+    {
+      "name": "battery_decorator_margin",
+      "value": "2"
+    },
+    {
+      "name": "battery_border_radius",
+      "value": "2"
+    },
+    {
+      "name": "battery_content_padding",
+      "value": "2"
+    },
+    {
+      "name": "battery_border_width",
+      "value": "1"
+    }
+  ]
+}

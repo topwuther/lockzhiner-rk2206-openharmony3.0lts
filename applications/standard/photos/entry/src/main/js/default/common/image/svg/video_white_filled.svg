@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic/gallery/public/video_filled</title>
+    <defs>
+        <path d="M14,5 C15.6568542,5 17,6.34314575 17,8 L17,16 C17,17.6568542 15.6568542,19 14,19 L4,19 C2.34314575,19 1,17.6568542 1,16 L1,8 C1,6.34314575 2.34314575,5 4,5 L14,5 Z M22.9503469,7.16150569 C22.9831987,7.27053648 23,7.38559225 23,7.50153111 L23,16.4987473 C23,17.051032 22.626904,17.4987473 22.1666667,17.4987473 C22.0700509,17.4987473 21.9741711,17.4785857 21.8833121,17.4391635 L18,15.7542608 L18,8.24601755 L21.8833121,6.56111487 C22.3161268,6.37332401 22.7938545,6.64212814 22.9503469,7.16150569 Z" id="path-1"></path>
+    </defs>
+    <g id="ic/gallery/public/video_filled" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Combined-Shape" fill="#ffffff" xlink:href="#path-1"></use>
+        <g id="编组" mask="url(#mask-2)" fill="#FFFFFF" fill-opacity="0">
+            <g id="矩形">
+                <rect x="0" y="0" width="24" height="24"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

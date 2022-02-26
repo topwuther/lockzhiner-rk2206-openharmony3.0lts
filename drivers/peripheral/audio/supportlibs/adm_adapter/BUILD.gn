@@ -1,0 +1,215 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if (defined(ohos_lite)) {
+  import("//build/lite/config/component/lite_component.gni")
+} else {
+  import("//build/ohos.gni")
+}
+import("//drivers/adapter/uhdf2/uhdf.gni")
+import("//drivers/peripheral/audio/audio.gni")
+
+config("audio_interface_config") {
+  visibility = [ ":*" ]
+
+  cflags = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DGST_DISABLE_DEPRECATED",
+    "-DHAVE_CONFIG_H",
+    "-fno-strict-aliasing",
+    "-Wno-sign-compare",
+    "-Wno-builtin-requires-header",
+    "-Wno-implicit-function-declaration",
+    "-Wno-format",
+    "-Wno-int-conversion",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-thread-safety-attributes",
+    "-Wno-missing-field-initializers",
+    "-Wno-inconsistent-missing-override",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-ffunction-sections",
+    "-fdata-sections",
+  ]
+
+  ldflags = [ "-Wl" ]
+}
+
+if (defined(ohos_lite)) {
+  shared_library("hdi_audio_interface_lib_capture") {
+    sources = [
+      "$hdf_framework_path/ability/sbuf/src/hdf_sbuf.c",
+      "//drivers/peripheral/audio/hal/hdi_passthrough/src/audio_common.c",
+      "src/audio_interface_lib_capture.c",
+      "src/audio_interface_lib_common.c",
+    ]
+
+    include_dirs = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/include",
+      "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
+      "//drivers/peripheral/audio/interfaces/include",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include",
+      "//third_party/bounds_checking_function/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_uhdf_path/osal/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/kits/",
+      "//device/hisilicon/hispark_taurus/sdk_linux/huawei_proprietary/include",
+    ]
+
+    deps = [
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//drivers/adapter/uhdf/manager:hdf_core",
+      "//drivers/adapter/uhdf/posix:hdf_posix_osal",
+      "//third_party/bounds_checking_function:libsec_shared",
+    ]
+
+    public_configs = [ ":audio_interface_config" ]
+  }
+
+  shared_library("hdi_audio_interface_lib_render") {
+    sources = [
+      "$hdf_framework_path/ability/sbuf/src/hdf_sbuf.c",
+      "//drivers/peripheral/audio/hal/hdi_passthrough/src/audio_common.c",
+      "src/audio_interface_lib_common.c",
+      "src/audio_interface_lib_render.c",
+    ]
+
+    include_dirs = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/include",
+      "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
+      "//drivers/peripheral/audio/interfaces/include",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include",
+      "//third_party/bounds_checking_function/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_uhdf_path/osal/include",
+      "//base/hiviewdfx/hilog_lite/interfaces/native/kits/",
+      "//device/hisilicon/hispark_taurus/sdk_linux/huawei_proprietary/include",
+    ]
+
+    deps = [
+      "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+      "//drivers/adapter/uhdf/manager:hdf_core",
+      "//drivers/adapter/uhdf/posix:hdf_posix_osal",
+      "//third_party/bounds_checking_function:libsec_shared",
+    ]
+
+    public_configs = [ ":audio_interface_config" ]
+  }
+} else {
+  ohos_shared_library("hdi_audio_interface_lib_capture") {
+    sources = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/src/audio_common.c",
+      "src/audio_interface_lib_capture.c",
+      "src/audio_interface_lib_common.c",
+    ]
+
+    include_dirs = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/include",
+      "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
+      "//drivers/peripheral/audio/interfaces/include",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include",
+      "//third_party/bounds_checking_function/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_uhdf_path/osal/include",
+      "//device/hisilicon/hispark_taurus/sdk_linux/huawei_proprietary/include",
+    ]
+
+    deps = [
+      "$hdf_uhdf_path/config:libhdf_hcs",
+      "$hdf_uhdf_path/hcs:hdf_default.hcb",
+      "$hdf_uhdf_path/hdi:libhdi",
+      "$hdf_uhdf_path/host:hdf_devhost",
+      "$hdf_uhdf_path/host:libhdf_host",
+      "$hdf_uhdf_path/ipc:libhdf_ipc_adapter",
+      "$hdf_uhdf_path/manager:hdf_devmgr",
+      "$hdf_uhdf_path/manager:hdf_devmgr.rc",
+      "$hdf_uhdf_path/osal:libhdf_utils",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    public_configs = [ ":audio_interface_config" ]
+
+    subsystem_name = "hdf"
+  }
+
+  ohos_shared_library("hdi_audio_interface_lib_render") {
+    sources = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/src/audio_common.c",
+      "src/audio_interface_lib_common.c",
+      "src/audio_interface_lib_render.c",
+    ]
+
+    include_dirs = [
+      "//drivers/peripheral/audio/hal/hdi_passthrough/include",
+      "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
+      "//drivers/peripheral/audio/interfaces/include",
+      "$hdf_framework_path/include/core",
+      "$hdf_framework_path/include/utils",
+      "$hdf_framework_path/include/osal",
+      "$hdf_framework_path/include",
+      "//third_party/bounds_checking_function/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_framework_path/utils/include",
+      "$hdf_framework_path/ability/sbuf/include",
+      "$hdf_uhdf_path/osal/include",
+      "//device/hisilicon/hispark_taurus/sdk_linux/huawei_proprietary/include",
+    ]
+
+    deps = [
+      "$hdf_uhdf_path/config:libhdf_hcs",
+      "$hdf_uhdf_path/hcs:hdf_default.hcb",
+      "$hdf_uhdf_path/hdi:libhdi",
+      "$hdf_uhdf_path/host:hdf_devhost",
+      "$hdf_uhdf_path/host:libhdf_host",
+      "$hdf_uhdf_path/ipc:libhdf_ipc_adapter",
+      "$hdf_uhdf_path/manager:hdf_devmgr",
+      "$hdf_uhdf_path/manager:hdf_devmgr.rc",
+      "$hdf_uhdf_path/osal:libhdf_utils",
+      "//utils/native/base:utils",
+    ]
+
+    if (is_standard_system) {
+      external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+    } else {
+      external_deps = [ "hilog:libhilog" ]
+    }
+
+    public_configs = [ ":audio_interface_config" ]
+
+    subsystem_name = "hdf"
+  }
+}

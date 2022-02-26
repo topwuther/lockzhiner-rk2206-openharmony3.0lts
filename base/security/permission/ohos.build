@@ -1,0 +1,34 @@
+{
+  "subsystem": "security",
+  "parts": {
+    "permission_standard": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk:libpermissionsdk_standard",
+          "header": {
+            "header_files": [
+              "permission/permission.h",
+              "permission/permission_def.h",
+              "permission/permission_kit.h"
+            ],
+            "header_base": "//base/security/permission/interfaces/innerkits/permission_standard/permissionsdk/main/cpp/include"
+          }
+        }
+      ],
+      "module_list": [
+        "//base/security/permission/interfaces/kits/permission_standard/napi:napi_packages",
+        "//base/security/permission:permission_build_module_standard",
+        "//base/security/permission:distributed_permission"
+      ],
+      "test_list": [
+        "//base/security/permission:permission_build_module_standard_test",
+        "//base/security/permission/services/permission_standard/distributedpermissionmanagerservice/test:unittest",
+        "//base/security/permission/interfaces/innerkits/permission_standard/distributedpermission/test:unittest"
+      ]
+    }
+  }
+}

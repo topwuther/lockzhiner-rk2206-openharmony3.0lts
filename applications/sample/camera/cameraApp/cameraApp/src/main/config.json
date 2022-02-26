@@ -1,0 +1,99 @@
+{
+  "app": {
+    "bundleName": "com.huawei.camera",
+    "vendor": "huawei",
+    "version": {
+      "code": 2,
+      "name": "2"
+      },
+      "apiVersion": {
+        "compatible": 3,
+        "target": 4
+      }
+    },
+    "deviceConfig": {
+        "default": {
+        }
+    },
+  "module": {
+    "package": "com.huawei.camera",
+    "name": ".MyHarmonyAbilityPackage",
+    "deviceType": [
+      "phone",
+      "tv",
+      "tablet",
+      "pc",
+      "car",
+      "smartWatch",
+      "sportsWatch",
+      "smartVision"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "cameraApp",
+      "moduleType": "entry"
+    },
+    "abilities": [
+      {
+        "name": "CameraAbility",
+        "icon": "assets/cameraApp/resources/base/media/camera.png",
+        "label": "test app 1",
+        "launchType": "standard",
+        "type": "page",
+        "visible": true
+      }
+    ],
+    "reqPermissions": [
+      {
+        "name": "ohos.permission.CAMERA",
+        "reason": "USER_GRANT",
+        "usedScene": {
+          "ability": [
+            ".FormAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.MODIFY_AUDIO_SETTINGS",
+        "reason": "SYSTEM_GRANT",
+        "usedScene": {
+          "ability": [
+            ".FormAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.READ_MEDIA",
+        "reason": "USER_GRANT",
+        "usedScene": {
+          "ability": [
+            ".FormAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.MICROPHONE",
+        "reason": "USER_GRANT",
+        "usedScene": {
+          "ability": [
+            ".FormAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.WRITE_MEDIA",
+        "reason": "USER_GRANT",
+        "usedScene": {
+          "ability": [
+            ".FormAbility"
+          ],
+          "when": "inuse"
+        }
+      }
+    ]
+  }
+}

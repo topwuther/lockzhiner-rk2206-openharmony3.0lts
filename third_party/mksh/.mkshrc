@@ -1,0 +1,11 @@
+PS1='OHOS:$PWD$ '
+HOME=/
+
+for i in chgrp chmod chown cp date du free ifconfig kill mkdir mount mv ping ps reboot rm rmdir top touch umount uname;do alias $i="toybox $i";done
+alias ls='toybox ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+for i in arp cpup dhclient dns format hwi ipdebug lsfd memcheck netstat oom partinfo partition ping6 pmm reset sem shm stack statfs su swtmr sync systeminfo telnet v2p vmm watch writeproc;do alias $i="shell $i";done
+alias help='shell help;toybox help'

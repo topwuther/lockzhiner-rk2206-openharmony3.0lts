@@ -1,0 +1,32 @@
+# Set the default behavior
+* text eol=lf
+# Explicitly declare source files
+*.c text eol=lf
+*.h text eol=lf
+# Denote files that should not be modified.
+*.odt binary
+*.png binary
+# Visual Studio
+*.sln text eol=crlf
+*.vcxproj* text eol=crlf
+*.vcproj* text eol=crlf
+*.suo binary
+*.rc text eol=crlf
+# Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.tgz filter=lfs diff=lfs merge=lfs -text
+*.trp filter=lfs diff=lfs merge=lfs -text
+*.apk filter=lfs diff=lfs merge=lfs -text
+*.jar filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.asm filter=lfs diff=lfs merge=lfs -text
+*.8svn filter=lfs diff=lfs merge=lfs -text
+*.9svn filter=lfs diff=lfs merge=lfs -text
+*.dylib filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.a filter=lfs diff=lfs merge=lfs -text
+*.so filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text

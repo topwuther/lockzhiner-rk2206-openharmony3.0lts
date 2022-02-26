@@ -1,0 +1,86 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+config("intl_config") {
+  include_dirs = [
+    "//third_party/icu/icu4c/source",
+    "//third_party/icu/icu4c/source/common",
+    "//third_party/icu/icu4c/source/i18n",
+    "//base/global/i18n_standard/frameworks/intl/include",
+  ]
+}
+ohos_shared_library("intl_util") {
+  configs = [ ":intl_config" ]
+  include_dirs = [
+    "//third_party/icu/icu4c/source",
+    "//third_party/icu/icu4c/source/common",
+    "//third_party/icu/icu4c/source/i18n",
+    "//third_party/icu/icu4c/source/common/unicode",
+    "//base/global/i18n_standard/frameworks/intl/include",
+    "//base/telephony/core_service/interfaces/innerkits/common",
+    "//base/telephony/core_service/interfaces/innerkits/network_search/include",
+    "//base/telephony/core_service/interfaces/innerkits/api",
+    "//base/telephony/core_service/interfaces/innerkits/proxy",
+    "//base/telephony/core_service/interfaces/innerkits/kits/js/napi/sim/include",
+    "//base/telephony/ril_adapter/interfaces/innerkits",
+    "//base/telephony/core_service/common/log/include",
+    "//base/telephony/core_service/interfaces/kits/include",
+    "//utils/native/base/include",
+    "//third_party/libxml2/include",
+  ]
+  sources = [
+    "src/date_time_format.cpp",
+    "src/locale_config.cpp",
+    "src/locale_info.cpp",
+    "src/number_format.cpp",
+  ]
+  cflags_cc = [
+    "-Wall",
+    "-fPIC",
+  ]
+  deps = [
+    ":config_locales_xml",
+    ":config_regions_xml",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//base/telephony/core_service/interfaces/kits:tel_core_service_api",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//third_party/icu/icu4c:shared_icui18n",
+    "//third_party/icu/icu4c:shared_icuuc",
+    "//third_party/libxml2:xml2",
+    "//utils/native/base:utils",
+  ]
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+  subsystem_name = "global"
+  part_name = "i18n_standard"
+}
+
+ohos_prebuilt_etc("config_locales_xml") {
+  source =
+      "//base/global/i18n_standard/frameworks/intl/src/supported_locales.xml"
+  module_install_dir = "usr/ohos_locale_config/"
+  part_name = "i18n_standard"
+  subsystem_name = "global"
+}
+
+ohos_prebuilt_etc("config_regions_xml") {
+  source =
+      "//base/global/i18n_standard/frameworks/intl/src/supported_regions.xml"
+  module_install_dir = "usr/ohos_locale_config/"
+  part_name = "i18n_standard"
+  subsystem_name = "global"
+}

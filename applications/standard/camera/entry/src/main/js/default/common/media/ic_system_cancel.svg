@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_mode_edit_cancel</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12.028484,10.9459933 L18.7505839,4.22389337 C19.0434772,3.93100015 19.5183509,3.93100015 19.8112441,4.22389337 C20.1041373,4.51678659 20.1041373,4.99166033 19.8112441,5.28455354 L13.0891442,12.0066535 L19.8112441,18.7287534 C20.1041373,19.0216466 20.1041373,19.4965203 19.8112441,19.7894136 C19.5183509,20.0823068 19.0434772,20.0823068 18.7505839,19.7894136 L12.028484,13.0673136 L5.3063841,19.7894136 C5.01349088,20.0823068 4.53861715,20.0823068 4.24572393,19.7894136 C3.95283071,19.4965203 3.95283071,19.0216466 4.24572393,18.7287534 L10.9678239,12.0066535 L4.24572393,5.28455354 C3.95283071,4.99166033 3.95283071,4.51678659 4.24572393,4.22389337 C4.53861715,3.93100015 5.01349088,3.93100015 5.3063841,4.22389337 L12.028484,10.9459933 Z" id="path-1"></path>
+    </defs>
+    <g id="ic_mode_edit_cancel" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+    </g>
+</svg>

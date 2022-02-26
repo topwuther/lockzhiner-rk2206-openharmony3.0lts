@@ -1,0 +1,26 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "hicollie_native": {
+      "module_list": [
+        "//base/hiviewdfx/hicollie/interfaces/native/innerkits:libhicollie"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/hiviewdfx/hicollie/interfaces/native/innerkits:libhicollie",
+          "header": {
+            "header_base": "//base/hiviewdfx/hicollie/interfaces/native/innerkits/include",
+            "header_files": [
+              "xcollie/xcollie.h",
+              "xcollie/xcollie_checker.h",
+              "xcollie/xcollie_define.h"
+            ]
+          }
+        }
+      ],
+      "test_list": [
+        "//base/hiviewdfx/hicollie/frameworks/native/test/unittest/common:unittest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,71 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/test.gni")
+
+ohos_unittest("fms_file_share_ability_test") {
+  module_out_path = "storage_standard/fms_share_test"
+
+  sources = [
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/src/fd_holder.cpp",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/src/file_info.cpp",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/src/file_share_ability.cpp",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/src/fms_utils.cpp",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/src/shared_path_strategy.cpp",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/test/unittest/fms_file_share_ability_test/fms_file_share_ability_test.cpp",
+  ]
+
+  configs = [ "//build/config/compiler:exceptions" ]
+
+  include_dirs = [
+    "//third_party/node/src",
+    "//foundation/ace/napi/interfaces/kits",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/services/device_storage_service/include",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/services/device_storage_manager/include",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service/include",
+    "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/device_storage_manager/include",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+  deps = [
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:dummy_classes",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/native_rdb:native_rdb",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//utils/native/base:utils",
+    "//utils/native/base:utilsecurec",
+  ]
+
+  external_deps = [
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+  ]
+}
+
+group("test") {
+  testonly = true
+
+  deps = [ ":fms_file_share_ability_test" ]
+}

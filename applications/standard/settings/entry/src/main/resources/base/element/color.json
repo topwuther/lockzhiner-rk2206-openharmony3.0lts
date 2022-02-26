@@ -1,0 +1,24 @@
+{
+  "color": [
+    {
+      "name": "color_333333_grey",
+      "value": "#333333"
+    },
+    {
+      "name": "color_666666_grey",
+      "value": "#666666"
+    },
+    {
+      "name": "color_999999_grey",
+      "value": "#999999"
+    },
+    {
+      "name": "color_E3E3E3_grey",
+      "value": "#E3E3E3"
+    },
+    {
+      "name": "color_00000000_transparent",
+      "value": "#00000000"
+    }
+  ]
+}

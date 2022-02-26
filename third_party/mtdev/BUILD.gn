@@ -1,0 +1,51 @@
+import("//build/ohos.gni")
+
+## Build libmtdev.so {{{
+config("libmtdev_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "src",
+  ]
+
+  cflags = [
+    "-Wno-unused-parameter",
+    "-Wno-sign-compare",
+  ]
+}
+
+config("libmtdev_public_config") {
+  include_dirs = [
+    "include",
+  ]
+
+  cflags = [
+  ]
+}
+
+ohos_shared_library("libmtdev") {
+  sources = [
+    "src/caps.c",
+    "src/core.c",
+    "src/iobuf.c",
+    "src/match.c",
+    "src/match_four.c",
+  ]
+
+  configs = [
+    ":libmtdev_config",
+  ]
+
+  public_configs = [
+    ":libmtdev_public_config",
+  ]
+
+  deps = [
+  ]
+
+  public_deps = [
+  ]
+
+  part_name = "multimodalinput_base"
+}
+## Build libmtdev.so }}}

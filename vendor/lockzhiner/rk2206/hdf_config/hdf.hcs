@@ -1,0 +1,122 @@
+#include "gpio_config.hcs"
+#include "pwm_config.hcs"
+#include "i2c_config.hcs"
+#include "adc_config.hcs"
+
+root {
+    module = "rockchip,rk2206";
+    device_info {
+        match_attr = "hdf_manager";
+        template host {
+            hostName = "";
+            priority = 10;
+            template device {
+                template deviceNode {
+                    policy = 0;
+                    priority = 10;
+                    preload = 0;
+                    permission = 0664;
+                    moduleName = "";
+                    serviceName = "";
+                    deviceMatchAttr = "";
+                }
+            }
+        }
+
+        sample_host :: host {
+            hostName = "sample_host";
+            sample_device :: device {
+                device0 :: deviceNode {
+                    policy = 2;
+                    priority = 10;
+                    preload = 1;
+                    permission = 0664;
+                    moduleName = "sample_driver";
+                    serviceName = "sample_service";
+                }
+            }
+        }
+
+        platform :: host {
+            hostName = "platform_host";
+            priority = 10;
+
+            device_gpio :: device {
+                device0 :: deviceNode {
+                    policy = 0;                                 // 等于0，不需要发布服务
+                    priority = 10;                              // 驱动启动优先级
+                    permission = 0644;                          // 驱动创建设备节点权限
+                    moduleName = "gpio_driver_rk2206";          //【必要】用于指定驱动名称，需要与期望的驱动Entry中的moduleName一致；
+                    deviceMatchAttr = "lockzhiner_rk2206_gpio"; //【必要】用于配置控制器私有数据，要与 gpio_config.hcs 中对应控制器保持一致，其他控制器信息也在文件中
+                }
+            }
+
+            device_pwm :: device {  					//为每一个 pwm 控制器配置一个HDF设备节点，存在多个时【必须】添加，否则不用
+                device0 :: deviceNode {
+                    policy = 1;       					// 等于1，向内核态发布服务
+                    priority = 10;    					// 驱动启动优先级
+                    permission = 0644;					// 驱动创建设备节点权限
+                    moduleName = "pwm_driver_rk2206";   		        //【必要】用于指定驱动名称，需要与期望的驱动Entry中的moduleName一致；
+                    serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM0";//【必要且唯一】驱动对外发布服务的名称
+                    deviceMatchAttr = "lockzhiner_rk2206_pwm0";		    //【必要】用于配置控制器私有数据，要与 pwm_config.hcs 中对应，控制器保持一致，具体的控制器信息在 pwm_config.hcs 中
+                }
+                device1 :: deviceNode {
+                    policy = 1;
+                    priority = 10;
+                    permission = 0644;
+                    moduleName = "pwm_driver_rk2206";
+                    serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM1";
+                    deviceMatchAttr = "lockzhiner_rk2206_pwm1";
+                }
+                device2 :: deviceNode {
+                    policy = 1;
+                    priority = 10;
+                    permission = 0644;
+                    moduleName = "pwm_driver_rk2206";
+                    serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM2";
+                    deviceMatchAttr = "lockzhiner_rk2206_pwm2";
+                }
+            }
+
+            device_i2c :: device {
+                device0 :: deviceNode {
+                    policy = 0;                                 // 等于0，不需要发布服务
+                    priority = 10;                              // 驱动启动优先级
+                    permission = 0644;                          // 驱动创建设备节点权限
+                    moduleName = "i2c_driver_rk2206";           //【必要】用于指定驱动名称，需要与期望的驱动Entry中的moduleName一致；
+                    deviceMatchAttr = "lockzhiner_rk2206_i2c";  //【必要】用于配置控制器私有数据，要与 gpio_config.hcs 中对应控制器保持一致，其他控制器信息也在文件中
+                }
+            }
+
+            device_adc :: device {
+                device_adc_0 :: deviceNode {
+                    policy = 0;                                 // 等于0，不需要发布服务
+                    priority = 10;                              // 驱动启动优先级
+                    permission = 0644;                          // 驱动创建设备节点权限
+                    moduleName = "adc_driver_rk2206";           //【必要】用于指定驱动名称，需要与期望的驱动Entry中的moduleName一致；
+                    serviceName = "lockzhiner_rk2206_i2c";      //【必要】驱动对外发布服务的名称，必须唯一
+                    deviceMatchAttr = "lockzhiner_rk2206_adc0"; //【必要】用于配置控制器私有数据，要与adc_config.hcs中对应控制器保持一致,具体的控制器信息在 adc_config.hcs 中
+                }
+            }
+
+            device_spi :: device { //为每一个 SPI 控制器配置一个HDF设备节点
+                device_spi0 :: deviceNode {
+                    policy = 1;
+                    priority = 10;
+                    permission = 0644;
+                    moduleName = "spi_driver_rk2206";               // 【必要】用于指定驱动名称，该字段的值必须和驱动入口结构的moduleName值一致
+                    serviceName = "service_spi_driver_rk2206_spi0"; // 【必要且唯一】驱动对外发布服务的名称
+                    deviceMatchAttr = "device_drvice_rk2206_spi0";  // 需要与设备hcs文件中的 match_attr 匹配
+                }
+                device_spi1 :: deviceNode {
+                    policy = 1;
+                    priority = 10;
+                    permission = 0644;
+                    moduleName = "spi_driver_rk2206";
+                    serviceName = "service_spi_driver_rk2206_spi1";
+                    deviceMatchAttr = "device_drvice_rk2206_spi1";
+                }
+            }
+        }
+    }
+}

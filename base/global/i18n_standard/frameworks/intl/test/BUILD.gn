@@ -1,0 +1,43 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+module_output_path = "i18n_standard/intl_test"
+
+ohos_unittest("intl_test") {
+  module_out_path = module_output_path
+
+  sources = [
+    "unittest/intl_test.cpp",
+    "unittest/locale_config_test.cpp",
+  ]
+  include_dirs = [
+    "//base/global/i18n_standard/frameworks/intl/include",
+    "//third_party/icu/icu4c/source/common",
+    "//third_party/icu/icu4c/source/i18n",
+  ]
+  deps = [
+    "//base/global/i18n_standard/frameworks/intl:intl_util",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//third_party/googletest:gtest_main",
+    "//third_party/icu/icu4c:shared_icui18n",
+    "//third_party/icu/icu4c:shared_icuuc",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = []
+  deps += [ ":intl_test" ]
+}

@@ -1,0 +1,148 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/lite/config/component/lite_component.gni")
+import("//build/lite/ndk/ndk.gni")
+if (ohos_kernel_type == "liteos_a" || ohos_kernel_type == "linux") {
+  config("softbus_lite_config") {
+    include_dirs = [
+      "//foundation/communication/softbus_lite/discovery/coap/include",
+      "//foundation/communication/softbus_lite/os_adapter/include",
+      "//foundation/communication/softbus_lite/interfaces/kits/discovery",
+      "//third_party/cJSON",
+      "//third_party/bounds_checking_function/include",
+      "//foundation/communication/softbus_lite/discovery/discovery_service/include",
+      "//foundation/communication/softbus_lite/authmanager/include",
+      "//base/startup/syspara_lite/interfaces/kits",
+      "//foundation/communication/softbus_lite/trans_service/include/libdistbus",
+      "//foundation/communication/softbus_lite/trans_service/include/utils",
+      "//foundation/communication/softbus_lite/trans_service/source/libdistbus",
+      "//foundation/communication/softbus_lite/trans_service/source/utils",
+      "//foundation/communication/softbus_lite/interfaces/kits/transport",
+      "//base/security/deviceauth/interfaces/innerkits/deviceauth_lite",
+      "//third_party/mbedtls/include",
+      "//base/security/huks/interfaces/innerkits/huks_lite",
+      "//base/security/permission/interfaces/kits/permission_lite",
+    ]
+
+    if (ohos_kernel_type == "liteos_a") {
+      include_dirs += [ "//third_party/wpa_supplicant/wpa_supplicant-2.9/src/" ]
+    }
+
+    defines = [
+      "_GNU_SOURCE",
+      "_SCANTY_MEMORY_",
+    ]
+
+    defines += [ "SOFTBUS_DEBUG" ]
+    include_dirs += []
+  }
+
+  softbus_lite_sources = [
+    "//foundation/communication/softbus_lite/authmanager/source/auth_conn.c",
+    "//foundation/communication/softbus_lite/authmanager/source/auth_interface.c",
+    "//foundation/communication/softbus_lite/authmanager/source/bus_manager.c",
+    "//foundation/communication/softbus_lite/authmanager/source/msg_get_deviceid.c",
+    "//foundation/communication/softbus_lite/authmanager/source/wifi_auth_manager.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/coap_adapter.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/coap_discover.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/coap_socket.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/json_payload.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/nstackx_common.c",
+    "//foundation/communication/softbus_lite/discovery/coap/source/nstackx_device.c",
+    "//foundation/communication/softbus_lite/discovery/discovery_service/source/coap_service.c",
+    "//foundation/communication/softbus_lite/discovery/discovery_service/source/common_info_manager.c",
+    "//foundation/communication/softbus_lite/discovery/discovery_service/source/discovery_service.c",
+    "//foundation/communication/softbus_lite/os_adapter/source/L1/os_adapter.c",
+    "//foundation/communication/softbus_lite/trans_service/source/libdistbus/auth_conn_manager.c",
+    "//foundation/communication/softbus_lite/trans_service/source/libdistbus/tcp_session.c",
+    "//foundation/communication/softbus_lite/trans_service/source/libdistbus/tcp_session_manager.c",
+    "//foundation/communication/softbus_lite/trans_service/source/libdistbus/trans_lock.c",
+    "//foundation/communication/softbus_lite/trans_service/source/utils/aes_gcm.c",
+    "//foundation/communication/softbus_lite/trans_service/source/utils/message.c",
+    "//foundation/communication/softbus_lite/trans_service/source/utils/tcp_socket.c",
+  ]
+
+  cflags = [ "-Wall" ]
+
+  lite_library("softbus_lite") {
+    target_type = "shared_library"
+    sources = softbus_lite_sources
+    public_configs = [ ":softbus_lite_config" ]
+    public_deps = [
+      "//base/security/deviceauth/frameworks/deviceauth_lite/source:hichainsdk",
+      "//base/security/huks/interfaces/innerkits/huks_lite:huks_3.0_sdk",
+      "//base/security/permission/services/permission_lite/pms_client:pms_client",
+      "//build/lite/config/component/cJSON:cjson_shared",
+      "//third_party/bounds_checking_function:libsec_shared",
+    ]
+
+    if (ohos_kernel_type == "liteos_a") {
+      public_deps +=
+          [ "//third_party/wpa_supplicant/wpa_supplicant-2.9:wpa_supplicant" ]
+    }
+
+    out_dir = rebase_path(root_build_dir)
+    ldflags = [ "-L${out_dir}" ]
+
+    if (ohos_kernel_type == "liteos_a") {
+      ldflags += [ "-lwpa_client" ]
+    }
+  }
+
+  ndk_lib("softbus_ndk") {
+    lib_extension = ".so"
+    deps = [ ":softbus_lite" ]
+    head_files = [
+      "//foundation/communication/softbus_lite/interfaces/kits/transport",
+      "//foundation/communication/softbus_lite/interfaces/kits/discovery",
+    ]
+  }
+} else {
+  ndk_lib("discovery_ndk") {
+    deps = [ "//foundation/communication/softbus_lite/discovery:discovery" ]
+    head_files =
+        [ "//foundation/communication/softbus_lite/interfaces/kits/discovery" ]
+  }
+
+  ndk_lib("trans_service_ndk") {
+    deps = [
+      "//foundation/communication/softbus_lite/trans_service:trans_service",
+    ]
+    head_files =
+        [ "//foundation/communication/softbus_lite/interfaces/kits/transport" ]
+  }
+}
+
+group("softbus_lite_ndk") {
+  if (ohos_kernel_type == "liteos_m") {
+    deps = [
+      ":discovery_ndk",
+      ":trans_service_ndk",
+    ]
+  } else {
+    deps = [ ":softbus_ndk" ]
+  }
+}
+
+lite_component("softbus") {
+  if (ohos_kernel_type == "liteos_m") {
+    features = [
+      "discovery",
+      "authmanager",
+      "trans_service",
+    ]
+  } else {
+    features = [ ":softbus_lite" ]
+  }
+}

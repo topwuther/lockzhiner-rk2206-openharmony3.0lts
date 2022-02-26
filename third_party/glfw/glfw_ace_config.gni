@@ -1,0 +1,4 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021-2021. All rights reserved.
+# Defines
+ace_windows_defines = [ "WINDOWS_PLATFORM" ]
+ace_mac_defines = [ "MAC_PLATFORM" ]

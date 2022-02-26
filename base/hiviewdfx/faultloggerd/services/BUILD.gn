@@ -1,0 +1,75 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/hiviewdfx/faultloggerd/faultloggerd.gni")
+import("//build/ohos.gni")
+config("faultloggerd_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    ".",
+    "//utils/native/base/include",
+  ]
+
+  if (use_musl) {
+    cflags = [ "-DUSE_MUSL" ]
+  }
+}
+
+ohos_prebuilt_etc("faultloggerd.rc") {
+  if (use_musl) {
+    if (target_cpu == "arm") {
+      source = "config/faultloggerd32.cfg"
+    } else if (target_cpu == "arm64") {
+      source = "config/faultloggerd64.cfg"
+    } else if (target_cpu == "x86_64") {
+      source = "config/faultloggerd64.cfg"
+    }
+  } else {
+    if (target_cpu == "arm") {
+      source = "config/faultloggerd32.rc"
+    } else if (target_cpu == "arm64") {
+      source = "config/faultloggerd64.rc"
+    } else if (target_cpu == "x86_64") {
+      source = "config/faultloggerd64.rc"
+    }
+  }
+
+  relative_install_dir = "init"
+  part_name = "faultloggerd"
+  subsystem_name = "hiviewdfx"
+}
+
+ohos_executable("faultloggerd") {
+  install_enable = true
+  configs = [ ":faultloggerd_config" ]
+  sources = [
+    "fault_logger_daemon.cpp",
+    "main.cpp",
+  ]
+
+  deps = [
+    ":faultloggerd.rc",
+    "$faultloggerd_path/interfaces/innerkits/faultloggerd_client:libfaultloggerd",
+    "//utils/native/base:utils",
+  ]
+
+  if (is_standard_system) {
+    external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  } else {
+    external_deps = [ "hilog:libhilog" ]
+  }
+
+  part_name = "faultloggerd"
+  subsystem_name = "hiviewdfx"
+}

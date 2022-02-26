@@ -1,0 +1,148 @@
+{
+  "string": [
+    {
+      "name": "entry_MainAbility",
+      "value": "设置"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "enabled",
+      "value": "Enabled"
+    },
+    {
+      "name": "disabled",
+      "value": "Disabled"
+    },
+    {
+      "name": "settings",
+      "value": "Settings"
+    },
+    {
+      "name": "wifiTab",
+      "value": "WLANTab"
+    },
+    {
+      "name": "brightnessTab",
+      "value": "brightnessTab"
+    },
+    {
+      "name": "applyTab",
+      "value": "applyTab"
+    },
+    {
+      "name": "dateAndTimeTab",
+      "value": "dateAndTimeTab"
+    },
+    {
+      "name": "aboutTab",
+      "value": "aboutTab"
+    },
+    {
+      "name": "applicationInfo",
+      "value": "App info"
+    },
+    {
+      "name": "appManagement",
+      "value": "Apps"
+    },
+    {
+      "name": "cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "wifiPassword",
+      "value": "Password"
+    },
+    {
+      "name": "date",
+      "value": "Date"
+    },
+    {
+      "name": "time",
+      "value": "Time"
+    },
+    {
+      "name": "year",
+      "value": "year"
+    },
+    {
+      "name": "month",
+      "value": "month"
+    },
+    {
+      "name": "day",
+      "value": "date"
+    },
+    {
+      "name": "wifiList",
+      "value": "WLAN-List which can be used"
+    },
+    {
+      "name": "systemName",
+      "value": "SystemName"
+    },
+    {
+      "name": "model",
+      "value": "Model"
+    },
+    {
+      "name": "companyInfo",
+      "value": "CompanyInfo"
+    },
+    {
+      "name": "deviceId",
+      "value": "DeviceId"
+    },
+    {
+      "name": "softwareVersion",
+      "value": "SoftwareVersion"
+    },
+    {
+      "name": "version",
+      "value": "version "
+    },
+    {
+      "name": "password",
+      "value": "password"
+    },
+    {
+      "name": "connected",
+      "value": "connected"
+    },
+    {
+      "name": "monday",
+      "value": "monday"
+    },
+    {
+      "name": "tuesday",
+      "value": "tuesday"
+    },
+    {
+      "name": "wednesday",
+      "value": "wednesday"
+    },
+    {
+      "name": "thursday",
+      "value": "thursday"
+    },
+    {
+      "name": "friday",
+      "value": "friday"
+    },
+    {
+      "name": "saturday",
+      "value": "saturday"
+    },
+    {
+      "name": "sunday",
+      "value": "sunday"
+    }
+  ]
+}

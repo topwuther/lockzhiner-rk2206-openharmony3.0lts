@@ -1,0 +1,57 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2019-2019. All rights reserved.
+
+import("//build/test.gni")
+import("//drivers/adapter/uhdf2/uhdf.gni")
+
+module_output_path = "hdf/audio_hdi"
+
+ohos_unittest("AudioHdiTest") {
+  module_out_path = module_output_path
+  sources = [
+    "common/audio_adapter_test.cpp",
+    "common/audio_capture_test.cpp",
+    "common/audio_interface_lib_capture_test.cpp",
+    "common/audio_interface_lib_render_test.cpp",
+    "common/audio_manager_test.cpp",
+    "common/audio_render_test.cpp",
+  ]
+
+  include_dirs = [
+    "//drivers/peripheral/audio/test/unittest/common",
+    "//drivers/peripheral/audio/hal/hdi_passthrough/include",
+    "//drivers/peripheral/audio/interfaces/include",
+
+    "//drivers/framework/include/core",
+    "//drivers/framework/include/utils",
+    "//drivers/framework/include/osal",
+    "//drivers/framework/include",
+    "//third_party/bounds_checking_function/include",
+
+    "//drivers/framework/ability/sbuf/include",
+    "//drivers/framework/utils/include",
+    "//drivers/adapter/uhdf2/osal/include",
+  ]
+
+  deps = [
+    "$hdf_uhdf_path/osal:libhdf_utils",
+    "//drivers/peripheral/audio:hdi_audio",
+    "//drivers/peripheral/audio:hdi_audio_interface_lib_capture",
+    "//drivers/peripheral/audio:hdi_audio_interface_lib_render",
+    "//third_party/googletest:gmock_main",
+    "//third_party/googletest:gtest_main",
+  ]
+
+  cflags = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fsigned-char",
+    "-fno-common",
+    "-fno-strict-aliasing",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = [ ":AudioHdiTest" ]
+}

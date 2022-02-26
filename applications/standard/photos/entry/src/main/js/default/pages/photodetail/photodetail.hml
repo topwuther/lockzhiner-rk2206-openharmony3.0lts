@@ -1,0 +1,103 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<element src="../../common/component/top_bar/top_bar.hml"></element>
+<element src="../../common/component/bottom_bar/bottom_bar.hml"></element>
+<element src="../dialog/rename_dialog/rename_dialog.hml"></element>
+<element src="../dialog/delete_dialog/delete_dialog.hml"></element>
+
+<div class="photo-detail-container">
+    <top_bar
+            id="topBar"
+            data-source="{{ topBarSource }}"
+            @left-click="topBarLeftClick"
+            @right-click="topBarRightClick">
+    </top_bar>
+    <div class="photo-detail-div">
+        <swiper
+                class="photo-detail-swiper"
+                id="photoDetailSwiper"
+                index="{{ shareIndex }}"
+                loop="false" indicator="false"
+                on:change="swiperChange"
+                on:touchstart="hideBottomPop">
+            <div for="{{ (index, item) in list }}">
+                <div if="{{ item.mediaType == photoType }}" style="transform : rotate({{ item.rotate + 'deg' }});">
+                    <image
+                            src="{{ item.src }}"
+                            class="shared-transition-style"
+                            style="transform : scale({{ item.scale }});"></image>
+                </div>
+
+                <stack if="{{ item.mediaType == videoType }}">
+                    <video
+                            id="{{ 'video' + index }}"
+                            style="object-fit : fill;"
+                            src='{{ item.src }}'
+                            poster="/common/image/icon/video_poster.png"
+                            muted='false'
+                            autoplay="false"
+                            controls="true"
+                            on:prepared="videoPrepare({{ item }})"
+                            on:start="videoStart({{ item }}"
+                            on:pause="videoPause({{ item }})"
+                            on:finish="videoFinish({{ item }})"
+                            on:stop="videoStop({{ item }}})"
+                            on:error="videoError({{ item }})"></video>
+
+                    <image class="video-player"
+                           on:click="videoPlay({{ item }},{{ index }})"
+                           src="/common/image/icon/video_poster.png"
+                           show="{{ item.isPause }}">
+                    </image>
+                </stack>
+            </div>
+        </swiper>
+        <div class="scale-div" show="{{ showScale }}">
+            <div class="scale-top" on:click="leftScale">
+                <image class="scale-image" if="{{ ! isScaleAddDisable }}" src="/common/image/svg/scaleadd.svg"></image>
+                <image class="scale-image" else style="opacity : 0.5;" src="/common/image/svg/scaleadd.svg"></image>
+            </div>
+            <div class="scale-bottom" on:click="rightScale">
+                <image class="scale-image" if="{{ ! isScaleMinusDisable }}" src="/common/image/svg/scaleminus.svg">
+                </image>
+                <image class="scale-image" else style="opacity : 0.5;" src="/common/image/svg/scaleminus.svg"></image>
+            </div>
+        </div>
+    </div>
+
+    <bottom_bar id="bottom_bar" is-show="{{ isShowBottom }}"
+                @bottom-tab-click="bottomTabClick"
+                @popup-item-click="popupItemClick"
+                @change-pop-visible="changePopVisible"
+                pop-visible="{{ popVisible }}"
+                data-source="{{ bottomBarSource }}"
+                popup-list="{{ bottomBarPopList }}"></bottom_bar>
+    <rename_dialog id="rename_dialog" @rename-dialog-album="renameDialogAlbum" input-name="{{ inputName }}">
+    </rename_dialog>
+    <delete_dialog id="delete_dialog" @delete-query="deleteQuery"></delete_dialog>
+    <dialog id="photo_detail_dialog" oncancel="cancel" class="detail-dialog">
+        <div class="detail-dialog-div">
+            <text class="detail-dialog-title">{{ $t('strings.detailInfo') }}</text>
+            <text class="detail-dialog-text">{{ $t('strings.name') }}： {{ detailData.name }}</text>
+            <text class="detail-dialog-text">{{ $t('strings.size') }}： {{ detailData.size }}MB</text>
+            <div class="detail-dialog-btn">
+                <text style="color : dodgerblue;" on:click="dialogCancel">{{ $t('strings.know') }}</text>
+            </div>
+        </div>
+    </dialog>
+</div>

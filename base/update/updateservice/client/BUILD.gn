@@ -1,0 +1,65 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+ohos_shared_library("update") {
+  sources = [
+    "//base/update/updateservice/client/update_client.cpp",
+    "//base/update/updateservice/client/update_module.cpp",
+    "//base/update/updateservice/client/update_session.cpp",
+  ]
+
+  include_dirs = [
+    "//base/update/updater/interfaces/kits/include",
+    "//base/update/updater/services/include",
+    "//base/update/updater/utils/include",
+    "//third_party/node/src",
+    "//foundation/ace/napi/interfaces/kits",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/update/updateservice/interfaces/innerkits/include",
+    "//base/update/updateservice/client",
+    "//base/startup/syspara_lite/adapter/native/syspara/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedschedule/safwk/services/safwk/include",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk",
+    "//foundation/distributedschedule/samgr/adapter/interfaces/innerkits/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+  ]
+
+  deps = [
+    "//base/update/updater/interfaces/kits/misc_info:libmiscinfo",
+    "//base/update/updater/interfaces/kits/packages:libpackageExt",
+    "//base/update/updater/services/log:libupdaterlog",
+    "//base/update/updater/utils:libutils",
+    "//base/update/updateservice/interfaces/innerkits/engine:updateservicekits",
+    "//foundation/ace/napi:ace_napi",
+    "//third_party/bounds_checking_function:libsec_static",
+    "//third_party/openssl:crypto_source",
+    "//third_party/openssl:ssl_source",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "startup_l2:syspara",
+  ]
+
+  install_enable = true
+  relative_install_dir = "module"
+  part_name = "updater"
+}

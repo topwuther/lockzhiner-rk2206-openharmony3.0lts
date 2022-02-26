@@ -1,0 +1,42 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<div>
+    <dialog if="{{ dialogWidth !== 0 }}" id="ContinueAbilityDialog" style="width : {{ dialogWidth }} px;"
+            class="DialogMain" oncancel="cancelDialog">
+        <div class="DialogDiv">
+            <text class="DialogTitleText" style="height : {{ dialogTitleTextHeight }} px;
+                font-size : {{ dialogTitleTextFontSize }} px;">{{ $t('strings.choose_device') }}</text>
+            <list class="DialogDeviceList" divider="true" style="max-height : {{ dialogDeviceListMaxHeight }} px;">
+                <list-item for="{{ deviceList }}" class="DeviceListItem"
+                           style="height : {{ deviceListItemHeight }} px;">
+                    <label class="DeviceItemTitle" target="{{ $item.id }}"
+                           style="font-size : {{ deviceItemTitleFontSize }} px;">{{ $item.name }}</label>
+                    <input class="DeviceItemRadio" type="radio" checked="{{ $item.id == presentDeviceId }}"
+                           id="{{ $item.id }}"
+                           name="{{ $item.listName }}" value="{{ $item.id }}"
+                           onchange="onRadioChange({{ $item.id }})"></input>
+                </list-item>
+            </list>
+            <div class="InnerBtn" style="height : {{ innerBtnHeight }} px;">
+                <button class="DialogCancelButton" type="text" style="font-size : {{ dialogCancelButtonFontSize }} px;"
+                        value="{{ $t('strings.restore_defaults_dialog_cancel') }}"
+                        onclick="onDismissDialogClicked"></button>
+            </div>
+        </div>
+    </dialog>
+</div>

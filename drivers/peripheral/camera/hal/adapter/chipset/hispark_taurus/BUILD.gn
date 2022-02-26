@@ -1,0 +1,133 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+import("//build/ohos.gni")
+import("//drivers/adapter/uhdf2/uhdf.gni")
+import("//drivers/peripheral/camera/hal/camera.gni")
+
+action("build_camera_host_config") {
+  script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  sources = [ rebase_path(
+          "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/hdi_impl/camera_host_config.hcs") ]
+  outputs = [ "$target_gen_dir/hdi_impl/camera_host_config.hcb" ]
+  args = [
+    "-o",
+    rebase_path(outputs[0]),
+    sources[0],
+  ]
+}
+
+ohos_prebuilt_etc("camera_host_config.hcb") {
+  deps = [ ":build_camera_host_config" ]
+  hcs_outputs = get_target_outputs(":build_camera_host_config")
+  source = hcs_outputs[0]
+  relative_install_dir = "hdfconfig"
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}
+
+action("build_stream_supported_config") {
+  script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  sources = [ rebase_path(
+          "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/hdi_impl/stream_supported_config.hcs") ]
+  outputs = [ "$target_gen_dir/hdi_impl/stream_supported_config.hcb" ]
+  args = [
+    "-o",
+    rebase_path(outputs[0]),
+    sources[0],
+  ]
+}
+
+ohos_prebuilt_etc("stream_supported_config.hcb") {
+  deps = [ ":build_stream_supported_config" ]
+  hcs_outputs = get_target_outputs(":build_stream_supported_config")
+  source = hcs_outputs[0]
+  relative_install_dir = "hdfconfig"
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}
+
+ohos_prebuilt_etc("config.c") {
+  source =
+      "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"
+  exec_script(
+      "//drivers/framework/tools/hc-gen/build_hcs.py",
+      [
+        "-o",
+        rebase_path(
+            "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/config.c"),
+        "-t",
+        rebase_path(
+            "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/pipeline_core/config.hcs"),
+      ],
+      "")
+}
+
+ohos_prebuilt_etc("params.c") {
+  source =
+      "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"
+  exec_script(
+      "//drivers/framework/tools/hc-gen/build_hcs.py",
+      [
+        "-o",
+        rebase_path(
+            "$camera_path/pipeline_core/pipeline_impl/src/strategy/config/params.c"),
+        "-t",
+        rebase_path(
+            "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/pipeline_core/params.hcs"),
+      ],
+      "")
+}
+
+action("build_ipp_algo_config") {
+  script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  sources = [ rebase_path(
+          "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/pipeline_core/ipp_algo_config.hcs") ]
+  outputs = [ "$target_gen_dir/pipeline_core/ipp_algo_config.hcb" ]
+  args = [
+    "-o",
+    rebase_path(outputs[0]),
+    sources[0],
+  ]
+}
+
+ohos_prebuilt_etc("ipp_algo_config.hcb") {
+  deps = [ ":build_ipp_algo_config" ]
+  hcs_outputs = get_target_outputs(":build_ipp_algo_config")
+  source = hcs_outputs[0]
+  relative_install_dir = "hdfconfig"
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}
+
+action("build_mpp_config_hcs") {
+  script = "$hdf_framework_path/tools/hc-gen/build_hcs.py"
+  sources = [ rebase_path(
+          "//vendor/hisilicon/Hi3516DV300/hdf_config/uhdf/camera/hal/mpp/hispark_taurus/driver/mpp_config.hcs") ]
+  outputs = [ "$target_gen_dir/driver/mpp_config.hcb" ]
+  args = [
+    "-o",
+    rebase_path(outputs[0]),
+    sources[0],
+  ]
+}
+
+ohos_prebuilt_etc("mpp_config.hcb") {
+  deps = [ ":build_mpp_config_hcs" ]
+  hcs_outputs = get_target_outputs(":build_mpp_config_hcs")
+  source = hcs_outputs[0]
+  relative_install_dir = "hdfconfig"
+  subsystem_name = "hdf"
+  part_name = "hdf"
+}
+
+group("hispark_taurus_build") {
+  public_deps = [
+    ":camera_host_config.hcb",
+    ":config.c",
+    ":ipp_algo_config.hcb",
+    ":mpp_config.hcb",
+    ":params.c",
+    ":stream_supported_config.hcb",
+    "src/driver_adapter:driver_adapter",
+    "src/pipeline_core:camera_ipp_algo_example",
+  ]
+}

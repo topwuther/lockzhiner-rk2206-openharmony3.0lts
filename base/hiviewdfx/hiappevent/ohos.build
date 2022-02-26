@@ -1,0 +1,15 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "hiappevent_js": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "module_list": [
+        "//base/hiviewdfx/hiappevent:hiappevent_js_target",
+        "//base/hiviewdfx/hiappevent/frameworks/native/libhiappevent:libhiappevent_base"
+      ]
+    }
+  }
+}

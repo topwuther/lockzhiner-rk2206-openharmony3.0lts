@@ -1,0 +1,11 @@
+{
+  "float": [
+    {
+      "name": "clock_fontsize",
+      "value": "18"
+    },{
+      "name": "clock_maxwidth",
+      "value": "70"
+    }
+  ]
+}

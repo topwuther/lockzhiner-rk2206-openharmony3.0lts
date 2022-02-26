@@ -1,0 +1,165 @@
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.main-list-container {
+    flex-direction: column;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 50px;
+    padding-left: 8px;
+    color: #000;
+}
+
+.head-content {
+    margin-top: 30px;
+    width: 100%;
+    height: 448px;
+    position: relative;
+}
+
+.bottom-name {
+    position: absolute;
+    bottom: 72px;
+    left: 24px;
+}
+
+.bottom-number {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+}
+
+.bottom-icon {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+}
+
+.head-img {
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+}
+
+.grid-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-content-img {
+    background-color: #ccc;
+    width: 336px;
+    height: 490px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img {
+    border-radius: 24px;
+}
+
+.list-content {
+    flex-direction: column;
+    width: 100%;
+}
+
+.list-title {
+    margin-top: 36px;
+    font-size: 36px;
+    padding-left: 8px;
+    color: #000;
+}
+
+.list-content-layout {
+    height: 160px;
+    padding-left: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.list-content-image {
+    width: 112px;
+    height: 112px;
+    background-color: #ccc;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-content-img {
+    width: 112px;
+    height: 112px;
+}
+
+.text {
+    color: #fff;
+}
+
+.text-div {
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.img-div {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.grid-text {
+    padding-left: 8px;
+    color: #fff;
+}
+
+.text-content {
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 24px;
+}
+
+.list-text {
+    color: #000;
+    opacity: .9;
+    font-size: 32px;
+    max-lines: 1;
+    text-overflow: ellipsis;
+    width: 350px;
+}
+
+.number-text {
+    color: #000;
+    opacity: .6;
+    margin-top: 10px;
+    font-size: 28px;
+}
+
+.select-img {
+    width: 38px;
+    height: 38px;
+}
+
+.select-img-layout {
+    padding-right: 16px;
+}

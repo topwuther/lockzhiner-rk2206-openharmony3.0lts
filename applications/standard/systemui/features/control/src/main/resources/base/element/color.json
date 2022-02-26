@@ -1,0 +1,41 @@
+{
+  "color": [
+    {
+      "name": "plane_bg_color",
+      "value": "#CCFFFFFF"
+    },{
+      "name": "slider_block_color",
+      "value": "#0000FF"
+    },{
+      "name": "slider_track_color",
+      "value": "#BEBEBE"
+    },{
+      "name": "slider_select_color",
+      "value": "#0000FF"
+    },{
+      "name": "brightness_bg_color",
+      "value": "#CCFFFFFF"
+    },{
+      "name": "control_center_bg_color",
+      "value": "#66000000"
+    },{
+      "name": "icon_on_bg",
+      "value": "#0A59F7"
+    },{
+      "name": "icon_off_bg",
+      "value": "#F5F5F5"
+    },{
+      "name": "title_font_color",
+      "value": "#FFF"
+    },
+
+    {
+      "name": "volume_bg_color",
+      "value": "#CCFFFFFF"
+    },
+    {
+      "name": "wifi_bg_color",
+      "value": "#CCFFFFFF"
+    }
+  ]
+}

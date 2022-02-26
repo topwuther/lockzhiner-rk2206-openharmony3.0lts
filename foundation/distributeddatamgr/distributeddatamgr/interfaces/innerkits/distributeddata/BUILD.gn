@@ -1,0 +1,87 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/ohos.gni")
+
+group("build_module") {
+  deps = [ ":distributeddata_inner" ]
+}
+
+config("distributeddatafwk_config") {
+  visibility = [ ":*" ]
+
+  cflags = [ "-Wno-multichar" ]
+
+  include_dirs = [
+    "include",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/include",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src",
+    "//utils/system/safwk/native/include",
+    "//utils/native/base/include",
+    "//foundation/distributeddatamgr/distributeddatamgr/interfaces/innerkits/app_distributeddata/include",
+  ]
+}
+
+config("distributeddatafwk_public_config") {
+  visibility = [ "//foundation/distributeddatamgr/distributeddatamgr:*" ]
+
+  include_dirs = [
+    "include",
+    "//utils/native/base/include",
+  ]
+}
+
+ohos_shared_library("distributeddata_inner") {
+  part_name = "distributeddatamgr"
+  sources = [
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/blob.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/change_notification.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/data_query.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/device_status_change_listener_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/distributed_kv_data_manager.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/idevice_status_change_listener_impl.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_client_death_observer.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_data_service.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_observer.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_resultset.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_single.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_snapshot.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/ikvstore_sync_callback.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_client_death_observer.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_death_recipient_impl.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_observer_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_resultset_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_service_death_notifier.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_snapshot_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/kvstore_sync_callback_client.cpp",
+    "../../../frameworks/innerkitsimpl/distributeddatafwk/src/single_kvstore_client.cpp",
+    "include/types.h",
+  ]
+
+  configs = [ ":distributeddatafwk_config" ]
+
+  deps = [
+    "//utils/native/base:utils",
+    "//foundation/distributeddatamgr/distributeddatamgr/services/distributeddataservice/adapter:distributeddata_adapter",
+  ]
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  public_configs = [ ":distributeddatafwk_public_config" ]
+
+  subsystem_name = "distributeddatamgr"
+}

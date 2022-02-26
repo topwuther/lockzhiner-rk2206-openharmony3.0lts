@@ -1,0 +1,52 @@
+{
+  "string": [
+    {
+      "name": "entry_MainAbility",
+      "value": "phone"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "intoSettings",
+      "value": "Launcher settings"
+    },
+    {
+      "name": "addBlankPage",
+      "value": "Add Blank Page"
+    },
+    {
+      "name": "deleteBlankPage",
+      "value": "Delete Blank Page"
+    },
+    {
+      "name": "layout",
+      "value": "Layout"
+    },
+    {
+      "name": "layoutStyle",
+      "value": "Layout Style"
+    },
+    {
+      "name": "launcherLayout",
+      "value": "Launcher Layout"
+    },
+    {
+      "name": "recentTasksSetting",
+      "value": "Recent Tasks Setting"
+    },
+    {
+      "name": "cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "uninstall",
+      "value": "Uninstall"
+    },
+    {
+      "name": "submit",
+      "value": "Submit"
+    }
+  ]
+}

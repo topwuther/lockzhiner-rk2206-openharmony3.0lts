@@ -1,0 +1,158 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+ohos_prebuilt_etc("launcher_hap") {
+  source = "Launcher.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("launcher_recents_hap") {
+  source = "Launcher_Recents.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("launcher_settings_hap") {
+  source = "Launcher_Settings.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("settings_hap") {
+  source = "Settings.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("navigationBar_hap") {
+  source = "SystemUI-NavigationBar.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("statusBar_hap") {
+  source = "SystemUI-StatusBar.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("systemDialog_hap") {
+  source = "SystemUI-SystemDialog.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("clock_demo_hap") {
+  source = "Clock_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("airquality_demo_hap") {
+  source = "Airquality_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("calc_demo_hap") {
+  source = "Calc_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("shopping_demo_hap") {
+  source = "Shopping_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("flashlight_demo_hap") {
+  source = "Flashlight_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("ecg_demo_hap") {
+  source = "Ecg_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("photos_hap") {
+  source = "Photos.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("music_demo_hap") {
+  source = "Music_Demo.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("demo.wav") {
+  source = "resources/demo.wav"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("dynamic.wav") {
+  source = "resources/dynamic.wav"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("camera_hap") {
+  source = "Camera.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("capture.ogg") {
+  source = "resources/capture.ogg"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("device_manager_ui_hap") {
+  source = "DeviceManager_UI.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}
+
+ohos_prebuilt_etc("kika_input_hap") {
+  source = "kikaInput.hap"
+  module_install_dir = "app"
+  part_name = "prebuilt_hap"
+  subsystem_name = "applications"
+}

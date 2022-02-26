@@ -1,0 +1,33 @@
+export function mockDeviceInfo() {
+  global.systemplugin.deviceInfo = {
+    deviceType: '[PC preview] unknow type',
+    manufacture: '[PC preview] unknow manufacture',
+    brand: '[PC preview] unknow brand',
+    marketName: '[PC preview] unknow market nanme',
+    productSeries: '[PC preview] unknow product series',
+    productModel: '[PC preview] unknow product model',
+    softwareModel: '[PC preview] unknow software model',
+    hardwareModel: '[PC preview] unknow hardware model',
+    hardwareProfile: '[PC preview] unknow hardware profile',
+    serial: '[PC preview] unknow serial',
+    bootloaderVersion: '[PC preview] unknow bootloader version',
+    abiList: '[PC preview] unknow ablity list',
+    securityPatchTag: '[PC preview] unknow security patch tag',
+    displayVersion: '[PC preview] unknow display version',
+    incrementalVersion: '[PC preview] unknow incremental version',
+    osReleaseType: '[PC preview] unknow os release type',
+    osFullName: '[PC preview] unknow os full name',
+    majorVersion: '[PC preview] unknow security major version',
+    seniorVersion: '[PC preview] unknow senior version',
+    featureVersion: '[PC preview] unknow feature version',
+    buildVersion: '[PC preview] unknow build version',
+    sdkApiVersion: '[PC preview] unknow sdk api version',
+    firstApiVersion: '[PC preview] unknow first api version',
+    versionId: '[PC preview] unknow version id',
+    buildType: '[PC preview] unknow build type',
+    buildUser: '[PC preview] unknow build user',
+    buildHost: '[PC preview] unknow build host',
+    buildTime: '[PC preview] unknow build time',
+    buildRootHash: '[PC preview] unknow build root hash'
+  }
+}

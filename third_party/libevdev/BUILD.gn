@@ -1,0 +1,50 @@
+import("//build/ohos.gni")
+
+## Build libevdev.so {{{
+config("libevdev_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "libevdev",
+    "include",
+  ]
+
+  cflags = [
+    "-Wno-unused-parameter",
+    "-Wno-missing-braces",
+  ]
+}
+
+config("libevdev_public_config") {
+  include_dirs = [
+    "export_include",
+  ]
+
+  cflags = [
+  ]
+}
+
+ohos_shared_library("libevdev") {
+  sources = [
+    "libevdev/libevdev-uinput.c",
+    "libevdev/libevdev.c",
+    "libevdev/libevdev-names.c",
+  ]
+
+  configs = [
+    ":libevdev_config",
+  ]
+
+  public_configs = [
+    ":libevdev_public_config",
+  ]
+
+  deps = [
+  ]
+
+  public_deps = [
+  ]
+
+  part_name = "multimodalinput_base"
+}
+## Build libevdev.so }}}

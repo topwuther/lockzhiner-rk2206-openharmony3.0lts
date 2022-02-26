@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "no-non-null-assertion": true,
+    "typedef-whitespace": true,
+    "no-eval": true,
+    "no-consecutive-blank-lines": true
+  }
+}

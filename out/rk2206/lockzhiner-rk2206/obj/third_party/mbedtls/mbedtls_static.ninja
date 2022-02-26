@@ -1,0 +1,79 @@
+defines = -D_XOPEN_SOURCE=700 -DOHOS_DEBUG -D__LITEOS__ -D__LITEOS_M__ -D__unix__ -DMBEDTLS_CONFIG_FILE=\<../port/config/config_liteos_m.h\>
+include_dirs = -I../../../kernel/liteos_m/kal/posix/include -I../../../kernel/liteos_m/kernel/include -I../../../kernel/liteos_m/utils -I../../../third_party/musl/porting/liteos_m/kernel/include -I../../../device/rockchip/rk2206/sdk_liteos/include -I../../../device/rockchip/rk2206/adapter/include -I../../../device/rockchip/rk2206/sdk_liteos/board/fs -I../../../device/rockchip/hardware/lib/CMSIS/Device/RK2206/Include -I../../../third_party/cmsis/CMSIS/Core/Include -I../../../kernel/liteos_m/kal/posix/include -I../../../kernel/liteos_m/components/fs/fatfs -I../../../kernel/liteos_m/kernel/include -I../../../kernel/liteos_m/kernel/arch/include -I../../../kernel/liteos_m/kernel/arch/arm/cortex-m4/gcc -I../../../kernel/liteos_m/utils -I../../../kernel/liteos_m/kal/cmsis -I../../../kernel/liteos_m/components/net/lwip-2.1/porting/include -I../../../third_party/FatFs/source -I../../../third_party/musl/arch/arm -I../../../third_party/lwip/src/include -I../../../utils/native/lite/include -I../../../foundation/communication/wifi_aware/interfaces/kits -I../../../foundation/communication/wifi_lite/interfaces/wifiservice -I../../../foundation/communication/ipc_lite/interfaces/kits -I../../../foundation/communication/softbus_lite/interfaces/kits/discovery -I../../../foundation/communication/softbus_lite/interfaces/kits/transport -I../../../base/startup/syspara_lite/interfaces/kits -I../../../base/security/huks/interfaces/innerkits/huks_lite -I../../../utils/native/lite/include -I../../../base/hiviewdfx/hilog_lite/interfaces/native/kits -I../../../third_party/openssl/crypto/ec -I../../../third_party/openssl/include -I../../../kernel/liteos_m/components -I../../../third_party/bounds_checking_function/include -I../../../third_party/mbedtls/include -I../../../third_party/mbedtls/include/mbedtls
+cflags = -Os -mcpu=cortex-m4 -mthumb -Wall -fdata-sections -ffunction-sections -DUSE_HAL_DRIVER -D_STORAGE_LITE_ -D__LITEOS_M__ -D_BSD_SOURCE -D_GNU_SOURCE -mcpu=cortex-m4 -mthumb -Wall -fdata-sections -ffunction-sections -DUSE_HAL_DRIVER -D_STORAGE_LITE_ -D__LITEOS_M__ -D_BSD_SOURCE -D_GNU_SOURCE -mcpu=cortex-m4 -fno-common -fno-builtin -fno-strict-aliasing -Wall -fsigned-char -fstack-protector-all
+cflags_c = -std=c99
+target_output_name = libmbedtls
+
+build obj/third_party/mbedtls/library/libmbedtls.aes.o: cc ../../../third_party/mbedtls/library/aes.c
+build obj/third_party/mbedtls/library/libmbedtls.aesni.o: cc ../../../third_party/mbedtls/library/aesni.c
+build obj/third_party/mbedtls/library/libmbedtls.arc4.o: cc ../../../third_party/mbedtls/library/arc4.c
+build obj/third_party/mbedtls/library/libmbedtls.aria.o: cc ../../../third_party/mbedtls/library/aria.c
+build obj/third_party/mbedtls/library/libmbedtls.asn1parse.o: cc ../../../third_party/mbedtls/library/asn1parse.c
+build obj/third_party/mbedtls/library/libmbedtls.asn1write.o: cc ../../../third_party/mbedtls/library/asn1write.c
+build obj/third_party/mbedtls/library/libmbedtls.base64.o: cc ../../../third_party/mbedtls/library/base64.c
+build obj/third_party/mbedtls/library/libmbedtls.bignum.o: cc ../../../third_party/mbedtls/library/bignum.c
+build obj/third_party/mbedtls/library/libmbedtls.blowfish.o: cc ../../../third_party/mbedtls/library/blowfish.c
+build obj/third_party/mbedtls/library/libmbedtls.camellia.o: cc ../../../third_party/mbedtls/library/camellia.c
+build obj/third_party/mbedtls/library/libmbedtls.ccm.o: cc ../../../third_party/mbedtls/library/ccm.c
+build obj/third_party/mbedtls/library/libmbedtls.chacha20.o: cc ../../../third_party/mbedtls/library/chacha20.c
+build obj/third_party/mbedtls/library/libmbedtls.chachapoly.o: cc ../../../third_party/mbedtls/library/chachapoly.c
+build obj/third_party/mbedtls/library/libmbedtls.cipher.o: cc ../../../third_party/mbedtls/library/cipher.c
+build obj/third_party/mbedtls/library/libmbedtls.cipher_wrap.o: cc ../../../third_party/mbedtls/library/cipher_wrap.c
+build obj/third_party/mbedtls/library/libmbedtls.cmac.o: cc ../../../third_party/mbedtls/library/cmac.c
+build obj/third_party/mbedtls/library/libmbedtls.ctr_drbg.o: cc ../../../third_party/mbedtls/library/ctr_drbg.c
+build obj/third_party/mbedtls/library/libmbedtls.des.o: cc ../../../third_party/mbedtls/library/des.c
+build obj/third_party/mbedtls/library/libmbedtls.dhm.o: cc ../../../third_party/mbedtls/library/dhm.c
+build obj/third_party/mbedtls/library/libmbedtls.ecdh.o: cc ../../../third_party/mbedtls/library/ecdh.c
+build obj/third_party/mbedtls/library/libmbedtls.ecdsa.o: cc ../../../third_party/mbedtls/library/ecdsa.c
+build obj/third_party/mbedtls/library/libmbedtls.ecjpake.o: cc ../../../third_party/mbedtls/library/ecjpake.c
+build obj/third_party/mbedtls/library/libmbedtls.ecp.o: cc ../../../third_party/mbedtls/library/ecp.c
+build obj/third_party/mbedtls/library/libmbedtls.ecp_curves.o: cc ../../../third_party/mbedtls/library/ecp_curves.c
+build obj/third_party/mbedtls/library/libmbedtls.entropy.o: cc ../../../third_party/mbedtls/library/entropy.c
+build obj/third_party/mbedtls/library/libmbedtls.entropy_poll.o: cc ../../../third_party/mbedtls/library/entropy_poll.c
+build obj/third_party/mbedtls/library/libmbedtls.error.o: cc ../../../third_party/mbedtls/library/error.c
+build obj/third_party/mbedtls/library/libmbedtls.gcm.o: cc ../../../third_party/mbedtls/library/gcm.c
+build obj/third_party/mbedtls/library/libmbedtls.havege.o: cc ../../../third_party/mbedtls/library/havege.c
+build obj/third_party/mbedtls/library/libmbedtls.hkdf.o: cc ../../../third_party/mbedtls/library/hkdf.c
+build obj/third_party/mbedtls/library/libmbedtls.hmac_drbg.o: cc ../../../third_party/mbedtls/library/hmac_drbg.c
+build obj/third_party/mbedtls/library/libmbedtls.md.o: cc ../../../third_party/mbedtls/library/md.c
+build obj/third_party/mbedtls/library/libmbedtls.md2.o: cc ../../../third_party/mbedtls/library/md2.c
+build obj/third_party/mbedtls/library/libmbedtls.md4.o: cc ../../../third_party/mbedtls/library/md4.c
+build obj/third_party/mbedtls/library/libmbedtls.md5.o: cc ../../../third_party/mbedtls/library/md5.c
+build obj/third_party/mbedtls/library/libmbedtls.md_wrap.o: cc ../../../third_party/mbedtls/library/md_wrap.c
+build obj/third_party/mbedtls/library/libmbedtls.memory_buffer_alloc.o: cc ../../../third_party/mbedtls/library/memory_buffer_alloc.c
+build obj/third_party/mbedtls/library/libmbedtls.net_sockets.o: cc ../../../third_party/mbedtls/library/net_sockets.c
+build obj/third_party/mbedtls/library/libmbedtls.nist_kw.o: cc ../../../third_party/mbedtls/library/nist_kw.c
+build obj/third_party/mbedtls/library/libmbedtls.oid.o: cc ../../../third_party/mbedtls/library/oid.c
+build obj/third_party/mbedtls/library/libmbedtls.padlock.o: cc ../../../third_party/mbedtls/library/padlock.c
+build obj/third_party/mbedtls/library/libmbedtls.pem.o: cc ../../../third_party/mbedtls/library/pem.c
+build obj/third_party/mbedtls/library/libmbedtls.pk.o: cc ../../../third_party/mbedtls/library/pk.c
+build obj/third_party/mbedtls/library/libmbedtls.pk_wrap.o: cc ../../../third_party/mbedtls/library/pk_wrap.c
+build obj/third_party/mbedtls/library/libmbedtls.pkcs12.o: cc ../../../third_party/mbedtls/library/pkcs12.c
+build obj/third_party/mbedtls/library/libmbedtls.pkcs5.o: cc ../../../third_party/mbedtls/library/pkcs5.c
+build obj/third_party/mbedtls/library/libmbedtls.pkparse.o: cc ../../../third_party/mbedtls/library/pkparse.c
+build obj/third_party/mbedtls/library/libmbedtls.pkwrite.o: cc ../../../third_party/mbedtls/library/pkwrite.c
+build obj/third_party/mbedtls/library/libmbedtls.platform.o: cc ../../../third_party/mbedtls/library/platform.c
+build obj/third_party/mbedtls/library/libmbedtls.platform_util.o: cc ../../../third_party/mbedtls/library/platform_util.c
+build obj/third_party/mbedtls/library/libmbedtls.poly1305.o: cc ../../../third_party/mbedtls/library/poly1305.c
+build obj/third_party/mbedtls/library/libmbedtls.ripemd160.o: cc ../../../third_party/mbedtls/library/ripemd160.c
+build obj/third_party/mbedtls/library/libmbedtls.rsa.o: cc ../../../third_party/mbedtls/library/rsa.c
+build obj/third_party/mbedtls/library/libmbedtls.rsa_internal.o: cc ../../../third_party/mbedtls/library/rsa_internal.c
+build obj/third_party/mbedtls/library/libmbedtls.sha1.o: cc ../../../third_party/mbedtls/library/sha1.c
+build obj/third_party/mbedtls/library/libmbedtls.sha256.o: cc ../../../third_party/mbedtls/library/sha256.c
+build obj/third_party/mbedtls/library/libmbedtls.sha512.o: cc ../../../third_party/mbedtls/library/sha512.c
+build obj/third_party/mbedtls/library/libmbedtls.ssl_ciphersuites.o: cc ../../../third_party/mbedtls/library/ssl_ciphersuites.c
+build obj/third_party/mbedtls/library/libmbedtls.ssl_cli.o: cc ../../../third_party/mbedtls/library/ssl_cli.c
+build obj/third_party/mbedtls/library/libmbedtls.ssl_tls.o: cc ../../../third_party/mbedtls/library/ssl_tls.c
+build obj/third_party/mbedtls/library/libmbedtls.threading.o: cc ../../../third_party/mbedtls/library/threading.c
+build obj/third_party/mbedtls/library/libmbedtls.timing.o: cc ../../../third_party/mbedtls/library/timing.c
+build obj/third_party/mbedtls/library/libmbedtls.version.o: cc ../../../third_party/mbedtls/library/version.c
+build obj/third_party/mbedtls/library/libmbedtls.version_features.o: cc ../../../third_party/mbedtls/library/version_features.c
+build obj/third_party/mbedtls/library/libmbedtls.x509.o: cc ../../../third_party/mbedtls/library/x509.c
+build obj/third_party/mbedtls/library/libmbedtls.x509_crl.o: cc ../../../third_party/mbedtls/library/x509_crl.c
+build obj/third_party/mbedtls/library/libmbedtls.x509_crt.o: cc ../../../third_party/mbedtls/library/x509_crt.c
+build obj/third_party/mbedtls/library/libmbedtls.xtea.o: cc ../../../third_party/mbedtls/library/xtea.c
+
+build ./libs/libmbedtls.a: alink obj/third_party/mbedtls/library/libmbedtls.aes.o obj/third_party/mbedtls/library/libmbedtls.aesni.o obj/third_party/mbedtls/library/libmbedtls.arc4.o obj/third_party/mbedtls/library/libmbedtls.aria.o obj/third_party/mbedtls/library/libmbedtls.asn1parse.o obj/third_party/mbedtls/library/libmbedtls.asn1write.o obj/third_party/mbedtls/library/libmbedtls.base64.o obj/third_party/mbedtls/library/libmbedtls.bignum.o obj/third_party/mbedtls/library/libmbedtls.blowfish.o obj/third_party/mbedtls/library/libmbedtls.camellia.o obj/third_party/mbedtls/library/libmbedtls.ccm.o obj/third_party/mbedtls/library/libmbedtls.chacha20.o obj/third_party/mbedtls/library/libmbedtls.chachapoly.o obj/third_party/mbedtls/library/libmbedtls.cipher.o obj/third_party/mbedtls/library/libmbedtls.cipher_wrap.o obj/third_party/mbedtls/library/libmbedtls.cmac.o obj/third_party/mbedtls/library/libmbedtls.ctr_drbg.o obj/third_party/mbedtls/library/libmbedtls.des.o obj/third_party/mbedtls/library/libmbedtls.dhm.o obj/third_party/mbedtls/library/libmbedtls.ecdh.o obj/third_party/mbedtls/library/libmbedtls.ecdsa.o obj/third_party/mbedtls/library/libmbedtls.ecjpake.o obj/third_party/mbedtls/library/libmbedtls.ecp.o obj/third_party/mbedtls/library/libmbedtls.ecp_curves.o obj/third_party/mbedtls/library/libmbedtls.entropy.o obj/third_party/mbedtls/library/libmbedtls.entropy_poll.o obj/third_party/mbedtls/library/libmbedtls.error.o obj/third_party/mbedtls/library/libmbedtls.gcm.o obj/third_party/mbedtls/library/libmbedtls.havege.o obj/third_party/mbedtls/library/libmbedtls.hkdf.o obj/third_party/mbedtls/library/libmbedtls.hmac_drbg.o obj/third_party/mbedtls/library/libmbedtls.md.o obj/third_party/mbedtls/library/libmbedtls.md2.o obj/third_party/mbedtls/library/libmbedtls.md4.o obj/third_party/mbedtls/library/libmbedtls.md5.o obj/third_party/mbedtls/library/libmbedtls.md_wrap.o obj/third_party/mbedtls/library/libmbedtls.memory_buffer_alloc.o obj/third_party/mbedtls/library/libmbedtls.net_sockets.o obj/third_party/mbedtls/library/libmbedtls.nist_kw.o obj/third_party/mbedtls/library/libmbedtls.oid.o obj/third_party/mbedtls/library/libmbedtls.padlock.o obj/third_party/mbedtls/library/libmbedtls.pem.o obj/third_party/mbedtls/library/libmbedtls.pk.o obj/third_party/mbedtls/library/libmbedtls.pk_wrap.o obj/third_party/mbedtls/library/libmbedtls.pkcs12.o obj/third_party/mbedtls/library/libmbedtls.pkcs5.o obj/third_party/mbedtls/library/libmbedtls.pkparse.o obj/third_party/mbedtls/library/libmbedtls.pkwrite.o obj/third_party/mbedtls/library/libmbedtls.platform.o obj/third_party/mbedtls/library/libmbedtls.platform_util.o obj/third_party/mbedtls/library/libmbedtls.poly1305.o obj/third_party/mbedtls/library/libmbedtls.ripemd160.o obj/third_party/mbedtls/library/libmbedtls.rsa.o obj/third_party/mbedtls/library/libmbedtls.rsa_internal.o obj/third_party/mbedtls/library/libmbedtls.sha1.o obj/third_party/mbedtls/library/libmbedtls.sha256.o obj/third_party/mbedtls/library/libmbedtls.sha512.o obj/third_party/mbedtls/library/libmbedtls.ssl_ciphersuites.o obj/third_party/mbedtls/library/libmbedtls.ssl_cli.o obj/third_party/mbedtls/library/libmbedtls.ssl_tls.o obj/third_party/mbedtls/library/libmbedtls.threading.o obj/third_party/mbedtls/library/libmbedtls.timing.o obj/third_party/mbedtls/library/libmbedtls.version.o obj/third_party/mbedtls/library/libmbedtls.version_features.o obj/third_party/mbedtls/library/libmbedtls.x509.o obj/third_party/mbedtls/library/libmbedtls.x509_crl.o obj/third_party/mbedtls/library/libmbedtls.x509_crt.o obj/third_party/mbedtls/library/libmbedtls.xtea.o || obj/build/lite/prebuilts.stamp
+  arflags =
+  output_extension = .a
+  output_dir = ./libs

@@ -1,0 +1,11 @@
+[
+    {
+        "Name"                  : "rt-thread",
+        "License"               : "Apache License V2.0",
+        "License File"          : "COPYRIGHT",
+        "Version Number"        : "4.0.2",
+        "Owner"                 : "tonghaoyang1@huawei.com",
+        "Upstream URL"          : "http://code.google.com/p/rt-thread/",
+        "Description"           : "The Real-Time Thread(RT-Thread) Operating System is an open source real-time operating system developed by the RT-Thread Studio based in China, more on kernel and components Introduction."
+    }
+]

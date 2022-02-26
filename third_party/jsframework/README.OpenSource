@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "weex",
+        "License": "Apache License V2.0",
+        "License File": "LICENSE",
+        "Version Number": "0.28.0",
+        "Owner": "leijie4@huawei.com",
+        "Upstream URL": "https://weex.apache.org",
+        "Description": "A framework for building performant mobile cross-platform UI."
+    }
+]

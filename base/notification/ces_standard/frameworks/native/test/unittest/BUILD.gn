@@ -1,0 +1,125 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/frameworks/native"
+
+config("kits_natvie_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include/",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/aafwk/standard/services/abilitymgr/include/",
+    "//foundation/appexecfwk/standard/services/bundlemgr/include",
+    "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedschedule/safwk/services/safwk/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+  ]
+
+  cflags = []
+
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+}
+
+ohos_unittest("matching_skills_test") {
+  module_out_path = module_output_path
+
+  sources = [ "matching_skills_test.cpp" ]
+
+  configs = [ ":kits_natvie_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_unittest("common_event_subscribe_test") {
+  module_out_path = module_output_path
+
+  sources = [ "common_event_subscribe_test.cpp" ]
+
+  configs = [ ":kits_natvie_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler:libeventhandler",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_unittest("common_event_unsubscribe_test") {
+  module_out_path = module_output_path
+
+  sources = [ "common_event_unsubscribe_test.cpp" ]
+
+  configs = [ ":kits_natvie_config" ]
+
+  deps = [
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ipc:ipc_core",
+  ]
+}
+
+group("unittest") {
+  testonly = true
+  deps = []
+
+  deps += [
+    ":common_event_subscribe_test",
+    ":common_event_unsubscribe_test",
+    ":matching_skills_test",
+  ]
+}

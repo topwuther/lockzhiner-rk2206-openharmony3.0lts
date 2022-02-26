@@ -1,0 +1,25 @@
+{
+    "parts": {
+        "safwk": {
+            "variants": ["phone", "wearable"],
+            "inner_kits": [
+                {
+                    "header": {
+                        "header_base": "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk",
+                        "header_files": [
+                            "system_ability.h",
+                            "connection_handler.h",
+                            "system_ability_connection_callback.h",
+                            "ilocal_ability_manager.h"
+                        ]
+                    },
+                    "name": "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk"
+                }
+            ],
+            "module_list": [
+                "//foundation/distributedschedule/safwk/services/safwk:sa_main"
+            ]
+        }
+    },
+    "subsystem": "distributedschedule"
+}

@@ -1,0 +1,72 @@
+{
+  "float": [
+    {
+      "name": "statusbar_height",
+      "value": "67"
+    },
+    {
+      "name": "quicklysetting_time_fontsize",
+      "value": "30"
+    },
+    {
+      "name": "quicklysetting_date_fontsize",
+      "value": "20"
+    },
+    {
+      "name": "quicklysetting_textflex_marginleft",
+      "value": "10"
+    },
+    {
+      "name": "quicklysetting_image_width",
+      "value": "50"
+    },
+    {
+      "name": "quicklysetting_image_height",
+      "value": "50"
+    },
+    {
+      "name": "quicklysetting_image_marginright",
+      "value": "10"
+    },
+    {
+      "name": "quicklysetting_height",
+      "value": "120"
+    },
+    {
+      "name": "quicklysetting_borderradius",
+      "value": "20"
+    },
+    {
+      "name": "quicklysetting_marginleft",
+      "value": "10"
+    },
+    {
+      "name": "quicklysetting_marginright",
+      "value": "10"
+    },
+    {
+      "name": "deleteall_image_width",
+      "value": "50"
+    },
+    {
+      "name": "deleteall_image_height",
+      "value": "50"
+    },
+    {
+      "name": "deleteall_image_borderradius",
+      "value": "25"
+    },
+    {
+      "name": "deleteall_image_opacity",
+      "value": "0.9"
+    },
+    {
+      "name": "default_left_width_small",
+      "value": "230"
+    },
+    {
+      "name": "default_left_width_large",
+      "value": "300"
+    }
+  ]
+}

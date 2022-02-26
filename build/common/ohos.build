@@ -1,0 +1,10 @@
+{
+  "subsystem": "common",
+  "parts": {
+    "common": {
+      "module_list": [
+        "//build/common:common_packages"
+      ]
+    }
+  }
+}

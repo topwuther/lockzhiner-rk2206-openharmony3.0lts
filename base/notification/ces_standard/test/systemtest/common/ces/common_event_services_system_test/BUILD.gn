@@ -1,0 +1,73 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/systemtest"
+
+ohos_systemtest("cesSystemTest") {
+  module_out_path = module_output_path
+
+  sources = [ "common_event_services_system_test.cpp" ]
+
+  configs = [
+    "//foundation/appexecfwk/standard/libs/libeventhandler:libeventhandler_config",
+    "${ces_standard_path}/test/systemtest/common/ces:cesfwk_kits_test_config",
+  ]
+
+  include_dirs = [
+    "//utils/native/base/include",
+    "//foundation/appexecfwk/standard/common/log/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "${services_path}/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+  ]
+
+  cflags = []
+
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "${services_path}:cesfwk_services",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  defines = [
+    "APP_LOG_TAG = \"CesFwkKitsTest\"",
+    "LOG_DOMAIN = 0xD002200",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+}
+
+group("systemtest_cesTest") {
+  testonly = true
+
+  deps = [ ":cesSystemTest" ]
+}

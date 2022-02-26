@@ -1,0 +1,4 @@
+*.o
+*.cmd
+debug.log
+.vscode

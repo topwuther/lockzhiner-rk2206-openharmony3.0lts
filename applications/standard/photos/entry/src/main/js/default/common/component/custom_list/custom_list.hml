@@ -1,0 +1,85 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<div class="main-list-container">
+    <text class="title" if="{{ headTitle }}">{{ headTitle }}</text>
+    <stack class="head-content" onlongpress="parentLongPress({{ headSource }})" if="{{ showHead && headSource }}">
+        <image class="head-img img" if="{{ showHead }}" src="{{ headSource.src }}"
+               onclick="photoClick({{ headSource }},{{ 0 }})">
+        </image>
+
+        <text class="bottom-name text"> {{ headSource.name }} </text>
+        <text class="bottom-number text"> {{ headSource.list.length }} </text>
+        <image class="bottom-icon select-img" style="width : {{ gridItemCheckedStyle.width }};
+                height : {{ gridItemCheckedStyle.height }};" if="{{ headSource.icon }}"
+               src="{{ headSource.icon }}"></image>
+    </stack>
+
+    <div class="grid-content" if="{{ gridSource && gridSource.length > 0 }}">
+        <div for="{{ (index, item) in gridSource }}" class="content-div"
+             style="width : {{ gridItemStyle.width }};
+                     height : {{ gridItemStyle.height }};
+                     padding : {{ gridItemStyle.padding }};
+                     opacity : {{ item.checked ? 0.5 : 1 }};">
+            <stack
+                    id="{{ 'gridItem' + index }}"
+                    style="width : {{ gridImageStyle.width }};
+                            height : {{ gridImageStyle.height }};
+                            position : relative;"
+                    onclick="photoClick({{ item }},{{ index }},{{ 'grid' }})"
+                    onlongpress="parentLongPress({{ item }},{{ index }},{{ 'grid' }})">
+                <div class="grid-content-img" style="border-radius : {{ gridImageStyle.radius }};">
+                    <image if="{{ item.src }}" style="border-radius : {{ gridImageStyle.radius }};"
+                           src="{{ item.src }}"></image>
+                    <image else style="height : 112px; width : 112px;" src="/common/image/svg/photo.svg"></image>
+                </div>
+
+                <text class="bottom-name text"> {{ item.name }} </text>
+                <text class="bottom-number text"> {{ item.list.length }} </text>
+                <image class="bottom-icon select-img" style="width : {{ gridItemCheckedStyle.width }};
+                        height : {{ gridItemCheckedStyle.height }};" if="{{ item.icon }}"
+                       src="{{ item.icon }}"></image>
+            </stack>
+        </div>
+    </div>
+
+    <text class="list-title" if="{{ showListTitle }}">{{ listTitle }}</text>
+    <div class="list-content" if="{{ listSource && listSource.length > 0 }}">
+        <div for="{{ (index, item) in listSource }}"
+             onlongpress="parentLongPress({{ item }},{{ index }})"
+             onclick="photoClick({{ item }},{{ index }})">
+            <div class="list-content-layout" style="height : {{ listItemStyle.height }};">
+                <div style="align-items : center;">
+                    <div class="list-content-image img">
+                        <image if="{{ item.src }}" class="list-content-img img"
+                               src="{{ item.src }}"></image>
+                        <image else style="height : 56px; width : 56px;" src="/common/image/svg/photo.svg"></image>
+                    </div>
+
+                    <div class="text-content">
+                        <text class="list-text"> {{ item.name }} </text>
+                        <text class="number-text" if="{{ item.showNumber }}">{{ item.list.length }}</text>
+                    </div>
+                </div>
+                <div class="select-img-layout">
+                    <image class="select-img" if="{{ item.icon }}" src="{{ item.icon }}"></image>
+                    <text style="color : black;" else> {{ item.list.length }} </text>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

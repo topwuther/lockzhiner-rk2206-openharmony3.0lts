@@ -1,0 +1,23 @@
+defines = -D_XOPEN_SOURCE=700 -DOHOS_DEBUG -D__LITEOS__ -D__LITEOS_M__
+include_dirs = -I../../../kernel/liteos_m/components/cpup -I../../../kernel/liteos_m/components/exchook -I../../../kernel/liteos_m/components/backtrace -I../../../kernel/liteos_m/components/power -I../../../kernel/liteos_m/components/dynlink -I../../../device/rockchip/rk2206/sdk_liteos/include -I../../../device/rockchip/rk2206/adapter/include -I../../../device/rockchip/rk2206/sdk_liteos/board/fs -I../../../device/rockchip/hardware/lib/CMSIS/Device/RK2206/Include -I../../../third_party/cmsis/CMSIS/Core/Include -I../../../kernel/liteos_m/kal/posix/include -I../../../kernel/liteos_m/components/fs/fatfs -I../../../kernel/liteos_m/kernel/include -I../../../kernel/liteos_m/kernel/arch/include -I../../../kernel/liteos_m/kernel/arch/arm/cortex-m4/gcc -I../../../kernel/liteos_m/utils -I../../../kernel/liteos_m/kal/cmsis -I../../../kernel/liteos_m/components/net/lwip-2.1/porting/include -I../../../third_party/FatFs/source -I../../../third_party/musl/arch/arm -I../../../third_party/lwip/src/include -I../../../utils/native/lite/include -I../../../foundation/communication/wifi_aware/interfaces/kits -I../../../foundation/communication/wifi_lite/interfaces/wifiservice -I../../../foundation/communication/ipc_lite/interfaces/kits -I../../../foundation/communication/softbus_lite/interfaces/kits/discovery -I../../../foundation/communication/softbus_lite/interfaces/kits/transport -I../../../base/startup/syspara_lite/interfaces/kits -I../../../base/security/huks/interfaces/innerkits/huks_lite -I../../../utils/native/lite/include -I../../../base/hiviewdfx/hilog_lite/interfaces/native/kits -I../../../third_party/openssl/crypto/ec -I../../../third_party/openssl/include -I../../../kernel/liteos_m/components -I../../../third_party/bounds_checking_function/include -I../../../kernel/liteos_m/kernel/include -I../../../kernel/liteos_m/kernel/arch/include -I../../../kernel/liteos_m/utils -I../../../third_party/bounds_checking_function/include
+cflags = -Os -mcpu=cortex-m4 -mthumb -Wall -fdata-sections -ffunction-sections -DUSE_HAL_DRIVER -D_STORAGE_LITE_ -D__LITEOS_M__ -D_BSD_SOURCE -D_GNU_SOURCE -mcpu=cortex-m4 -mthumb -Wall -fdata-sections -ffunction-sections -DUSE_HAL_DRIVER -D_STORAGE_LITE_ -D__LITEOS_M__ -D_BSD_SOURCE -D_GNU_SOURCE -mcpu=cortex-m4 -fno-common -fno-builtin -fno-strict-aliasing -Wall -fsigned-char -fstack-protector-all
+cflags_c = -std=c99
+target_output_name = libkernel
+
+build obj/kernel/liteos_m/kernel/src/libkernel.los_event.o: cc ../../../kernel/liteos_m/kernel/src/los_event.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_init.o: cc ../../../kernel/liteos_m/kernel/src/los_init.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_mux.o: cc ../../../kernel/liteos_m/kernel/src/los_mux.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_queue.o: cc ../../../kernel/liteos_m/kernel/src/los_queue.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_sched.o: cc ../../../kernel/liteos_m/kernel/src/los_sched.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_sem.o: cc ../../../kernel/liteos_m/kernel/src/los_sem.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_sortlink.o: cc ../../../kernel/liteos_m/kernel/src/los_sortlink.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_swtmr.o: cc ../../../kernel/liteos_m/kernel/src/los_swtmr.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_task.o: cc ../../../kernel/liteos_m/kernel/src/los_task.c
+build obj/kernel/liteos_m/kernel/src/libkernel.los_tick.o: cc ../../../kernel/liteos_m/kernel/src/los_tick.c
+build obj/kernel/liteos_m/kernel/src/mm/libkernel.los_membox.o: cc ../../../kernel/liteos_m/kernel/src/mm/los_membox.c
+build obj/kernel/liteos_m/kernel/src/mm/libkernel.los_memory.o: cc ../../../kernel/liteos_m/kernel/src/mm/los_memory.c
+
+build ./libs/libkernel.a: alink obj/kernel/liteos_m/kernel/src/libkernel.los_event.o obj/kernel/liteos_m/kernel/src/libkernel.los_init.o obj/kernel/liteos_m/kernel/src/libkernel.los_mux.o obj/kernel/liteos_m/kernel/src/libkernel.los_queue.o obj/kernel/liteos_m/kernel/src/libkernel.los_sched.o obj/kernel/liteos_m/kernel/src/libkernel.los_sem.o obj/kernel/liteos_m/kernel/src/libkernel.los_sortlink.o obj/kernel/liteos_m/kernel/src/libkernel.los_swtmr.o obj/kernel/liteos_m/kernel/src/libkernel.los_task.o obj/kernel/liteos_m/kernel/src/libkernel.los_tick.o obj/kernel/liteos_m/kernel/src/mm/libkernel.los_membox.o obj/kernel/liteos_m/kernel/src/mm/libkernel.los_memory.o || ./libs/libarch.a obj/build/lite/prebuilts.stamp
+  arflags =
+  output_extension = .a
+  output_dir = ./libs

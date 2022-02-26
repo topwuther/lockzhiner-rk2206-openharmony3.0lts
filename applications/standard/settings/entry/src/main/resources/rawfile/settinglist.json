@@ -1,0 +1,46 @@
+[
+  {
+    "settingIcon": "/res/image/ic_settings_wifi.svg",
+    "settingTitle": "WLAN",
+    "settingAlias": "wifiTab",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg",
+    "settingSummary": "",
+    "settingUri": "pages/wifi"
+  },{
+    "settingIcon": "/res/image/ic_settings_display.svg",
+    "settingTitle": "",
+    "settingAlias": "brightnessTab",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg",
+    "settingSummary": "",
+    "settingUri": "pages/brightnessSettings"
+  },
+  {
+    "settingIcon": "res/image/ic_settings_applications.svg",
+    "settingTitle": "",
+    "settingAlias": "applyTab",
+    "settingValue": "",
+    "settingArrow": "res/image/ic_settings_arrow.svg",
+    "settingSummary": "",
+    "settingUri": "pages/appManagement"
+  },
+  {
+    "settingIcon": "/res/image/ic_settings_advanced.svg",
+    "settingTitle": "",
+    "settingAlias": "dateAndTimeTab",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg",
+    "settingSummary": "",
+    "settingUri": "pages/dateAndTime"
+  },
+  {
+    "settingIcon": "/res/image/ic_settings_about.svg",
+    "settingTitle": "",
+    "settingAlias": "aboutTab",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg",
+    "settingSummary": "",
+    "settingUri": "pages/aboutDevice"
+  }
+]

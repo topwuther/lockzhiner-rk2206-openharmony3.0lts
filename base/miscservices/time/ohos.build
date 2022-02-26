@@ -1,0 +1,18 @@
+{
+  "subsystem": "miscservices",
+  "parts": {
+    "time_native": {
+      "variants": [
+         "phone",
+         "wearable",
+         "ivi"
+      ],
+      "module_list": [
+        "//base/miscservices/time:time_native_packages"
+      ],
+      "test_list": [
+        "//base/miscservices/time/services/time_manager/test:TimeServiceTest"
+      ]
+    }
+  }
+}

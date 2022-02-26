@@ -1,0 +1,13 @@
+quarantine_size_mb=16
+max_redzone=2048
+thread_local_quarantine_size_kb=256
+allow_user_segv_handler=1
+detect_odr_violation=0
+alloc_dealloc_mismatch=0
+allocator_may_return_null=1
+detect_container_overflow=0
+abort_on_error=1
+halt_on_error=1
+allow_addr2line=1
+report_globals=0
+handle_abort=1

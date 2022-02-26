@@ -1,0 +1,52 @@
+import("//build/ohos.gni")
+
+## Build libdrm.so {{{
+config("libdrm_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = []
+
+  cflags = [
+    "-Wno-deprecated-declarations",
+    "-Wno-enum-conversion",
+    "-DMAJOR_IN_SYSMACROS=1",
+  ]
+}
+
+config("libdrm_public_config") {
+  include_dirs = [
+    ".",
+    "include",
+    "include/drm",
+  ]
+
+  cflags = []
+}
+
+ohos_shared_library("libdrm") {
+  output_prefix_override = true
+  output_name = "libdrm"
+  output_extension = "so"
+
+  sources = [
+    "xf86drm.c",
+    "xf86drmHash.c",
+    "xf86drmMode.c",
+    "xf86drmRandom.c",
+  ]
+
+  configs = [ ":libdrm_config" ]
+
+  public_configs = [ ":libdrm_public_config" ]
+
+  deps = []
+
+  public_deps = []
+  install_images = [
+    "system",
+    "updater",
+  ]
+  part_name = "graphic_standard"
+  subsystem_name = "graphic"
+}
+## Build libdrm.so }}}

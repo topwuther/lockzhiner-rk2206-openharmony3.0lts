@@ -1,0 +1,4 @@
+# Copyright (C) 2021 Lockzhiner (fuzhou) Technologies Co., Ltd. All rights reserved.
+
+group("rk2206") {
+}

@@ -1,0 +1,45 @@
+{
+    "adapterNum": 3,
+    "adapters": [{
+        "name": "internal",
+        "portnum": 2,
+        "port": [{
+            "dir": "PORT_OUT",
+            "id": 0,
+            "name": "AOP"
+        },
+        {
+            "dir": "PORT_IN",
+            "id": 0,
+            "name": "AIP"
+        }]
+    },
+    {
+        "name": "usb",
+        "portnum": 3,
+        "port": [{
+            "dir": "PORT_OUT",
+            "id": 0,
+            "name": "AOP"
+        },
+        {
+            "dir": "PORT_IN",
+            "id": 0,
+            "name": "AIP"
+        },
+        {
+            "dir": "PORT_OUT_IN",
+            "id": 0,
+            "name": "AIOP"
+        }]
+    },
+    {
+        "name": "hdmi",
+        "portnum": 1,
+        "port": [{
+            "dir": "PORT_OUT",
+            "id": 12,
+            "name": "AOP"
+        }]
+    }]
+}

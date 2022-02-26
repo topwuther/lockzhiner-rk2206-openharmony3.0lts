@@ -1,0 +1,45 @@
+root {
+    platform {
+        pwm_config {
+            template pwm_device {
+                serviceName = "";
+                match_attr = "";    // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                num = 0;            // 【必要】设备号
+                portId = 0;         // PWM端口号，PWM7_M1 => 7(引脚号56)， PWM0_M1 => 0(引脚号44)，PWM1_M1 => 1（引脚号45）
+                gpio = 44;          // 引脚号，PWM7_M1 => GPIO1_D0(引脚号56)， PWM0_M1 => GPIO0_B4(引脚号44)，PWM1_M1 => GPIO0_B5（引脚号45）
+                duty = 160000;      // 脉宽时间/高电平时间(ns)
+                cycle = 200000;     // 总周期时长(ns)
+            }
+
+            device_pwm0 :: pwm_device {
+                serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM0";
+                match_attr = "lockzhiner_rk2206_pwm0";      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                num = 0;
+                portId = 0;
+                gpio = 44;
+                duty = 160000;
+                cycle = 200000;
+            }
+
+            device_pwm1 :: pwm_device {
+                serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM1";
+                match_attr = "lockzhiner_rk2206_pwm1";      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                num = 1;
+                portId = 1;
+                gpio = 45;
+                duty = 160000;
+                cycle = 200000;
+            }
+
+            device_pwm2 :: pwm_device {
+                serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_PWM2";
+                match_attr = "lockzhiner_rk2206_pwm2";      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+                num = 2;
+                portId = 7;
+                gpio = 56;
+                duty = 160000;
+                cycle = 200000;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+if (!defined(defines)) {
+  defines = []
+}
+
+is_support_v4l2 = true
+if (is_support_v4l2) {
+  is_support_mpi = false
+  defines += [ "SUPPORT_V4L2" ]
+  chipset_build_deps = "adapter/platform/v4l2:rpi3_build"
+  camera_device_manager_deps = "//drivers/peripheral/camera/hal/adapter/chipset/rpi3/src/device_manager:camera_device_manager"
+  camera_pipeline_core_deps = "//drivers/peripheral/camera/hal/adapter/platform/v4l2/src/pipeline_core:camera_pipeline_core"
+}

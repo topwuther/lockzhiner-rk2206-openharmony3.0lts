@@ -1,0 +1,184 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos/notice/notice.gni")
+import("//build/templates/metadata/module_info.gni")
+
+ohos_copy("ets_internal_api") {
+  sources = [
+    "api/@internal/ets/index.d.ts",
+    "api/@internal/ets/lifecycle.d.ts",
+    "api/@internal/global.d.ts",
+  ]
+  outputs = [ target_out_dir + "/$target_name/{{source_file_part}}" ]
+  module_source_dir = target_out_dir + "/$target_name"
+  module_install_name = ""
+}
+
+ohos_copy("ets_component") {
+  sources = [
+    "api/@internal/component/ets/ability_component.d.ts",
+    "api/@internal/component/ets/action_sheet.d.ts",
+    "api/@internal/component/ets/alert_dialog.d.ts",
+    "api/@internal/component/ets/alphabet_indexer.d.ts",
+    "api/@internal/component/ets/animator.d.ts",
+    "api/@internal/component/ets/badge.d.ts",
+    "api/@internal/component/ets/blank.d.ts",
+    "api/@internal/component/ets/button.d.ts",
+    "api/@internal/component/ets/calendar.d.ts",
+    "api/@internal/component/ets/camera.d.ts",
+    "api/@internal/component/ets/circle.d.ts",
+    "api/@internal/component/ets/column.d.ts",
+    "api/@internal/component/ets/column_split.d.ts",
+    "api/@internal/component/ets/common.d.ts",
+    "api/@internal/component/ets/counter.d.ts",
+    "api/@internal/component/ets/custom_dialog_controller.d.ts",
+    "api/@internal/component/ets/datapanel.d.ts",
+    "api/@internal/component/ets/datePicker.d.ts",
+    "api/@internal/component/ets/divider.d.ts",
+    "api/@internal/component/ets/ellipse.d.ts",
+    "api/@internal/component/ets/flex.d.ts",
+    "api/@internal/component/ets/forEach.d.ts",
+    "api/@internal/component/ets/form_component.d.ts",
+    "api/@internal/component/ets/gauge.d.ts",
+    "api/@internal/component/ets/geometryView.d.ts",
+    "api/@internal/component/ets/gesture.d.ts",
+    "api/@internal/component/ets/grid.d.ts",
+    "api/@internal/component/ets/gridItem.d.ts",
+    "api/@internal/component/ets/grid_container.d.ts",
+    "api/@internal/component/ets/hyperlink.d.ts",
+    "api/@internal/component/ets/image.d.ts",
+    "api/@internal/component/ets/image_animator.d.ts",
+    "api/@internal/component/ets/index.d.ts",
+    "api/@internal/component/ets/lazyForEach.d.ts",
+    "api/@internal/component/ets/line.d.ts",
+    "api/@internal/component/ets/list.d.ts",
+    "api/@internal/component/ets/listItem.d.ts",
+    "api/@internal/component/ets/loadingProgress.d.ts",
+    "api/@internal/component/ets/marquee.d.ts",
+    "api/@internal/component/ets/menu.d.ts",
+    "api/@internal/component/ets/navigator.d.ts",
+    "api/@internal/component/ets/navigatorView.d.ts",
+    "api/@internal/component/ets/option.d.ts",
+    "api/@internal/component/ets/pageTransition.d.ts",
+    "api/@internal/component/ets/panel.d.ts",
+    "api/@internal/component/ets/path.d.ts",
+    "api/@internal/component/ets/piece.d.ts",
+    "api/@internal/component/ets/polygon.d.ts",
+    "api/@internal/component/ets/polyline.d.ts",
+    "api/@internal/component/ets/progress.d.ts",
+    "api/@internal/component/ets/qrcode.d.ts",
+    "api/@internal/component/ets/radio.d.ts",
+    "api/@internal/component/ets/rating.d.ts",
+    "api/@internal/component/ets/rect.d.ts",
+    "api/@internal/component/ets/row.d.ts",
+    "api/@internal/component/ets/row_split.d.ts",
+    "api/@internal/component/ets/scroll.d.ts",
+    "api/@internal/component/ets/shape.d.ts",
+    "api/@internal/component/ets/slider.d.ts",
+    "api/@internal/component/ets/span.d.ts",
+    "api/@internal/component/ets/stack.d.ts",
+    "api/@internal/component/ets/stateManagement.d.ts",
+    "api/@internal/component/ets/swiper.d.ts",
+    "api/@internal/component/ets/tab_content.d.ts",
+    "api/@internal/component/ets/tabs.d.ts",
+    "api/@internal/component/ets/text.d.ts",
+    "api/@internal/component/ets/textPicker.d.ts",
+    "api/@internal/component/ets/textarea.d.ts",
+    "api/@internal/component/ets/textinput.d.ts",
+    "api/@internal/component/ets/toggle.d.ts",
+    "api/@internal/component/ets/video.d.ts",
+  ]
+  outputs = [ target_out_dir + "/$target_name/{{source_file_part}}" ]
+  module_source_dir = target_out_dir + "/$target_name"
+  module_install_name = ""
+}
+
+ohos_copy("common_api") {
+  sources = [
+    "api/common/@system.app.d.ts",
+    "api/common/@system.battery.d.ts",
+    "api/common/@system.bluetooth.d.ts",
+    "api/common/@system.brightness.d.ts",
+    "api/common/@system.cipher.d.ts",
+    "api/common/@system.configuration.d.ts",
+    "api/common/@system.device.d.ts",
+    "api/common/@system.fetch.d.ts",
+    "api/common/@system.file.d.ts",
+    "api/common/@system.geolocation.d.ts",
+    "api/common/@system.mediaquery.d.ts",
+    "api/common/@system.network.d.ts",
+    "api/common/@system.notification.d.ts",
+    "api/common/@system.package.d.ts",
+    "api/common/@system.prompt.d.ts",
+    "api/common/@system.request.d.ts",
+    "api/common/@system.router.d.ts",
+    "api/common/@system.sensor.d.ts",
+    "api/common/@system.storage.d.ts",
+    "api/common/@system.vibrator.d.ts",
+  ]
+  outputs = [ target_out_dir + "/$target_name/{{source_file_part}}" ]
+  module_source_dir = target_out_dir + "/$target_name"
+  module_install_name = ""
+}
+
+template("ohos_declaration_template") {
+  forward_variables_from(invoker, "*")
+  action_with_pydeps(target_name) {
+    script = "//interface/sdk-js/remove_internal.py"
+    outputs = [ root_out_dir + "/$target_name/" ]
+    args = [
+      "--input",
+      rebase_path("//interface/sdk-js/api", root_build_dir),
+      "--output",
+      rebase_path(root_out_dir + "/ohos_declaration/$target_name/",
+                  root_build_dir),
+    ]
+  }
+  _module_info_target = "/ohos_declaration/${target_name}_info"
+  _target_name = target_name
+  generate_module_info(_module_info_target) {
+    module_type = "jsdoc"
+    module_install_name = ""
+    module_name = _target_name
+    module_source_dir = root_out_dir + "/ohos_declaration/$_target_name"
+    install_enable = false
+  }
+}
+
+ohos_declaration_template("ohos_declaration_ets") {
+}
+ohos_declaration_template("ohos_declaration_phone") {
+}
+
+ohos_copy("ace_platform") {
+  sources = [
+    "api/config",
+    "api/phone",
+  ]
+  outputs = [ target_out_dir + "/$target_name/{{source_file_part}}" ]
+  module_source_dir = target_out_dir + "/$target_name"
+  module_install_name = ""
+}
+
+ohos_copy("form_declaration") {
+  sources = [
+    "api/form/action",
+    "api/form/css",
+    "api/form/hml",
+  ]
+  outputs = [ target_out_dir + "/$target_name/{{source_file_part}}" ]
+  module_source_dir = target_out_dir + "/$target_name"
+  module_install_name = ""
+}

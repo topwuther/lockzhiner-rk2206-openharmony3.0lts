@@ -1,0 +1,29 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+on init
+    mkdir /data/sadata_de
+    chmod 755 /data/sadata_de
+    chown system system /data/sadata_de
+    restorecon_recursive /data/sadata_de
+
+    mkdir /data/sadata_de/samgr
+    chmod 755 /data/sadata_de/samgr
+    chown system system /data/sadata_de/samgr
+    restorecon_recursive /data/sadata_de/samgr
+
+    start samgr
+
+service samgr /system/bin/samgr
+    user system
+    group system

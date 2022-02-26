@@ -1,0 +1,109 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/tools"
+
+ohos_systemtest("common_event_command_dump_system_test") {
+  module_out_path = module_output_path
+
+  include_dirs = [
+    "${aafwk_path}/tools/test/systemtest/aa",
+    "//third_party/jsoncpp/include",
+  ]
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "${aafwk_path}/tools/test/systemtest/aa/tool_system_test.cpp",
+    "${tools_path}/cem/src/common_event_command.cpp",
+    "common_event_command_dump_system_test.cpp",
+  ]
+
+  configs = [
+    "${appexecfwk_path}/tools/bm:tools_bm_config",
+    "${tools_path}/cem:tools_cem_config",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${appexecfwk_path}/services/bundlemgr:libbms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gtest_main",
+    "//third_party/jsoncpp:jsoncpp",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+ohos_systemtest("common_event_command_publish_system_test") {
+  module_out_path = module_output_path
+
+  include_dirs = [ "${aafwk_path}/tools/test/systemtest/aa" ]
+
+  sources = [
+    "${aafwk_path}/tools/aa/src/shell_command.cpp",
+    "${aafwk_path}/tools/test/systemtest/aa/tool_system_test.cpp",
+    "${tools_path}/cem/src/common_event_command.cpp",
+    "common_event_command_publish_system_test.cpp",
+  ]
+
+  configs = [
+    "${appexecfwk_path}/tools/bm:tools_bm_config",
+    "${tools_path}/cem:tools_cem_config",
+  ]
+
+  cflags = []
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${aafwk_path}/services/abilitymgr:abilityms",
+    "${appexecfwk_path}/services/bundlemgr:libbms",
+    "${ces_common_path}:libevent_common",
+    "${ces_core_path}:cesfwk_core",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//third_party/googletest:gtest_main",
+    "//third_party/jsoncpp:jsoncpp",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+  ]
+}
+
+group("systemtest") {
+  testonly = true
+
+  deps = [
+    ":common_event_command_dump_system_test",
+    ":common_event_command_publish_system_test",
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "float": [
+    {
+      "name": "WIFISTATUS_DISPLAY_HEIGHT",
+      "value": "50%"
+    },{
+      "name": "WIFISTATUS_HIDDEN_HEIGHT",
+      "value": "0"
+    },{
+      "name": "WIFISTATUS_MAXWIDTH",
+      "value": "42"
+    }
+  ]
+}

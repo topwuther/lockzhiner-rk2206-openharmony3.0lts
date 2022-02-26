@@ -1,0 +1,21 @@
+root {
+	platform {
+		i2c_config {
+			template i2c_controller {             //模板公共参数，继承该模板的节点如果使用模板中的默认值，则节点字段可以缺省
+				serviceName = "";
+                match_attr = "";    		      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+				bus = 0;                          //【必要】i2c 识别号
+				reg_pbase = 0x120b0000;           //【必要】物理基地址
+				reg_size = 0xd1;                  //【必要】寄存器位宽
+				irq = 0;                          //【可选】根据厂商需要来使用
+				freq = 400000;                    //【可选】根据厂商需要来使用
+				clk = 50000000;                   //【可选】根据厂商需要来使用
+			}
+			i2c0 :: i2c_controller {
+				bus = 0;
+				serviceName = "HDF_PLATFORM_LOCKZHINER_RK2206_I2C0";
+                match_attr = "lockzhiner_rk2206_i2c";      // 【必要】与hdf.hcs中的deviceMatchAttr值一致
+			}
+		}
+	}
+}

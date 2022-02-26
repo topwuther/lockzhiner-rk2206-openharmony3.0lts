@@ -1,0 +1,183 @@
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.container {
+    background-color: white;
+    flex-direction: column;
+    background-image: url("/common/background.png");
+    background-size: 100% 85%;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    font-family: HYQiHei-65S;
+}
+.percent{
+    text-align: right;
+    font-weight: bolder;
+    position: absolute;
+    padding-left: 88%;
+    padding-top: 6%;
+}
+
+
+.sign{
+    color: black;
+    padding-left: 20px;
+    font-size: 80px;
+}
+
+.left{
+    color: black;
+    font-size: 40px;
+    position: relative;
+}
+
+.banner1{
+    width: 88%;
+    height:9px;
+    background-color: #E6E6E6;
+
+}
+.banner2{
+    width: 0%;
+    height: 9px;
+    background-color: #0A9AFD;
+    position: relative;
+}
+
+.loadImg {
+    margin-top: 330px;
+    width: 100px;
+    height: 100px;
+    margin-left: 300px;
+    object-fit:scale-down;
+    align-items: center;
+    justify-content: center;
+    animation-name: one2;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    margin-bottom: 50px;
+}
+@keyframes one2{
+    from{
+        transform: rotate(0deg) ;
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.title{
+    color: black;
+    padding-top: 350px;
+    font-size: 60px;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 30px;
+
+}
+
+.title1{
+    color: black;
+    padding-left: 95px;
+    font-size: 45px;
+}
+
+.title1_1{
+    padding-top: 200px;
+}
+
+.allbutton {
+    width: 400px;
+    height: 80px;
+    margin-left: 160px;
+    margin-top: 30px;
+    border-radius: 50px;
+    background-color: #0A9AFD;
+}
+
+.button3{
+    width: 400px;
+    height: 80px;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+}
+
+.allbutton1 {
+    width: 240px;
+    height: 70px;
+    margin-left: 110px;
+    margin-top: 30px;
+    border-radius: 50px;
+    background-color: #0A9AFD;
+}
+
+.button1{
+    width: 240px;
+    height: 70px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 36px;
+    color: white;
+}
+
+.allbutton2 {
+    width: 240px;
+    height: 70px;
+    text-align: center;
+    margin-left: 40px;
+    margin-top: 30px;
+    border-radius: 50px;
+    background-color: #0A9AFD;
+
+}
+
+.button2{
+    color: white;
+    width: 240px;
+    height: 70px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 36px;
+
+}
+
+.dialog-main {
+    width: 500px;
+}
+.dialog-div {
+    flex-direction: column;
+    align-items: center;
+}
+.inner-txt {
+    width: 400px;
+    height: 160px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.inner-btn {
+    width: 400px;
+    height: 120px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
+
+
+

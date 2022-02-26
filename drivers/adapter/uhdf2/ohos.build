@@ -1,0 +1,49 @@
+{
+  "subsystem": "hdf",
+  "parts": {
+    "hdf": {
+      "module_list": [
+        "//drivers/adapter/uhdf2/osal:libhdf_utils",
+        "//drivers/adapter/uhdf2/ipc:libhdf_ipc_adapter",
+        "//drivers/adapter/uhdf2/hdi:libhdi",
+        "//drivers/adapter/uhdf2/manager:hdf_devmgr",
+        "//drivers/adapter/uhdf2/manager:hdf_devmgr.rc",
+        "//drivers/adapter/uhdf2/host:hdf_devhost",
+        "//drivers/adapter/uhdf2/host:libhdf_host",
+        "//drivers/adapter/uhdf2/config:libhdf_hcs",
+        "//drivers/adapter/uhdf2/host/test/unittest/sample_driver:libsample_driver",
+        "//drivers/adapter/uhdf2/hcs:hdf_default.hcb",
+        "//drivers/peripheral/input/hal:hdi_input",
+        "//drivers/peripheral/display/hal:hdi_display",
+        "//drivers/peripheral/wlan/client:wifi_driver_client",
+        "//drivers/peripheral/wlan/hal:wifi_hal",
+        "//drivers/peripheral/base:hdf_peripheral.rc",
+        "//drivers/peripheral/sensor/hal:hdi_sensor",
+        "//device/hisilicon/drivers/firmware/common/wlan:wifi_firmware",
+        "//drivers/peripheral/wlan/hdi_service:wifi_hdi_device",
+        "//drivers/peripheral/wlan/hdi_service:wifi_hdi_c_device",
+        "//drivers/peripheral/audio:hdi_audio",
+        "//drivers/peripheral/audio:audio_sample_client",
+        "//drivers/peripheral/usb:libusb_ddk",
+        "//drivers/peripheral/camera/hal:camera_hal",
+        "//drivers/peripheral/misc/vibrator/hal:hdi_vibrator",
+        "//drivers/peripheral/input/udriver:libhdf_input_hotplug",
+        "//drivers/peripheral/codec/hdi_service:codec_client",
+        "//drivers/peripheral/codec/hdi_service:codec_service"
+      ],
+      "test_list": [
+        "//drivers/peripheral/wlan/test:hdf_test_wifi",
+        "//drivers/peripheral/sensor/test:hdf_test_sensor",
+        "//drivers/adapter/uhdf2/test:hdf_test_uhdf",
+        "//drivers/adapter/uhdf2/osal/test:unittest",
+        "//drivers/adapter/uhdf2/host/test:unittest",
+        "//drivers/adapter/uhdf2/hdi/test:unittest",
+        "//drivers/peripheral/misc/vibrator/test:hdf_test_vibrator",
+        "//drivers/peripheral/wlan/test/hdi_service:unittest",
+        "//drivers/peripheral/audio/test/systemtest:systemtest",
+        "//drivers/peripheral/usb/test:hdf_test_usb",
+	"//drivers/peripheral/audio/test:hdf_test_audio"
+      ]
+    }
+  }
+}

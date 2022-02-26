@@ -1,0 +1,45 @@
+{
+  "subsystem": "communication",
+  "parts": {
+    "bluetooth_standard": {
+      "module_list": [
+        "//foundation/communication/bluetooth/sa_profile:communication_bluetooth_sa_profile",
+        "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework:btframework",
+        "//foundation/communication/bluetooth/services/bluetooth_standard/server:bluetooth_server"
+      ],
+      "inner_kits": [
+        {
+          "type": "so",
+          "name": "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework:btframework",
+          "header": {
+            "header_files": [
+              "bluetooth_a2dp_src.h",
+              "bluetooth_ble_central_manager.h",
+              "bluetooth_def.h",
+              "bluetooth_device_class.h",
+              "bluetooth_gatt_characteristic.h",
+              "bluetooth_gatt_client.h",
+              "bluetooth_gatt_descriptor.h",
+              "bluetooth_gatt_manager.h",
+              "bluetooth_gatt_server.h",
+              "bluetooth_gatt_service.h",
+              "bluetooth_host.h",
+              "bluetooth_remote_device.h",
+              "bluetooth_socket_inputstream.h",
+              "bluetooth_socket_outputstream.h",
+              "bluetooth_socket.h",
+              "uuid.h"
+            ],
+            "header_base": "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/include"
+          }
+        }
+      ],
+      "test_list": [
+        "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework/test/unittest/gatt:unittest",
+        "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework/test/unittest/spp:unittest",
+        "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework/test/unittest/host:unittest",
+        "//foundation/communication/bluetooth/interfaces/innerkits/native_cpp/framework/test/unittest:unittest"
+      ]
+    }
+  }
+}

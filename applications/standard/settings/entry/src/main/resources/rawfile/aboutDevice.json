@@ -1,0 +1,27 @@
+[
+  {
+    "settingAlias": "systemName",
+    "settingTitle": "",
+    "settingValue": "OpenHarmony"
+  },
+  {
+    "settingAlias": "model",
+    "settingTitle": "",
+    "settingValue": ""
+  },
+  {
+    "settingAlias": "companyInfo",
+    "settingTitle": "",
+    "settingValue": ""
+  },
+  {
+    "settingAlias": "deviceId",
+    "settingTitle": "",
+    "settingValue": "00000000000000"
+  },
+  {
+    "settingAlias": "softwareVersion",
+    "settingTitle": "",
+    "settingValue": ""
+  }
+]

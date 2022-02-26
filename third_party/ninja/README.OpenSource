@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "ninja",
+    "License": "Apache License V2.0",
+    "License File": "COPYING",
+    "Version Number": "1.10.1",
+    "Owner": "wangweichao2@huawei.com",
+    "Upstream URL": "https://ninja-build.org/",
+    "Description": "a small build system with a focus on speed"
+  }
+]

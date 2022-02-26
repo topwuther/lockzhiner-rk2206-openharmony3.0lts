@@ -1,0 +1,26 @@
+{
+  "subsystem": "distributeddatamgr",
+  "parts": {
+    "distributedfilejs": {
+      "variants": [
+        "wearable",
+        "phone"
+      ],
+      "module_list": [
+        "//foundation/distributeddatamgr/distributedfile/interfaces/kits/js:build_kits_js"
+      ]
+    },
+    "storage_standard": {
+      "module_list": [
+        "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service:file_share_ability",
+        "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/services:libfs_manager",
+        "//foundation/distributeddatamgr/distributedfile/storage/diskmgr/frameworks/file_manager_service:native_file_manager"
+      ]
+    },
+    "e2fsprogs": {
+      "module_list": [
+        "//third_party/e2fsprogs:e2fsprogs"
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/lite/config/component/lite_component.gni")
+
+copy("demo_image_for_test") {
+  sources = [ "resources/image_classification_demo.jpg" ]
+  outputs = [ "$root_out_dir/data/image_classification_demo.jpg" ]
+}
+
+executable("ic_app") {
+  sources = [
+    "camera_manager.cpp",
+    "image_classification_sample.cpp",
+    "picture_utils.cpp",
+    "resize_computer.cpp",
+  ]
+  cflags = [ "-Wall" ]
+  cflags_cc = cflags
+  include_dirs = [
+    "//third_party/libjpeg",
+    "//foundation/ai/engine/interfaces/kits",
+    "//foundation/ai/engine/interfaces/kits/cv/image_classification",
+    "//foundation/ai/engine/services/client/algorithm_sdk/cv/image_classification/include",
+    "//foundation/multimedia/media_lite/interfaces/kits/recorder_lite",
+  ]
+
+  ldflags = [ "-lstdc++" ]
+  ldflags += [ "-lpthread" ]
+  ldflags += [ "-Wl,-rpath-link=$ohos_root_path/$root_out_dir" ]
+
+  deps = [
+    "//foundation/ai/engine/services/client/algorithm_sdk/cv/image_classification:image_classification_sdk",
+    "//foundation/multimedia/camera_lite/frameworks:camera_lite",
+    "//foundation/multimedia/media_lite/frameworks/recorder_lite:recorder_lite",
+    "//third_party/libjpeg",
+  ]
+  output_dir = "$root_out_dir/dev_tools"
+}
+
+lite_component("ic") {
+  features = [ ":ic_app" ]
+}

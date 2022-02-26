@@ -1,0 +1,89 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/ohos.gni")
+
+cflags = []
+
+config("cesfwk_core_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = []
+
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  defines = [
+    "EVENT_LOG_TAG = \"CesFwk\"",
+    "LOG_DOMAIN = 0xD008800",
+  ]
+}
+
+config("cesfwk_core_public_config") {
+  visibility = [ ":*" ]
+
+  include_dirs = [
+    "${ces_core_path}/include",
+    "${ces_innerkits_path}/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include/ohos/aafwk/base",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/appexecfwk/standard/services/bundlemgr/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+  ]
+}
+
+ohos_shared_library("cesfwk_core") {
+  sources = [
+    "${ces_core_path}/src/common_event.cpp",
+    "${ces_core_path}/src/common_event_death_recipient.cpp",
+    "${ces_core_path}/src/common_event_listener.cpp",
+    "${ces_core_path}/src/common_event_proxy.cpp",
+    "${ces_core_path}/src/common_event_stub.cpp",
+    "${ces_core_path}/src/event_receive_proxy.cpp",
+    "${ces_core_path}/src/event_receive_stub.cpp",
+    "${ces_native_path}/src/async_common_event_result.cpp",
+    "${ces_native_path}/src/common_event_data.cpp",
+    "${ces_native_path}/src/common_event_publish_info.cpp",
+    "${ces_native_path}/src/common_event_subscribe_info.cpp",
+    "${ces_native_path}/src/common_event_subscriber.cpp",
+    "${ces_native_path}/src/matching_skills.cpp",
+  ]
+
+  configs = [ ":cesfwk_core_config" ]
+
+  public_configs = [ ":cesfwk_core_public_config" ]
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+  ]
+
+  subsystem_name = "notification"
+  part_name = "ces_standard"
+}

@@ -1,0 +1,36 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd. All rights reserved.
+# Copyright (c) 2020-2021 Lockzhiner Electronics Co., Ltd.
+#
+
+import("//drivers/adapter/khdf/liteos_m/hdf.gni")
+import("//device/rockchip/rk2206/sdk_liteos/board.gni")
+
+static_library("board") {
+  sources = [
+      "./startup/startup_rk2206.S",
+      "./dprintf.c",
+      "./main.c",
+      "./iotmain.c",
+      "./src/config_network.c",
+  ]
+
+  include_dirs = [
+    "$kernel_path/kernel/include",
+    "$kernel_path/kernel/arch/include",
+    "$kernel_path/utils",
+    "$kernel_path/kal/cmsis",
+    "$hilog_path/interfaces/native/kits",
+    "$adapter_path/include",
+    "./include",
+    "//third_party/cJSON",
+    "//third_party/lwip/src/include",
+    "//third_party/musl/porting/liteos_m/kernel/include",
+    "$rk_third_party_dir/simple_gui/inc",
+    "$hdf_fwk_path/include/platform",
+    "$hdf_fwk_path/include/utils",
+    "$hdf_fwk_path/include/osal",
+    "$khdf_path/osal/include",
+  ]
+
+  deps = [ ]
+}

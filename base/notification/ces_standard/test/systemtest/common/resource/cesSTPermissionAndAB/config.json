@@ -1,0 +1,45 @@
+{
+    "app":{
+        "bundleName": "com.ohos.cesst.cesSTPermissionAndAB",
+        "vendor": "ix",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+       "apiVersion": {
+          "compatible": 3,
+          "target": 3
+       }
+    },
+    "deviceConfig": {
+        "default": {
+        }
+    },
+    "module": {
+        "package":"com.hos.CesSTPermissionAndAB.src",
+        "name":"CesSTPermissionAndAB",
+        "deviceType": [
+            "tv",
+            "car"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "testability",
+            "moduleType": "entry"
+        },
+        "abilities": [{
+            "name": "CesSTPermissionAndAB",
+            "icon": "$media:snowball",
+            "label": "CesSTPermissionAndAB Ability zofa label",
+            "launchType": "singletop",
+            "orientation": "unspecified",
+            "type": "page",
+            "visible": true
+            }],
+        "reqPermissions": [{
+            "name": "ohos.permission.USE_BLUETOOTH"
+        },{
+            "name": "ohos.permission.LOCATION"
+        }]
+    }
+}

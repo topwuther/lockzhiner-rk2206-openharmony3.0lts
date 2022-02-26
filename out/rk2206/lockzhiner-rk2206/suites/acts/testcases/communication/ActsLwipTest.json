@@ -1,0 +1,19 @@
+{
+    "description": "Config for ActsLwipTest test cases",
+    "environment": [
+        {
+            "type": "device",
+            "label": "wifiiot"
+        }
+    ],
+    "kits": [
+        {
+            "type": "DeployKit",
+            "timeout": "20000",
+            "burn_file": "communication/ActsLwipTest.bin"
+        }
+    ],
+    "driver": {
+        "type": "CTestLite"
+    }
+}

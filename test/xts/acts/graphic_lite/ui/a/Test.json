@@ -1,0 +1,25 @@
+{
+    "description": "ui interface coverage filled",
+    "environment": [
+        {
+            "type": "device",
+            "label": "ipcamera"
+        }
+    ],
+    "kits": [
+        {
+            "type": "MountKit",
+            "server": "NfsServer",
+            "mount": [
+                {
+                    "source": "testcases/graphic",
+                    "target": "/test_root/graphic"
+                }
+            ]
+        }
+    ],
+    "driver": {
+        "type": "CppTestLite",
+        "execute": "/test_root/graphic/ActsUiInterfaceTest.bin"
+    }
+}

@@ -1,0 +1,20 @@
+arm-none-eabi-gcc -I/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/device/rockchip/rk2206/sdk_liteos/include -E /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/device/rockchip/rk2206/sdk_liteos/build/link/board.ld.S -o /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/device/rockchip/rk2206/sdk_liteos/board.ld -P
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb  --specs=nosys.specs -Tboard.ld -L/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/libs -Wl,--start-group -Wl,--start-group -Wl,--whole-archive -lbootstrap -lbroadcast -lhal_iothardware -lhardware -lhdf_config -lhdf_core -lhdf_osal_lite -lhdf_platform_lite   -Wl,--no-whole-archive -larch         -lcjson_static  -ldump_static       -lhal_wifiaware  -lhuks_3.0_sdk     -lnative_file    -lsec_static      -lwifiaware -lauthmanager  -lcmsis         -lexchook                            -lkernel           -lpm             -lsysparam        -lwifiservice -lbacktrace    -lcppsupport    -lhal_file_static   -lhichainsdk     -lposix          -ltoken_static -lboard        -lcpup          -lhievent_lite   -lmbedtls          -lsamgr          -ltrans_service -ldiscovery     -lhal_sysparam      -lhilog_lite     -lmusl-c           -lsamgr_adapter  -lutils -llwip          -lhal_token_static  -lhiview_lite    -lmusl-m           -lsamgr_source   -lutils_kv_store -lpahomqtt_static -llittlefs -Wl,--end-group -Wl,--end-group -Wl,-Map=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.map,--cref -Wl,--gc-sections -o /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.elf
+arm-none-eabi-size /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.elf
+   text	   data	    bss	    dec	    hex	filename
+ 216152	 213388	  57728	 487268	  76f64	/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.elf
+arm-none-eabi-objcopy -O ihex /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.elf /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.hex
+arm-none-eabi-objcopy -O binary -S /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.elf /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.bin
+file=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos.bin,json=/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/config.json
+Packing liteos.bin done
+name=IDBlock, offset=80, size=80, type=2, flag=0
+name=liteos, offset=100, size=f00, type=8, flag=0
+name=rootfs, offset=1000, size=2000, type=0, flag=1
+name=userfs, offset=3000, size=1000, type=0, flag=1
+Writing vendor...
+Writing idblock...
+Adding /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206/liteos ...
+Generating hash file...
+Generating firmware OK.
+cmd:sh ./build.sh /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/out/rk2206/lockzhiner-rk2206
+cost time:0:00:02

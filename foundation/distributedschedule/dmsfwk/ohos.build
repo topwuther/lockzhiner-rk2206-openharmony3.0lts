@@ -1,0 +1,28 @@
+{
+    "parts": {
+        "dmsfwk_standard": {
+            "variants": ["phone", "wearable"],
+            "inner_kits": [
+                {
+                    "header": {
+                        "header_base": "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr/include",
+                        "header_files": [
+                            "uri.h"
+                        ]
+                    },
+                    "name": "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri"
+                }
+            ],
+            "module_list": [
+                "//foundation/distributedschedule/dmsfwk/etc/init:etc",
+                "//foundation/distributedschedule/dmsfwk/sa_profile:dms_sa_profile",
+                "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr:distributedschedsvr"
+            ],
+            "system_kits": [],
+            "test_list": [
+                "//foundation/distributedschedule/dmsfwk/services/dtbschedmgr:unittest"
+            ]
+        }
+    },
+    "subsystem": "distributedschedule"
+}

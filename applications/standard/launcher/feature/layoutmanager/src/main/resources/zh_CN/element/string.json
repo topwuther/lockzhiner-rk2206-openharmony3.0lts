@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "layoutmanager_MainAbility",
+      "value": "layoutmanager_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "intoSettings",
+      "value": "桌面设置"
+    },
+    {
+      "name": "addBlankPage",
+      "value": "添加空白页"
+    },
+    {
+      "name": "deleteBlankPage",
+      "value": "删除空白页"
+    },
+    {
+      "name": "uninstall",
+      "value": "卸载"
+    },
+    {
+      "name": "submit",
+      "value": "确认"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    }
+  ]
+}

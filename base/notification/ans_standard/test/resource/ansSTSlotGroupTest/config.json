@@ -1,0 +1,40 @@
+{
+    "app":{
+        "bundleName": "com.ohos.ansst.ansSTSlotGroup",
+        "vendor": "ix",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+       "apiVersion": {
+          "compatible": 3,
+          "target": 3
+       }
+    },
+    "deviceConfig": {
+        "default": {
+        }
+    },
+    "module": {
+        "package":"com.hos.AnsSlotGroupSystemTest.src",
+        "name":"AnsSlotGroupSystemTest",
+        "deviceType": [
+            "tv",
+            "car"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "testability",
+            "moduleType": "entry"
+        },
+        "abilities": [{
+            "name": "AnsSlotGroupSystemTest",
+            "icon": "$media:snowball",
+            "label": "AnsSlotGroupSystemTest Ability zofa label",
+            "launchType": "singletop",
+            "orientation": "unspecified",
+            "type": "page",
+            "visible": true
+            }]
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "subsystem": "global",
+  "parts": {
+    "resmgr_standard": {
+      "module_list": [
+        "//base/global/resmgr_standard/interfaces/js/kits:resourcemanager",
+        "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr"
+      ],
+      "inner_kits": [
+        {
+          "header": {
+            "header_base": "//base/global/resmgr_standard/interfaces/innerkits/include/",
+            "header_files": [
+              "res_common.h",
+              "res_config.h",
+              "resource_manager.h",
+              "rstate.h"
+            ]
+          },
+          "name": "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr"
+        }
+      ],
+      "test_list": [
+        "//base/global/resmgr_standard/frameworks/resmgr/test:unittest"
+      ]
+    }
+  }
+}

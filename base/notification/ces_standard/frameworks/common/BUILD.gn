@@ -1,0 +1,44 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/ohos.gni")
+
+group("common_target") {
+  deps = [ ":libevent_common" ]
+}
+
+config("event_common_config") {
+  include_dirs = [ "log/include" ]
+}
+
+ohos_shared_library("libevent_common") {
+  sources = [ "log/src/event_log_wrapper.cpp" ]
+
+  defines = [
+    "EVENT_LOG_TAG = \"CES_STANDARD\"",
+    "LOG_DOMAIN = 0xD001140",
+  ]
+
+  public_configs = [
+    ":event_common_config",
+    "//utils/native/base:utils_config",
+  ]
+
+  deps = [ "//utils/native/base:utils" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  subsystem_name = "notification"
+  part_name = "ces_standard"
+}

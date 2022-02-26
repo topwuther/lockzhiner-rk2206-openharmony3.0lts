@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 224 224" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_camera_thumbnail_default_normal</title>
+    <desc>Created with Sketch.</desc>
+    <g id="output_slices" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ic_camera_thumbnail_default_normal">
+            <g id="ic_camera_gallery" transform="translate(16.000000, 16.000000)">
+                <circle id="Oval-3" stroke="#FFFFFF" stroke-width="4" cx="96" cy="96" r="94"></circle>
+                <path d="M67.4324079,185.620292 C67.5892857,185.100551 67.8203392,184.33078 68.1255684,183.310979 C75.386845,158.657362 90.6334833,136.468085 111.162164,120.757787 C132.618164,104.337702 158.277739,95.6588936 185.368122,95.6588936 C186.483356,95.6588936 188.484328,95.6844255 189.626116,95.7160851" id="Path" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M61.7142857,46.2857143 C53.1933061,46.2857143 46.2857143,53.1933061 46.2857143,61.7142857 C46.2857143,70.2352653 53.1933061,77.1428571 61.7142857,77.1428571 C70.2352653,77.1428571 77.1428571,70.2352653 77.1428571,61.7142857 C77.1428571,53.1933061 70.2352653,46.2857143 61.7142857,46.2857143" id="Fill-3" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

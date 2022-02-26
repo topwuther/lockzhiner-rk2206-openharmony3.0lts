@@ -1,0 +1,64 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+group("uikit_test3") {
+  deps = [
+    "//test/xts/acts/graphic_lite/ui/a:ActsUiInterfaceTest",
+    "//test/xts/acts/graphic_lite/ui/animator_posix:ActsAnimatorTest",
+    "//test/xts/acts/graphic_lite/ui/easing_equation_posix:ActsEasingEquationTest",
+    "//test/xts/acts/graphic_lite/ui/events_posix:ActsEventsTest",
+    "//test/xts/acts/graphic_lite/ui/flexlayout_posix:ActsFlexlaoutTest",
+    "//test/xts/acts/graphic_lite/ui/gridlayout_posix:ActsGridLayoutTest",
+    "//test/xts/acts/graphic_lite/ui/image_posix:ActsImageTest",
+    "//test/xts/acts/graphic_lite/ui/interpolation_posix:ActsInterpoliationTest",
+    "//test/xts/acts/graphic_lite/ui/layout_posix:ActsLayoutTest",
+    "//test/xts/acts/graphic_lite/ui/listlayout_posix:ActsListlayoutTest",
+    "//test/xts/acts/graphic_lite/ui/screen_posix:ActsScreenTest",
+    "//test/xts/acts/graphic_lite/ui/style_posix:ActsStyleTest",
+    "//test/xts/acts/graphic_lite/ui/theme_posix:ActsThemeTest",
+    "//test/xts/acts/graphic_lite/ui/ui_abstract_progress_posix:ActsUIAbstractProgressTest",
+    "//test/xts/acts/graphic_lite/ui/ui_analog_clock_posix:ActsUIAnalogClockTest",
+    "//test/xts/acts/graphic_lite/ui/ui_arc_lable_posix:ActsUIArcLabelTest",
+    "//test/xts/acts/graphic_lite/ui/ui_axis_posix:ActsUIAxisTest",
+    "//test/xts/acts/graphic_lite/ui/ui_box_porgress_posix:ActsUIBoxProgressTest",
+    "//test/xts/acts/graphic_lite/ui/ui_button_posix:ActsUIButtonTest",
+    "//test/xts/acts/graphic_lite/ui/ui_canvas_posix:ActsUICanvasTest",
+    "//test/xts/acts/graphic_lite/ui/ui_chart_posix:ActsUIChartTest",
+    "//test/xts/acts/graphic_lite/ui/ui_checbox_posix:ActsUICheckboxTest",
+    "//test/xts/acts/graphic_lite/ui/ui_circle_progress_posix:ActsUICircleProgressTest",
+    "//test/xts/acts/graphic_lite/ui/ui_digital_clock_posix:ActsUIDigitalClockTest",
+    "//test/xts/acts/graphic_lite/ui/ui_image_animator_posix:ActsUIImageAnimatorTest",
+    "//test/xts/acts/graphic_lite/ui/ui_image_posix:ActsUIImageTest",
+    "//test/xts/acts/graphic_lite/ui/ui_label_button_posix:ActsUILabelButtonTest",
+    "//test/xts/acts/graphic_lite/ui/ui_label_posix:ActsUILabelTest",
+    "//test/xts/acts/graphic_lite/ui/ui_list_posix:ActsUIListTest",
+    "//test/xts/acts/graphic_lite/ui/ui_picker_posix:ActsUIPickerTest",
+    "//test/xts/acts/graphic_lite/ui/ui_radio_button_posix:ActsUIRadioButtonTest",
+    "//test/xts/acts/graphic_lite/ui/ui_repeat_button_posix:ActsUIRepeatButtonTest",
+    "//test/xts/acts/graphic_lite/ui/ui_screenshot_posix:ActsUIScreenshotTest",
+    "//test/xts/acts/graphic_lite/ui/ui_scroll_view_posix:ActsUIScrollViewTest",
+    "//test/xts/acts/graphic_lite/ui/ui_slider_posix:ActsUISliderTest",
+    "//test/xts/acts/graphic_lite/ui/ui_surface_view_posix:ActsUISurfaceViewTest",
+    "//test/xts/acts/graphic_lite/ui/ui_swipe_view_posix:ActsUISwipeViewTest",
+    "//test/xts/acts/graphic_lite/ui/ui_text_posix:ActsUITextTest",
+    "//test/xts/acts/graphic_lite/ui/ui_texture_mapper_posix:ActsUITextureMapperTest",
+    "//test/xts/acts/graphic_lite/ui/ui_time_picker_posix:ActsUITimePickerTest",
+    "//test/xts/acts/graphic_lite/ui/ui_toggle_button_posix:ActsUIToggleButtonTest",
+    "//test/xts/acts/graphic_lite/ui/ui_view_group_posix:ActsUIViewGroupTest",
+    "//test/xts/acts/graphic_lite/ui/ui_view_posix:ActsUIViewTest",
+    "//test/xts/acts/graphic_lite/ui/uianimator_posix:ActsUIAnimatorTest",
+
+    #"//test/xts/acts/graphic_lite/ui/uidfx_posix:ActsUIDfxTest",
+    #"//test/xts/acts/graphic_lite/ui/uifont_posix:ActsUIFontTest",
+  ]
+}

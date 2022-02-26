@@ -1,0 +1,8 @@
+{
+  "MAGIC": "RESC",
+  "CHIP": "rk2206",
+  "MODEL": "lockzhiner-rk2206",
+  "DESC": "rk2206 OpenHarmony",
+  "VERSION": "2.00.0000",
+  "DIGEST": "JSHASH"
+}

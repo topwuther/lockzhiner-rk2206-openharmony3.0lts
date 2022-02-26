@@ -1,0 +1,95 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//base/notification/ces_standard/event.gni")
+import("//build/test.gni")
+
+module_output_path = "ces_standard/systemtest"
+
+ohos_systemtest("ActsFuzzTest") {
+  module_out_path = module_output_path
+  resource_config_file = "${ces_standard_path}/test/systemtest/common/resource/fuzzTest/ohos_test.xml"
+
+  sources = [
+    "${ces_standard_path}/test/systemtest/common/resource/fuzzTest/src/fuzzTestManager.cpp",
+    "${ces_standard_path}/test/systemtest/common/resource/fuzzTest/src/getparam.cpp",
+    "actsFuzzTest.cpp",
+  ]
+
+  configs = [
+    "${ces_standard_path}/test/systemtest/common/ces:cesfwk_kits_test_config",
+  ]
+
+  include_dirs = [
+    "//utils/native/base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "${ces_standard_path}/test/systemtest/common/resource",
+    "//third_party/json/single_include",
+    "${services_path}/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/libeventhandler/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_base/include",
+    "//foundation/appexecfwk/standard/interfaces/innerkits/appexecfwk_core/include",
+    "//foundation/appexecfwk/standard/kits/appkit/native/app/include",
+    "//foundation/appexecfwk/adapter/interfaces/innerkits/appexecfwk_base/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager/include",
+    "//foundation/aafwk/standard/interfaces/innerkits/want/include/ohos/aafwk/content",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native/include",
+    "//foundation/aafwk/standard/services/abilitymgr/include",
+    "//foundation/multimodalinput/input/interfaces/native/innerkits/event/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+  ]
+
+  cflags = []
+
+  if (target_cpu == "arm") {
+    cflags += [ "-DBINDER_IPC_32BIT" ]
+  }
+
+  deps = [
+    "${ces_common_path}:libevent_common",
+    "${ces_native_path}:cesfwk_innerkits",
+    "//base/global/resmgr_standard/frameworks/resmgr:global_resmgr",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/interfaces/innerkits/ability_manager:ability_manager",
+    "//foundation/aafwk/standard/interfaces/innerkits/base:base",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/multimodalinput/input/interfaces/native/innerkits/event:mmi_event",
+    "//third_party/googletest:gtest_main",
+    "//utils/native/base:utils",
+  ]
+
+  defines = [
+    "APP_LOG_TAG = \"CesFwkKitsTest\"",
+    "LOG_DOMAIN = 0xD002200",
+  ]
+  external_deps = [
+    "aafwk_standard:want",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "native_appdatamgr:native_appdatafwk",
+    "native_appdatamgr:native_dataability",
+    "native_appdatamgr:native_rdb",
+  ]
+}
+
+group("fuzzTest") {
+  testonly = true
+
+  deps = [ ":ActsFuzzTest" ]
+}

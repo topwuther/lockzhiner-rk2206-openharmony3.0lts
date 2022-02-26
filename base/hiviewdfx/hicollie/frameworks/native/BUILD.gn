@@ -1,0 +1,46 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+hicollie_part_path = "//base/hiviewdfx/hicollie"
+config("hicollie_include") {
+  include_dirs = [
+    ".",
+    "${hicollie_part_path}/interfaces/native/innerkits/include/xcollie",
+    "//utils/native/base/include",
+  ]
+  if (is_ohos) {
+    cflags_cc = [ "-D__XCOLLIE_OHOS__" ]
+  }
+}
+
+ohos_source_set("libhicollie_source") {
+  sources = [
+    "timer_ring.cpp",
+    "xcollie.cpp",
+    "xcollie_inner.cpp",
+  ]
+  configs = [ ":hicollie_include" ]
+
+  external_deps = [
+    "hilog_native:libhilog",
+    "hisysevent_native:libhisysevent",
+  ]
+
+  deps = [ "//utils/native/base:utils" ]
+}
+
+group("libhicollie") {
+  deps = [ ":libhicollie_source" ]
+}

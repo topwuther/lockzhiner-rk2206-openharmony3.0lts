@@ -1,0 +1,20 @@
+[
+  {
+    "settingIcon": "",
+    "settingAlias": "date",
+    "settingItemIsShow": true,
+    "settingTitle": "",
+    "settingSummary": "",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg"
+  },
+  {
+    "settingIcon": "",
+    "settingAlias": "time",
+    "settingItemIsShow": true,
+    "settingTitle": "",
+    "settingSummary": "",
+    "settingValue": "",
+    "settingArrow": "/res/image/ic_settings_arrow.svg"
+  }
+]

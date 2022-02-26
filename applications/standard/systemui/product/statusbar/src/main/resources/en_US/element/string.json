@@ -1,0 +1,51 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "SystemUI"
+    },
+    {
+      "name": "mainability_description",
+      "value": "JS_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "monday",
+      "value": "monday"
+    },
+    {
+      "name": "tuesday",
+      "value": "tuesday"
+    },
+    {
+      "name": "wednesday",
+      "value": "wednesday"
+    },
+    {
+      "name": "thursday",
+      "value": "thursday"
+    },
+    {
+      "name": "friday",
+      "value": "friday"
+    },
+    {
+      "name": "saturday",
+      "value": "saturday"
+    },
+    {
+      "name": "sunday",
+      "value": "sunday"
+    },
+    {
+      "name": "day",
+      "value": "day"
+    },
+    {
+      "name": "month",
+      "value": "month"
+    },{
+      "name": "nonotification_text",
+      "value": "no notification"
+    }
+  ]
+}

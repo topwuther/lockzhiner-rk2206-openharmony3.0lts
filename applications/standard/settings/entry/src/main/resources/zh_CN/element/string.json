@@ -1,0 +1,152 @@
+{
+  "string": [
+    {
+      "name": "entry_MainAbility",
+      "value": "设置"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "enabled",
+      "value": "已开启"
+    },
+    {
+      "name": "disabled",
+      "value": "已关闭"
+    },
+    {
+      "name": "settings",
+      "value": "设置"
+    },
+    {
+      "name": "wifiTab",
+      "value": "WLAN"
+    },
+    {
+      "name": "brightnessTab",
+      "value": "亮度"
+    },
+    {
+      "name": "applyTab",
+      "value": "应用"
+    },
+    {
+      "name": "dateAndTimeTab",
+      "value": "日期和时间"
+    },
+    {
+      "name": "aboutTab",
+      "value": "关于手机"
+    },
+    {
+      "name": "applicationInfo",
+      "value": "应用信息"
+    },
+    {
+      "name": "appManagement",
+      "value": "应用管理"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "confirm",
+      "value": "确定"
+    },
+    {
+      "name": "wifiPassword",
+      "value": "密码"
+    },
+    {
+      "name": "date",
+      "value": "日期"
+    },
+    {
+      "name": "time",
+      "value": "时间"
+    },
+    {
+      "name": "year",
+      "value": "年"
+    },
+    {
+      "name": "month",
+      "value": "月"
+    },
+    {
+      "name": "day",
+      "value": "日"
+    },
+    {
+      "name": "tipsContent",
+      "value": "为提高位置信息的精确度，应用和服务仍然会扫描WLAN网络.您可以在提高精确度中更改此设置"
+    },
+    {
+      "name": "wifiList",
+      "value": "可用WLAN列表"
+    },
+    {
+      "name": "systemName",
+      "value": "系统名称"
+    },
+    {
+      "name": "model",
+      "value": "型号"
+    },
+    {
+      "name": "companyInfo",
+      "value": "厂家信息"
+    },
+    {
+      "name": "deviceId",
+      "value": "设备"
+    },
+    {
+      "name": "softwareVersion",
+      "value": "软件版本"
+    },
+    {
+      "name": "version",
+      "value": "版本 "
+    },
+    {
+      "name": "password",
+      "value": "密码"
+    },
+    {
+      "name": "connected",
+      "value": "已连接"
+    },
+    {
+      "name": "monday",
+      "value": "星期一"
+    },
+    {
+      "name": "tuesday",
+      "value": "星期二"
+    },
+    {
+      "name": "wednesday",
+      "value": "星期三"
+    },
+    {
+      "name": "thursday",
+      "value": "星期四"
+    },
+    {
+      "name": "friday",
+      "value": "星期五"
+    },
+    {
+      "name": "saturday",
+      "value": "星期六"
+    },
+    {
+      "name": "sunday",
+      "value": "星期日"
+    }
+  ]
+}

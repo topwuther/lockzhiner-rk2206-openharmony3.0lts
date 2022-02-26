@@ -1,0 +1,19 @@
+{
+    "description": "Configuration for NetworkSearch Tests",
+    "driver": {
+        "type": "JSUnitTest",
+        "test-timeout": "1800",
+        "package": "com.ohos.networksearch",
+        "shell-timeout": "1800",
+        "native-test-timeout":"1800"
+    },
+    "kits": [
+        {
+            "test-file-name": [
+                "$module.hap"
+            ],
+            "type": "AppInstallKit",
+            "cleanup-apps": true
+        }
+    ]
+}

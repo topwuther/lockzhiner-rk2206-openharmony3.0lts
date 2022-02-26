@@ -1,0 +1,57 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//test/xts/tools/build/suite.gni")
+module_output_path = "hit/ActsMediaCppStandardTest"
+
+###############################################################################
+config("media_cpp_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "//multimedia/media_standard/frameworks/innerkitsimpl/native/player/include",
+  ]
+}
+
+ohos_moduletest_suite("ActsMediaCppStandardTest") {
+  module_out_path = module_output_path
+  sources = [
+    "player/src/TestParamsConfig.cpp",
+    "player/src/TestPlayer.cpp",
+    "player/src/api/ActsPlayerAPITest.cpp",
+    "player/src/function/ActsPlayerFuncAsyncTest.cpp",
+    "player/src/function/ActsPlayerFuncTest.cpp",
+    "player/src/function/ActsPlayerStateAsyncTest.cpp",
+    "player/src/function/ActsPlayerStateTest.cpp",
+  ]
+  include_dirs = [
+    "include",
+    "player/include",
+    "recorder/include",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara/include",
+    "//foundation/graphic/standard/interfaces/innerkits/wmclient",
+  ]
+  cflags = [ "-Wall" ]
+  cflags_cc = cflags
+  deps = [
+    "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
+    "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+    "//foundation/graphic/standard:libwmclient",
+    "//third_party/googletest:gtest_main",
+  ]
+  external_deps = [
+    "ipc:ipc_core",
+    "multimedia_media_standard:media_client",
+  ]
+  configs = [ ":media_cpp_config" ]
+}

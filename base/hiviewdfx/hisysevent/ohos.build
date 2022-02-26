@@ -1,0 +1,30 @@
+{
+  "subsystem": "hiviewdfx",
+  "parts": {
+    "hisysevent_native": {
+      "variants": [
+        "phone",
+        "ivi",
+        "wearable",
+        "intellitv"
+      ],
+      "module_list": [
+        "//base/hiviewdfx/hisysevent/interfaces/native/innerkits:libhisysevent"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/hiviewdfx/hisysevent/interfaces/native/innerkits:libhisysevent",
+          "header": {
+            "header_files": [
+              "hisysevent.h"
+            ],
+            "header_base": "//base/hiviewdfx/hisysevent/interfaces/native/innerkits/include"
+          }
+        }
+      ],
+      "test_list": [
+        "//base/hiviewdfx/hisysevent/test:moduletest"
+      ]
+    }
+  }
+}

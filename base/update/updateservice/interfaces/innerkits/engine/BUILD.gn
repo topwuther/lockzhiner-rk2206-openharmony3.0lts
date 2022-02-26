@@ -1,0 +1,64 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+ohos_prebuilt_etc("updater_sa.rc") {
+  source = "etc/updater_sa.rc"
+  relative_install_dir = "init"
+  part_name = "updater"
+}
+
+ohos_static_library("updateservicekits") {
+  defines = [ "DUAL_ADAPTER" ]
+  sources = [
+    "//base/update/updateservice/callback/src/update_callback.cpp",
+    "//base/update/updateservice/callback/src/update_callback_stub.cpp",
+    "//base/update/updateservice/engine/src/update_helper.cpp",
+    "//base/update/updateservice/interfaces/innerkits/engine/update_service_kits_impl.cpp",
+    "//base/update/updateservice/interfaces/innerkits/engine/update_service_proxy.cpp",
+  ]
+
+  include_dirs = [
+    "//base/update/updater/services/include",
+    "//base/update/updater/utils/include",
+    "//base/update/updater/interfaces/kits/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//base/update/updateservice/interfaces/innerkits/include",
+    "//base/update/updateservice/engine/include",
+    "//base/update/updateservice/callback/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedschedule/safwk/services/safwk/include",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk",
+    "//foundation/distributedschedule/samgr/adapter/interfaces/innerkits/include",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//third_party/bounds_checking_function/include",
+  ]
+
+  deps = [
+    "//base/update/updater/services/log:libupdaterlog",
+    "//third_party/bounds_checking_function:libsec_static",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr_L2:samgr_proxy",
+    "startup_l2:syspara",
+  ]
+
+  part_name = "updater"
+}

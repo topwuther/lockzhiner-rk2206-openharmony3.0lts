@@ -1,0 +1,36 @@
+{
+    "description": "Configuration for hjunit demo Tests",
+    "driver": {
+        "type": "JSUnitTest",
+        "test-timeout": "600000",
+        "package": "com.example.actsfeatureabilitytest",
+        "shell-timeout": "60000"
+    },
+    "kits": [
+        {
+            "test-file-name": [
+                "ActsFeatureAbilityTest.hap"
+            ],
+            "type": "AppInstallKit",
+            "cleanup-apps": true
+        },
+        {
+            "type": "PushKit",
+            "push": [
+                "FinishWithResultEmptyTest.hap->/data/FinishWithResultEmptyTest.hap",
+                "FinishWithResultPromiseParametersTest.hap->/data/FinishWithResultPromiseParametersTest.hap",
+                "FinishWithResultTest.hap->/data/FinishWithResultTest.hap",
+                "GetCallingBundlePromiseTest.hap->/data/GetCallingBundlePromiseTest.hap",
+                "StartAbility.hap->/data/StartAbility.hap",
+                "StartAbilityForResult.hap->/data/StartAbilityForResult.hap",
+                "TerminateAbilityTest.hap->/data/TerminateAbilityTest.hap"
+            ]
+        },
+        {
+            "type": "ShellKit",
+            "run-command": [
+                "chmod 644 /data/*.hap"
+            ]
+        }
+    ]
+}

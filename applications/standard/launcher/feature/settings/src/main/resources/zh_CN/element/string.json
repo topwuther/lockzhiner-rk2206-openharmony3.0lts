@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "settings_MainAbility",
+      "value": "settings_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "intoSettings",
+      "value": "桌面设置"
+    },
+    {
+      "name": "layout",
+      "value": "布局"
+    },
+    {
+      "name": "layoutStyle",
+      "value": "布局样式"
+    },
+    {
+      "name": "launcherLayout",
+      "value": "桌面布局"
+    },
+    {
+      "name": "recentTasksSetting",
+      "value": "最近任务数"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    }
+  ]
+}

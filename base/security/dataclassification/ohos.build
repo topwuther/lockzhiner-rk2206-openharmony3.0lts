@@ -1,0 +1,38 @@
+{
+  "subsystem": "security",
+  "parts": {
+    "dataclassification": {
+      "variants": [
+        "phone",
+        "wearable"
+      ],
+      "module_list": [
+        "//base/security/dataclassification/interfaces/innerkits/hwdevsl:hwdsl",
+        "//base/security/dataclassification/interfaces/innerkits/fbe_iudf_xattr:fbe_iudf_xattr"
+      ],
+      "inner_kits": [
+        {
+          "name": "//base/security/dataclassification/interfaces/innerkits/fbe_iudf_xattr:fbe_iudf_xattr",
+          "header": {
+            "header_files": [
+              "fbe_sdp_code_num.h",
+              "fbe_sdp_policy.h"
+            ],
+            "header_base": "//base/security/dataclassification/interfaces/innerkits/fbe_iudf_xattr/include"
+          }
+        },
+        {
+          "name": "//base/security/dataclassification/interfaces/innerkits/hwdevsl:hwdsl",
+          "header": {
+            "header_files": [
+              "1.0/dev_slinfo_mgr.h"
+            ],
+            "header_base": "//base/security/dataclassification/interfaces/innerkits/hwdevsl/include"
+          }
+        }
+      ],
+      "test_list": [
+      ]
+    }
+  }
+}

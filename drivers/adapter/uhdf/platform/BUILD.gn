@@ -1,0 +1,57 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/lite/config/component/lite_component.gni")
+
+HDF_FRAMEWORKS = "//drivers/framework"
+
+shared_library("hdf_platform") {
+  sources = [
+    "$HDF_FRAMEWORKS/support/platform/src/mmc/mmc_if.c",
+    "$HDF_FRAMEWORKS/support/platform/src/mmc/emmc_if.c",
+    "$HDF_FRAMEWORKS/support/platform/src/i2c_if.c",
+    "$HDF_FRAMEWORKS/support/platform/src/uart_if.c",
+  ]
+
+  include_dirs = [
+    "$HDF_FRAMEWORKS/include/core",
+    "$HDF_FRAMEWORKS/include/utils",
+    "$HDF_FRAMEWORKS/utils/include",
+    "$HDF_FRAMEWORKS/include/osal",
+    "$HDF_FRAMEWORKS/include/platform",
+    "$HDF_FRAMEWORKS/../adapter/uhdf/posix/include",
+    "$HDF_FRAMEWORKS/ability/sbuf/include",
+    "//base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
+  ]
+
+  deps = [
+    "//drivers/adapter/uhdf/manager:hdf_core",
+    "//drivers/adapter/uhdf/posix:hdf_posix_osal",
+    "//third_party/bounds_checking_function:libsec_shared",
+  ]
+
+  defines = [ "__USER__" ]
+
+  cflags = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-fsigned-char",
+    "-fno-common",
+    "-fno-strict-aliasing",
+  ]
+}
+
+lite_component("hdf_platform_driver") {
+  features = [ ":hdf_platform" ]
+}

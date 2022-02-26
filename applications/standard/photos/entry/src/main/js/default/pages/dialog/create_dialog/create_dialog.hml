@@ -1,0 +1,28 @@
+<!--
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<dialog id="createDialog" class="create-dialog-main" oncancel="cancelDialog">
+    <div class="dialog-div">
+        <text class="title">{{ $t('strings.createAlbum') }}</text>
+        <input class="input" type="text" value="{{ inputName }}" onchange="valueChange"
+               placeholder="{{ $t('strings.inputPlaceholder') }}"></input>
+        <div class="bottom-div">
+            <text onclick="cancel" class="btn-txt">{{ $t('strings.cancel') }}</text>
+            <text onclick="query" class="btn-txt line">{{ $t('strings.define') }}</text>
+        </div>
+    </div>
+</dialog>

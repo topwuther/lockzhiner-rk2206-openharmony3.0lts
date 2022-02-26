@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "settings_MainAbility",
+      "value": "settings_MainAbility"
+    },
+    {
+      "name": "mainability_description",
+      "value": "ETS_Empty Feature Ability"
+    },
+    {
+      "name": "layout",
+      "value": "Layout"
+    },
+    {
+      "name": "intoSettings",
+      "value": "Launcher settings"
+    },
+    {
+      "name": "layoutStyle",
+      "value": "Layout Style"
+    },
+    {
+      "name": "launcherLayout",
+      "value": "Launcher Layout"
+    },
+    {
+      "name": "recentTasksSetting",
+      "value": "Recent Tasks Setting"
+    },
+    {
+      "name": "cancel",
+      "value": "Cancel"
+    }
+  ]
+}

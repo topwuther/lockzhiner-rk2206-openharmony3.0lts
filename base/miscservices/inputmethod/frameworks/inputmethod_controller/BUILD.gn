@@ -1,0 +1,64 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//base/miscservices/inputmethod/inputmethod.gni")
+import("//build/ohos.gni")
+
+config("inputmethod_client_native_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "include",
+    "//utils/native/base/include",
+  ]
+}
+
+config("inputmethod_client_native_public_config") {
+  visibility = []
+  include_dirs = [
+    "//base/miscservices/inputmethod/frameworks/inputmethod_controller/include",
+    "//base/miscservices/inputmethod/frameworks/inputmethod_ability/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//base/hiviewdfx/hilog/interfaces/native/innerkits/include",
+    "//base/miscservices/inputmethod/services/include",
+    "//utils/native/base/include",
+  ]
+}
+
+ohos_shared_library("inputmethod_client") {
+  sources = [
+    "src/input_client_proxy.cpp",
+    "src/input_client_stub.cpp",
+    "src/input_data_channel_proxy.cpp",
+    "src/input_data_channel_stub.cpp",
+    "src/input_method_controller.cpp",
+    "src/input_method_system_ability_proxy.cpp",
+  ]
+
+  deps = [
+    "//base/miscservices/inputmethod/frameworks/inputmethod_ability:inputmethod_ability",
+    "//base/miscservices/inputmethod/services:inputmethod_service",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core:ipc_core",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_single:ipc_single",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  configs = [ ":inputmethod_client_native_config" ]
+
+  public_configs = [ ":inputmethod_client_native_public_config" ]
+
+  subsystem_name = "miscservices"
+  part_name = "inputmethod_native"
+}

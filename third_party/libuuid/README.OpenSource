@@ -1,0 +1,11 @@
+[
+    {
+        "Name"                  : "libuuid",
+        "License"               : "BSD 3-Clause License",
+        "License File"          : "uuid/COPYING",
+        "Version Number"        : "1.0.3",
+        "Owner"                 : "jiangxiaofeng8@huawei.com",
+        "Upstream URL"          : "https://sourceforge.net/projects/libuuid",
+        "Description"           : "Portable uuid C library."
+    }
+]

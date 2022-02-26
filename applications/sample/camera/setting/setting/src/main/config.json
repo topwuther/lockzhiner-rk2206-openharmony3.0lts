@@ -1,0 +1,40 @@
+{
+    "app": {
+        "bundleName": "com.huawei.setting",
+        "vendor": "huawei",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+        "apiVersion": {
+            "compatible": 3,
+            "target": 4
+        }
+    },
+    "deviceConfig": {
+        "default": {
+
+        }
+    },
+    "module": {
+        "package": "com.huawei.setting",
+        "name": ".MyHarmonyAbilityPackage",
+        "deviceType": [
+            "phone", "tv","tablet", "pc","car","smartWatch","sportsWatch","smartVision"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "setting",
+            "moduleType": "entry"
+        },
+        "abilities": [{
+            "name": "SettingMainAbility",
+            "icon": "assets/setting/resources/base/media/setting.png",
+            "label": "test testapp2 1",
+            "launchType": "standard",
+            "type": "page",
+            "visible":true
+        }
+        ]
+    }
+}

@@ -1,0 +1,86 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#import("//build/test.gni")
+import("//test/xts/tools/build/suite.gni")
+
+#module_output_path = "hits/huks_standard"
+########################################################
+config("module_private_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "//utils/native/base/include",
+    "//third_party/bounds_checking_function/include",
+
+    #"unittest/include",
+    #"include",
+    "//test/xts/acts/security_lite/huks/common/include",
+  ]
+}
+
+########################################################
+ohos_moduletest_suite("huks_std_function_test") {
+  #subsystem_name = "acts"
+  #part_name = "huks_standard"
+  #module_output_path = subsystem_name + "/" + part_name
+  #module_output_path  = module_output_path
+  configs = [ ":module_private_config" ]
+  cflags_cc = [ "-DHILOG_ENABLE" ]
+  defines = [ "_STANDARD_SYSTEM_" ]
+
+  sources = [
+    "src/hks_aes_test.cpp",
+    "src/hks_agreement_test.cpp",
+    "src/hks_bn_exp_mod_test.cpp",
+    "src/hks_cipher_test.cpp",
+    "src/hks_curve25519_test.cpp",
+    "src/hks_delete_test.cpp",
+    "src/hks_derive_test.cpp",
+    "src/hks_exist_test.cpp",
+    "src/hks_generate_key_test.cpp",
+    "src/hks_generate_random_test.cpp",
+    "src/hks_hash_test.cpp",
+    "src/hks_mac_test.cpp",
+    "src/hks_modify_key_test.cpp",
+    "src/hks_others_test.cpp",
+    "src/hks_safe_cipher_key_test.cpp",
+    "src/hks_safe_compare_key_test.cpp",
+
+    #"src/hks_test_api_performance.c",
+    #"src/hks_test_cipher.c",
+    #"src/hks_test_common.c",
+    #"src/hks_test_mem.c",
+    #"src/hks_test_aes.c",
+    #"src/hks_test_curve25519.c",
+    #"src/hks_test_file_operator.c",
+  ]
+
+  include_dirs = [
+    "//utils/native/base/include",
+    "//third_party/bounds_checking_function/include",
+    "include",
+  ]
+
+  deps = [
+    "//base/security/huks/frameworks/huks_standard/main:huks_standard_frameworks",
+    "//base/security/huks/interfaces/innerkits/huks_standard/main:libhukssdk",
+    "//test/xts/acts/security_lite/huks/common:huks_test_common",
+    "//third_party/bounds_checking_function:libsec_static",
+    "//utils/native/base:utils",
+  ]
+}
+
+group("Huksstandardtest") {
+  testonly = true
+  deps = [ ":huks_std_function_test" ]
+}

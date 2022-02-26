@@ -1,0 +1,125 @@
+/* address.c -- representation of network addresses
+ *
+ * Copyright (C) 2015-2016,2019 Olaf Bergmann <bergmann@tzi.org>
+ * Copyright (c) 2021 Huawei Device Co., Ltd. All rights reserved.
+ *
+ * This file is part of the CoAP library libcoap. Please see
+ * README for terms of use.
+ */
+
+#include "coap_internal.h"
+
+#if !defined(WITH_CONTIKI) && !defined(WITH_LWIP)
+#ifdef HAVE_ARPA_INET_H
+#include <arpa/inet.h>
+#endif
+#ifdef HAVE_NETINET_IN_H
+#include <netinet/in.h>
+#endif
+#ifdef HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+#ifdef HAVE_WS2TCPIP_H
+#include <ws2tcpip.h>
+#endif
+
+#ifdef RIOT_VERSION
+/* FIXME */
+#define IN_MULTICAST(Address) (0)
+#endif /* RIOT_VERSION */
+
+int
+coap_address_equals(const coap_address_t *a, const coap_address_t *b) {
+  assert(a); assert(b);
+
+  if (a->size != b->size || a->addr.sa.sa_family != b->addr.sa.sa_family)
+    return 0;
+
+  /* need to compare only relevant parts of sockaddr_in6 */
+ switch (a->addr.sa.sa_family) {
+ case AF_INET:
+   return
+     a->addr.sin.sin_port == b->addr.sin.sin_port &&
+     memcmp(&a->addr.sin.sin_addr, &b->addr.sin.sin_addr,
+            sizeof(struct in_addr)) == 0;
+ case AF_INET6:
+   return a->addr.sin6.sin6_port == b->addr.sin6.sin6_port &&
+     memcmp(&a->addr.sin6.sin6_addr, &b->addr.sin6.sin6_addr,
+            sizeof(struct in6_addr)) == 0;
+ default: /* fall through and signal error */
+   ;
+ }
+ return 0;
+}
+
+#ifdef COAP_SUPPORT_SOCKET_BROADCAST
+int coap_is_bcast(const coap_address_t *a) {
+  if (a == NULL) {
+    return 0;
+  }
+
+  switch (a->addr.sa.sa_family) {
+    case AF_INET:
+      if (a->addr.sin.sin_addr.s_addr == 0xFFFFFFFF) {
+        return 1;
+      } else {
+        return 0;
+      }
+    case AF_INET6:
+      /* not support ipv6 */
+      return 0;
+    default:
+      return 0;
+  }
+}
+#endif
+
+int coap_is_mcast(const coap_address_t *a) {
+  if (!a)
+    return 0;
+
+ switch (a->addr.sa.sa_family) {
+ case AF_INET:
+   return IN_MULTICAST(ntohl(a->addr.sin.sin_addr.s_addr));
+ case  AF_INET6:
+   return IN6_IS_ADDR_MULTICAST(&a->addr.sin6.sin6_addr);
+ default:  /* fall through and signal error */
+   ;
+  }
+ return 0;
+}
+
+#endif /* !defined(WITH_CONTIKI) && !defined(WITH_LWIP) */
+
+void coap_address_init(coap_address_t *addr) {
+  assert(addr);
+  memset(addr, 0, sizeof(coap_address_t));
+#if !defined(WITH_LWIP) && !defined(WITH_CONTIKI)
+  /* lwip and Contiki have constant address sizes and don't need the .size part */
+  addr->size = sizeof(addr->addr);
+#endif
+}
+
+#if defined(WITH_LWIP)
+#include <lwip/inet.h>
+#endif
+
+void coap_address_ntop(const coap_address_t *addr, char *dst, int len) {
+  if ((addr == NULL) || (dst == NULL) || (len < INET6_ADDRSTRLEN)) {
+    return;
+  }
+#if defined(WITH_LWIP)
+  (void)ipaddr_ntoa_r(&(addr->addr), dst, len);
+#elif defined(WITH_CONTIKI)
+  /* not supported yet */
+#else
+  if (addr->addr.sa.sa_family == AF_INET) {
+    const void *addrptr = &addr->addr.sin.sin_addr;
+    (void)inet_ntop(addr->addr.sa.sa_family, addrptr, dst, len);
+  } else {
+    const void *addrptr = &addr->addr.sin6.sin6_addr;
+    (void)inet_ntop(addr->addr.sa.sa_family, addrptr, dst, len);
+  }
+#endif
+}
+

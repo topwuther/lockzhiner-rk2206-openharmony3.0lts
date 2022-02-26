@@ -1,0 +1,45 @@
+{
+    "app":{
+        "bundleName": "com.ohos.cesst.cesSTPermissionOrAB",
+        "vendor": "ix",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+       "apiVersion": {
+          "compatible": 3,
+          "target": 3
+       }
+    },
+    "deviceConfig": {
+        "default": {
+        }
+    },
+    "module": {
+        "package":"com.hos.CesSTPermissionOrAB.src",
+        "name":"CesSTPermissionOrAB",
+        "deviceType": [
+            "tv",
+            "car"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "testability",
+            "moduleType": "entry"
+        },
+        "abilities": [{
+            "name": "CesSTPermissionOrAB",
+            "icon": "$media:snowball",
+            "label": "CesSTPermissionOrAB Ability zofa label",
+            "launchType": "singletop",
+            "orientation": "unspecified",
+            "type": "page",
+            "visible": true
+            }],
+        "reqPermissions": [{
+            "name": "ohos.permission.WRITE_USER_STORAGE"
+        },{
+            "name": "ohos.permission.READ_USER_STORAGE"
+        }]
+    }
+}

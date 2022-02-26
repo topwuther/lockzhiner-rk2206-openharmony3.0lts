@@ -1,0 +1,130 @@
+[
+  {
+    "SESSION_NAME": "ohos\\.distributedschedule\\.foundation.*",
+    "REGEXP": "true",
+    "DEVID": "UUID",
+    "APP_INFO": [
+      {
+        "TYPE": "system_app",
+        "UID": "1000",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "com\\.huawei\\.def.*",
+    "REGEXP": "true",
+    "DEVID": "NETWORKID",
+    "APP_INFO": [
+      {
+        "TYPE": "system_app",
+        "UID": "1000",
+        "PKG_NAME": "com.huawei.def",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "com\\.huawei\\.hwddmp.*",
+    "REGEXP": "true",
+    "DEVID": "UUID",
+    "APP_INFO": [
+      {
+        "TYPE": "system_app",
+        "UID": "1000",
+        "PKG_NAME": "com.huawei.hwddmp",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "com.huawei.devicegroupmanage",
+    "DEVID": "UDID",
+    "APP_INFO": [
+      {
+        "TYPE": "system_app",
+        "PKG_NAME": "com.huawei.devicegroupmanage",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "DBinderService",
+    "DEVID": "NETWORKID",
+    "APP_INFO": [
+      {
+        "TYPE": "native_app",
+        "UID": "1000",
+        "PKG_NAME": "DBinderService",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "DBinder.*",
+    "REGEXP": "true",
+    "DEVID": "NETWORKID",
+    "SEC_LEVEL": "public",
+    "APP_INFO": [
+      {
+        "TYPE": "granted_app",
+        "PKG_NAME": "DBinderBus",
+        "ACTIONS": "open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "distributeddata.*",
+    "REGEXP": "true",
+    "DEVID": "UUID",
+    "APP_INFO": [
+      {
+        "TYPE": "system_app",
+        "UID": "1000",
+        "PKG_NAME": "com.huawei.hwddmp",
+        "ACTIONS": "create,open"
+      },
+      {
+        "TYPE": "system_app",
+        "UID": "0",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "SystemAbilityManager_DDC.*",
+    "REGEXP": "true",
+    "DEVID": "UUID",
+    "APP_INFO": [
+      {
+        "TYPE": "native_app",
+        "UID": "1000",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "hiview_distributed_network_softbus",
+    "DEVID": "NETWORKID",
+    "APP_INFO": [
+      {
+        "TYPE": "native_app",
+        "UID": "0",
+        "PKG_NAME": "hiview_distributed_network_softbus",
+        "ACTIONS": "create,open"
+      }
+    ]
+  },
+  {
+    "SESSION_NAME": "DistributedFileService.*",
+    "REGEXP": "true",
+    "DEVID": "UUID",
+    "APP_INFO": [
+      {
+        "TYPE": "native_app",
+        "UID": "1000",
+        "ACTIONS": "create,open"
+      }
+    ]
+  }
+]

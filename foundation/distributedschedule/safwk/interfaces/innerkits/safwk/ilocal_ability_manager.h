@@ -1,0 +1,1 @@
+../../../services/safwk/include/ilocal_ability_manager.h

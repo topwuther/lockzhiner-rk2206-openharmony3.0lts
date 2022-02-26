@@ -1,0 +1,15 @@
+{
+    "supported_boards": {
+        "hi3516dv300": {
+            "board_parent_path": "vendor/hisilicon",
+            "dot_config_path": "kernel/liteos_a/tools/build/config",
+            "dot_configs": ["hi3516dv300_release.config", "hi3516dv300_debug_shell.config"]
+        },
+        "hi3518ev300": {
+            "board_parent_path": "vendor/hisilicon",
+            "dot_config_path": "kernel/liteos_a/tools/build/config",
+            "dot_configs": ["hi3518ev300_release.config", "hi3518ev300_debug_shell.config"]
+        }
+    },
+    "drivers_path_relative_to_vendor": "hdf/huawei_proprietary"
+}

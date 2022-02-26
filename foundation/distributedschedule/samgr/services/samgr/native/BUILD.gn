@@ -1,0 +1,87 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+
+config("distributed_store_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//third_party/json/include",
+    "//foundation/distributedschedule/dmsfwk/services/dtbdecidefwk/include",
+  ]
+}
+
+config("sam_config") {
+  # header file path
+  include_dirs = [
+    "//developtools/liblog",
+    "//foundation/distributedschedule/samgr/services/samgr/native/include",
+    "//foundation/distributedschedule/samgr/services/samgr/java/include",
+    "//foundation/distributedschedule/samgr/utils/native/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//foundation/distributedschedule/samgr/services/lsamgr/include",
+  ]
+}
+
+group("etc") {
+  deps = [ ":samgr.rc" ]
+}
+
+ohos_prebuilt_etc("samgr.rc") {
+  relative_install_dir = "init"
+  if (use_musl) {
+    source = "samgr_L2.cfg"
+  } else {
+    source = "samgr_L2.rc"
+  }
+  part_name = "samgr_L2"
+  subsystem_name = "distributedschedule"
+}
+
+ohos_executable("samgr") {
+  install_enable = true
+  sources = [
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/ability_death_recipient.cpp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/sa_main.cpp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/system_ability_manager.cpp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/system_ability_manager_stub.cpp",
+    "//foundation/distributedschedule/samgr/services/samgr/native/source/utils.cpp",
+    "//foundation/distributedschedule/samgr/utils/native/source/tools.cpp",
+  ]
+
+  deps = [
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/lsamgr:lsamgr",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy:samgr_proxy",
+    "//utils/native/base:utils",
+  ]
+  
+  configs = [
+    ":sam_config",
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/lsamgr:config_samgr",
+    ":distributed_store_config",
+  ]
+
+  if (is_standard_system) {
+    external_deps = [
+      "hiviewdfx_hilog_native:libhilog",
+      "ipc:ipc_core",
+      "ipc:libdbinder",
+    ]
+    public_deps = [ "//third_party/libxml2:libxml2" ]
+    part_name = "samgr_L2"
+  }
+  subsystem_name = "distributedschedule"
+}
