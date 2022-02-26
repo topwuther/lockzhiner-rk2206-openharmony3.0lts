@@ -1,0 +1,16 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#avc: denied { getattr } for dsm=hisi_Q pid=1609 comm="Thread-179" path="/data/system/users/10/account.json" dev="sdd74" ino=12812 scontext=u:r:system_server:s0 tcontext=u:object_r:account_data_file:s0 tclass=file permissive=0 CMD=system_server
+#avc: denied { unlink } for dsm=hisi_Q pid=1632 comm="Thread-56" name="account.json" dev="sdd74" ino=7448 scontext=u:r:system_server:s0 tcontext=u:object_r:account_data_file:s0 tclass=file permissive=0 CMD=system_server
+allow system_server account_data_file:file { getattr unlink };

@@ -1,0 +1,60 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+#
+# This software is licensed under the terms of the GNU General Public
+# License version 2, as published by the Free Software Foundation, and
+# may be copied, distributed, and modified under those terms.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+config DRIVERS_HDF_SENSOR
+    bool "Enable HDF sensor driver"
+    default n
+    depends on DRIVERS_HDF
+    help
+      Answer Y to enable HDF sensor driver.
+
+config DRIVERS_HDF_SENSOR_ACCEL
+    bool "Enable HDF accel sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR
+    help
+      Answer Y to enable HDF accel sensor driver.
+config DRIVERS_HDF_SENSOR_ACCEL_BMI160
+    bool "Enable HDF accel sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR_ACCEL
+    help
+      Answer Y to enable HDF accel bmi160 sensor driver.
+config DRIVERS_HDF_SENSOR_GYRO
+    bool "Enable HDF gyro sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR
+    help
+      Answer Y to enable HDF gyro sensor driver.
+config DRIVERS_HDF_SENSOR_BAROMETER
+    bool "Enable HDF barometer sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR
+    help
+      Answer Y to enable HDF barometer sensor driver.
+config DRIVERS_HDF_SENSOR_BAROMETER_BMP180
+    bool "Enable HDF barometer sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR_BAROMETER
+    help
+      Answer Y to enable HDF barometer bmp180 sensor driver.
+config DRIVERS_HDF_SENSOR_HALL
+    bool "Enable HDF hall sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR
+    help
+      Answer Y to enable HDF hall sensor driver.
+config DRIVERS_HDF_SENSOR_HALL_AK8789
+    bool "Enable HDF hall sensor driver"
+    default n
+    depends on DRIVERS_HDF_SENSOR_HALL
+    help
+      Answer Y to enable HDF hall ak8789 sensor driver.

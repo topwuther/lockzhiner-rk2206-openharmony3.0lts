@@ -1,0 +1,146 @@
+{
+  "components": [
+    {
+      "component": "graphic_utils",
+      "description": "",
+      "optional": "true",
+      "dirs": ["foundation/graphic/utils"],
+      "targets": [
+        "//foundation/graphic/utils:lite_graphic_utils",
+        "//foundation/graphic/utils/test:lite_graphic_utils_test"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": ["libgraphic_utils.so"],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog_lite"
+        ]
+      }
+    },
+    {
+      "component": "graphic_hals",
+      "description": "",
+      "optional": "true",
+      "dirs": ["foundation/graphic/utils"],
+      "targets": ["//foundation/graphic/utils:lite_graphic_hals"],
+      "rom": "",
+      "ram": "",
+      "output": ["libgraphic_hals.so"],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "graphic_utils"
+        ]
+      }
+    },
+    {
+      "component": "surface",
+      "description": "",
+      "optional": "true",
+      "dirs": ["foundation/graphic/surface"],
+      "targets": [
+        "//foundation/graphic/surface:lite_surface",
+        "//foundation/graphic/surface/test:lite_surface_test"
+      ],
+      "rom": "110KB",
+      "ram": "~50KB",
+      "output": ["libsurface.so"],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog_lite",
+          "ipc_lite",
+          "peripheral_display",
+          "peripheral_input"
+        ],
+        "board_special": {}
+      }
+    },
+    {
+      "component": "wms",
+      "description": "",
+      "optional": "true",
+      "dirs": ["foundation/graphic/wms"],
+      "targets": [
+        "//foundation/graphic/wms:lite_wms",
+        "//foundation/graphic/wms/test:lite_wms_test"
+      ],
+      "rom": "110KB",
+      "ram": "~50KB",
+      "output": ["wms_server", "libwms_client.so"],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog_lite",
+          "ipc_lite",
+          "samgr_lite",
+          "surface",
+          "peripheral_display",
+          "peripheral_input"
+        ],
+        "board_special": {}
+      }
+    },
+    {
+      "component": "ui",
+      "description": "",
+      "optional": "true",
+      "dirs": ["foundation/graphic/ui"],
+      "targets": [
+        "//foundation/graphic/ui:lite_ui",
+        "//foundation/graphic/ui/test/unittest:lite_graphic_ui_test"
+      ],
+      "rom": "900KB",
+      "ram": "~90KB",
+      "output": ["libui.so"],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "libjpeg",
+          "cjson",
+          "freetype"
+        ],
+        "components": [
+          "hilog_lite",
+          "media_lite",
+          "surface",
+          "wms"
+        ]
+      }
+    }
+  ]
+}

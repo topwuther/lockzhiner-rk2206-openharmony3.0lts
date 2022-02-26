@@ -1,0 +1,26 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type wifi_manager_service, domain, coredomain, mlstrustedsubject;
+domain_auto_trans(wifi_manager_service, samain_exec, wifi_manager_service)
+
+binder_call(samgr, wifi_manager_service)
+binder_call(wifi_manager_service, samgr)
+
+domain_trans(init, samain_exec, wifi_manager_service)
+
+allow wifi_manager_service samgr:binder { call transfer };
+
+allow wifi_manager_service system_app:binder { call transfer };
+allow wifi_manager_service platform_app:binder { call transfer };
+allow wifi_manager_service priv_app:binder { call transfer };

@@ -1,0 +1,13 @@
+config DRIVERS_HDF_WIFI
+    bool "Enable HDF wifi"
+    default n
+    depends on DRIVERS_HDF
+    help
+      Answer Y to enable HDF wifi.
+
+config DRIVERS_HI3881
+    bool "Enable hi3881"
+    default n
+    depends on DRIVERS_HDF_WIFI
+    help
+      Answer Y to enable hi3881 wifi chip driver.

@@ -1,0 +1,4 @@
+type hdf_sec_device, dev_type;
+type hdf_event_device, dev_type;
+type pal_device, dev_type;
+type hdf_kevent_device, dev_type;

@@ -1,0 +1,24 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+#
+# This software is licensed under the terms of the GNU General Public
+# License version 2, as published by the Free Software Foundation, and
+# may be copied, distributed, and modified under those terms.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+config DRIVERS_HDF_DSOFTBUS
+    bool "Enable HDF dsoftbus driver"
+    default n
+    depends on DRIVERS_HDF
+    help
+      control HDF dsoftbus driver capability.
+
+config DSOFTBUS_WLAN_PARAM_MONITOR
+    bool "enable dsoftbus wlan parameter monitor"
+    default n
+    depends on DRIVERS_HDF_DSOFTBUS
+    help
+      control hdf dsoftbus wlan parameter monitor capability.

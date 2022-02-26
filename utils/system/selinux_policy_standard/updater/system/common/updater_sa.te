@@ -1,0 +1,39 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type updater_sa, domain, coredomain, mlstrustedsubject;
+domain_auto_trans(updater_sa, samain_exec, updater_sa);
+
+binder_call(updater_sa, servicemanager);
+binder_call(updater_sa, samgr);
+binder_call(updater_sa, system_server);
+binder_call(samgr, updater_sa);
+
+# use_hilog(updater_sa)
+allow updater_sa servicemanager:binder { call transfer };
+allow updater_sa samgrservice:service_manager { find };
+allow updater_sa system_app:binder { transfer call };
+allow updater_sa system_app:fd { use };
+allow updater_sa system_app:tcp_socket { write read };
+
+domain_trans(init, samain_exec, updater_sa);
+
+binder_call(system_app, updater_sa);
+binder_call(system_server, updater_sa);
+allow updater_sa property_socket:sock_file { write };
+allow updater_sa init:unix_stream_socket { connectto };
+allow updater_sa ctl_start_prop:property_service { set };
+allow updater_sa ctl_stop_prop:property_service { set };
+
+#type=1400 audit(92349.830:102): avc: denied { append } for comm="updater_sa" name="update_service_log.txt" dev="mmcblk0p7" ino=12 scontext=u:r:updater_sa:s0 tcontext=u:object_r:updater_data_file:s0 tclass=file permissive=1
+allow updater_sa updater_data_file:file { getattr append };

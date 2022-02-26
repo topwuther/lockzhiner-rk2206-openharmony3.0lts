@@ -1,0 +1,47 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type mediadistributedservice, domain, coredomain, mlstrustedsubject;
+type media_service, app_api_service, ephemeral_app_api_service, system_server_service, service_manager_type;
+domain_auto_trans(mediadistributedservice, samain_exec, mediadistributedservice);
+
+binder_call(mediadistributedservice, servicemanager);
+binder_call(mediadistributedservice, samgr);
+binder_call(mediadistributedservice, system_server);
+binder_call(samgr, mediadistributedservice);
+
+# use_hilog(mediadistributedservice)
+allow mediadistributedservice servicemanager:binder { call transfer };
+allow mediadistributedservice samgrservice:service_manager { find };
+allow mediadistributedservice system_app:binder { transfer call };
+allow mediadistributedservice system_app:fd { use };
+allow mediadistributedservice system_app:tcp_socket { write read };
+
+domain_trans(init, samain_exec, mediadistributedservice);
+
+#avc: denied { call } for pid=3866 scontext=u:r:system_app:s0 tcontext=u:r:mediadistributedservice:s0 tclass=binder permissive=0
+binder_call(system_app, mediadistributedservice);
+#avc:  denied  { find } for service=media.media_flinger pid=845 uid=1000 scontext=u:r:mediadistributedservice:s0 tcontext=u:object_r:mediaserver_service:s0 tclass=service_manager
+allow mediadistributedservice mediaserver_service:service_manager { find };
+#avc: denied { call } for pid=837 scontext=u:r:mediadistributedservice:s0 tcontext=u:r:mediaserver:s0 tclass=binder
+allow mediadistributedservice mediaserver:binder { call transfer };
+#avc:  denied  { find } for service=media pid=768 uid=1000 scontext=u:r:mediadistributedservice:s0 tcontext=u:object_r:media_service:s0 tclass=service_manager
+allow mediadistributedservice media_service:service_manager { find };
+#avc: denied { transfer } for pid=734 scontext=u:r:mediaserver:s0 tcontext=u:r:mediadistributedservice:s0 tclass=binder
+allow mediaserver mediadistributedservice:binder { call transfer };
+binder_call(mediaserver, mediadistributedservice);
+binder_call(system_server, mediadistributedservice);
+allow mediadistributedservice property_socket:sock_file { write };
+allow mediadistributedservice init:unix_stream_socket { connectto };
+allow mediadistributedservice ctl_start_prop:property_service { set };
+allow mediadistributedservice ctl_stop_prop:property_service { set };

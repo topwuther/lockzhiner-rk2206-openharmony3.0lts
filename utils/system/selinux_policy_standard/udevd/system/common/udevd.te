@@ -1,0 +1,60 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type udevd, domain, coredomain ;
+
+type udevd_exec, exec_type, file_type, system_file_type;
+type udevd_socket, file_type, data_file_type, core_data_file_type, coredomain_socket, mlstrustedobject;
+type udevd_file, file_type, data_file_type, core_data_file_type, mlstrustedobject;
+
+init_daemon_domain(udevd)
+
+allow udevd udevd_exec:file { read map execute entrypoint getattr };
+
+allow udevd udevd_socket:sock_file { create link unlink create_file_perms };
+
+allow udevd udevd_file:dir { add_name write read create };
+
+allow udevd proc_cmdline:file { read getattr open };
+
+allow udevd kmsg_device:chr_file { write getattr open ioctl };
+
+allow udevd device:dir { write remove_name create add_name };
+
+allow udevd device:lnk_file { write create link unlink };
+
+allow udevd input_device:chr_file { read write getattr setattr };
+
+allow udevd input_device:dir { search read };
+
+allow udevd usb_device:dir { search read };
+
+allow udevd sysfs_net:dir { search };
+
+allow udevd sysfs_net:file { read getattr open };
+
+allow udevd self:netlink_kobject_uevent_socket { setopt read bind create write getattr };
+
+allow udevd self:capability { net_admin fowner chown fsetid };
+
+allow shell udevd_exec:file { getattr execute read open execute_no_trans map };
+
+file_type_auto_trans(udevd, system_data_file, account_data_file);
+
+allow udevd system_data_file:dir { add_name search read write create remove_name relabelfrom link unlink };
+
+allow udevd account_data_file:file { create getattr open read write };
+
+allow udevd shell_exec:file { read map execute entrypoint getattr };
+
+allow udevd usb_device:chr_file { read write getattr setattr };

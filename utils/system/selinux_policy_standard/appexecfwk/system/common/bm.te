@@ -1,0 +1,36 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type bm, domain, coredomain, mlstrustedsubject;
+type bm_exec, exec_type, file_type, system_file_type;
+
+domain_auto_trans(shell, bm_exec, bm)
+
+binder_call(bm, samgr);
+# use_hilog(bm)
+allow bm media_rw_data_file:file { getattr rw_file_perms create };
+allow bm media_rw_data_file:dir { getattr rw_dir_perms create };
+allow bm sdcardfs:dir { search create_dir_perms};
+allow bm sdcardfs:file { getattr read open create_file_perms };
+allow bm mnt_user_file:lnk_file { read getattr };
+allow bm mnt_user_file:dir { search getattr };
+allow bm shell:fd { use };
+allow bm devpts:chr_file { read write getattr ioctl };
+allow bm storage_file:dir { search getattr };
+allow bm servicemanager:binder { call };
+allow bm samgrservice:service_manager { find };
+allow bm system_app:binder { call transfer };
+allow bm system_app:fd { use };
+allow bm storage_file:lnk_file { read getattr };
+allow bm samgr:binder { transfer call };
+allow bm accountmgr:binder { transfer call };

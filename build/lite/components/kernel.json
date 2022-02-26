@@ -1,0 +1,147 @@
+{
+  "components": [
+    {
+      "component": "liteos_a",
+      "description": "liteos-a kernel",
+      "optional": "false",
+      "dirs": [
+        "kernel/liteos_a"
+      ],
+      "targets": [
+        "//kernel/liteos_a:kernel"
+      ],
+      "rom": "1.98MB",
+      "ram": "",
+      "output": [
+        "liteos.bin"
+      ],
+      "adapted_board": [
+        "hispark_aries",
+        "hispark_taurus",
+        "hi3518ev300",
+	"hi3516dv300"
+      ],
+      "adapted_kernel": [ "liteos_a" ],
+      "features": [],
+      "deps": {
+        "components": [],
+        "third_party": [
+          "FreeBSD",
+          "musl",
+          "zlib",
+          "FatFs",
+          "Linux_Kernel",
+          "lwip",
+          "NuttX",
+          "mtd-utils"
+        ]
+      }
+    },
+    {
+      "component": "liteos_m",
+      "description": "liteos-m kernel",
+      "optional": "false",
+      "dirs": [
+        "kernel/liteos_m"
+      ],
+      "targets": [
+        "//kernel/liteos_m:kernel"
+      ],
+      "rom": "40KB",
+      "ram": "",
+      "output": [],
+      "features": [],
+      "adapted_board": [],
+      "adapted_kernel": [ "liteos_m" ],
+      "deps": {
+        "components": [],
+        "third_party": [
+          "bounds_checking_function",
+          "FatFs"
+        ]
+      }
+    },
+    {
+      "component": "linux_hi3516dv300",
+      "description": "linux 4.9",
+      "optional": "false",
+      "dirs": [
+        "vendor/hisi/camera/dvkit_product/linux/hi3516dv300"
+      ],
+      "targets": [
+        "//vendor/hisi/camera/dvkit_product/linux/hi3516dv300/Hi3516CV500_SDK_V2.0.2.0:linux_kernel"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "u-boot-hi3516dv300.bin",
+        "uImage_hi3516dv300_smp",
+        "rootfs.img"
+      ],
+      "features": [],
+      "adapted_board": [
+        "hi3516dv300",
+        "hi3516dv300_openharmony"
+      ],
+      "adapted_kernel": [ "linux" ],
+      "deps": {
+        "components": [],
+        "third_party": []
+      }
+    },
+    {
+      "component": "linux_4_1_9",
+      "description": "linux 4.1.9",
+      "optional": "false",
+      "dirs": [
+        "kernel/linux/build"
+      ],
+      "targets": [
+        "//kernel/linux/build:linux_kernel"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "uImage_hi3516dv300_smp"
+      ],
+      "features": [],
+      "adapted_board": [
+        "hi3516dv300",
+        "hispark_taurus"
+      ],
+      "adapted_kernel": [ "linux" ],
+      "deps": {
+        "components": [],
+        "third_party": []
+      }
+    },
+    {
+      "component": "linux_hi3518ev300",
+      "description": "linux 4.9",
+      "optional": "false",
+      "dirs": [
+        "vendor/hisi/camera/dvkit_product/linux/hi3518ev300"
+      ],
+      "targets": [
+        "//vendor/hisi/camera/dvkit_product/linux/hi3518ev300/Hi3516EV200_SDK_V1.0.1.2_LINUX:linux_kernel"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "u-boot-hi3518ev300.bin",
+        "uImage_hi3518ev300",
+        "rootfs.img"
+      ],
+      "features": [],
+      "adapted_board": [
+        "hi3518ev300",
+        "hi3518ev300_openharmony"
+      ],
+      "adapted_kernel": [ "linux" ],
+      "deps": {
+        "components": [],
+        "third_party": []
+      }
+    }
+  ]
+}

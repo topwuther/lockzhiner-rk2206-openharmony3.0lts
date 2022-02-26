@@ -1,0 +1,141 @@
+# Copyright (c) 2020 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import("//build/lite/ndk/ndk.gni")
+
+# gn version >= 1714 required.
+assert(gn_version >= 1714, "GN version 1714 required, please upgrade!")
+
+# write version info.
+version_info = [
+  "VERSION=\"$ohos_version\"",
+  "BUILD_TIME=\"$ohos_build_datetime\"",
+]
+write_file("$root_build_dir/etc/version-info", version_info)
+
+# this group will mark the dependent target as prebuilts
+group("mark_as_prebuilts") {
+}
+
+group("prebuilts") {
+  public_deps = [ "//prebuilts/lite/sysroot" ]
+}
+
+group("ohos") {
+  deps = []
+  if (ohos_build_target == "") {
+    # Step 1: Read product configuration profile.
+    product_cfg = read_file("${product_path}/config.json", "json")
+
+    # Step 2: Loop subsystems configured by product.
+    foreach(product_configed_subsystem, product_cfg.subsystems) {
+      subsystem_name = product_configed_subsystem.subsystem
+      subsystem_info = {
+      }
+
+      # Step 3: Read OS subsystems profile.
+      subsystem_info =
+          read_file("//build/lite/components/${subsystem_name}.json", "json")
+
+      # Step 4: Loop components configured by product.
+      foreach(product_configed_component,
+              product_configed_subsystem.components) {
+        # Step 5: Check whether the component configured by product is exist.
+        component_found = false
+        foreach(system_component, subsystem_info.components) {
+          if (product_configed_component.component ==
+              system_component.component) {
+            component_found = true
+          }
+        }
+        assert(
+            component_found,
+            "Component \"${product_configed_component.component}\" not found" +
+                ", please check your product configuration.")
+
+        # Step 6: Loop OS components and check validity of product configuration.
+        foreach(component, subsystem_info.components) {
+          kernel_valid = false
+          board_valid = false
+
+          # Step 6.1: Skip component which not configured by product.
+          if (component.component == product_configed_component.component) {
+            # Step 6.1.1: Loop OS components adapted kernel type.
+            foreach(component_adapted_kernel, component.adapted_kernel) {
+              if (component_adapted_kernel == product_cfg.kernel_type &&
+                  kernel_valid == false) {
+                kernel_valid = true
+              }
+            }
+
+            assert(
+                kernel_valid,
+                "Invalid component configed, ${subsystem_name}:${product_configed_component.component} " + "not available for kernel: ${product_cfg.kernel_type}!")
+
+            # Step 6.1.2: Add valid component for compiling.
+            # Skip kernel target for userspace only scenario.
+            if (!ohos_build_userspace_only ||
+                (ohos_build_userspace_only && subsystem_name != "kernel" &&
+                 subsystem_name != "vendor")) {
+              foreach(component_target, component.targets) {
+                deps += [ component_target ]
+              }
+            }
+          }
+        }
+      }
+    }
+
+    # Skip device target for userspace only scenario.
+    if (!ohos_build_userspace_only) {
+      # Step 7: Add device and product target by default.
+      deps += [ "${device_path}/../" ]
+    }
+  } else {
+    deps += string_split(ohos_build_target, "&&")
+  }
+}
+
+group("product") {
+  deps = []
+
+  # build product, skip build single component scenario.
+  if (ohos_build_target == "") {
+    deps += [ "${product_path}" ]
+  }
+}
+
+group("ndk") {
+  # Add native API targets.
+  deps = []
+  if (ohos_build_ndk) {
+    deps += [ "//build/lite/ndk:ndk" ]
+  }
+}
+
+if (ohos_build_type == "debug" && product != "") {
+  action("gen_testfwk_info") {
+    outputs = [ "$root_out_dir/gen_testfwk_info.log" ]
+    script = "//build/lite/testfwk/gen_testfwk_info.py"
+    archive_dir_name = "test_info"
+    args = [
+      "--component-info-file",
+      rebase_path("${product_path}/config.json"),
+      "--output-json-fold",
+      rebase_path("${root_out_dir}/${archive_dir_name}/build_configs/"),
+      "--output-json-file-name",
+      "infos_for_testfwk.json",
+      "--output-module-list-files-fold",
+      rebase_path("${root_out_dir}/${archive_dir_name}/module_list_files/"),
+    ]
+  }
+}

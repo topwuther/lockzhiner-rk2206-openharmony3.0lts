@@ -1,0 +1,24 @@
+config DRIVERS_HDF_DISP
+    bool "Enable HDF Display driver"
+    default n
+    depends on DRIVERS_HDF
+    help
+        Answer Y to choice HDF Display driver.
+config DRIVERS_HDF_LCDKIT
+    bool "Enable HDF Lcdkit driver"
+    default n
+    depends on DRIVERS_HDF_DISP
+    help
+        Answer Y to enable HDF Lcdkit driver.
+config DRIVERS_HDF_LCD_ICN9700
+    bool "Enable HDF Icn9700 driver"
+    default n
+    depends on DRIVERS_HDF_DISP
+    help
+        Answer Y to enable HDF Icn9700 driver.
+config DRIVERS_HDF_LCD_ST7789
+    bool "Enable HDF St7789 driver"
+    default n
+    depends on DRIVERS_HDF_DISP
+    help
+        Answer Y to enable HDF St7789 driver.

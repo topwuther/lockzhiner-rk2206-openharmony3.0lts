@@ -1,0 +1,49 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type wm_test, domain, coredomain;
+type wm_test_exec, exec_type, file_type, system_file_type;
+domain_auto_trans(init, wm_test_exec, wm_test)
+binder_call(wm_test, wm_test)
+binder_call(wm_test, wms_service)
+
+# avc: denied { connectto } for comm="wm_test" path="/dev/socket/wayland-0" scontext=u:r:wm_test:s0 tcontext=u:r:weston:s0 tclass=unix_stream_socket permissive=1
+allow wm_test weston:unix_stream_socket { connectto };
+
+# avc: denied { transfer } for comm="samgr" scontext=u:r:samgr:s0 tcontext=u:r:wm_test:s0 tclass=binder permissive=1
+binder_call(samgr, wm_test)
+
+# avc: denied { use } for comm="weston" path="anon_inode:dmabuf" dev="anon_inodefs" ino=24 scontext=u:r:weston:s0 tcontext=u:r:wm_test:s0 tclass=fd permissive=1
+allow weston wm_test:fd { use };
+
+# avc: denied { read write } for comm="logwrapper" name="2" dev="devpts" ino=5 scontext=u:r:wm_test:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+# avc: denied { open } for comm="logwrapper" path="/dev/pts/2" dev="devpts" ino=5 scontext=u:r:wm_test:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+allow wm_test devpts:chr_file { open read write };
+
+# avc: denied { getattr } for comm="wm_test" path="/dev/dri/card0" dev="tmpfs" ino=631 scontext=u:r:wm_test:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+# avc: denied { read write } for comm="wm_test" name="card0" dev="tmpfs" ino=631 scontext=u:r:wm_test:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+# avc: denied { open } for comm="wm_test" path="/dev/dri/card0" dev="tmpfs" ino=521 scontext=u:r:wm_test:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+# avc: denied { ioctl } for comm="wm_test" path="/dev/dri/card0" dev="tmpfs" ino=521 ioctlcmd=0x64b2 scontext=u:r:wm_test:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+allow wm_test graphic_device:chr_file { open read write getattr ioctl };
+
+# avc: denied { write } for name="hilogInput" dev="tmpfs" ino=2370 scontext=u:r:wm_test:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+#allow wm_test socket_device:sock_file { write };
+
+# avc: denied { execute_no_trans } for path="/system/bin/wm_test" dev="mmcblk0p3" ino=321 scontext=u:r:wm_test:s0 tcontext=u:object_r:wm_test_exec:s0 tclass=file permissive=1
+allow wm_test wm_test_exec:file { execute_no_trans };
+
+# avc: denied { call } for scontext=u:r:wm_test:s0 tcontext=u:r:samgr:s0 tclass=binder permissive=1
+binder_call(wm_test, samgr);
+
+## avc: denied { write } for name="wayland-0" dev="tmpfs" ino=579 scontext=u:r:wm_test:s0 tcontext=u:object_r:weston_sock:s0 tclass=sock_file permissive=1
+#allow wm_test weston_sock:sock_file { write };

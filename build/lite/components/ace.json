@@ -1,0 +1,132 @@
+{
+  "components": [
+    {
+      "component": "ace_engine_lite",
+      "description": "JS APP development frameworks.",
+      "optional": "true",
+      "dirs": [
+        "foundation/ace/ace_engine_lite"
+      ],
+      "targets": [
+        "//foundation/ace/ace_engine_lite/frameworks:jsfwk",
+        "//foundation/ace/ace_engine_lite/test:unittest"
+      ],
+      "rom": "521KB",
+      "ram": "~82KB",
+      "output": [ "libace_lite.so" ],
+      "adapted_kernel": [ "liteos_a", "linux"],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "cjson",
+          "freetype",
+          "jerryscript"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "appexecfwk_lite",
+          "huks",
+          "ui",
+          "syspara_lite",
+          "surface",
+          "i18n_lite",
+          "resmgr_lite",
+          "hilog",
+          "permission",
+          "ipc_lite",
+          "kal_timer",
+          "kv_store",
+          "timer_task",
+          "ace_common_lite",
+          "ace_native_engine_lite",
+          "ace_module_manager_lite"
+        ]
+      }
+    },
+    {
+      "component": "ace_common_lite",
+      "description": "ace lite common kits",
+      "optional": "true",
+      "dirs": [
+        "//foundation/ace/ace_engine_lite/frameworks/common"
+      ],
+      "targets": [
+        "//foundation/ace/ace_engine_lite/frameworks/common:ace_common_lite"
+      ],
+      "rom": "9KB",
+      "ram": "~2KB",
+      "output": [ "libace_common.so" ],
+      "adapted_kernel": [ "liteos_a", "linux"],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "hilog"
+        ]
+      }
+    },
+    {
+      "component": "ace_native_engine_lite",
+      "description": "native JS engine adapter",
+      "optional": "true",
+      "dirs": [
+        "//foundation/ace/ace_engine_lite/frameworks/native_engine"
+      ],
+      "targets": [
+        "//foundation/ace/ace_engine_lite/frameworks/native_engine:ace_native_engine_lite"
+      ],
+      "rom": "32KB",
+      "ram": "~5KB",
+      "output": [ "libace_native_engine.so" ],
+      "adapted_kernel": [ "liteos_a", "linux"],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "jerryscript"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "hilog",
+          "ace_common_lite"
+        ]
+      }
+    },
+    {
+      "component": "ace_module_manager_lite",
+      "description": "native JS module manager framework",
+      "optional": "true",
+      "dirs": [
+        "//foundation/ace/ace_engine_lite/frameworks/module_manager"
+      ],
+      "targets": [
+        "//foundation/ace/ace_engine_lite/frameworks/module_manager:ace_module_manager_lite"
+      ],
+      "rom": "12KB",
+      "ram": "~2KB",
+      "output": [ "libace_module_manager.so" ],
+      "adapted_kernel": [ "liteos_a", "linux"],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "jerryscript"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "hilog",
+          "js_builtin",
+          "ace_common_lite",
+          "ace_native_engine_lite"
+        ]
+      }
+    }
+  ]
+}

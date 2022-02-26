@@ -1,0 +1,26 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type installs, domain, coredomain;
+type installs_exec, system_file_type, exec_type, file_type;
+
+init_daemon_domain(installs);
+
+#avc: denied { call } for comm="samgr" scontext=u:r:samgr:s0 tcontext=u:r:installs:s0 tclass=binder permissive=1
+binder_call(installs, samgr);
+
+#avc: denied { chown } for comm="installs" capability=0 scontext=u:r:installs:s0 tcontext=u:r:installs:s0 tclass=capability permissive=1
+allow installs installs:capability { chown };
+
+#avc: denied { setattr } for comm="installs" name="accounts" dev="mmcblk0p5" ino=24481 scontext=u:r:installs:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+allow installs system_data_file:dir { setattr };

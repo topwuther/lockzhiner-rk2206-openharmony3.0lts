@@ -1,0 +1,262 @@
+{
+  "components": [
+    {
+      "component": "hilog",
+      "description": "Log services for liteos-a kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hilog_lite/frameworks/featured",
+        "base/hiviewdfx/hilog_lite/interfaces/native/innerkits/hilog",
+        "base/hiviewdfx/hilog_lite/interfaces/native/kits/hilog",
+        "base/hiviewdfx/hilog_lite/interfaces/native/innerkits",
+        "base/hiviewdfx/hilog_lite/interfaces/native/kits",
+        "base/hiviewdfx/hilog_lite/frameworks/featured/hilog"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_static",
+        "//base/hiviewdfx/hilog_lite/frameworks/featured:hilog_shared",
+        "//base/hiviewdfx/hilog_lite/services/apphilogcat:apphilogcat"
+      ],
+      "rom": "10KB",
+      "ram": "~10KB",
+      "output": [
+        "libhilog_shared.so",
+        "libhilog_static.a",
+        "libhilogcat.a",
+        "apphilogcat"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hiview_lite",
+          "samgr_lite"
+        ]
+      }
+    },
+    {
+      "component": "hiview_lite",
+      "description": "DFX services for liteos-m kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hiview_lite"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hiview_lite:hiview_lite"
+      ],
+      "rom": "10KB",
+      "ram": "~10KB",
+      "output": [],
+      "adapted_kernel": [
+        "liteos_m"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+        ],
+        "third_party": [
+          "cjson",
+          "bounds_checking_function"
+        ]
+      }
+    },
+    {
+      "component": "hidumper",
+      "description": "System information dump service for liteos-a kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hidumper_lite"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hidumper_lite:hidumper"
+      ],
+      "rom": "26KB",
+      "ram": "~10KB",
+      "output": [
+        "libhidumper.a"
+      ],
+      "adapted_kernel": [
+        "liteos_a"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+        ],
+        "third_party": [
+          "cjson",
+          "bounds_checking_function"
+        ]
+      }
+    },
+    {
+      "component": "hilog_lite",
+      "description": "Log services for liteos-m kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hilog_lite/frameworks/mini",
+        "base/hiviewdfx/hilog_lite/command",
+        "base/hiviewdfx/hilog_lite/interfaces/native/kits/hilog_lite"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hilog_lite/frameworks/mini:hilog_lite"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_kernel": [
+        "liteos_m"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "hiview_lite",
+          "utils_base",
+          "liteos_m"
+        ],
+        "third_party": []
+      }
+    },
+    {
+      "component": "blackbox",
+      "description": "Blackbox services for liteos-m kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/blackbox"
+      ],
+      "targets": [
+        "//base/hiviewdfx/blackbox:blackbox"
+      ],
+      "rom": "10KB",
+      "ram": "~5KB",
+      "output": [
+        "libblackbox.a"
+      ],
+      "adapted_kernel": [
+        "liteos_m"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "utils_base",
+          "liteos_m"
+        ],
+        "third_party": []
+      }
+    },
+    {
+      "component": "hidumper_mini",
+      "description": "system information dump for liteos-m kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hidumper_lite/mini"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hidumper_lite/mini:hidumper_mini"
+      ],
+      "rom": "~10KB",
+      "ram": "~5KB",
+      "output": [
+        "libhidumper_mini.a"
+      ],
+      "adapted_kernel": [
+        "liteos_m"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "utils_base",
+          "liteos_m"
+        ],
+        "third_party": []
+      }
+    },
+    {
+      "component": "hievent_lite",
+      "description": "event log for liteos-m kernel.",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/hievent_lite"
+      ],
+      "targets": [
+        "//base/hiviewdfx/hievent_lite:hievent_lite"
+      ],
+      "rom": "10KB",
+      "ram": "~10KB",
+      "output": [],
+      "adapted_kernel": [
+        "liteos_m"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "utils_base",
+          "hiview_lite",
+          "samgr_lite"
+        ],
+        "third_party": []
+      }
+    },
+    {
+      "component": "hiview",
+      "description": "",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/huawei_proprietary/hiview_service"
+      ],
+      "targets": [
+        "//base/hiviewdfx/huawei_proprietary/hiview_service:hiview"
+      ],
+      "rom": "500KB",
+      "ram": "~500KB",
+      "output": [
+        "hiview",
+        "libhiview",
+        "libhiview_hievent"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": []
+      }
+    },
+    {
+      "component": "hiview_tunnel",
+      "description": "log upload service for liteos-a kernel",
+      "optional": "false",
+      "dirs": [
+        "base/hiviewdfx/huawei_proprietary/hiview_tunnel"
+      ],
+      "targets": [
+        "//base/hiviewdfx/huawei_proprietary/hiview_tunnel:libhiview_tunnel"
+      ],
+      "rom": "500KB",
+      "ram": "~500KB",
+      "output": [
+        "libhiview_tunnel"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": []
+      }
+    }
+  ]
+}

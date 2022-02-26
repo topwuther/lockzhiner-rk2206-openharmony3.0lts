@@ -1,0 +1,34 @@
+{
+  "components": [
+    {
+      "component": "sensor_lite",
+      "description": "Sensor services",
+      "optional": "true",
+      "dirs": [
+        "base/sensors/sensor_lite"
+      ],
+      "targets": [
+        "//base/sensors/sensor_lite/services:sensor_service",
+        "//base/sensors/sensor_lite/frameworks:sensor_lite",
+        "//base/sensors/sensor_lite/interfaces/kits/native:unittest"
+      ],
+      "rom": "92KB",
+      "ram": "~200KB",
+      "output": [ "libsensor_frameworks.so" ],
+      "adapted_kernel": [ "liteos_a" ],
+      "adapted_board": [],
+      "features": [],
+      "deps": {
+        "components": [
+          "samgr_lite",
+          "ipc_lite",
+          "utils_base",
+          "peripheral_sensor"
+        ],
+        "third_party": [
+          "bounds_checking_function"
+        ]
+      }
+    }
+  ]
+}

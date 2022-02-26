@@ -1,0 +1,42 @@
+{
+    "components": [
+    {
+        "component": "devicemanager_lite",
+        "discription": "get all devices, device discover, device auth",
+        "optional": "true",
+        "dirs": [
+          "//foundation/distributedhardware/devicemanager"
+        ],
+        "targets": [
+          "//foundation/distributedhardware/devicemanager:devicemanager_lite"
+        ],
+        "rom": "543KB",
+        "ram": "",
+        "output": [
+          "libdevicemanager.so",
+          "libdevicemanagersdk.so",
+          "libdevicemanagerutils.so",
+          "devicemanagerservice"
+        ],
+        "adapted_kernel": [
+          "liteos_a",
+          "linux"
+        ],
+        "features": [],
+        "deps": {
+          "third_party": [
+            "bounds_checking_function"
+          ],
+          "kernel_special": {},
+          "board_special": {},
+          "components": [
+            "utils_base",
+            "ipc_lite",
+            "hilog",
+            "dsoftbus",
+            "deviceauth_lite"
+          ]
+        }
+      }
+    ]
+  }

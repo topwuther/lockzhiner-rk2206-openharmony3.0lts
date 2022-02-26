@@ -1,0 +1,28 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type time_service, domain, coredomain;
+
+domain_auto_trans(time_service, samain_exec, time_service)
+
+binder_call(time_service, time_service)
+binder_call(time_service, servicemanager)
+binder_call(time_service, system_server)
+binder_call(time_service, samgr)
+binder_call(samgr, time_service)
+
+# use_hilog(time_service)
+allow time_service samgrservice:service_manager find;
+domain_trans(init, samain_exec, time_service)
+
+binder_call(time_service, system_app)

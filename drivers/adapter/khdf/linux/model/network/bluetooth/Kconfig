@@ -1,0 +1,7 @@
+config DRIVERS_HDF_BT
+    bool "Enable HDF Bluetooth"
+    default n
+    depends on DRIVERS_HDF
+    help
+      Answer Y to enable HDF bluetooth.
+

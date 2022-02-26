@@ -1,0 +1,52 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type samgr, domain, coredomain ;
+type samgr_exec, exec_type, file_type, system_file_type;
+
+init_daemon_domain(samgr)
+add_service(samgr, samgrservice)
+
+# use_hilog(samgr)
+#allow samgr zdn_cfg_file:file { read write open };
+#avc:  denied  { call } for  dsm=HS_Q pid=631 comm="samgr" scontext=u:r:samgr:s0 tcontext=u:r:system_server:s0 tclass=binder permissive=1 CMD=/system/bin/samgr
+binder_call(samgr, system_server)
+#avc: denied { transfer } for dsm=HS_Q scontext=u:r:samgr:s0 tcontext=u:r:platform_app:s0:c512,c768 tclass=binder permissive=1
+binder_call(samgr, platform_app)
+#avc:  denied  { transfer } for  dsm=HS_Q pid=631 comm="samgr" scontext=u:r:samgr:s0 tcontext=u:r:system_app:s0 tclass=binder permissive=1 CMD=/system/bin/samgr
+binder_call(samgr, system_app)
+#avc: denied { call } for dsm=HS_Q comm="samgr" scontext=u:r:logd:s0 tcontext=u:r:servicemanager:s0 tclass=binder permissive=1
+binder_call(samgr, servicemanager)
+binder_call(samgr, eventmgr)
+
+allow samgr permission_service:service_manager { find };
+
+allow samgr system_app:tcp_socket { read write };
+binder_call(samgr, accountmgr)
+binder_call(samgr, untrusted_app)
+binder_call(samgr, priv_app)
+binder_call(samgr, foundation)
+binder_call(samgr, installs)
+#avc: denied { transfer } for comm="samgr" scontext=u:r:samgr:s0 tcontext=u:r:appspawn:s0 tclass=binder permissive=1
+binder_call(samgr, appspawn)
+
+#avc: denied { transfer } for pid=650 scontext=u:r:samgr:s0 tcontext=u:r:radio:s0 tclass=binder permissive=0
+allow samgr radio:binder { transfer };
+#avc: denied { write } for pid=8509 name="property_service" dev="tmpfs" ino=17534 scontext=u:r:samgr:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+allow samgr property_socket:sock_file { write };
+#avc: denied { connectto } for pid=7600 path="/dev/socket/property_service" scontext=u:r:samgr:s0 tcontext=u:r:init:s0 tclass=unix_stream_socket permissive=0
+allow samgr init:unix_stream_socket { connectto };
+#avc: denied { set } for property=sys.samgr.initcount pid=7564 uid=1000 gid=1000 scontext=u:r:samgr:s0 tcontext=u:object_r:system_prop:s0 tclass=property_service permissive=0
+allow samgr system_prop:property_service { set };
+#auditd  : type=1400 audit(0.0:704): avc: denied { setattr } for comm="saDataStorage" name="samgr" dev="sdd74" ino=40504 scontext=u:r:samgr:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=0
+allow samgr system_data_file:dir { setattr };

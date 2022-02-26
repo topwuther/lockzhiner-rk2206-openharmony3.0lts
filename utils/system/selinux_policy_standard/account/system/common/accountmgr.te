@@ -1,0 +1,56 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type accountmgr, domain, coredomain;
+
+#accountmgr: type=1400 audit(0.0:8495): avc: denied { call } for dsm=HS_Q scontext=u:r:logd:s0 tcontext=u:r:servicemanager:s0 tclass=binder permissive=1
+binder_call(accountmgr, servicemanager);
+binder_call(accountmgr, samgr);
+binder_call(accountmgr, system_app);
+
+#avc: denied { call } for dsm=HS_Q scontext=u:r:logd:s0 tcontext=u:r:logd:s0 tclass=binder permissive=1
+#avc:  denied  { transfer } for  dsm=HS_Q pid=17516 comm="accountmgr" scontext=u:r:logd:s0 tcontext=u:r:logd:s0 tclass=binder permissive=1 CMD=accountmgr
+binder_call(accountmgr, logd);
+
+#avc: denied { entrypoint } for path="/system/bin/sa_main" dev="sdd22" ino=30864 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samain_exec:s0 tclass=file permissive=1
+#avc: denied { map } for path="/system/bin/sa_main" dev="sdd22" ino=30864 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samain_exec:s0 tclass=file permissive=1
+#avc: denied { read } for path="/system/bin/sa_main" dev="sdd22" ino=30864 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samain_exec:s0 tclass=file permissive=1
+#avc: denied { execute } for path="/system/bin/sa_main" dev="sdd22" ino=30864 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samain_exec:s0 tclass=file permissive=1
+#avc: denied { getattr } for path="/system/bin/sa_main" dev="overlay" ino=19312 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samain_exec:s0 tclass=file permissive=1
+domain_trans(init, samain_exec, accountmgr);
+
+#avc:  denied  { find } for service=SamgrService pid=773 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:samgrservice:s0 tclass=service_manager permissive=1
+allow accountmgr samgrservice:service_manager { find };
+
+#avc: denied { write } for pid=798 name="sadata" dev="sdd74" ino=245 scontext=u:r:accountmgr:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=0
+file_type_auto_trans(accountmgr, system_data_file, account_data_file);
+allow accountmgr system_data_file:dir { add_name search read write create remove_name relabelfrom };
+allow accountmgr account_data_file:file { create getattr open read write };
+
+# use_hilog(accountmgr)
+
+#avc:  denied  { find } for service=user pid=6873 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:user_service:s0 tclass=service_manager permissive=0
+allow accountmgr user_service:service_manager { find };
+
+#avc: denied { call } for pid=835 scontext=u:r:accountmgr:s0 tcontext=u:r:system_server:s0 tclass=binder permissive=0
+binder_call(accountmgr, system_server);
+
+#avc:  denied  { find } for service=activity pid=835 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:activity_service:s0 tclass=service_manager permissive=0
+allow accountmgr activity_service:service_manager { find };
+
+#avc: denied { find } for service=device_identifiers pid=841 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:device_identifiers_service:s0 tclass=service_manager permissive=0 CMD=accountmgr
+allow accountmgr device_identifiers_service:service_manager { find };
+
+#avc: denied { find } for dsm=hisi_Q service=permission pid=870 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:permission_service:s0 tclass=service_manager permissive=0 CMD=accountmgr
+#avc: denied { find } for service=permission pid=870 uid=1000 scontext=u:r:accountmgr:s0 tcontext=u:object_r:permission_service:s0 tclass=service_manager permissive=0
+allow accountmgr permission_service:service_manager { find };

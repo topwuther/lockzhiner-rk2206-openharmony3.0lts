@@ -1,0 +1,115 @@
+{
+  "components": [
+    {
+      "component": "samgr_lite",
+      "description": "",
+      "optional": "false",
+      "dirs": [
+        "foundation/distributedschedule/samgr_lite"
+      ],
+      "targets": [
+        "//foundation/distributedschedule/samgr_lite:samgr"
+      ],
+      "rom": "62KB",
+      "ram": "",
+      "output": [
+        "libsamgr.so",
+        "libbroadcast.so",
+        "libserver.so"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "liteos_m",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "utils_base",
+          "ipc_lite",
+          "hilog_lite"
+        ]
+      }
+    },
+    {
+      "component": "safwk_lite",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "foundation/distributedschedule/safwk_lite"
+      ],
+      "targets": [
+        "//foundation/distributedschedule/safwk_lite"
+      ],
+      "rom": "15KB",
+      "ram": "",
+      "output": [ "foundation" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "utils_base",
+          "aafwk_lite",
+          "appexecfwk_lite",
+          "hilog",
+          "permission",
+          "dmsfwk_lite",
+          "samgr_lite",
+          "powermgr_lite"
+        ]
+      }
+    },
+    {
+      "component": "dmsfwk_lite",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "foundation/distributedschedule/dmsfwk_lite"
+      ],
+      "targets": [
+        "//foundation/distributedschedule/dmsfwk_lite:dtbschedmgr",
+        "//foundation/distributedschedule/dmsfwk_lite/moduletest/dtbschedmgr_lite:distributed_schedule_test_dms_door"
+      ],
+      "rom": "26KB",
+      "ram": "",
+      "output": [ "dmslite.so" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "utils_base",
+          "hilog",
+          "samgr_lite",
+          "aafwk_lite",
+          "appexecfwk_lite",
+          "softbus_lite",
+          "huks"
+        ]
+      }
+    }
+  ]
+}

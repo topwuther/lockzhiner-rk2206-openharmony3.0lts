@@ -1,0 +1,236 @@
+{
+  "components": [
+    {
+      "component": "hichainsdk",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/security/deviceauth"
+      ],
+      "targets": [
+        "//base/security/deviceauth/frameworks/deviceauth_lite:hichainsdk"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [ "libhichainsdk.so" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "liteos_m",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "huks"
+        ]
+      }
+    },
+    {
+      "component": "huks",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/security/huks"
+      ],
+      "targets": [
+        "//base/security/huks/frameworks/huks_lite:huks_sdk"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [ "libhuks.so" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "liteos_m",
+        "linux"
+      ],
+      "features": [
+        "disable_huks_binary = false",
+        "disable_authenticate = false"
+      ],
+      "deps": {
+        "third_party": [
+          "mbedtls",
+          "openssl",
+          "bounds_checking_function"
+        ],
+        "components": []
+      }
+    },
+    {
+      "component": "secure_os",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "device/hisilicon/itrustee/itrustee_ree_lite/"
+      ],
+      "targets": [
+        "//device/hisilicon/itrustee/itrustee_ree_lite/services/teecd:teecd",
+        "//device/hisilicon/itrustee/itrustee_ree_lite/frameworks/libteec:libteec_vendor"
+      ],
+      "rom": "400KB",
+      "ram": "~4MB",
+      "output": [
+        "teecd",
+        "libteecd_bin.a"
+      ],
+      "adapted_kernel": [ "liteos_a" ],
+      "features": [
+        "enable_tee_ree = false"
+      ],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": []
+      }
+    },
+    {
+      "component": "permission",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/security/permission"
+      ],
+      "targets": [
+        "//base/security/permission/services/permission_lite:permission_lite"
+      ],
+      "rom": "100KB",
+      "ram": "~90KB",
+      "output": [ "libipc_auth_target.so" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "hilog",
+          "samgr_lite",
+          "ipc_lite"
+        ],
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+        ]
+      }
+    },
+    {
+      "component": "appverify",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/security/appverify"
+      ],
+      "targets": [
+        "//base/security/appverify/interfaces/innerkits/appverify_lite:verify"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libverify_base.so",
+        "libverify.so"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "hilog",
+          "syspara_lite"
+        ],
+        "third_party": [
+          "bounds_checking_function",
+          "mbedtls",
+          "cjson"
+        ]
+      }
+    },
+    {
+      "component": "crypto_lite",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/security/huks/frameworks/crypto_lite"
+      ],
+      "targets": [
+        "//base/security/huks/frameworks/crypto_lite/cipher:cipher_shared"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [ "cipher_shared.so" ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "hilog"
+        ],
+        "third_party": [
+          "bounds_checking_function",
+          "mbedtls"
+        ]
+      }
+    },
+    {
+      "component": "dm-verity",
+      "description": "",
+      "optional": "true",
+      "dirs": [ "//third_party/cryptsetup" ],
+      "targets": [
+        "//third_party/cryptsetup:veritysetup"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [ "veritysetup" ],
+      "adapted_kernel": [ "linux" ],
+      "features": [],
+      "deps": {
+        "components": [],
+        "third_party": [
+          "popt",
+          "libuuid",
+          "LVM2",
+          "cjson"
+        ]
+      }
+    },
+    {
+      "component": "deviceauth_lite",
+      "description": "hichain3.0",
+      "optional": "true",
+      "dirs": [ "//base/security/deviceauth" ],
+      "targets": [ "//base/security/deviceauth:deviceauth_lite" ],
+      "rom": "600K",
+      "ram": "~80K",
+      "output": [
+        "libdeviceauth_sdk.so",
+        "deviceauth_service"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [ ],
+      "deps": {
+        "third_party": [
+          "mbedtls",
+          "openssl",
+          "bounds_checking_function",
+          "cjson"
+        ],
+        "components": []
+      }
+    }
+  ]
+}

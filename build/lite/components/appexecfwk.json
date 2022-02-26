@@ -1,0 +1,48 @@
+{
+  "components": [
+    {
+      "component": "appexecfwk_lite",
+      "description": "Bundle installation management frameworks.",
+      "optional": "true",
+      "dirs": [
+        "foundation/appexecfwk/appexecfwk_lite"
+      ],
+      "targets": [
+        "//foundation/appexecfwk/appexecfwk_lite/services/bundlemgr_lite:appexecfwk_services_lite",
+        "//foundation/appexecfwk/appexecfwk_lite/frameworks/bundle_lite:appexecfwk_kits_lite"
+      ],
+      "rom": "300KB",
+      "ram": ">2MB",
+      "output": [
+        "libbundlems.so",
+        "libbundle.so",
+        "bundle_daemon",
+        "bm"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "zlib",
+          "bounds_checking_function",
+          "cjson"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "aafwk_lite",
+          "hilog",
+          "utils_base",
+          "permission",
+          "ipc_lite",
+          "samgr_lite",
+          "resmgr_lite",
+          "appverify"
+        ]
+      }
+    }
+  ]
+}

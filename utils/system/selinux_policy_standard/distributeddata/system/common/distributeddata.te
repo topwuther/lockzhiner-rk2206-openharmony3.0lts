@@ -1,0 +1,61 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type distributeddata, domain, coredomain, mlstrustedsubject;
+domain_auto_trans(distributeddata, samain_exec, distributeddata)
+
+binder_call(distributeddata, system_server)
+binder_call(distributeddata, servicemanager)
+binder_call(distributeddata, samgr)
+binder_call(distributeddata, accountmgr)
+binder_call(distributeddata, system_app)
+binder_call(samgr, distributeddata)
+binder_call(servicemanager, distributeddata)
+binder_call(system_server, distributeddata)
+binder_call(accountmgr, distributeddata)
+domain_trans(init, samain_exec, distributeddata)
+
+allow distributeddata servicemanager:binder { call transfer };
+allow distributeddata accountmgr:binder { call };
+allow distributeddata samgrservice:service_manager { find };
+allow distributeddata system_app:binder { transfer call };
+allow distributeddata system_app:fd { use };
+allow distributeddata registry_service:service_manager { find };
+allow distributeddata connectivity_service:service_manager { find };
+allow distributeddata network_management_service:service_manager { find };
+allow distributeddata samgr:binder { call transfer };
+allow distributeddata system_server:binder { call transfer };
+allow distributeddata permission_service:service_manager { find };
+allow distributeddata netstats_service:service_manager { find };
+allow distributeddata netpolicy_service:service_manager { find };
+allow servicemanager distributeddata:dir { search };
+allow servicemanager distributeddata:file { read open write };
+allow servicemanager distributeddata:process { getattr };
+allow accountmgr distributeddata:binder { call };
+
+allow distributeddata system_data_file:dir { open read remove_name setattr write add_name create };
+
+allow distributeddata system_data_file:file { map lock ioctl getattr read open };
+
+file_type_auto_trans(distributeddata, system_data_file, distributed_data_sadata)
+
+allow distributeddata distributed_data_sadata:dir rw_dir_perms;
+
+allow distributeddata distributed_data_sadata:file rw_file_perms;
+
+allow distributeddata distributed_data_sadata:dir { setattr create unlink rmdir rename  };
+
+allow distributeddata distributed_data_sadata:file { setattr create unlink rename };
+
+#allow distributeddata ddmp_databus_svc:service_manager { find };
+

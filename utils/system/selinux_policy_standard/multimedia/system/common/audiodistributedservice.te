@@ -1,0 +1,46 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type audiodistributedservice, domain, coredomain, mlstrustedsubject;
+domain_auto_trans(audiodistributedservice, samain_exec, audiodistributedservice);
+
+binder_call(audiodistributedservice, servicemanager);
+binder_call(audiodistributedservice, samgr);
+binder_call(audiodistributedservice, system_server);
+binder_call(samgr, audiodistributedservice);
+
+# use_hilog(audiodistributedservice)
+allow audiodistributedservice servicemanager:binder { call transfer };
+allow audiodistributedservice samgrservice:service_manager { find };
+allow audiodistributedservice system_app:binder { transfer call };
+allow audiodistributedservice system_app:fd { use };
+allow audiodistributedservice system_app:tcp_socket { write read };
+
+domain_trans(init, samain_exec, audiodistributedservice);
+
+#avc: denied { call } for pid=3866 scontext=u:r:system_app:s0 tcontext=u:r:audiodistributedservice:s0 tclass=binder permissive=0
+binder_call(system_app, audiodistributedservice);
+#avc:  denied  { find } for service=media.audio_flinger pid=845 uid=1000 scontext=u:r:audiodistributedservice:s0 tcontext=u:object_r:audioserver_service:s0 tclass=service_manager
+allow audiodistributedservice audioserver_service:service_manager { find };
+#avc: denied { call } for pid=837 scontext=u:r:audiodistributedservice:s0 tcontext=u:r:audioserver:s0 tclass=binder
+allow audiodistributedservice audioserver:binder { call transfer };
+#avc:  denied  { find } for service=audio pid=768 uid=1000 scontext=u:r:audiodistributedservice:s0 tcontext=u:object_r:audio_service:s0 tclass=service_manager
+allow audiodistributedservice audio_service:service_manager { find };
+#avc: denied { transfer } for pid=734 scontext=u:r:audioserver:s0 tcontext=u:r:audiodistributedservice:s0 tclass=binder
+allow audioserver audiodistributedservice:binder { call transfer };
+binder_call(audioserver, audiodistributedservice);
+binder_call(system_server, audiodistributedservice);
+allow audiodistributedservice property_socket:sock_file { write };
+allow audiodistributedservice init:unix_stream_socket { connectto };
+allow audiodistributedservice ctl_start_prop:property_service { set };
+allow audiodistributedservice ctl_stop_prop:property_service { set };

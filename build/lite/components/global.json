@@ -1,0 +1,77 @@
+{
+  "components": [
+    {
+      "component": "resmgr_lite",
+      "description": "resource scheduler.",
+      "optional": "true",
+      "dirs": [
+        "base/global/resmgr_lite"
+      ],
+      "targets": [
+        "//base/global/resmgr_lite/frameworks/resmgr_lite:global_resmgr",
+        "//base/global/resmgr_lite/frameworks/resmgr_lite/test:unittest"
+      ],
+      "rom": "21KB",
+      "ram": "~48KB",
+      "output": [ "global_resmgr.so" ],
+      "adapted_kernel": [ "liteos_a" ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "utils_base"
+        ]
+      }
+    },
+    {
+      "component": "i18n_lite",
+      "description": "i18n interfaces",
+      "optional": "true",
+      "dirs": [
+        "base/global/i18n_lite"
+      ],
+      "targets": [
+        "//base/global/i18n_lite/frameworks/i18n:global_i18n",
+        "//base/global/i18n_lite/frameworks/i18n/test:I18nTest"
+      ],
+      "rom": "2.5MB",
+      "ram": "~112KB",
+      "output": [ "global_i18n.so" ],
+      "adapted_kernel": [ "liteos_a" ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "utils_base"
+        ]
+      }
+    },
+    {
+      "component": "global_cust",
+      "description": "",
+      "optional": "true",
+      "dirs": [
+        "base/global/cust_lite"
+      ],
+      "targets": [
+        "//base/global/cust_lite/frameworks/cust_lite:cust"
+      ],
+      "rom": "9KB",
+      "ram": "~40KB",
+      "output": [ "cust.so" ],
+      "adapted_kernel": [ "linux" ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+        ]
+      }
+    }
+  ]
+}

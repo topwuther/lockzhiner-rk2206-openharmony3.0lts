@@ -1,0 +1,59 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type appspawn, domain, coredomain;
+type appspawn_exec, system_file_type, exec_type, file_type;
+type appspawn_socket, file_type, coredomain_socket;
+
+init_daemon_domain(appspawn);
+
+#avc: denied { call } for comm="com.demolau" scontext=u:r:appspawn:s0 tcontext=u:r:samgr:s0 tclass=binder permissive=1
+binder_call(appspawn, samgr);
+
+#avc: denied { call } for comm="com.demolau" scontext=u:r:appspawn:s0 tcontext=u:r:foundation:s0 tclass=binder permissive=1
+binder_call(appspawn, foundation);
+
+#avc: denied { call } for comm="com.demolau" scontext=u:r:appspawn:s0 tcontext=u:r:ueventd:s0 tclass=binder permissive=1
+binder_call(appspawn, ueventd);
+
+#avc: denied { write } for comm="appspawn" name="socket" dev="tmpfs" ino=1902 scontext=u:r:appspawn:s0 tcontext=u:object_r:socket_device:s0 tclass=dir permissive=0
+#avc: denied { add_name } for comm="appspawn" name="AppSpawn" scontext=u:r:appspawn:s0 tcontext=u:object_r:socket_device:s0 tclass=dir permissive=0
+allow appspawn socket_device:dir { write add_name };
+
+#avc: denied { fsetid } for comm="appspawn" capability=4 scontext=u:r:appspawn:s0 tcontext=u:r:appspawn:s0 tclass=capability permissive=1
+#avc: denied { chown } for comm="appspawn" capability=0 scontext=u:r:appspawn:s0 tcontext=u:r:appspawn:s0 tclass=capability permissive=1
+allow appspawn appspawn:capability { fsetid chown };
+
+#avc: denied { write } for comm="com.demolau" name="wayland-0" dev="tmpfs" ino=580 scontext=u:r:appspawn:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+allow appspawn socket_device:sock_file { write };
+
+# conflict with neverallow in third_part/sepolicy, fix them later.
+#avc: denied { setattr } for comm="appspawn" name="AppSpawn" dev="tmpfs" ino=2634 scontext=u:r:appspawn:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+#avc: denied { create } for comm="appspawn" name="AppSpawn" scontext=u:r:appspawn:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+#allow appspawn socket_device:sock_file { setattr create };
+
+#avc: denied { read } for comm="com.demolau" name="com.demolauncher" dev="mmcblk0p5" ino=24502 scontext=u:r:appspawn:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+#avc: denied { open } for comm="com.demolau" path="/data/accounts/account_0/applications/com.demolauncher/com.demolauncher" dev="mmcblk0p5" ino=24502 scontext=u:r:appspawn:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+allow appspawn system_data_file:dir { read open };
+
+#avc: denied { read } for comm="com.demolau" name="resources.index" dev="mmcblk0p5" ino=24505 scontext=u:r:appspawn:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { open } for comm="com.demolau" path="/data/accounts/account_0/applications/com.demolauncher/com.demolauncher/assets/entry/resources.index" dev="mmcblk0p5" ino=24505 scontext=u:r:appspawn:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { getattr } for comm="com.demolau" path="/data/accounts/account_0/applications/com.demolauncher/com.demolauncher/assets/entry/resources.index" dev="mmcblk0p5" ino=24505 scontext=u:r:appspawn:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+allow appspawn system_data_file:file { read open getattr };
+
+#avc: denied { connectto } for comm="com.demolau" path="/dev/socket/wayland-0" scontext=u:r:appspawn:s0 tcontext=u:r:ueventd:s0 tclass=unix_stream_socket permissive=1
+allow appspawn ueventd:unix_stream_socket { connectto };
+
+#avc: denied { getattr } for comm="1.gpu" path="/dev/dri/card0" dev="tmpfs" ino=2324 scontext=u:r:appspawn:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+#avc: denied { read write } for comm="1.gpu" name="card0" dev="tmpfs" ino=2345 scontext=u:r:appspawn:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+#avc: denied { open } for comm="1.gpu" path="/dev/dri/card0" dev="tmpfs" ino=2345 scontext=u:r:appspawn:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1

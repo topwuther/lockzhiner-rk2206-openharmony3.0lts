@@ -1,0 +1,58 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type foundation, domain, coredomain;
+type foundation_data_file, file_type, data_file_type, core_data_file_type;
+
+domain_trans(init, samain_exec, foundation);
+
+binder_call(foundation, samgr);
+#avc: denied { call } for comm="foundation" scontext=u:r:foundation:s0 tcontext=u:r:hdf_devmgr:s0 tclass=binder permissive=1
+binder_call(foundation, hdf_devmgr);
+#avc: denied { call } for comm="foundation" scontext=u:r:foundation:s0 tcontext=u:r:appspawn:s0 tclass=binder permissive=1
+binder_call(foundation, appspawn);
+#avc: denied { call } for comm="BundleMgrServic" scontext=u:r:foundation:s0 tcontext=u:r:installs:s0 tclass=binder permissive=1
+binder_call(foundation, installs);
+
+#avc: denied { call } for comm="foundation" scontext=u:r:foundation:s0 tcontext=u:r:hdf_devhost:s0 tclass=binder permissive=1
+#avc: denied { transfer } for comm="foundation" scontext=u:r:foundation:s0 tcontext=u:r:hdf_devhost:s0 tclass=binder permissive=1
+binder_call(foundation, hdf_devhost);
+
+#avc: denied { remove_name } for comm="foundation" name="permission.db-journal" dev="mmcblk0p5" ino=40813 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+#avc: denied { write } for comm="foundation" name="system" dev="mmcblk0p5" ino=40807 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+#avc: denied { add_name } for comm="foundation" name="permission.db" scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+#avc: denied { read } for comm="foundation" name="system" dev="mmcblk0p5" ino=16327 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+#avc: denied { open } for comm="foundation" path="/data/system" dev="mmcblk0p5" ino=8167 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+allow foundation system_data_file:dir { remove_name write add_name read open };
+
+#avc: denied { read open } for comm="foundation" path="/data/system/permission.db" dev="mmcblk0p5" ino=40811 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { getattr } for comm="foundation" path="/data/system/permission.db" dev="mmcblk0p5" ino=73451 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { ioctl } for comm="foundation" path="/data/system/permission.db" dev="mmcblk0p5" ino=73451 ioctlcmd=0xf50c scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { lock } for comm="foundation" path="/data/system/permission.db" dev="mmcblk0p5" ino=73451 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+allow foundation system_data_file:file { read open getattr ioctl lock };
+
+# conflict with neverallow in third_part/sepolicy, fix them later.
+#avc: denied { write } for comm="foundation" path="/data/system/permission.db" dev="mmcblk0p5" ino=40811 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { create } for comm="foundation" name="permission.db" scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#avc: denied { unlink } for comm="foundation" name="permission.db-journal" dev="mmcblk0p5" ino=48972 scontext=u:r:foundation:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+#allow foundation system_data_file:file { write create unlink };
+
+#avc: denied { write } for comm="foundation" name="AppSpawn" dev="tmpfs" ino=2439 scontext=u:r:foundation:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+allow foundation socket_device:sock_file { write };
+
+#avc: denied { connectto } for comm="foundation" path="/dev/socket/AppSpawn" scontext=u:r:foundation:s0 tcontext=u:r:appspawn:s0 tclass=unix_stream_socket permissive=1
+allow foundation appspawn:unix_stream_socket { connectto };
+
+#avc: denied { read } for comm="BundleMgrServic" name="/" dev="mmcblk0p4" ino=2 scontext=u:r:foundation:s0 tcontext=u:object_r:vendor_file:s0 tclass=dir permissive=1
+#avc: denied { open } for comm="BundleMgrServic" path="/vendor" dev="mmcblk0p4" ino=2 scontext=u:r:foundation:s0 tcontext=u:object_r:vendor_file:s0 tclass=dir permissive=1
+allow foundation vendor_file:dir { read open };

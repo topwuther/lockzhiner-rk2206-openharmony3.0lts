@@ -1,0 +1,62 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type weston, domain, coredomain;
+type weston_exec, exec_type, file_type, system_file_type;
+#type weston_sock, file_type, coredomain_socket;
+domain_auto_trans(init, weston_exec, weston)
+#file_type_auto_trans(weston, socket_device, weston_sock)
+
+# avc: denied { open } for path="/dev/tty1" dev="tmpfs" ino=2259 scontext=u:r:weston:s0 tcontext=u:object_r:tty_device:s0 tclass=chr_file permissive=1
+# avc: denied { getattr } for path="/dev/tty1" dev="tmpfs" ino=2259 scontext=u:r:weston:s0 tcontext=u:object_r:tty_device:s0 tclass=chr_file permissive=1
+allow weston tty_device:chr_file { open ioctl read write getattr };
+
+# avc: denied { sys_rawio } for comm="weston" capability=17 scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=capability permissive=1
+# avc: denied { sys_admin } for comm="weston" capability=21 scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=capability permissive=1
+#allow weston self:capability { sys_tty_config sys_rawio sys_admin };
+
+# avc: denied { write } for name="hilogInput" dev="tmpfs" ino=2370 scontext=u:r:weston:s0 tcontext=u:object_r:socket_device:s0 tclass=sock_file permissive=1
+#allow weston socket_device:sock_file { unlink write };
+
+# avc: denied { ioctl } for comm="weston" path="/dev/dri/card0" dev="tmpfs" ino=2404 ioctlcmd=0x64b4 scontext=u:r:weston:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+# avc: denied { map } for path="/dev/dri/card0" dev="tmpfs" ino=520 scontext=u:r:weston:s0 tcontext=u:object_r:graphic_device:s0 tclass=chr_file permissive=1
+allow weston graphic_device:chr_file { open read write getattr ioctl map };
+
+# avc: denied { remove_name } for comm="weston" name="wayland-0" dev="tmpfs" ino=574 scontext=u:r:weston:s0 tcontext=u:object_r:socket_device:s0 tclass=dir permissive=1
+#allow weston socket_device:dir { remove_name };
+#allow weston socket_device:dir create_file_perms;
+
+# avc: denied { read write } for name="0" dev="devpts" ino=3 scontext=u:r:weston:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+# avc: denied { open } for path="/dev/pts/0" dev="devpts" ino=3 scontext=u:r:weston:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+# avc: denied { getattr } for path="/dev/pts/0" dev="devpts" ino=3 scontext=u:r:weston:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+# avc: denied { ioctl } for path="/dev/pts/0" dev="devpts" ino=3 ioctlcmd=0x5401 scontext=u:r:weston:s0 tcontext=u:object_r:devpts:s0 tclass=chr_file permissive=1
+allow weston devpts:chr_file { open read write getattr ioctl };
+
+# avc: denied { execute_no_trans } for path="/system/bin/weston" dev="mmcblk0p3" ino=318 scontext=u:r:weston:s0 tcontext=u:object_r:weston_exec:s0 tclass=file permissive=1
+allow weston weston_exec:file { execute_no_trans };
+
+# avc: denied { read } for name="bus" dev="sysfs" ino=8 scontext=u:r:weston:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+# avc: denied { open } for path="/sys/bus" dev="sysfs" ino=8 scontext=u:r:weston:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+#allow weston sysfs:dir { open read };
+
+#(sysfs) avc: denied { getattr } for path="/sys/devices/platform/hidrm/drm/card0/card0-DSI-1/uevent" dev="sysfs" ino=11835 scontext=u:r:weston:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+#(sysfs) avc: denied { read } for name="uevent" dev="sysfs" ino=11805 scontext=u:r:weston:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+#(sysfs) avc: denied { open } for path="/sys/devices/platform/hidrm/drm/card0/uevent" dev="sysfs" ino=11805 scontext=u:r:weston:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+#(sysfs) allow weston drm_uevent:file { open getattr read };
+#allow weston sysfs:file { open getattr read };
+
+# avc: denied { create } for scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=netlink_kobject_uevent_socket permissive=1
+# avc: denied { setopt } for scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=netlink_kobject_uevent_socket permissive=1
+# avc: denied { bind } for scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=netlink_kobject_uevent_socket permissive=1
+# avc: denied { getattr } for scontext=u:r:weston:s0 tcontext=u:r:weston:s0 tclass=netlink_kobject_uevent_socket permissive=1
+allow weston self:netlink_kobject_uevent_socket { create setopt bind getattr };

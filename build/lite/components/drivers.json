@@ -1,0 +1,316 @@
+{
+  "components": [
+    {
+      "component": "drivers_framework",
+      "description": "",
+      "optional": "false",
+      "dirs": ["drivers/framework"],
+      "targets": [],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [],
+        "components": []
+      }
+    },
+    {
+      "component": "adapter_khdf_liteos",
+      "description": "",
+      "optional": "false",
+      "dirs": ["drivers/adapter/khdf/liteos"],
+      "targets": [],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_board": [],
+      "adapted_kernel": ["liteos_a"],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "liteos_a",
+          "hilog"
+        ]
+      }
+    },
+    {
+      "component": "adapter_khdf_linux",
+      "description": "",
+      "optional": "false",
+      "dirs": ["drivers/adapter/khdf/linux"],
+      "targets": [],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_board": [],
+      "adapted_kernel": [ "linux" ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "linux_hi3516dv300",
+          "linux_hi3518ev300",
+          "hilog"
+        ]
+      }
+    },
+    {
+      "component": "adapter_uhdf",
+      "description": "",
+      "optional": "false",
+      "dirs": ["drivers/adapter/uhdf"],
+      "targets": [
+        "//drivers/adapter/uhdf/manager:hdf_manager",
+        "//drivers/adapter/uhdf/posix:hdf_posix",
+        "//drivers/adapter/uhdf/platform:hdf_platform_driver",
+        "//drivers/adapter/uhdf/test/unittest/common:hdf_test_common",
+        "//drivers/adapter/uhdf/test:hdf_test_uhdf"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libhdf_core.so",
+        "libhdf_osal.so",
+        "libhdf_platform.so",
+        "libhdf_test_common.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "utils_base",
+          "developer_test"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_display",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/display"],
+      "targets": [
+        "//drivers/peripheral/display/hal:hdi_display",
+        "//drivers/peripheral/display/test:hdf_test_display"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libdisplay_gralloc.so",
+        "libdisplay_layer.so",
+        "libdisplay_gfx.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_input",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/input"],
+      "targets": [
+        "//drivers/peripheral/input/hal:hdi_input",
+        "//drivers/peripheral/input/test:hdf_test_input"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libhdi_input.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_sensor",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/sensor"],
+      "targets": [
+        "//drivers/peripheral/sensor/hal:hdi_sensor",
+        "//drivers/peripheral/sensor/test:hdf_test_sensor"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libhdi_sensor.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_misc",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/misc"],
+      "targets": [
+        "//drivers/peripheral/misc/vibrator/hal:hdi_vibrator",
+        "//drivers/peripheral/misc/vibrator/test/:hdf_test_vibrator"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libhdi_vibrator.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_wlan",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/wlan"],
+      "targets": [
+        "//drivers/peripheral/wlan/hal:wifi_hal",
+        "//drivers/peripheral/wlan/client:wifi_driver_client",
+        "//device/hisilicon/drivers/firmware/common/wlan:wifi_firmware",
+        "//drivers/peripheral/wlan/test:hdf_test_wlan"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [
+        "libwifi_hal.so",
+        "libwifi_driver_client.so"
+      ],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_audio",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/audio"],
+      "targets": [],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    },
+    {
+      "component": "peripheral_usb",
+      "description": "",
+      "optional": "true",
+      "dirs": ["drivers/peripheral/usb"],
+      "targets": [
+        "//drivers/peripheral/usb/sample/device/liteos:usbfn_sample",
+        "//drivers/peripheral/usb/sample/host:usbhost_ddk_test",
+        "//drivers/peripheral/usb/sample/host/liteos_test:liteos_host_speed_test",
+        "//drivers/peripheral/usb/test:hdf_test_usb_device"
+      ],
+      "rom": "",
+      "ram": "",
+      "output": [],
+      "adapted_board": [],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "components": [
+          "hilog",
+          "adapter_uhdf"
+        ]
+      }
+    }
+  ]
+}

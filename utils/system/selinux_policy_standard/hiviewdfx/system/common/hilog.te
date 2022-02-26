@@ -1,0 +1,51 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type hilogd_exec, exec_type, file_type, system_file_type;
+type hilog_exec, exec_type, file_type, system_file_type;
+type hilog_input, file_type, coredomain_socket, mlstrustedobject;
+type hilog_control, file_type, coredomain_socket, mlstrustedobject;
+
+define(`use_hilog', `
+	allow $1 hilog_input:unix_dgram_socket { sendto };
+	allow $1 hilog_input:sock_file { write };
+	allow $1 logd:unix_dgram_socket { sendto };
+	')
+
+define(`read_hilog', `
+	allow $1 hilog_exec:file { getattr open read execute execute_no_trans map  };
+	allow $1 hilog_control:sock_file { write read open  };
+	allow $1 hilog_control:unix_dgram_socket sendto;
+	')
+
+read_hilog(shell)
+read_hilog(appdomain)
+
+use_hilog({ domain -kernel })
+
+# for hilog start in hilogd domain
+#type hilogd, domain, mlstrustedsubject;
+#typeattribute hilogd coredomain;
+#init_daemon_domain(hilogd)
+
+# for hilog start in logd domain
+domain_auto_trans(init, hilog_exec, logd);
+
+allow init hilogd_exec:file { execute read open getattr };
+allow logd hilogd_exec:file { entrypoint map execute getattr read };
+allow logd self:capability { fowner fsetid };
+
+allow logd hilog_input:unix_dgram_socket { rw_socket_perms_no_ioctl };
+allow logd hilog_input:sock_file { create_file_perms };
+allow logd hilog_control:unix_dgram_socket { rw_socket_perms_no_ioctl };
+allow logd hilog_control:sock_file { create_file_perms };

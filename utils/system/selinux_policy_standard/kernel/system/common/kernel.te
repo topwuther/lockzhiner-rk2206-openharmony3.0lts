@@ -1,0 +1,24 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#type=1400 audit(83510.650:29): avc: denied { create } for comm="kdevtmpfs" name="hisi_wifi" scontext=u:r:kernel:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=0
+allow kernel device:chr_file { create getattr setattr };
+
+#type=1400 audit(78032.030:21): avc: denied { write } for comm="kdevtmpfs" name="/" dev="devtmpfs" ino=1025 scontext=u:r:kernel:s0 tcontext=u:object_r:device:s0 tclass=dir permissive=0
+allow kernel device:dir { write add_name };
+
+#type=1400 audit(747.500:10): avc: denied { mknod } for comm="kdevtmpfs" capability=27 scontext=u:r:kernel:s0 tcontext=u:r:kernel:s0 tclass=capability permissive=1
+allow kernel self:capability { mknod };
+
+#type=1400 audit(78032.740:22): avc: denied { read } for comm="chip_factory_lo" name="wifi_cfg" dev="mmcblk0p4" ino=246 scontext=u:r:kernel:s0 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=0
+allow kernel vendor_file:file { read open };

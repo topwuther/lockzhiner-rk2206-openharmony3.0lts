@@ -1,0 +1,40 @@
+{
+    "app": {
+        "bundleName": "com.huawei.screensaver",
+        "vendor": "huawei",
+        "version": {
+            "code": 1,
+            "name": "1.0"
+        },
+        "apiVersion": {
+            "compatible": 3,
+            "target": 4
+        }
+    },
+    "deviceConfig": {
+        "default": {
+
+        }
+    },
+    "module": {
+        "package": "com.huawei.screensaver",
+        "name": ".MyHarmonyAbilityPackage",
+        "deviceType": [
+            "phone", "tv","tablet", "pc","car","smartWatch","sportsWatch","smartVision"
+        ],
+        "distro": {
+            "deliveryWithInstall": true,
+            "moduleName": "screensaver",
+            "moduleType": "entry"
+        },
+        "abilities": [
+        {
+            "name": "ScreensaverAbility",
+            "label": "screensaver",
+            "launchType": "standard",
+            "type": "page",
+            "visible":true
+        }
+        ]
+    }
+}

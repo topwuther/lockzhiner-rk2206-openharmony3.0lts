@@ -1,0 +1,40 @@
+{
+  "components": [
+    {
+      "component": "ai_engine",
+      "description": "AI engine framework.",
+      "optional": "true",
+      "dirs": [
+        "foundation/ai/engine"
+      ],
+      "targets": [
+        "//foundation/ai/engine/services:ai"
+      ],
+      "rom": "130KB",
+      "ram": "~337KB",
+      "output": [
+        "ai_server",
+        "ai_communication_adapter.a"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function",
+          "iniparser"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "hilog",
+          "utils_base",
+          "ipc_lite",
+          "samgr_lite"
+        ]
+      }
+    }
+  ]
+}

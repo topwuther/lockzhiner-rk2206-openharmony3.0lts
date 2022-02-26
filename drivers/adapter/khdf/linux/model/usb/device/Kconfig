@@ -1,0 +1,6 @@
+config DRIVERS_HDF_USB_F_GENERIC
+    bool "Enable F_GENERIC driver"
+    default y
+    depends on DRIVERS_HDF
+    help
+        Answer Y to choice HDF USB F_GENERIC driver.

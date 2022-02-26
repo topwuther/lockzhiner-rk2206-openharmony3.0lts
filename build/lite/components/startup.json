@@ -1,0 +1,140 @@
+{
+  "components": [
+    {
+      "component": "syspara_lite",
+      "discription": "",
+      "optional": "true",
+      "dirs": [
+        "base/startup/syspara_lite"
+      ],
+      "targets": [
+        "//base/startup/syspara_lite/frameworks/parameter",
+        "//base/startup/syspara_lite/frameworks/token"
+      ],
+      "rom": "23KB",
+      "ram": "",
+      "output": [
+        "libhal_sysparam.so",
+        "libsysparam.so",
+        "libtoken.a",
+        "libtoken.so"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "liteos_m",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "utils_base"
+        ]
+      }
+    },
+    {
+      "component": "bootstrap_lite",
+      "discription": "",
+      "optional": "true",
+      "dirs": [
+        "base/startup/bootstrap_lite"
+      ],
+      "targets": [
+        "//base/startup/bootstrap_lite/services/source:bootstrap"
+      ],
+      "rom": "14KB",
+      "ram": "~128KB",
+      "output": [
+        "libbootstrap.a"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "liteos_m",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "third_party": [
+          "bounds_checking_function"
+        ],
+        "kernel_special": {},
+        "board_special": {},
+        "components": [
+          "utils_base",
+          "samgr_lite"
+        ]
+      }
+    },
+    {
+      "component": "init_lite",
+      "discription": "",
+      "optional": "false",
+      "dirs": [
+        "base/startup/init_lite"
+      ],
+      "targets": [
+        "//base/startup/init_lite/services:init_lite"
+      ],
+      "rom": "31KB",
+      "ram": "~200KB",
+      "output": [
+        "init"
+      ],
+      "adapted_kernel": [
+        "liteos_a",
+        "linux"
+      ],
+      "features": [],
+      "deps": {
+        "components": [
+          "syspara_lite"
+        ],
+        "third_party": [
+          "bounds_checking_function",
+          "cjson"
+        ]
+      }
+    },
+    {
+        "component": "appspawn_lite",
+        "discription": "",
+        "optional": "true",
+        "dirs": [
+          "base/startup/appspawn_lite"
+        ],
+        "targets": [
+          "//base/startup/appspawn_lite/services:appspawn_lite"
+        ],
+        "rom": "26KB",
+        "ram": "~1.8M",
+        "output": [ "appspawn" ],
+        "adapted_kernel": [
+          "liteos_a",
+          "linux"
+        ],
+        "features": [],
+        "deps": {
+          "third_party": [
+            "bounds_checking_function",
+            "cjson"
+          ],
+          "kernel_special": {},
+          "board_special": {},
+          "components": [
+            "hilog_lite",
+            "samgr_lite",
+            "ipc_lite",
+            "kv_store",
+            "aafwk_lite",
+            "ace_engine_lite",
+            "surface",
+            "ui"
+          ]
+        }
+      }
+  ]
+}

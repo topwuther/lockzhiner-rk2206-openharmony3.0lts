@@ -1,0 +1,61 @@
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type hiview_exec, exec_type, file_type, system_file_type;
+type hiview, coredomain, domain, mlstrustedsubject;
+type hisysevent, file_type, coredomain_socket, mlstrustedobject;
+domain_auto_trans(init, hiview_exec, hiview);
+
+allow appdomain faultlogger_log_file:file r_file_perms;
+allow appdomain faultlogger_temp_file:file w_file_perms;
+allow crash_dump hiviewdfx_faultlogger_service:service_manager { find };
+allow hiview hiviewdfx_faultlogger_service:service_manager { add find };
+allow hiview hiview_service:binder { call };
+allow hiview hiview_service:service_manager { add find };
+allow hiview activity_service:service_manager { find };
+allow hiview package_service:service_manager { find };
+allow hiview samgrservice:service_manager { find };
+allow hiview samgr:binder { call transfer };
+allow hiview samgr:file { read open write };
+allow hiview servicemanager:binder { call };
+allow hiview rootfs:dir { read write };
+domain_trans(init, samain_exec, hiview);
+
+allow hiview faultlogger_log_file:dir create_dir_perms;
+allow hiview faultlogger_log_file:file create_file_perms;
+allow hiview faultlogger_core_file:dir create_dir_perms;
+allow hiview faultlogger_core_file:file create_file_perms;
+allow hiview faultlogger_temp_file:dir create_dir_perms;
+allow hiview faultlogger_temp_file:file create_file_perms;
+
+allow hiview shell:fd { use };
+allow hiview shell:fifo_file { write };
+
+allow hiview hisysevent:unix_dgram_socket { rw_socket_perms_no_ioctl };
+allow hiview hisysevent:sock_file { create_file_perms };
+
+binder_call(samgr, hiview);
+binder_call(appdomain, hiview);
+binder_call(crash_dump, hiview);
+binder_call(crash_dump, hiviewdfx_faultlogger_service);
+binder_call(hiview, servicemanager);
+binder_call(hiview, package_service);
+binder_call(hiview, activity_service);
+binder_call(hiview, system_server);
+
+define(`use_hisysevent', `
+	allow $1 hisysevent:sock_file { write };
+	allow $1 hiview:unix_dgram_socket { sendto };
+	')
+
+use_hisysevent({ shell })

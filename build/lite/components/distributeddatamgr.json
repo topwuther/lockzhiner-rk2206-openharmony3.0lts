@@ -1,0 +1,38 @@
+{
+    "components": [
+    {
+        "component": "dbm_kv_store",
+        "discription": "it supports storage of local lightweight key-value pairs",
+        "optional": "true",
+        "dirs": [
+          "foundation/distributeddatamgr/appdatamgr/interfaces/innerkits/dbm_kv_store",
+          "foundation/distributeddatamgr/appdatamgr/frameworks/innerkitsimpl/dbm_kv_store"
+        ],
+        "targets": [
+          "//foundation/distributeddatamgr/appdatamgr/frameworks/innerkitsimpl/dbm_kv_store:dbm_kv_store"
+        ],
+	"rom": "13KB",
+        "ram": "80k",
+        "output": [
+          "libdbm_kv_store.so",
+          "libdbm_kv_store.a"
+        ],
+        "adapted_kernel": [
+          "liteos_a",
+          "liteos_m",
+          "linux"
+        ],
+        "features": [],
+        "deps": {
+          "third_party": [
+            "bounds_checking_function"
+          ],
+          "kernel_special": {},
+          "board_special": {},
+          "components": [
+            "utils_base"
+          ]
+        }
+      }
+    ]
+  }
