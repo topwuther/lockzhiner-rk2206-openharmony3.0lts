@@ -2,20 +2,20 @@
 
 | 目录名    | 描述                                                                                                                                                 |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| board     | [小凌派-RK2206开发板原理图](/vendor/lockzhiner/rk2206/docs/board/硬件原理图/小凌派开发板原理图/小凌派开发板底板原理图.pdf)、硬件资料、[视频课程配套PPT] |
-| datasheet | 数据手册                                                                                                                                             |
+| board     | [小凌派-RK2206开发板原理图](/vendor/lockzhiner/rk2206/docs/board/硬件原理图/小凌派开发板原理图/小凌派开发板底板原理图.pdf)、[硬件资料](/vendor/lockzhiner/rk2206/docs/board/硬件原理图/小凌派开发板原理图)、[视频课程配套PPT](/vendor/lockzhiner/rk2206/docs/board/课程配套PPT) 等等 |
+| datasheet | [数据手册](/vendor/lockzhiner/rk2206/docs/datasheet)                                                                                                                                             |
 | figures   | 资料图库                                                                                                                                             |
 
 ## 资料导航
 
 | No | 类别           | 路径                                                         |
 | -- | -------------- | ------------------------------------------------------------ |
-| 1  | 开发板硬件资料 | [/vendor/lockzhiner/rk2206/docs/board/硬件原理图/]           |
+| 1  | 开发板硬件资料 | [硬件原理图](/vendor/lockzhiner/rk2206/docs/board/硬件原理图)           |
 | 2  | 快速上手教程   | [教程](/vendor/lockzhiner/rk2206/README.md) |
 | 3  | 案例代码列表   | [案例](/vendor/lockzhiner/rk2206/samples/README.md)                         |
-| 4  | 视频学习地址   |                                      |
+| 4  | 视频学习地址   | 暂无                                    |
 | 5  | 视频课程PPT    | [课程配套PPT](/vendor/lockzhiner/rk2206/docs/board/课程配套PPT)          |
-| 6  | 常见问题       |                                                              |
+| 6  | 常见问题       | 暂无                                                          |
 
 ## 一、小凌派-RK2206开发板介绍
 
@@ -42,7 +42,7 @@
 如果您想学习HarmonyOS系统的环境搭建，并想了解整个从0到1的过程，建议您跟着我们一步一步的学习。
 需要告诉您的是，HarmonyOS系统的环境搭建所涉及的领域及组件会比较多，您需要严格按照我们的教程执行每一步，否则可能会出现不能预知的错误。
 
-1、文档系列（Gitee）
+1、[文档系列（Gitee）](/vendor/lockzhiner/rk2206/docs/board/课程配套PPT)
 
 ## 四、小凌派-RK2206开发板 案例开发
 
