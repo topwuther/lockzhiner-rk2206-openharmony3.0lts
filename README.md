@@ -11,10 +11,10 @@
 | No | 类别           | 路径                                                         |
 | -- | -------------- | ------------------------------------------------------------ |
 | 1  | 开发板硬件资料 | [/vendor/lockzhiner/rk2206/docs/board/硬件原理图/]           |
-| 2  | 快速上手教程   | [/vendor/lockzhiner/rk2206/README.md](/vendor/lockzhiner/rk2206/README.md) |
-| 3  | 案例代码列表   | [/vendor/lockzhiner/rk2206/samples/]                         |
-| 4  | 视频学习地址   | [](http://www.baidu.com)                                     |
-| 5  | 视频课程PPT    | [/vendor/lockzhiner/rk2206/docs/board/课程配套PPT/]          |
+| 2  | 快速上手教程   | [教程](/vendor/lockzhiner/rk2206/README.md) |
+| 3  | 案例代码列表   | [案例](/vendor/lockzhiner/rk2206/samples/README.md)                         |
+| 4  | 视频学习地址   |                                      |
+| 5  | 视频课程PPT    | [课程配套PPT](/vendor/lockzhiner/rk2206/docs/board/课程配套PPT)          |
 | 6  | 常见问题       |                                                              |
 
 ## 一、小凌派-RK2206开发板介绍
@@ -35,7 +35,7 @@
 
 1、文档（Gitee）
 
-* [编译环境搭建](/device/rockchip/README.md)
+* [编译环境搭建](/vendor/lockzhiner/rk2206/README.md)
 
 ## 三、手把手教程系列
 
@@ -109,3 +109,4 @@
 ## 七、联系我们
 
 QQ群：982739783
+
