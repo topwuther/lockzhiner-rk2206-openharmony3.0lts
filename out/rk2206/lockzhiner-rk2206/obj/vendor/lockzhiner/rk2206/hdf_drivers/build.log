@@ -1,3 +1,0 @@
-cp -f /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_BUILD.gn /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/drivers/adapter/khdf/liteos_m/platform/BUILD.gn
-cmd:sh /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206/hdf_drivers/copy.sh /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206/hdf_drivers/khdf_platform_BUILD.gn /svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/drivers/adapter/khdf/liteos_m/platform/BUILD.gn
-cost time:0:00:00

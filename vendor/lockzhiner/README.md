@@ -18,7 +18,7 @@ vendor/lockzhiner/                  --- vendor_lockzhiner 仓库路径
 
 ## 安装教程
 
-参考 [小凌派-RK2206开发板安装教程](https://gitee.com/openharmony-sig/device_soc_rockchip/README.md)
+参考 [小凌派-RK2206开发板安装教程](/vendor/lockzhiner/rk2206/README.md)
 
 ## 使用说明
 
@@ -31,3 +31,4 @@ vendor/lockzhiner/                  --- vendor_lockzhiner 仓库路径
 ## 相关仓
 
 [device/rockchip](https://gitee.com/openharmony/device_rockchip/README.md)
+

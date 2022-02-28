@@ -4,7 +4,7 @@
 
 本例程演示如何在小凌派-RK2206开发板上使用鸿蒙LiteOS-M内核接口，进行事件编程开发。例程创建一个队列，两个任务；任务1调用读事件接口等待事件通知，任务2调用写事件接口通知任务1事件到达。
 
-![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.png)
+![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.jpg)
 
 ## 程序设计
 

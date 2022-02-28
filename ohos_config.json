@@ -1,9 +1,0 @@
-{
-  "root_path": "/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts",
-  "board": "rk2206",
-  "kernel": "liteos_m",
-  "product": "lockzhiner-rk2206",
-  "product_path": "/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/vendor/lockzhiner/rk2206",
-  "device_path": "/svn/mouxian/work/lockzhiner-rk2206-openharmony3.0lts/device/rockchip/rk2206/sdk_liteos",
-  "patch_cache": null
-}

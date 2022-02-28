@@ -4,7 +4,7 @@
 
 本例程演示如何在小凌派-RK2206开发板上使用鸿蒙LiteOS-M内核接口，通过信号量控制不同的线程，实现任务之间的同步。
 
-![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.png)
+![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.jpg)
 
 ## 程序设计
 

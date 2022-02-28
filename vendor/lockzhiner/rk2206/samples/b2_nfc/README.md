@@ -2,7 +2,7 @@
 
 本示例将演示如何在小凌派-RK2206开发板控制NFC
 
-![小凌派-RK2206](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.png)
+![小凌派-RK2206](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.jpg)
 
 ## 程序设计
 
