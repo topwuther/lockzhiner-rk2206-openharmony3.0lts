@@ -329,7 +329,7 @@ unsigned int eeprom_write(unsigned int addr, unsigned char *data, unsigned int d
     
     /* 判断addr + data_len是否是页地址 */
     page_end = (addr + data_len) / EEPROM_PAGE;
-    if ((addr + data_len) / EEPROM_PAGE != 0)
+    if ((addr + data_len) % EEPROM_PAGE != 0)
     {
         page_end += 1;
         is_data_back = 1;

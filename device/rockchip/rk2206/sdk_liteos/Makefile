@@ -75,7 +75,7 @@ common_LIBS = \
 -lboard        -lcpup          -lhievent_lite   -lmbedtls          -lsamgr          -ltrans_service \
 -ldiscovery     -lhal_sysparam      -lhilog_lite     -lmusl-c           -lsamgr_adapter  -lutils \
 -llwip          -lhal_token_static  -lhiview_lite    -lmusl-m           -lsamgr_source   -lutils_kv_store \
--lpahomqtt_static -llittlefs
+-lpahomqtt_static -llzlittlefs
 LIBS= -Wl,--start-group \
       -Wl,--whole-archive $(boot_LIBS) $(hardware_LIBS) $(hdf_LIBS) $(app_LIBS) -Wl,--no-whole-archive \
       $(common_LIBS) \

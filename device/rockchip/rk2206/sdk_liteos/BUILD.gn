@@ -34,7 +34,7 @@ lite_component("sdk") {
     "//device/rockchip/rk2206/adapter/hals/update:hal_update_static",
     # xts
     "//base/update/ota_lite/frameworks/source:hota",
-    "//kernel/liteos_m/components/fs/littlefs:littlefs",
+    "../third_party/littlefs:lzlittlefs",
     "//build/lite/config/component/cJSON:cjson_static",
     "../third_party/lwip:rk2206_lwip",
     "//kernel/liteos_m/components/net/lwip-2.1:lwip",
