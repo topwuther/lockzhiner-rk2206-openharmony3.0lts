@@ -282,10 +282,10 @@ unsigned int eeprom_read(unsigned int addr, unsigned char *data, unsigned int da
 unsigned int eeprom_write(unsigned int addr, unsigned char *data, unsigned int data_len)
 {
     unsigned int ret = 0;
-    unsigned int offset_current;
+    unsigned int offset_current = 0;
     unsigned int page_start, page_end;
-    unsigned char is_data_front;
-    unsigned char is_data_back;
+    unsigned char is_data_front = 0;
+    unsigned char is_data_back = 0;
     unsigned int len;
 
     if (addr >= EEPROM_ADDRESS_MAX) {

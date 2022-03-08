@@ -12,13 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <math.h>
-#include "lz_hardware.h"
-#include "ohos_init.h"
+#include "cmsis_os2.h"
+#include "config_network.h"
 
 #include "e53_intelligent_smoke_sensation.h"
 #include "eeprom.h"
@@ -112,7 +107,6 @@ typedef union
         } rw;
     };
 } GRF_SOC_CON29;
-#define GRF_SOC_CON29_OFFSET 0X0274  //偏移值
 
 
 static iss_eeprom_data_s m_iss_eeprom_data =
@@ -189,7 +183,7 @@ static uint32_t iss_adc_dev_init(iss_mq2_dev_s *adc)
         return 1;
     }
     
-    volatile GRF_SOC_CON29 *soc = (GRF_SOC_CON29*)(0x41050000U + GRF_SOC_CON29_OFFSET);
+    volatile GRF_SOC_CON29 *soc = (GRF_SOC_CON29*)&GRF->SOC_CON29;
     /*配置ADC外部参考电压grf_saradc_vol_sel=0，内部参考电压grf_saradc_vol_sel=1,rw.grf_saradc_vol_sel对应位写使能*/
     soc->rw.grf_saradc_vol_sel = 1;
     soc->grf_saradc_vol_sel    = 0;
@@ -306,27 +300,27 @@ static void eeprom_test(void)
 {
     int i = 0;
     uint8_t temp = 255;
-
-    for(i = 0; i < 256; i++)
+    
+    for (i = 0; i < 256; i++)
     {
-        if(eeprom_writebyte(i, i) != 1)
+        if (eeprom_writebyte(i, i) != 1)
         {
             printf("\n\nwrite eeprom data failed\n\n");
             return;
         }
-        if(eeprom_readbyte(i,&temp) != 1)
+        if (eeprom_readbyte(i, &temp) != 1)
         {
             printf("\n\nread eeprom data failed\n\n");
             return;
         }
-        if(temp != i)
+        if (temp != i)
         {
             printf("\n\nread eeprom data error write:%02x, read:%02x\n\n", i, temp);
             return;
         }
     }
     printf("\n\neeprom data read and write success\n\n");
-
+    
 }
 /***************************************************************
 * 函数名称: iss_save_default_param
@@ -397,9 +391,9 @@ static uint32_t iss_param_init(void)
         return 1;
     }
     printf("\n\neeprom data:%08x %04x %04x %08x %04x %04x %04x %04x %04x %04x\n\n", m_iss_eeprom_data.head, m_iss_eeprom_data.sn, m_iss_eeprom_data.mqdata,
-    m_iss_eeprom_data.beepdata, m_iss_eeprom_data.leddata, m_iss_eeprom_data.reserve[0], m_iss_eeprom_data.reserve[1],
-     m_iss_eeprom_data.reserve[2],  m_iss_eeprom_data.reserve[3], m_iss_eeprom_data.crc);
-
+           m_iss_eeprom_data.beepdata, m_iss_eeprom_data.leddata, m_iss_eeprom_data.reserve[0], m_iss_eeprom_data.reserve[1],
+           m_iss_eeprom_data.reserve[2],  m_iss_eeprom_data.reserve[3], m_iss_eeprom_data.crc);
+           
     /*读成功时防止保存的参数是异常值*/
     if (m_iss_eeprom_data.beepdata < 1000 || m_iss_eeprom_data.beepdata > 100000000)
     {
@@ -473,7 +467,7 @@ static uint32_t iss_pwm_stop(iss_pwm_dev_s *pwm)
         printf("PWM not init\n");
         return 1;
     }
-    else if(pwm->onoff == 0)
+    else if (pwm->onoff == 0)
     {
         return 0;
     }
