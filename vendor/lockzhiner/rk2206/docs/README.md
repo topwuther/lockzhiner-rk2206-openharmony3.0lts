@@ -14,7 +14,7 @@
 | 2  | 快速上手教程   | [教程](/vendor/lockzhiner/rk2206/README.md) |
 | 3  | 案例代码列表   | [案例](/vendor/lockzhiner/rk2206/samples/README.md)                         |
 | 4  | 视频学习地址   | [视频地址](https://www.bilibili.com/medialist/play/1360647720?from=space&business=space_series&business_id=2088027&desc=1)                                    |
-| 5  | 视频课程PPT    | [课程配套课件](/vendor/lockzhiner/rk2206/docs/board/课程配套课件)          |
+| 5  | 视频课程课件    | [课程配套课件](/vendor/lockzhiner/rk2206/docs/board/课程配套课件)          |
 | 6  | 常见问题       | 暂无                                                          |
 
 ## 一、小凌派-RK2206开发板介绍
