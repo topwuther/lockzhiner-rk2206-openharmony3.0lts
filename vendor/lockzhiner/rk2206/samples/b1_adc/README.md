@@ -48,7 +48,7 @@ static float adc_get_voltage()
 
 #### adc初始化源代码分析
 
-这部分代码为i2c初始化的代码。首先用 `DevIoInit()` 函数将 `GPIO0_PC5`复用为 `SRADC5`。然后调用 `LzSaradcInit()`函数初始化ADC5端口。最后设置寄存器 `GRF_SOC_CON29`的 `bit[4] = 0`，即ADC的基准电压以AVDD（芯片外接地）为准。
+这部分代码为adc初始化的代码。首先用 `DevIoInit()` 函数将 `GPIO0_PC5`复用为 `SRADC5`。然后调用 `LzSaradcInit()`函数初始化ADC5端口。最后设置寄存器 `GRF_SOC_CON29`的 `bit[4] = 0`，即ADC的基准电压以AVDD（芯片外接地）为准。
 
 ```c
 /***************************************************************
