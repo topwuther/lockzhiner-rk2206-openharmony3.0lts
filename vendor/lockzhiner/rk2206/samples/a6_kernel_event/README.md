@@ -171,28 +171,22 @@ void event_master_thread()
             printf("%s write event failed ret:0x%x\n", __func__, ret);
         }
 
+        /*delay 1s*/
         LOS_Msleep(2000);
         LOS_EventClear(&m_event, ~m_event.uwEventID);
     }
 }
 
-void event_master_thread()
+void event_slave_thread()
 {
-    unsigned int ret = LOS_OK;
-
-    LOS_Msleep(1000);
+    unsigned int event;
 
     while (1)
     {
-        printf("%s write event:0x%x\n", __func__, EVENT_WAIT);
-        ret = LOS_EventWrite(&m_event, EVENT_WAIT);
-        if (ret != LOS_OK) {
-            printf("%s write event failed ret:0x%x\n", __func__, ret);
-        }
-
-        /*delay 1s*/
-        LOS_Msleep(2000);
-        LOS_EventClear(&m_event, ~m_event.uwEventID);
+        /* 阻塞方式读事件，等待事件到达*/
+        event = LOS_EventRead(&m_event, EVENT_WAIT, LOS_WAITMODE_AND, LOS_WAIT_FOREVER);
+        printf("%s read event:0x%x\n", __func__, event);
+        LOS_Msleep(1000);
     }
 }
 ```
