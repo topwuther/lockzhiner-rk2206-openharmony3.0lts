@@ -42,8 +42,6 @@ int MQTTDeserialize_publish(unsigned char* dup, int* qos, unsigned char* retaine
 	int rc = 0;
 	int mylen = 0;
 
-	buflen = buflen;
-
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
 	if (header.bits.type != PUBLISH)
@@ -88,8 +86,6 @@ int MQTTDeserialize_ack(unsigned char* packettype, unsigned char* dup, unsigned 
 	unsigned char* enddata = NULL;
 	int rc = 0;
 	int mylen;
-
-	buflen = buflen;
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);

@@ -124,7 +124,7 @@ static int readPacket(MQTTClient* c, Timer* timer)
     decodePacket(c, &rem_len, TimerLeftMS(timer));
     len += MQTTPacket_encode(c->readbuf + 1, rem_len); /* put the original remaining length back into the buffer */
 
-    if ((unsigned int)rem_len > (c->readbuf_size - len))
+    if (rem_len > (c->readbuf_size - len))
     {
         rc = BUFFER_OVERFLOW;
         goto exit;
@@ -216,29 +216,18 @@ int keepalive(MQTTClient* c)
     if (c->keepAliveInterval == 0)
         goto exit;
 
-    // If we are waiting for a ping response, check if it has been too long
-    if ( c->ping_outstanding == 1 ){
-        if ( TimerIsExpired(&c->pingresp_timer) ){
+    if (TimerIsExpired(&c->last_sent) || TimerIsExpired(&c->last_received))
+    {
+        if (c->ping_outstanding)
             rc = FAILURE; /* PINGRESP not received in keepalive interval */
-            goto exit;
-        }
-    }
-    else{
-        // If we have not sent or received anything in the timeout period,
-        // send out a ping request
-        if ( TimerIsExpired(&c->last_sent) || TimerIsExpired(&c->last_received) )
+        else
         {
             Timer timer;
             TimerInit(&timer);
             TimerCountdownMS(&timer, 1000);
             int len = MQTTSerialize_pingreq(c->buf, c->buf_size);
-            if (len > 0 && (rc = sendPacket(c, len, &timer)) == SUCCESS){ // send the ping packet
-                // send the ping packet
-                // Expect the PINGRESP within 2 seconds of the PINGREQ
-                // being sent
-                TimerCountdownMS(&c->pingresp_timer, 2000 );
+            if (len > 0 && (rc = sendPacket(c, len, &timer)) == SUCCESS) // send the ping packet
                 c->ping_outstanding = 1;
-            }
         }
     }
 
@@ -388,7 +377,6 @@ void MQTTRun(void* parm)
 #endif
 		TimerCountdownMS(&timer, 500); /* Don't wait too long if no traffic is incoming */
 		cycle(c, &timer);
-
 #if defined(MQTT_TASK)
 		MqttMutexUnlock(&c->mutex);
 #endif

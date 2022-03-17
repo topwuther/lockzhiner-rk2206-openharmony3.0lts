@@ -1,17 +1,17 @@
 /*
-* Copyright (c) 2021 LOCKZHINER Electronic Co., Ltd.
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (c) 2022 FuZhou Lockzhiner Electronic Co., Ltd. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <stdio.h>
 
@@ -271,7 +271,7 @@ static void e53_iv01_deinit_pwm()
 
 /***************************************************************
  * 函数名称: e53_iv01_init_interrupt
- * 说    明: 初始化GPIO中断
+ * 说    明: 初始化外部高电平GPIO
  * 参    数: 无
  * 返 回 值: 无
  ***************************************************************/
@@ -282,7 +282,7 @@ static void e53_iv01_init_interrupt()
     /* 创建信号量 */
     LOS_SemCreate(0, &m_task_sem);
     
-    /* Echo引脚设置为GPIO输出模式 */
+    /* Echo引脚设置为GPIO输入模式 */
     PinctrlSet(E53_IV01_ECHO0_GPIO, MUX_FUNC0, PULL_KEEP, DRIVE_KEEP);
     LzGpioInit(E53_IV01_ECHO0_GPIO);
     LzGpioSetDir(E53_IV01_ECHO0_GPIO, LZGPIO_DIR_IN);

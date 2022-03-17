@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 LOCKZHINER Electronic Co., Ltd.
+ * Copyright (c) 2022 FuZhou Lockzhiner Electronic Co., Ltd. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at

@@ -138,7 +138,6 @@ int MQTTDeserialize_connack(unsigned char* sessionPresent, unsigned char* connac
 	int mylen;
 	MQTTConnackFlags flags = {0};
 
-	buflen = buflen;
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);

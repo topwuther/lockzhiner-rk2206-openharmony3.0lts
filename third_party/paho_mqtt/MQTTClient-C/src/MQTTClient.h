@@ -126,7 +126,7 @@ typedef struct MQTTClient
     void (*defaultMessageHandler) (MessageData*);
 
     Network* ipstack;
-    Timer last_sent, last_received, pingresp_timer;
+    Timer last_sent, last_received;
 #if defined(MQTT_TASK)
     Mutex mutex;
     Thread thread;

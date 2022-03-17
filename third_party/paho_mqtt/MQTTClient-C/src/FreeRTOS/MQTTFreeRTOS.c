@@ -15,7 +15,7 @@
  *    Ian Craggs - convert to FreeRTOS
  *******************************************************************************/
 
-#include "MQTTLiteOS.h"
+#include "MQTTFreeRTOS.h"
 
 
 int ThreadStart(Thread* thread, void (*fn)(void*), void* arg)
@@ -35,16 +35,68 @@ int ThreadStart(Thread* thread, void (*fn)(void*), void* arg)
 }
 
 
+void MutexInit(Mutex* mutex)
+{
+	mutex->sem = xSemaphoreCreateMutex();
+}
+
+int MutexLock(Mutex* mutex)
+{
+	return xSemaphoreTake(mutex->sem, portMAX_DELAY);
+}
+
+int MutexUnlock(Mutex* mutex)
+{
+	return xSemaphoreGive(mutex->sem);
+}
+
+
+void TimerCountdownMS(Timer* timer, unsigned int timeout_ms)
+{
+	timer->xTicksToWait = timeout_ms / portTICK_PERIOD_MS; /* convert milliseconds to ticks */
+	vTaskSetTimeOutState(&timer->xTimeOut); /* Record the time at which this function was entered. */
+}
+
+
+void TimerCountdown(Timer* timer, unsigned int timeout) 
+{
+	TimerCountdownMS(timer, timeout * 1000);
+}
+
+
+int TimerLeftMS(Timer* timer) 
+{
+	xTaskCheckForTimeOut(&timer->xTimeOut, &timer->xTicksToWait); /* updates xTicksToWait to the number left */
+	return (timer->xTicksToWait < 0) ? 0 : (timer->xTicksToWait * portTICK_PERIOD_MS);
+}
+
+
+char TimerIsExpired(Timer* timer)
+{
+	return xTaskCheckForTimeOut(&timer->xTimeOut, &timer->xTicksToWait) == pdTRUE;
+}
+
+
+void TimerInit(Timer* timer)
+{
+	timer->xTicksToWait = 0;
+	memset(&timer->xTimeOut, '\0', sizeof(timer->xTimeOut));
+}
 
 
 int FreeRTOS_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 {
+	TickType_t xTicksToWait = timeout_ms / portTICK_PERIOD_MS; /* convert milliseconds to ticks */
+	TimeOut_t xTimeOut;
 	int recvLen = 0;
 
+	vTaskSetTimeOutState(&xTimeOut); /* Record the time at which this function was entered. */
 	do
 	{
 		int rc = 0;
-		rc = recv(n->my_socket, buffer + recvLen, len - recvLen, 0);
+
+		FreeRTOS_setsockopt(n->my_socket, 0, FREERTOS_SO_RCVTIMEO, &xTicksToWait, sizeof(xTicksToWait));
+		rc = FreeRTOS_recv(n->my_socket, buffer + recvLen, len - recvLen, 0);
 		if (rc > 0)
 			recvLen += rc;
 		else if (rc < 0)
@@ -52,7 +104,7 @@ int FreeRTOS_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 			recvLen = rc;
 			break;
 		}
-	} while (recvLen < len);
+	} while (recvLen < len && xTaskCheckForTimeOut(&xTimeOut, &xTicksToWait) == pdFALSE);
 
 	return recvLen;
 }
@@ -60,13 +112,17 @@ int FreeRTOS_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 
 int FreeRTOS_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
 {
+	TickType_t xTicksToWait = timeout_ms / portTICK_PERIOD_MS; /* convert milliseconds to ticks */
+	TimeOut_t xTimeOut;
 	int sentLen = 0;
 
+	vTaskSetTimeOutState(&xTimeOut); /* Record the time at which this function was entered. */
 	do
 	{
 		int rc = 0;
 
-		rc = send(n->my_socket, buffer + sentLen, len - sentLen, 0);
+		FreeRTOS_setsockopt(n->my_socket, 0, FREERTOS_SO_RCVTIMEO, &xTicksToWait, sizeof(xTicksToWait));
+		rc = FreeRTOS_send(n->my_socket, buffer + sentLen, len - sentLen, 0);
 		if (rc > 0)
 			sentLen += rc;
 		else if (rc < 0)
@@ -74,7 +130,7 @@ int FreeRTOS_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
 			sentLen = rc;
 			break;
 		}
-	} while (sentLen < len);
+	} while (sentLen < len && xTaskCheckForTimeOut(&xTimeOut, &xTicksToWait) == pdFALSE);
 
 	return sentLen;
 }
@@ -107,12 +163,12 @@ int NetworkConnect(Network* n, char* addr, int port)
 	sAddr.sin_port = FreeRTOS_htons(port);
 	sAddr.sin_addr = ipAddress;
 
-	if ((n->my_socket = socket(FREERTOS_AF_INET, FREERTOS_SOCK_STREAM, FREERTOS_IPPROTO_TCP)) < 0)
+	if ((n->my_socket = FreeRTOS_socket(FREERTOS_AF_INET, FREERTOS_SOCK_STREAM, FREERTOS_IPPROTO_TCP)) < 0)
 		goto exit;
 
-	if ((retVal = connect(n->my_socket, &sAddr, sizeof(sAddr))) < 0)
+	if ((retVal = FreeRTOS_connect(n->my_socket, &sAddr, sizeof(sAddr))) < 0)
 	{
-		closesocket(n->my_socket);
+		FreeRTOS_closesocket(n->my_socket);
 	    goto exit;
 	}
 

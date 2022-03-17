@@ -190,13 +190,11 @@ int* sock = &mysock;
 			else
 				rc = connect(*sock, (struct sockaddr*)&address6, sizeof(address6));
 	#endif
-				printf("connect status: %d \r\n", rc);
 		}
 	}
 	if (mysock == INVALID_SOCKET)
-	{
 		return rc;
-	}
+
 	tv.tv_sec = 1;  /* 1 second Timeout */
 	tv.tv_usec = 0;  
 	setsockopt(mysock, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,sizeof(struct timeval));

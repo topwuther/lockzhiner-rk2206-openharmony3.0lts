@@ -1,9 +1,3 @@
-# 基于鸿蒙LiteOS-M内核平台的Paho MQTT库
-
-原始的 Paho MQTT源码：https://github.com/eclipse/paho.mqtt.embedded-c 
-
-鸿蒙系统相关移植文件：MQTTClient-C\src\liteOS\MQTTLiteOS.c
-
 # Eclipse Paho MQTT C/C++ client for Embedded platforms
 
 This repository contains the source code for the [Eclipse Paho](http://eclipse.org/paho) MQTT C/C++ client library for Embedded platorms.

@@ -1,4 +1,4 @@
-# Copyright (c) 2021 FuZhou LOCKZHINER Electronic Co., Ltd.
+# Copyright (c) 2022 FuZhou Lockzhiner Electronic Co., Ltd. All rights reserved.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -38,6 +38,8 @@ lite_component("app") {
         #"./c5_e53_body_induction:e53_bi_example",
         #"./c6_e53_gesture_sensor:e53_gs_example",
         #"./c7_e53_intelligent_smoke_sensor:e53_iss_example",
+        #"./c8_e53_temperature_measurement:e53_tm_example",
+        #"./c9_e53_heart_rate_detection:e53_hrd_example",
 
         # Iot云应用
         #"./d2_iot_cloud_smart_covers:iot_cloud_sc_example",

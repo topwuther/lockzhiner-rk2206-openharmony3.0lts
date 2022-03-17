@@ -39,8 +39,6 @@ int MQTTDeserialize_unsubscribe(unsigned char* dup, unsigned short* packetid, in
 	unsigned char* enddata = NULL;
 	int rc = 0;
 	int mylen = 0;
-	len = len;
-	maxcount = maxcount;
 
 	FUNC_ENTRY;
 	header.byte = readChar(&curdata);
