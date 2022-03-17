@@ -9,8 +9,6 @@
 硬件资源图如下所示：
 ![2.4寸液晶模块硬件资源](/vendor/lockzhiner/rk2206/docs/figures/2.4inch_lcd/2.4inch_lcd_resource_map.jpg)
 
-
-
 ## 硬件接口说明
 
 引脚名称开发者可在硬件资源图中查看，也可在2.4寸液晶模块背面查看。
@@ -23,20 +21,17 @@
 | SPI_CLK  | SPI时钟信号线 | 
 | SPI_CS | SPI片选信号线，低电平有效 | 
 | GND |电源地引脚 | 
-| 5V | 5V电源输入引脚 | 
-
+| 5V | 5V电源输入引脚 |
 
 ## 硬件设计
+
 硬件电路如下图所示：
 ![2.4寸液晶模块硬件电路图](/vendor/lockzhiner/rk2206/docs/figures/2.4inch_lcd/lz_hm_2.4inch_lcd_sch.jpg)
-
-
 
 ### 硬件连接
 
 安装图如下所示：
 ![2.4寸液晶模块硬件连接图](/vendor/lockzhiner/rk2206/docs/figures/2.4inch_lcd/2.4inch_lcd_connection_diagram.jpg)
-
 
 ## 程序设计
 
@@ -533,10 +528,10 @@ lcd_wr_reg(0x29);
 "./b0_lcd:lcd_example",
 ```
 
-修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-lcd_example` 参与编译。
+修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-llcd_example` 参与编译。
 
 ```r
-hardware_LIBS = -lhal_iothardware -lhardware -lcd_example
+hardware_LIBS = -lhal_iothardware -lhardware -llcd_example
 ```
 
 ### 运行结果
@@ -547,5 +542,5 @@ hardware_LIBS = -lhal_iothardware -lhardware -lcd_example
 ************Lcd Example***********
 
 ************Lcd Example***********
-
 ```
+
