@@ -246,7 +246,7 @@ ping a161b173a6.iot-mqtts.cn-north-4.myhuaweicloud.com
 
 ![华为云IP地址](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/ping.png)
 
-IP地址对应例程代码中的OC_SERVER_IP，端口号1883对于例程代码中的OC_SERVER_PORT。
+IP地址对应例程/vendor/lockzhiner/rk2206/samples/d4_iot_cloud_intelligent_vehicle/include/oc_mqtt.h代码中的OC_SERVER_IP，端口号1883对于例程代码中的OC_SERVER_PORT。
 
 ```c
 #define OC_SERVER_IP                    "121.36.42.100"
@@ -289,7 +289,7 @@ IP地址对应例程代码中的OC_SERVER_IP，端口号1883对于例程代码�
 
 ![连接信息](/vendor/lockzhiner/rk2206/docs/figures/huaweicloud/IV/id.png)
 
-修改例程代码中的CLIENT_ID、USERNAME和PASSWORD为生成的ClientId、Username和Password。
+修改例程/vendor/lockzhiner/rk2206/samples/d4_iot_cloud_intelligent_vehicle/iot_cloud_intelligent_vehicle.c代码中的CLIENT_ID、USERNAME和PASSWORD为生成的ClientId、Username和Password。
 
 ```c
 #define CLIENT_ID                       "61e7f618de9933029be38412_E53_IV_0_0_2022021902"
@@ -299,7 +299,7 @@ IP地址对应例程代码中的OC_SERVER_IP，端口号1883对于例程代码�
 
 ### WIFI连接
 
-修改例程代码中的SSID和PASSWORD为使用WIFI的SSID和密匙，用于连接网络，设备通过WIFI访问华为云。
+修改例程/device/rockchip/rk2206/sdk_liteos/board/src/config_network.c代码中的SSID和PASSWORD为使用WIFI的SSID和密匙，用于连接网络，设备通过WIFI访问华为云。
 
 ```c
 #define SSID                       "lzdz"
