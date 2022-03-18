@@ -45,8 +45,8 @@ LITE_OS_SEC_TEXT_INIT int Main(void)
         IotInit();
         OHOS_SystemInit();
         /* 开启驱动管理服务 */
-        DeviceManagerStart();
-        ExternalTaskConfigNetwork();
+        //DeviceManagerStart();
+        //ExternalTaskConfigNetwork();
         LZ_HARDWARE_LOGD(MAIN_TAG, "%s: LOS_Start ...", __func__);
         LOS_Start();
     }
