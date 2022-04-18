@@ -11,6 +11,7 @@
 
 | 编号 | 类别      | 例程名                  | 说明                                                                                                       |
 | ---- | --------- | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| A0   | 内核      | Hello World             | [Hello World](/vendor/lockzhiner/rk2206/samples/a0_hello_world/README_zh.md)     
 | A1   | 内核      | thread                  | [任务](/vendor/lockzhiner/rk2206/samples/a1_kernal_task/README_zh.md)                                            |
 | A2   | 内核      | semaphore               | [信号量](/vendor/lockzhiner/rk2206/samples/a2_kernel_semaphore/README_zh.md)                                     |
 | A3   | 内核      | timer                   | [定时器](/vendor/lockzhiner/rk2206/samples/a3_kernel_timer/README_zh.md)                                         |
