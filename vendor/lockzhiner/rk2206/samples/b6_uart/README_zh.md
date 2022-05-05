@@ -189,6 +189,7 @@ HelloWorld!
 ```
 
 注意：如果你使用MobaXterm，并且发现串口0能打印，但是换行有问题，则：
+
 （1）在MobaXterm界面中按住右边的Ctrl按键 + 右击鼠标，弹出菜单，选择`Change terminal settings...`，如下图所示：
 
 ![右击菜单图](/vendor/lockzhiner/rk2206/docs/figures/uart/MobaXterm_右击菜单.png)
