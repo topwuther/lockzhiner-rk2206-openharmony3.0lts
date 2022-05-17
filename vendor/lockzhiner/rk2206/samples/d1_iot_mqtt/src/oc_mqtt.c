@@ -114,11 +114,11 @@ static int oc_mqtt_entry(void)
 connect:
     rc = NetworkConnect(&n, OC_SERVER_IP, OC_SERVER_PORT);
     if (0 != rc) {
-        LOG_ERR("NetworkConnect %s fail rc:%d", OC_SERVER_IP, rc);
+        printf("NetworkConnect %s fail rc:%d", OC_SERVER_IP, rc);
         osDelay(2000);
         goto connect;
     } else {
-        LOG_INFO("NetworkConnect %s success", OC_SERVER_IP);
+        printf("NetworkConnect %s success", OC_SERVER_IP);
     }
 
     buf_size  = 2048;
@@ -126,7 +126,7 @@ connect:
     oc_mqtt_readbuf = (unsigned char *) malloc(buf_size);
     if (!(oc_mqtt_buf && oc_mqtt_readbuf))
     {
-        LOG_ERR("No memory for MQTT client buffer!");
+        printf("No memory for MQTT client buffer!");
         return -2;
     }
 
@@ -134,7 +134,7 @@ connect:
 
     mq_client.defaultMessageHandler = msgHandler;
 
-    LOG_INFO("test:%d %p %p\n", mq_client.defaultMessageHandler==NULL?1:0, mq_client.defaultMessageHandler, &mq_client);
+    printf("test:%d %p %p\n", mq_client.defaultMessageHandler==NULL?1:0, mq_client.defaultMessageHandler, &mq_client);
 
     MQTTStartTask(&mq_client);
 
@@ -149,7 +149,7 @@ connect:
 
     rc = MQTTConnect(&mq_client, &data);
     if (0 != rc) {
-        LOG_ERR("MQTTConnect fail rt:%d", rc);
+        printf("MQTTConnect fail rt:%d", rc);
     }
     return rc;
     
@@ -180,7 +180,7 @@ int oc_mqtt_init(void)
 
     if (init_ok)
     {
-        LOG_INFO("oc mqtt already init!");
+        printf("oc mqtt already init!");
         return 0;
     }
     if (oc_mqtt_entry() < 0)
@@ -191,12 +191,12 @@ int oc_mqtt_init(void)
     __exit:
     if (!result)
     {
-        LOG_INFO("oc package(V) initialize success.");
+        printf("oc package(V) initialize success.");
         init_ok = 0;
     }
     else
     {
-        LOG_ERR("oc package(V) initialize failed(%d).", result);
+        printf("oc package(V) initialize failed(%d).", result);
     }
     return result;
 }

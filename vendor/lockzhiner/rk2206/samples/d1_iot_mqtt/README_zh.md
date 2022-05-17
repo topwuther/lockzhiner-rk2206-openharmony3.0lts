@@ -256,10 +256,16 @@ void Iot_Mqtt_Example()
 
 ### 修改 BUILD.gn 文件
 
-修改 `vendor\lockzhiner\rk2206\samples`路径下 BUILD.gn 文件，指定 `iot_mqtt` 参与编译。
+修改 `vendor/lockzhiner/rk2206/sample` 路径下 BUILD.gn 文件，指定 `d1_iot_mqtt` 参与编译。
 
 ```r
-"iot_mqtt",
+"./d1_iot_mqtt:iot_mqtt_example",
+```
+
+修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-liot_mqtt_example` 参与编译。
+
+```r
+hardware_LIBS = -lhal_iothardware -lhardware -liot_mqtt_example
 ```
 
 ### 运行结果

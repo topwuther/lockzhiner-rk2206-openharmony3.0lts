@@ -13,9 +13,11 @@
  * limitations under the License.
 */
 
-#include "MQTTClient.h"
-#include "lz_hardware.h"
+#include <cJSON.h>
+#include "ohos_init.h"
 #include "los_task.h"
+#include "oc_mqtt.h"
+#include "MQTTClient.h"
 
 #define IOT_MQTT_EXAMPLE                        "iot_mqtt"
 
@@ -37,12 +39,12 @@ void Message_Arrived(MessageData* data)
 }
 
 /***************************************************************
-* 函数名称: Iot_Mqtt_Thread
+* 函数名称: iot_mqtt_thread
 * 说    明: iot mqtt线程
 * 参    数: 无
 * 返 回 值: 无
 ***************************************************************/
-void Iot_Mqtt_Thread()
+void iot_mqtt_thread()
 {
     int rc;
     MQTTClient client;
@@ -114,14 +116,14 @@ begin:
 * 参    数: 无
 * 返 回 值: 无
 ***************************************************************/
-void Iot_Mqtt_Example()
+void iot_mqtt_example()
 {
     unsigned int threadID;
     unsigned int ret = LOS_OK;
 
     TSK_INIT_PARAM_S task = {0};
 
-    task.pfnTaskEntry = (TSK_ENTRY_FUNC)Iot_Mqtt_Thread;
+    task.pfnTaskEntry = (TSK_ENTRY_FUNC)iot_mqtt_thread;
     task.uwStackSize = 10240;
     task.pcName = IOT_MQTT_EXAMPLE;
     task.usTaskPrio = 6;
@@ -132,3 +134,5 @@ void Iot_Mqtt_Example()
         return;
     }
 }
+
+APP_FEATURE_INIT(iot_mqtt_example);

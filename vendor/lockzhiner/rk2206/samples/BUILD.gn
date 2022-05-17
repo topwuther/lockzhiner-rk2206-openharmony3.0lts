@@ -44,6 +44,7 @@ lite_component("app") {
         #"./c9_e53_heart_rate_detection:e53_hrd_example",
 
         # Iot云应用
+        #"./d1_iot_mqtt:iot_mqtt_example",
         #"./d2_iot_cloud_smart_covers:iot_cloud_sc_example",
         #"./d3_iot_cloud_intelligent_street_lamp:iot_cloud_isl_example",
         #"./d4_iot_cloud_intelligent_vehicle:iot_cloud_iv_example",
