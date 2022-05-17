@@ -21,6 +21,7 @@
 
 #ifndef LZ_HARDWARE_PWM_H
 #define LZ_HARDWARE_PWM_H
+typedef void (*PwmIsrFunc) (void *arg);
 
 typedef enum _LZ_HARDWARE_PWM_CHN
 {
@@ -114,6 +115,56 @@ unsigned int LzPwmStart(unsigned int port, unsigned int duty, unsigned int cycle
  * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
  */
 unsigned int LzPwmStop(unsigned int port);
+
+/**
+ * @brief Enables the interrupt feature for a PWM device.
+ *
+ * This function can be used to set the interrupt type, interrupt polarity, and interrupt callback for a PWM device.
+ *
+ * @param port Indicates the port number of the PWM device.
+ * @param func Indicates the interrupt callback function.
+ * @param arg Indicates the pointer to the argument used in the interrupt callback function.
+ * @return Returns {@link LZ_HARDWARE_SUCCESS} if the interrupt feature is enabled;
+ * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
+ */
+unsigned int LzPwmRegisterIsrFunc(unsigned int port, PwmIsrFunc func, void *arg);
+
+/**
+ * @brief Disables the interrupt feature for a PWM device.
+ *
+ * @param port Indicates the port number of the PWM device.
+ * @return Returns {@link LZ_HARDWARE_SUCCESS} if the interrupt feature is disabled;
+ * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
+ */
+unsigned int LzPwmUnregisterIsrFunc(unsigned int port);
+
+/**
+ * @brief Enable the interrupt for a PWM device.
+ *
+ * @param port Indicates the port number of the PWM device.
+ * @return Returns {@link LZ_HARDWARE_SUCCESS} if the interrupt feature is masked;
+ * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
+ */
+unsigned int LzPwmEnableIsr(unsigned int port);
+
+/**
+ * @brief Disable the interrupt for a PWM device.
+ *
+ * @param port Indicates the port number of the PWM device.
+ * @return Returns {@link LZ_HARDWARE_SUCCESS} if the interrupt feature is masked;
+ * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
+ */
+unsigned int LzPwmDisableIsr(unsigned int port);
+
+/**
+ * @brief SET the MODE for a PWM device.
+ *
+ * @param port Indicates the port number of the PWM device.
+ * @param Working mode of the PWM device.
+ * @return Returns {@link LZ_HARDWARE_SUCCESS} if the interrupt feature is masked;
+ * returns {@link LZ_HARDWARE_FAILURE} otherwise. For details about other return values, see the chip description.
+ */
+unsigned int LzPwmSetMode(unsigned int port, LzPwmMode mode);
 
 #endif
 /** @} */

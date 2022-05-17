@@ -47,9 +47,9 @@ typedef enum {
  */
 typedef enum {
     /** 1 stop bit */
-    UART_STOP_BIT_1 = 1,
+    UART_STOP_BIT_1 = 0,
     /** 2 stop bits */
-    UART_STOP_BIT_2 = 2,
+    UART_STOP_BIT_2 = 1,
 } UartStopBit;
 
 /**
@@ -59,12 +59,12 @@ typedef enum {
  * @version 2.2
  */
 typedef enum {
-    /** No parity */
-    UART_PARITY_NONE = 0,
     /** Odd parity */
-    UART_PARITY_ODD = 1,
+    UART_PARITY_ODD = 0,
     /** Even parity */
-    UART_PARITY_EVEN = 2,
+    UART_PARITY_EVEN = 1,
+    /** No parity */
+    UART_PARITY_NONE = 2,
 } UartParity;
 
 /**
