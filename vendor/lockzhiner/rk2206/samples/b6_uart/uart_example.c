@@ -51,12 +51,7 @@ void uart_process(void)
     while (1)
     {
         printf("%s, %d: uart write!\n", __FILE__, __LINE__);
-        ret = LzUartWrite(UART_ID, str, strlen(str));
-        if (ret != LZ_HARDWARE_SUCCESS)
-        {
-            printf("%s, %d: LzUartInit(%d) failed!\n", __FILE__, __LINE__, ret);
-            return;
-        }
+        LzUartWrite(UART_ID, str, strlen(str));
 
         LOS_Msleep(2000);
     }
