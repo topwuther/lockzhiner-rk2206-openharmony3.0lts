@@ -20,21 +20,23 @@
 #include "MQTTClient.h"
 
 #define IOT_MQTT_EXAMPLE                        "iot_mqtt"
+#define MQTT_SERVER_IP                          "192.168.0.106"
+#define MQTT_SERVER_PORT                        1883
 
 static unsigned char sendBuf[1000];
 static unsigned char readBuf[1000];
 
-Network network;
+static Network network;
 
 /***************************************************************
-* 函数名称: Message_Arrived
+* 函数名称: message_receive
 * 说    明: 接收MQTT数据
 * 参    数: data:接收的数据指针
 * 返 回 值: 无
 ***************************************************************/
-void Message_Arrived(MessageData* data)
+void message_receive(MessageData* data)
 {
-    printf("Message arrived on topic %.*s: %.*s\n", data->topicName->lenstring.len, data->topicName->lenstring.data,
+    printf("message arrived on topic %.*s: %.*s\n", data->topicName->lenstring.len, data->topicName->lenstring.data,
         data->message->payloadlen, data->message->payload);
 }
 
@@ -53,6 +55,7 @@ void iot_mqtt_thread()
     MQTTString clientId = MQTTString_initializer;
     MQTTPacket_connectData data = MQTTPacket_connectData_initializer;
 
+    /*WIFI连接*/
     SetWifiModeOn();
 
     printf("NetworkInit...\n");
@@ -60,7 +63,7 @@ void iot_mqtt_thread()
 
 begin:
     printf("NetworkConnect...\n");
-    rc = NetworkConnect(&network, "192.168.0.107", 1883);
+    rc = NetworkConnect(&network, MQTT_SERVER_IP, MQTT_SERVER_PORT);
 
     printf("MQTTClientInit...\n");
     MQTTClientInit(&client, &network, 2000, sendBuf, sizeof(sendBuf), readBuf, sizeof(readBuf));
@@ -84,7 +87,7 @@ begin:
     }
 
     printf("MQTTSubscribe...\n");
-    rc = MQTTSubscribe(&client, "substopic", 2, Message_Arrived);
+    rc = MQTTSubscribe(&client, "substopic", 2, message_receive);
     if (rc != 0) {
         printf("MQTTSubscribe fail:%d\n", rc);
         LOS_Msleep(200);
@@ -111,7 +114,7 @@ begin:
 }
 
 /***************************************************************
-* 函数名称: Iot_Mqtt_Example
+* 函数名称: iot_mqtt_example
 * 说    明: iot mqtt物联网协议例程
 * 参    数: 无
 * 返 回 值: 无
@@ -120,14 +123,13 @@ void iot_mqtt_example()
 {
     unsigned int threadID;
     unsigned int ret = LOS_OK;
-
     TSK_INIT_PARAM_S task = {0};
 
     task.pfnTaskEntry = (TSK_ENTRY_FUNC)iot_mqtt_thread;
     task.uwStackSize = 10240;
     task.pcName = IOT_MQTT_EXAMPLE;
     task.usTaskPrio = 6;
-    ret = LOS_TaskCreate(threadID, &task);
+    ret = LOS_TaskCreate(&threadID, &task);
     if (LOS_OK != ret)
     {
         printf("Falied to create %s\n", IOT_MQTT_EXAMPLE);
