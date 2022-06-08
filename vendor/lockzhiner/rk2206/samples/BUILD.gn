@@ -31,6 +31,7 @@ lite_component("app") {
         #"./b5_oled:oled_example",
         #"./b6_uart:uart_example",
         #"./b7_wifi_tcp:wifi_tcp_example",
+        #"./b8_wifi_udp:wifi_udp_example",
         
         # E53模块
         #"./c1_e53_intelligent_agriculture:e53_ia_example",
