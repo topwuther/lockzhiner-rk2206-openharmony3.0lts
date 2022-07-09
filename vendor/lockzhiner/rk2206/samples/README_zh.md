@@ -25,6 +25,8 @@
 | B5   | 基础      | oled                    | [OLED显示](/vendor/lockzhiner/rk2206/samples/b5_oled/README_zh.md)                                               |
 | B6   | 基础      | uart                    | [UART打印](/vendor/lockzhiner/rk2206/samples/b6_uart/README_zh.md)                                               |
 | B7   | 基础      | wifi_tcp                | [TCP通信](/vendor/lockzhiner/rk2206/samples/b7_wifi_tcp/README_zh.md)                                               |
+| B8   | 基础      | wifi_udp                | [UDP通信](/vendor/lockzhiner/rk2206/samples/b8_wifi_udp/README_zh.md)                                               |
+| B9   | 基础      | gpio                    | [GPIO控制](/vendor/lockzhiner/rk2206/samples/b9_gpio/README_zh.md)                                               |
 | C1   | E53传感器 | e53_ia_example          | [智慧农业](/vendor/lockzhiner/rk2206/samples/c1_e53_intelligent_agriculture/README_zh.md)                        |
 | C2   | E53传感器 | e53_sc_example          | [智慧井盖](/vendor/lockzhiner/rk2206/samples/c2_e53_smart_covers/README_zh.md)                                   |
 | C3   | E53传感器 | e53_isl_example         | [智慧路灯](/vendor/lockzhiner/rk2206/samples/c3_e53_intelligent_street_lamp/README_zh.md)                        |
