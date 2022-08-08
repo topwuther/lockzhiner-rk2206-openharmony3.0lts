@@ -22,6 +22,8 @@ lite_component("app") {
         #"./a4_kernel_mutex:mutex_example",
         #"./a5_kernel_queue:queue_example",
         #"./a6_kernel_event:event_example",
+        #"./a7_hal_file:hal_file_example",
+        #"./a8_hal_pwm:hal_pwm_example",
 
         # 基础外设类
         #"./b1_adc:adc_example",
@@ -32,6 +34,8 @@ lite_component("app") {
         #"./b6_uart:uart_example",
         #"./b7_wifi_tcp:wifi_tcp_example",
         #"./b8_wifi_udp:wifi_udp_example",
+        #"./b9_gpio:gpio_example",
+        #"./b10_gpio_interrupt:gpio_interrupt_example",
         
         # E53模块
         #"./c1_e53_intelligent_agriculture:e53_ia_example",
@@ -42,7 +46,6 @@ lite_component("app") {
         #"./c6_e53_gesture_sensor:e53_gs_example",
         #"./c7_e53_intelligent_smoke_sensor:e53_iss_example",
         #"./c8_e53_temperature_measurement:e53_tm_example",
-        #"./c9_e53_heart_rate_detection:e53_hrd_example",
 
         # Iot云应用
         #"./d1_iot_mqtt:iot_mqtt_example",
@@ -51,7 +54,6 @@ lite_component("app") {
         #"./d4_iot_cloud_intelligent_vehicle:iot_cloud_iv_example",
         #"./d5_iot_cloud_body_induction:iot_cloud_bi_example",
         #"./d6_iot_cloud_gesture_sensor:iot_cloud_gs_example",
-        #"./d7_iot_cloud_intelligent_agriculture:iot_cloud_ia_example",
     ]
 
     deps = [

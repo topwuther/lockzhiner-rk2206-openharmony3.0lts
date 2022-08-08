@@ -88,5 +88,7 @@ unsigned int FlashInit(void);
  */
 unsigned int FlashDeinit(void);
 
+void FlashSetResidentFlag(int flag);
+
 #endif
 /** @} */

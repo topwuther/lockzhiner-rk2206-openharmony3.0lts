@@ -173,14 +173,14 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     _bss_end = .;
-  } >SRAM_DATA
+  } >PSRAM
   .stack :
   {
     . = ALIGN(8);
     _sstack = .;
     PROVIDE ( end = . );
     *(.stack*)
-    . = . + 0x8000;
+    . = . + 0x100000;
     _estack = .;
     PROVIDE(_StackTop = .);
     . = ALIGN(8);

@@ -25,11 +25,11 @@
 #include "lfs_api.h"
 
 /* flash的基地址 */
-static uint32_t m_flash_base_addr = PART_USERFS_ADDR;
+static uint32_t m_flash_base_addr = PART_USERFS_ADDR + 4096;
 
 /* 挂载点 */
-#define MOUNT_PATH       "/TEXT"
-#define DIR_PATH         "/XTS"
+#define MOUNT_PATH       "/data"
+#define DIR_PATH         ""
 #define STR_SLASHES      "/"
 ////////////////////////////////////////////////////////
 
@@ -174,7 +174,7 @@ static int fs_open_dir(const char* path)
 /* 挂载文件系统 */
 static int fs_mount(unsigned index, const char* path)
 {
-    int err;
+    int err = 0;
     struct FileOpInfo *fileOpInfo = NULL;
         
     SetDefaultMountPath(index, path);
@@ -188,8 +188,13 @@ static int fs_mount(unsigned index, const char* path)
             return -1;
         }
     }
+    else
+    {
+        printf("%s CheckPathIsMounted failed\n", path);
+        return -1;
+    }
 
-    return err;
+    return 0;
 }
 
 /* 文件系统初始化 */
@@ -202,27 +207,38 @@ static int fs_init(void)
     FlashDeinit();
     FlashInit();
 
-    /* 初始化flash空间 */
-    for (block = 0; block < m_lfs_cfg.block_count; ++block)
-    {
-        addr = m_flash_base_addr + (4096 * block);
-        ret = FlashErase(addr, 4096);
-        // printf("@#@#FlashErase addr:%#x block:%d,%d\n", addr, block, ret);
-        if(ret != 0)
-        {
-            return ret;
-        }
-    }
-
     /* 挂载文件系统 */
     ret =  fs_mount(0, MOUNT_PATH);
     if(ret != 0)
     {
-        return ret;
+        printf("fs_mount failed(%d) and flahs erase\n");
+        /* 挂载不成功，则初始化flash空间 */
+        for (block = 0; block < m_lfs_cfg.block_count; ++block)
+        {
+            addr = m_flash_base_addr + (4096 * block);
+            ret = FlashErase(addr, 4096);
+            printf("FlashErase: addr(%08x), block(%08x), ret(%d)\n", addr, block, ret);
+            if(ret != 0)
+            {
+                return ret;
+            }
+        }
+
+        /* 重新挂载 */
+        ret =  fs_mount(0, MOUNT_PATH);
+        if(ret != 0)
+        {
+            printf("remount fs failed(%d)\n", ret);
+            return ret;
+        }
     }
 
     /* 打开路径 */
     ret = fs_open_dir(MOUNT_PATH DIR_PATH);
+    if (ret != 0)
+    {
+        printf("%s mount failed\n", MOUNT_PATH DIR_PATH);
+    }
 
     return ret;
 }
@@ -237,6 +253,7 @@ static int HalFileInit(void)
         ret = fs_init();
         if(ret == 0)
         {
+            printf("HalFileInit: Flash Init Successful!\n");
             m_flash_init = 1;
         }
     }
@@ -248,8 +265,6 @@ static int HalFileInit(void)
 int HalFileOpen(const char* path, int oflag, int mode)
 {
     int ret = -1;
-    int value = 1000;
-    int reli_flag = 0;
     char path_buf[LFS_NAME_MAX] = {0};
 
     if (strlen(path) + strlen((MOUNT_PATH DIR_PATH STR_SLASHES)) >= LFS_NAME_MAX)
@@ -308,7 +323,6 @@ int HalFileStat(const char* path, unsigned int* fileSize)
 
 int HalFileDelete(const char* path)
 {
-    int value = 1000;
     char path_buf[LFS_NAME_MAX] = {0};
 
     strcpy(path_buf, (MOUNT_PATH DIR_PATH STR_SLASHES));

@@ -21,7 +21,7 @@ static_library("hal_file_static") {
     "//device/rockchip/rk2206/sdk_liteos/include",
     "//kernel/liteos_m/components/fs",
     "//kernel/liteos_m/components/fs/littlefs",
-    "//third_party/littlefs",
+    "//device/rockchip/rk2206/third_party/littlefs",
     "//third_party/musl/porting/liteos_m/kernel/include",
   ]
 }

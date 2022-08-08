@@ -49,5 +49,22 @@ enum {
 #define LZ_HARDWARE_LOGW(tag, fmt, arg...) LZ_PRINTF(LZ_HARDWARE_LOGW_LEVEL, GREEN "[" tag ":W]" fmt "\n" NONE, ##arg)
 #define LZ_HARDWARE_LOGE(tag, fmt, arg...) LZ_PRINTF(LZ_HARDWARE_LOGE_LEVEL, RED "[" tag ":E]" fmt "\n" NONE, ##arg)
 
+
+/* 打印日志信息 */
+#define PRINT_LOG(fmt, args...)     do { \
+    if (0) printf("%s, %d, log: "fmt, __FILE__, __LINE__, ##args); \
+} while (0)
+
+/* 打印告警信息 */
+#define PRINT_WARN(fmt, args...)     do { \
+        if (0) printf("%s, %d, warn: "fmt, __FILE__, __LINE__, ##args); \
+    } while (0)
+
+/* 打印错误信息 */
+#define PRINT_ERR(fmt, args...)     do { \
+    if (1) printf("%s, %d, error: "fmt, __FILE__, __LINE__, ##args); \
+} while (0)
+
+
 #endif /* LZ_HARDWARE_LOG_H */
 

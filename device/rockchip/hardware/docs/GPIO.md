@@ -2,17 +2,17 @@
 
 ## 简介
 
--   GPIO（General-purpose input/output）即通用型输入输出。通常，GPIO控制器通过分组的方式管理所有GPIO管脚，每组GPIO有一个或多个寄存器与之关联，通过读写寄存器完成对GPIO管脚的操作。
--   GPIO接口定义了操作GPIO管脚的标准方法集合，包括
-
-    -   设置管脚方向： 方向可以是输入或者输出\(暂不支持高阻态\)
-    -   读写管脚电平值： 电平值可以是低电平或高电平
-    -   设置管脚中断服务函数：设置一个管脚的中断响应函数，以及中断触发方式
-    -   使能和禁止管脚中断：禁止或使能管脚中
+- GPIO（General-purpose input/output）即通用型输入输出。通常，GPIO控制器通过分组的方式管理所有GPIO管脚，每组GPIO有一个或多个寄存器与之关联，通过读写寄存器完成对GPIO管脚的操作。
+- GPIO接口定义了操作GPIO管脚的标准方法集合，包括
+  
+  - 设置管脚方向： 方向可以是输入或者输出\(暂不支持高阻态\)
+  - 读写管脚电平值： 电平值可以是低电平或高电平
+  - 设置管脚中断服务函数：设置一个管脚的中断响应函数，以及中断触发方式
+  - 使能和禁止管脚中断：禁止或使能管脚中
 
 ## 接口说明
 
-### 包含头文件： 
+### 包含头文件：
 
 ```c
 #include "lz_hardware.h"
@@ -21,7 +21,7 @@
 #### 1. GPIO初始化接口
 
 ```c
-unsigned int GpioInit(GpioID id);
+unsigned int LzGpioInit(GpioID id);
 1) 参数说明：
    id： Gpio管脚id
 2) 返回值：
@@ -68,7 +68,7 @@ unsigned int LzGpioSetVal(GpioID id, LzGpioValue val);
    id：  Gpio管脚id
    val： Gpio管脚电平值
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 #### 6.GPIO设备获取管脚电平值：
@@ -79,7 +79,7 @@ unsigned int LzGpioGetVal(GpioID id, LzGpioValue *val);
    id：  Gpio管脚id
    val： Gpio管脚电平值
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 #### 7.GPIO设备注册管脚中断函数：
@@ -92,7 +92,7 @@ unsigned int LzGpioRegisterIsrFunc(GpioID id, LzGpioIntType type, GpioIsrFunc fu
    func:      Gpio中断函数
    arg:       Gpio中断函数参数
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 #### 8.GPIO设备注销管脚中断函数：
@@ -102,7 +102,7 @@ unsigned int LzGpioUnregisterIsrFunc(GpioID id);
 1) 参数说明：
    id：       Gpio管脚id
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 #### 9.GPIO设备使能管脚中断：
@@ -112,7 +112,7 @@ unsigned int LzGpioEnableIsr(GpioID id);
 1) 参数说明：
    id：       Gpio管脚id
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 #### 10.GPIO设备关闭管脚中断：
@@ -122,7 +122,7 @@ unsigned int LzGpioDisableIsr(GpioID id);
 1) 参数说明：
    id：       Gpio管脚id
 2) 返回值：
-   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码  
+   成功返回LZ_HARDWARE_SUCCESS, 出错返回错误码
 ```
 
 ## 使用实例
@@ -142,10 +142,10 @@ unsigned int gpio_sample()
 {
     unsigned int ret = LZ_HARDWARE_SUCCESS;
     uint16_t val = 0;
-    if (GpioInit(TEST_GPIO) != LZ_HARDWARE_SUCCESS)
+    if (LzGpioInit(TEST_GPIO) != LZ_HARDWARE_SUCCESS)
         return LZ_HARDWARE_FAILURE;
-  	//设置GPIO管脚为输入
-    ret = LzGpioSetDir(TEST_GPIO, GPIO_DIR_IN);  //input
+    //设置GPIO管脚为输入
+    ret = LzGpioSetDir(TEST_GPIO, LZGPIO_DIR_IN);  //input
     //拉高GPIO管脚电平值
     ret = LzGpioSetVal(TEST_GPIO, LZGPIO_LEVEL_HIGH);
     //注册Gpio中断,设置Gpio管脚中断为下降沿触发
@@ -156,7 +156,5 @@ unsigned int gpio_sample()
     ret = LzGpioGetVal(TEST_GPIO, &val);
     return LZ_HARDWARE_SUCCESS;
 }
-
-
 ```
 

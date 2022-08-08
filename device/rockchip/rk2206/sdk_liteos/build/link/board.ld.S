@@ -214,7 +214,7 @@ SECTIONS
 
     . = ALIGN(4);
     _bss_end = .;
-  } >SRAM_DATA
+  } >PSRAM
 
   .stack :
   {

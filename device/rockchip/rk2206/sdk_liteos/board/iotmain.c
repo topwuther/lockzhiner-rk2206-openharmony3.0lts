@@ -12,11 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+#include <stdio.h>
 #include "lz_hardware.h"
 
 #define IOT_TAG      "IOT"
-
 
 static void IotProcess(void *arg)
 {
@@ -26,7 +25,7 @@ static void IotProcess(void *arg)
 
     while (1)
     {
-        //printf("%s: sleep 5 sec!\n", __func__);
+        printf("%s: sleep 5 sec!\n", __func__);
         LOS_Msleep(5000);
     }
 }

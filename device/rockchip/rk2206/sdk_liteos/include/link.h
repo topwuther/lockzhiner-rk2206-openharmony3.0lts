@@ -59,7 +59,7 @@ extern "C" {
 #define PSRAM_ADDR              0x38000000
 #define PSRAM_SIZE              0x00800000
 
-#define SYS_STACK_SIZE          0x8000
+#define SYS_STACK_SIZE          0x100000
 
 #ifdef __cplusplus
 #if __cplusplus

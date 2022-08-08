@@ -58,7 +58,7 @@ struct FsMap {
 };
 
 struct FileOps {
-    int (*Open)(const char *path, int openFlag, ...);
+    int (*Open)(const char *path, int openFlag, int mode);
     int (*Close)(int fd);
     int (*Unlink)(const char *fileName);
     int (*Rmdir)(const char *dirName);

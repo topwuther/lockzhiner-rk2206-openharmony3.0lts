@@ -11,21 +11,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-static_library("lzlittlefs") {
-  sources = [
-    "lfs.c",
-    "lfs_util.c",
-    "lfs_api.c",
-  ]
 
-  include_dirs = [
-    "./",
-    "//kernel/liteos_m/kernel/arch/include",
-    "//kernel/liteos_m/kernel/include",
-    "//kernel/liteos_m/utils",
-    "//kernel/liteos_m/kal/cmsis",
-    "//kernel/liteos_m/kal/posix/include",
-  ]
+static_library("hal_pwm_example") {
+    sources = [
+        "hal_pwm_example.c",
+    ]
 
-  deps = [ "//kernel/liteos_m/kal/posix" ]
+    include_dirs = [
+        "//utils/native/lite/include",
+        "//utils/native/lite/hals/file",
+    ]
+
+    deps = [
+        "//device/rockchip/hardware:hardware",
+    ]
 }
