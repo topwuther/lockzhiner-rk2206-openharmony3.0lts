@@ -34,6 +34,22 @@ PWM初始化。
 |:--|:------| 
 | port | PWM端口号 |
 
+其中，port对应于如下表所示：
+
+| 端口号 | 描述             |
+| :----- | :--------------- |
+| 0      | GPIO_PB4 输出PWM |
+| 1      | GPIO_PB5 输出PWM |
+| 2      | GPIO_PB6 输出PWM |
+| 3      | GPIO_PC0 输出PWM |
+| 4      | GPIO_PC1 输出PWM |
+| 5      | GPIO_PC2 输出PWM |
+| 6      | GPIO_PC3 输出PWM |
+| 7      | GPIO_PC4 输出PWM |
+| 8      | GPIO_PC5 输出PWM |
+| 9      | GPIO_PC6 输出PWM |
+| 10     | GPIO_PC7 输出PWM |
+
 **返回值：**
 
 |返回值|描述|
