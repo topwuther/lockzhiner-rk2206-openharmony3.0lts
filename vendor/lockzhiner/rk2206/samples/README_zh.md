@@ -19,7 +19,7 @@
 | A5   | 内核      | queue                        | [消息队列](/vendor/lockzhiner/rk2206/samples/a5_kernel_queue/README_zh.md) |
 | A6   | 内核      | event                        | [事件](/vendor/lockzhiner/rk2206/samples/a6_kernel_event/README_zh.md) |
 | A7   | 内核      | hal_file                     | [标准文件读写](/vendor/lockzhiner/rk2206/samples/a7_hal_file/README_zh.md) |
-| A8   | 内核      | hal_pwm                      | [标准PWM控制](/vendor/lockzhiner/rk2206/samples/a8_file_pwm/README_zh.md) |
+| A8   | 内核      | hal_pwm                      | [标准PWM控制](/vendor/lockzhiner/rk2206/samples/a8_hal_pwm/README_zh.md) |
 | B1   | 基础      | adc                          | [ADC按键检测](/vendor/lockzhiner/rk2206/samples/b1_adc/README_zh.md) |
 | B2   | 基础      | nfc                          | [NFC标签](/vendor/lockzhiner/rk2206/samples/b2_nfc/README_zh.md) |
 | B3   | 基础      | eeprom                       | [EEPROM测试](/vendor/lockzhiner/rk2206/samples/b3_eeprom/README_zh.md) |

@@ -57,7 +57,7 @@
 
 | 编号 | 类别      | 例程名                  | 说明                                                                                                       |
 | ---- | --------- | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
-| A0   | 内核      | Hello World             | [Hello World](/vendor/lockzhiner/rk2206/samples/a0_hello_world/README_zh.md)     
+| A0   | 内核      | Hello World             | [Hello World](/vendor/lockzhiner/rk2206/samples/a0_hello_world/README_zh.md)     |
 | A1   | 内核      | thread                  | [任务](/vendor/lockzhiner/rk2206/samples/a1_kernal_task/README_zh.md)                                            |
 | A2   | 内核      | semaphore               | [信号量](/vendor/lockzhiner/rk2206/samples/a2_kernel_semaphore/README_zh.md)                                     |
 | A3   | 内核      | timer                   | [定时器](/vendor/lockzhiner/rk2206/samples/a3_kernel_timer/README_zh.md)                                         |
@@ -65,7 +65,7 @@
 | A5   | 内核      | queue                   | [消息队列](/vendor/lockzhiner/rk2206/samples/a5_kernel_queue/README_zh.md)                                       |
 | A6   | 内核      | event                   | [事件](/vendor/lockzhiner/rk2206/samples/a6_kernel_event/README_zh.md)                                           |
 | A7   | 内核      | hal_file                | [标准文件读写](/vendor/lockzhiner/rk2206/samples/a7_hal_file/README_zh.md) 										|
-| A8   | 内核      | hal_pwm                 | [标准PWM控制](/vendor/lockzhiner/rk2206/samples/a8_file_pwm/README_zh.md) 										|
+| A8   | 内核      | hal_pwm                 | [标准PWM控制](/vendor/lockzhiner/rk2206/samples/a8_hal_pwm/README_zh.md) 							|
 | B1   | 基础      | adc                     | [ADC按键检测](/vendor/lockzhiner/rk2206/samples/b1_adc/README_zh.md)                                             |
 | B2   | 基础      | nfc                     | [NFC标签](/vendor/lockzhiner/rk2206/samples/b2_nfc/README_zh.md)                                                 |
 | B3   | 基础      | eeprom                  | [EEPROM测试](/vendor/lockzhiner/rk2206/samples/b3_eeprom/README_zh.md)                                           |
