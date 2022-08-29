@@ -102,7 +102,7 @@ STATIC INLINE UINT32 OsMemFlGet(UINT32 size)
 STATIC INLINE UINT32 OsMemSlGet(UINT32 size, UINT32 fl)
 {
     if ((fl < OS_MEM_SMALL_BUCKET_COUNT) || (size < OS_MEM_SMALL_BUCKET_MAX_SIZE)) {
-        PRINT_ERR("fl or size is too small, fl = %u, size = %u\n", fl, size);
+        //PRINT_ERR("fl or size is too small, fl = %u, size = %u\n", fl, size);
         return 0;
     }
 
