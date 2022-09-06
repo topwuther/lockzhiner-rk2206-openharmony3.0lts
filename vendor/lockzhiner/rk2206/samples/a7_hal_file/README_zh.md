@@ -1,193 +1,274 @@
-# 小凌派-RK2206开发板OpenHarmonyOS内核开发-事件
+# 小凌派-RK2206开发板OpenHarmonyOS内核开发-文件
 
 ## 实验内容
 
-本例程演示如何在小凌派-RK2206开发板上使用鸿蒙LiteOS-M内核接口，进行事件编程开发。例程创建一个事件，两个任务；任务1调用读事件接口等待事件通知，任务2调用写事件接口通知任务1事件到达。
+本例程演示如何在小凌派-RK2206开发板上使用鸿蒙LiteOS-M内核接口，进行文件读写开发。
+
+例程：
+
+（1）创建一个文件；
+
+（2）每5秒进行1次文件读写操作；
+
+（3）文件标识移动到文件起始处，读文件内容，并打印；
+
+（4）文件标识移动到文件起始处，写文件内容；
+
+（5）循环上述的第2～4步骤。
 
 ![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.jpg)
 
 ## 程序设计
 
-事件是一种实现任务间通信的机制，可用于实现任务间的同步，但是仅仅作为事件类型的通信，不提供数据传输功能。一个任务可以等待多个事件的发生：可以是任意一个事件发生时唤醒任务进行事件处理;也可以是几个事件都发生后才唤醒任务进行事件处理。事件集合用32位无符号整型变量来表示，每一位代表一个事件。
-
-多任务环境下，任务之间往往需要同步操作，一个等待即是一个同步。事件可以提供一对多、多对多的同步操作。一对多同步模型：一个任务等待多个事件的触发；多对多同步模型：多个任务等待多个事件的触发。任务可以通过创建事件控制块来实现对事件的触发和等待操作。
+在本章节中，我们将了解OpenHarmony标准文件操作接口，如文件如何创建、打开、读写和关闭文件。
 
 ### API分析
 
-#### LOS_EventInit()
+#### 头文件
+
+```shell
+//utils/native/lite/hals/file/hal_file.h
+```
+
+#### HalFileOpen()
 
 ```c
-UINT32 LOS_EventInit(PEVENT_CB_S eventCB);
+int HalFileOpen(const char *path, int oflag, int mode);
 ```
 
 **描述：**
 
-事件控制块初始化。
+打开/创建文件，类似于Linux的open函数。
 
 **参数：**
 
 |名字|描述|
-|:--|:------| 
-| eventCB | 事件控制块指针 |
+|:--|:------|
+| path | 文件路径 |
+| oflag | 参考///utils/native/lite/include/utils_file.h<br>O_RDONLY_FS：只读<br>O_WRONLY_FS：只写<br>O_RDWR_FS：读写<br>O_CREAT_FS：如果没有则创建<br>O_EXCL_FS：如果没有则创建；如有则不能打开<br>O_TRUNC_FS：如果文件存在，则清空文件内容<br>O_APPEND_FS：如果文件存在，则标记位置移动到文件最后 |
+| mode | 0 |
+
+**返回值：**
+
+|返回值|描述|
+|:--|:------|
+| LOS_OK | 成功 |
+| 其它 | 失败 |
+
+#### HalFileClose()
+
+```c
+int HalFileClose(int fd);
+```
+
+**描述：**
+
+关闭文件。
+
+**参数：**
+
+|名字|描述|
+|:--|:------|
+| fd | 文件句柄 |
 
 **返回值：**
 |返回值|描述|
 |:--|:------|
 | LOS_OK | 成功 |
-| LOS_ERRNO_EVENT_PTR_NULL | 失败 |
+| 其它 | 失败 |
 
-#### LOS_EventRead()
+#### HalFileRead()
 
 ```c
-UINT32 LOS_EventRead(PEVENT_CB_S eventCB, UINT32 eventMask, UINT32 mode, UINT32 timeOut);
+int HalFileRead(int fd, char* buf, unsigned int len);
 ```
 
 **描述：**
 
-读事件（等待事件），任务会根据timeOut（单位：tick）进行阻塞等待；
-未读取到事件时，返回值为0；正常读取到事件时，返回正值（事件发生的集合）；其他情况返回特定错误码。
+从文件中读取一段内容。
 
 **参数：**
 
 |名字|描述|
-|:--|:------| 
-| eventCB | 事件控制块指针 |
-| eventMask | 事件掩码 |
-| mode | 事件读取的模式 |
-| timeOut | 超时时间 |
+|:--|:------|
+| fd | 文件句柄 |
+| buf | 从文件读取内容的缓冲区 |
+| len | 从文件读取内容的大小 |
 
 **返回值：**
 |返回值|描述|
-|:--|:------| 
-| LOS_OK | 成功 |
-| LOS_ERRNO_EVENT_SETBIT_INVALID <br> LOS_ERRNO_EVENT_EVENTMASK_INVALID <br> LOS_ERRNO_EVENT_READ_IN_INTERRUPT <br> LOS_ERRNO_EVENT_FLAGS_INVALID <br> LOS_ERRNO_EVENT_READ_IN_LOCK <br> LOS_ERRNO_EVENT_PTR_NULL | 失败 |
+|:--|:------|
+| >= 0 | 成功，表示成功从文件读取内容的大小 |
+| < 0 | 失败 |
 
-#### LOS_EventWrite()
+#### HalFileWrite()
 
 ```c
-UINT32 LOS_EventWrite(PEVENT_CB_S eventCB, UINT32 events);
+int HalFileWrite(int fd, const char* buf, unsigned int len);
 ```
 
 **描述：**
 
-写一个特定的事件到事件控制块。
+往文件写入一段内容。
 
 **参数：**
 
 |名字|描述|
-|:--|:------| 
-| eventCB | 事件控制块指针 |
-| events | 要写入的事件掩码 |
+|:--|:------|
+| fd | 文件句柄 |
+| buf | 需要写入到文件的内容缓冲区 |
+| len | 需要写入到文件的内容大小 |
 
 **返回值：**
 |返回值|描述|
-|:--|:------| 
-| LOS_OK | 成功 |
-| LOS_ERRNO_EVENT_SETBIT_INVALID <br> LOS_ERRNO_EVENT_PTR_NULL | 失败 |
+|:--|:------|
+| >= 0 | 成功，表示成功写入到文件的内容大小 |
+| < 0 | 失败 |
 
-#### LOS_EventClear()
+#### HalFileDelete()
 
 ```c
-UINT32 LOS_EventClear(PEVENT_CB_S eventCB, UINT32 eventMask);
+int HalFileDelete(const char* path);
 ```
 
 **描述：**
 
-根据events掩码，清除事件控制块中的事件。
+删除文件。
 
 **参数：**
 
-|名字|描述|
-|:--|:------| 
-| eventCB | 事件控制块指针 |
-| eventMask| 要清除的事件掩码 |
+| 名字 | 描述     |
+| :--- | :------- |
+| path | 文件路径 |
 
 **返回值：**
-|返回值|描述|
-|:--|:------| 
-| LOS_OK | 成功 |
-| LOS_ERRNO_EVENT_PTR_NULL | 失败 |
+
+| 返回值 | 描述 |
+| :----- | :--- |
+| 0      | 成功 |
+| 其它   | 失败 |
+
+#### HalFileStat()
+
+```c
+int HalFileStat(const char* path, unsigned int* fileSize);
+```
+
+**描述：**
+
+删除文件。
+
+**参数：**
+
+| 名字     | 描述         |
+| :------- | :----------- |
+| path     | 文件路径     |
+| fileSize | 文件内容大小 |
+
+**返回值：**
+
+| 返回值 | 描述 |
+| :----- | :--- |
+| 0      | 成功 |
+| 其它   | 失败 |
+
+#### HalFileSeek()
+
+```c
+int HalFileSeek(int fd, int offset, unsigned int whence);
+```
+
+**描述：**
+
+文件标记移动。
+
+**参数：**
+
+| 名字   | 描述                                                         |
+| :----- | :----------------------------------------------------------- |
+| fd     | 文件句柄                                                     |
+| offset | 文件位置移动位数                                             |
+| whence | SEEK_SET_FS：从文件开头移动<br>SEEK_CUR_FS：从文件当前位置移动<br/>SEEK_END_FS：从文件结尾移动 |
+
+**返回值：**
+
+| 返回值 | 描述 |
+| :----- | :--- |
+| 0      | 成功 |
+| 其它   | 失败 |
 
 ### 软件设计
 
 **主要代码分析**
 
-在event_example函数中，通过LOS_EventInit函数创建事件，并通过LOS_TaskCreate函数创建两个线程：event_master_thread和event_slave_thread。
+在file_example函数中通过LOS_TaskCreate函数创建一个线程：hal_file_thread。
 
 ```c
-void event_example()
+void file_example()
 {
-    unsigned int thread_id1;
-    unsigned int thread_id2;
-    TSK_INIT_PARAM_S task1 = {0};
-    TSK_INIT_PARAM_S task2 = {0};
+    unsigned int thread_id;
+    TSK_INIT_PARAM_S task = {0};
     unsigned int ret = LOS_OK;
 
-    ret = LOS_EventInit(&m_event);
+    task.pfnTaskEntry = (TSK_ENTRY_FUNC)hal_file_thread;
+    task.uwStackSize = 1024 * 10;
+    task.pcName = "hal_file_thread";
+    task.usTaskPrio = 25;
+    ret = LOS_TaskCreate(&thread_id, &task);
     if (ret != LOS_OK)
     {
-        printf("Falied to create EventFlags\n");
-        return;
-    }
-
-    task1.pfnTaskEntry = (TSK_ENTRY_FUNC)event_master_thread;
-    task1.uwStackSize = 2048;
-    task1.pcName = "event_master_thread";
-    task1.usTaskPrio = 5;
-    ret = LOS_TaskCreate(&thread_id1, &task1);
-    if (ret != LOS_OK)
-    {
-        printf("Falied to create event_master_thread ret:0x%x\n", ret);
-        return;
-    }
-
-    task2.pfnTaskEntry = (TSK_ENTRY_FUNC)event_slave_thread;
-    task2.uwStackSize = 2048;
-    task2.pcName = "event_slave_thread";
-    task2.usTaskPrio = 5;
-    ret = LOS_TaskCreate(&thread_id2, &task2);
-    if (ret != LOS_OK)
-    {
-        printf("Falied to create event_slave_thread ret:0x%x\n", ret);
+        printf("Falied to create hal_file_thread ret:0x%x\n", ret);
         return;
     }
 }
+
+APP_FEATURE_INIT(file_example);
 ```
 
-event_slave_thread线程函数中通过LOS_EventRead函数将线程置于阻塞状态，等待事件到达；在event_master_thread函数中通过LOS_EventWrite函数每隔2S写入事件，实现线程的同步，2s后清除事件，重复以上流程。
+hal_file_thread函数负责打开文件，每5秒移动到文件头读取数据，再移动到文件头写入一段内容，重复以上流程。
 
 ```c
-void event_master_thread()
+void hal_file_thread()
 {
-    unsigned int ret = LOS_OK;
+    int fd;
+    char buffer[1024];
+    int read_length, write_length;
+    int current = 0;
 
-    LOS_Msleep(1000);
+    /* 打开文件，如果没有该文件就创建，如有该文件则打开
+     * O_TRUNC_FS => 清空文件内容
+     */
+    //fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS, 0);
+    fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS | O_TRUNC_FS, 0);
+    if (fd == -1)
+    {
+        printf("%s HalFileOpen failed!\n", FILE_NAME);
+        return;
+    }
 
     while (1)
     {
-        printf("%s write event:0x%x\n", __func__, EVENT_WAIT);
-        ret = LOS_EventWrite(&m_event, EVENT_WAIT);
-        if (ret != LOS_OK) {
-            printf("%s write event failed ret:0x%x\n", __func__, ret);
-        }
+        /* 文件位置移动到文件开始位置 */
+        HalFileSeek(fd, 0, SEEK_SET);
+        memset(buffer, 0, sizeof(buffer));
+        /* 读取文件内容 */
+        read_length = HalFileRead(fd, buffer, sizeof(buffer));
+        printf("read: \n");
+        printf("    length = %d\n", read_length);
+        printf("    content = %s\n", buffer);
 
-        /*delay 1s*/
-        LOS_Msleep(2000);
-        LOS_EventClear(&m_event, ~m_event.uwEventID);
+        /* 文件位置移动到文件开始位置 */
+        HalFileSeek(fd, 0, SEEK_SET);
+        memset(buffer, 0, sizeof(buffer));
+        snprintf(buffer, sizeof(buffer), "Hello World(%d) => ", current);
+        /* 写入文件 */
+        write_length = HalFileWrite(fd, buffer, strlen(buffer));
+
+        current++;
+        LOS_Msleep(5000);
     }
-}
 
-void event_slave_thread()
-{
-    unsigned int event;
-
-    while (1)
-    {
-        /* 阻塞方式读事件，等待事件到达*/
-        event = LOS_EventRead(&m_event, EVENT_WAIT, LOS_WAITMODE_AND, LOS_WAIT_FOREVER);
-        printf("%s read event:0x%x\n", __func__, event);
-        LOS_Msleep(1000);
-    }
+    HalFileClose(fd);
 }
 ```
 
@@ -195,28 +276,60 @@ void event_slave_thread()
 
 ### 修改 BUILD.gn 文件
 
-修改 `vendor/lockzhiner/rk2206/sample` 路径下 BUILD.gn 文件，指定 `a6_kernel_event` 参与编译。
+修改 `vendor/lockzhiner/rk2206/sample` 路径下 BUILD.gn 文件，指定 `a7_hal_file` 参与编译。
 
 ```r
-"./a6_kernel_event:event_example",
+"./a7_hal_file:hal_file_example",
 ```
 
-修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-levent_example` 参与编译。
+修改 `device/lockzhiner/rk2206/sdk_liteos` 路径下 Makefile 文件，添加 `-lhal_file_example` 参与编译。
 
 ```r
-hardware_LIBS = -lhal_iothardware -lhardware -levent_example
+app_LIBS = -lhal_file_example
 ```
 
 ### 运行结果
 
-示例代码编译烧录代码后，按下开发板的RESET按键，通过串口助手查看日志，event_master_thread函数每隔2s写入事件，2s后清除事件；event_slave_thread函数阻塞等待事件达到，事件到达后，每1s打印一次读事件信息。
+示例代码编译烧录代码后，按下开发板的RESET按键，通过串口助手查看日志。
 
 ```r
-event_master_thread write event:0x1
-event_slave_thread read event:0x1
-event_slave_thread read event:0x1
-event_master_thread write event:0x1
-event_slave_thread read event:0x1
-event_slave_thread read event:0x1
+HalFileInit: Flash Init Successful!
+read:
+    length = 0
+    content =
+read:
+    length = 18
+    content = Hello World(0) =>
+read:
+    length = 18
+    content = Hello World(1) =>
 ```
+
+## 注意事项
+
+（1）如果出现内存检测错误，则需要加大任务的堆栈大小，即：
+
+```c
+void file_example()
+{
+    unsigned int thread_id;
+    TSK_INIT_PARAM_S task = {0};
+    unsigned int ret = LOS_OK;
+
+    task.pfnTaskEntry = (TSK_ENTRY_FUNC)hal_file_thread;
+    task.uwStackSize = 1024 * 10;						/* 如果出现内存堆栈错误，则加大任务堆栈大小 */
+    task.pcName = "hal_file_thread";
+    task.usTaskPrio = 25;
+    ret = LOS_TaskCreate(&thread_id, &task);
+    if (ret != LOS_OK)
+    {
+        printf("Falied to create hal_file_thread ret:0x%x\n", ret);
+        return;
+    }
+}
+
+APP_FEATURE_INIT(file_example);
+```
+
+
 

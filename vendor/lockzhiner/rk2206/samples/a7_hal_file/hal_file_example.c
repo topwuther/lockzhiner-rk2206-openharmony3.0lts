@@ -37,8 +37,8 @@ void hal_file_thread()
     /* 打开文件，如果没有该文件就创建，如有该文件则打开
      * O_TRUNC_FS => 清空文件内容
      */
-    fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS, 0);
-    // fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS | O_TRUNC_FS, 0);
+    //fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS, 0);
+    fd = HalFileOpen(FILE_NAME, O_RDWR_FS | O_CREAT_FS | O_TRUNC_FS, 0);
     if (fd == -1)
     {
         printf("%s HalFileOpen failed!\n", FILE_NAME);
@@ -56,17 +56,18 @@ void hal_file_thread()
         printf("    length = %d\n", read_length);
         printf("    content = %s\n", buffer);
 
-        /* 文件位置移动到文件结尾 */
-        HalFileSeek(fd, 0, SEEK_END);
+        /* 文件位置移动到文件开始位置 */
+        HalFileSeek(fd, 0, SEEK_SET);
         memset(buffer, 0, sizeof(buffer));
         snprintf(buffer, sizeof(buffer), "Hello World(%d) => ", current);
         /* 写入文件 */
         write_length = HalFileWrite(fd, buffer, strlen(buffer));
-        HalFileClose(fd);
 
         current++;
         LOS_Msleep(5000);
     }
+
+    HalFileClose(fd);
 }
 
 /***************************************************************
@@ -82,7 +83,7 @@ void file_example()
     unsigned int ret = LOS_OK;
 
     task.pfnTaskEntry = (TSK_ENTRY_FUNC)hal_file_thread;
-    task.uwStackSize = 2048;
+    task.uwStackSize = 1024 * 10;
     task.pcName = "hal_file_thread";
     task.usTaskPrio = 25;
     ret = LOS_TaskCreate(&thread_id, &task);
