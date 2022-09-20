@@ -197,5 +197,41 @@ static inline unsigned int LzI2cReadReg(unsigned int id, unsigned short slaveAdd
    return LzI2cTransfer(id, msgs, 2);
 }
 
+/**
+* @brief Write register address and read the register value from an I2C device.
+* 注意：i2c必须经过初始化
+*
+* @param id Indicates the I2C device ID.
+* @param slaveAddr Indicates the I2C slave device address.
+* @param slaveAddr Indicates Len.
+*/
+static inline unsigned int LzI2cScan(unsigned int id, unsigned short *slaveAddr, unsigned int slaveAddrLen)
+{
+    unsigned short address;
+    unsigned int ret;
+    unsigned char buffer[1];
+    unsigned int offset = 0;
+
+    for (address = 0x3; address < 0x78; address++)
+    {
+        ret = LzI2cWrite(id, address, buffer, 0);
+        if (ret == LZ_HARDWARE_SUCCESS)
+        {
+            /* 该从设备地址有效 */
+            if (offset < slaveAddrLen)
+            {
+                slaveAddr[offset] = address;
+                offset++;
+            }
+        }
+        else
+        {
+            /* 该从设备地址没有i2c设备 */
+        }
+    }
+
+    return offset;
+}
+
 #endif
 /** @} */

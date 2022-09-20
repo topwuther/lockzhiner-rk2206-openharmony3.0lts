@@ -36,6 +36,9 @@ lite_component("app") {
         #"./b8_wifi_udp:wifi_udp_example",
         #"./b9_gpio:gpio_example",
         #"./b10_gpio_interrupt:gpio_interrupt_example",
+        #"./b11_i2c_scan:i2c_scan_example",
+        #"./b12_watchdog:watchdog_example",
+        #"./b13_reboot:reboot_example",
         
         # E53模块
         #"./c1_e53_intelligent_agriculture:e53_ia_example",

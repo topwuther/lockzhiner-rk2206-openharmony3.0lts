@@ -44,6 +44,7 @@
 #include "lz_hardware/saradc.h"
 #include "lz_hardware/wifi.h"
 #include "lz_hardware/vendor.h"
+#include "lz_hardware/watchdog.h"
 
 unsigned int HalInit(void);
 #endif

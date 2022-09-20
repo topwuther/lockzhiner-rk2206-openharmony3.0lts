@@ -189,6 +189,15 @@ unsigned int LzUartDeinit(unsigned int id);
  */
 unsigned int LzUartSetFlowCtrl(unsigned int id, FlowCtrl flowCtrl);
 
+/**
+ * 串口读操作，如有有数据则返回0 
+ * 参数：
+ *      @id: 串口号
+ * 返回：0为成功，反之则失败
+ */
+unsigned int LzUartReadAny(unsigned int id);
+
+
 unsigned int DebugWrite(unsigned int id, const unsigned char *data, unsigned int dataLen);
 unsigned int DebugPutc(unsigned int id, char c);
 

@@ -16,7 +16,7 @@
 #include "iot_pwm.h"
 #include "lz_hardware.h"
 
-/* ??PWM???? */
+/* 定义PWM设备数量 */
 enum EnumPwmDev {
     EPWMDEV_PWM0_M1 = 0,    /* GPIO_PB4 */
     EPWMDEV_PWM1_M1,        /* GPIO_PB5 */

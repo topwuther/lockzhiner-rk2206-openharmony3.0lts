@@ -20,4 +20,9 @@
 
 void RebootDevice(unsigned int cause)
 {
+    printf("RebootDevice: restart!\n");
+    LzWatchdogInit();
+    LzWatchdogSetTimeout(1);
+    LzWatchdogStart(LZ_WATCHDOG_REBOOT_MODE_FIRST);
+    LOS_Msleep(2000);
 }
