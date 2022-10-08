@@ -97,7 +97,7 @@ void task_example()
 }
 ```
 
-### 创建BUILG.gn
+### 创建BUILD.gn
 
 在a0_hello_world文件夹下创建BUILD.gn文件。BUILD.gn负责将hello_world.c文件编译成静态库libtask_helloworld.a。BUILD.gn的语法为gn语法，对gn语法感兴趣的同学可以上gn官网阅读相关文档。BUILD.gn具体内容如下：
 
