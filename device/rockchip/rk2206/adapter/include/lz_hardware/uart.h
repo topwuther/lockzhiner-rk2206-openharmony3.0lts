@@ -190,10 +190,10 @@ unsigned int LzUartDeinit(unsigned int id);
 unsigned int LzUartSetFlowCtrl(unsigned int id, FlowCtrl flowCtrl);
 
 /**
- * ´®¿Ú¶Á²Ù×÷£¬ÈçÓĞÓĞÊı¾İÔò·µ»Ø0 
- * ²ÎÊı£º
- *      @id: ´®¿ÚºÅ
- * ·µ»Ø£º0Îª³É¹¦£¬·´Ö®ÔòÊ§°Ü
+ * ä¸²å£è¯»æ“ä½œï¼Œå¦‚æœ‰æœ‰æ•°æ®åˆ™è¿”å›0 
+ * å‚æ•°ï¼š
+ *      @id: ä¸²å£å·
+ * è¿”å›ï¼š0ä¸ºæˆåŠŸï¼Œåä¹‹åˆ™å¤±è´¥
  */
 unsigned int LzUartReadAny(unsigned int id);
 

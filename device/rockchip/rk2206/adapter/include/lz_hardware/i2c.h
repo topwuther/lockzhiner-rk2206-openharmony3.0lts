@@ -199,7 +199,7 @@ static inline unsigned int LzI2cReadReg(unsigned int id, unsigned short slaveAdd
 
 /**
 * @brief Write register address and read the register value from an I2C device.
-* ×¢Òâ£ºi2c±ØĞë¾­¹ı³õÊ¼»¯
+* æ³¨æ„ï¼ši2cå¿…é¡»ç»è¿‡åˆå§‹åŒ–
 *
 * @param id Indicates the I2C device ID.
 * @param slaveAddr Indicates the I2C slave device address.
@@ -217,7 +217,7 @@ static inline unsigned int LzI2cScan(unsigned int id, unsigned short *slaveAddr,
         ret = LzI2cWrite(id, address, buffer, 0);
         if (ret == LZ_HARDWARE_SUCCESS)
         {
-            /* ¸Ã´ÓÉè±¸µØÖ·ÓĞĞ§ */
+            /* è¯¥ä»è®¾å¤‡åœ°å€æœ‰æ•ˆ */
             if (offset < slaveAddrLen)
             {
                 slaveAddr[offset] = address;
@@ -226,7 +226,7 @@ static inline unsigned int LzI2cScan(unsigned int id, unsigned short *slaveAddr,
         }
         else
         {
-            /* ¸Ã´ÓÉè±¸µØÖ·Ã»ÓĞi2cÉè±¸ */
+            /* è¯¥ä»è®¾å¤‡åœ°å€æ²¡æœ‰i2cè®¾å¤‡ */
         }
     }
 
