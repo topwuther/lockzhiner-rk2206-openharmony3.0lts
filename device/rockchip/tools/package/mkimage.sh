@@ -95,12 +95,23 @@ function make_config_json()
 
 function main()
 {
+    arch_text=`arch`
+
     mkdir -p ${IMAGE_DIR}
 
     make_config_json > ${CONFIG_JSON}
     make_setting_ini > ${SETTING_INI}
-    ${TOOLS_DIR}/resource_header_tool pack --json ${CONFIG_JSON} ${OUT_DIR}/${LITEOS_BIN}
-    ${TOOLS_DIR}/firmware_merger -p ${SETTING_INI} ${IMAGE_DIR}
+	if [ "${arch_text}" = "x86_64" ]; then
+        echo "arch is x86_64 and packet for x86_64"
+		${TOOLS_DIR}/resource_header_tool pack --json ${CONFIG_JSON} ${OUT_DIR}/${LITEOS_BIN}
+		${TOOLS_DIR}/firmware_merger -p ${SETTING_INI} ${IMAGE_DIR}
+	elif [ "${arch_text}" = "aarch64" ]; then
+        echo "arch is aarch64 and packet for aarch64"
+		python3 ${TOOLS_DIR}/resource_header_tool_aarch64.py pack --json ${CONFIG_JSON} ${OUT_DIR}/${LITEOS_BIN}
+		${TOOLS_DIR}/firmware_merger_aarch64 -p ${SETTING_INI} ${IMAGE_DIR}
+	else:
+		echo "mkimage.sh => ${arch_text} is out of the range!"
+    fi
     cp ${LOADER_IMAGE} ${IMAGE_DIR}/
 }
 
