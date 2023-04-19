@@ -191,6 +191,8 @@ cd lockzhiner-rk2206-openharmony3.0lts
 
 ## 7、编译流程
 
+### 7.1、ubuntu编译方式
+
 编译步骤如下所示：
 
 ```shell
@@ -207,6 +209,100 @@ hb build -f
 编译出的目标文件在 `out/rk2206/lockzhiner-rk2206/images`目录下。如下图所示：
 
 ![](image/README/1646018887782.png)
+
+注意：如果用户不使用的我司提供的Linux镜像，可参考docker编译方式。
+
+### 7.2、docker编译方式
+
+#### 7.2.1、安装docker
+
+```shell
+sudo apt install docker.io
+```
+
+#### 7.2.2、下载镜像
+
+```shell
+sudo docker pull swr.cn-south-1.myhuaweicloud.com/openharmony-docker/openharmony-docker:1.0.0
+```
+
+#### 7.2.3、开启容器
+
+移动到OpenHarmony主目录下（这里假设OpenHarmony主目录为/home/lzdz/lockzhiner-rk2206-openharmony3.0lts），运行如下命令：
+
+```shell
+cd lockzhiner-rk2206-openharmony3.0lts
+sudo docker run -it -v /home/lzdz/lockzhiner-rk2206-openharmony3.0lts:/home/openharmony swr.cn-south-1.myhuaweicloud.com/openharmony-docker/openharmony-docker:1.0.0
+```
+
+注意：上述“:”的前面字符串是虚拟机本地OpenHarmony源代码主目录，需要根据虚拟机OpenHarmony源代码主目录路径而改变。“:”后面为docker镜像的路径，不需要修改。
+
+接下来，安装相关工具
+
+```shell
+# 移动到容器内OpenHarmony主目录，注意容器中主目录变为/home/openharmony
+cd /home/openharmony
+# 下载编译工具
+./build/prebuilts_download.sh
+# 安装hb工具
+pip3 install build/lite
+```
+
+最后，编译OpenHarmony
+
+```shell
+hb set -root .
+hb set
+lockzhiner
+   lockzhiner-rk2206
+选择lockzhiner-rk2206
+hb build -f
+```
+
+编译出的目标文件在 `out/rk2206/lockzhiner-rk2206/images`目录下。
+
+#### 7.2.4、关闭容器
+
+关闭容器可以分为2种方式。
+
+（1）容器内关闭容器
+
+```shell
+exit
+```
+
+（2）本地停止容器运行
+
+```shell
+# 列出所有的容器
+sudo docker container ls --all
+# 根据列出的容器，选择对应的containerID
+sudo docker container stop [containerID]
+```
+
+注意：使用stop命令需要等待5~10秒才能退出。
+
+#### 7.2.5、重启容器
+
+```shell
+# 列出所有的容器
+sudo docker container ls --all
+# 根据列出的容器，选择对应的containerID
+sudo docker container start [containerID]
+# 接入到容器中
+sudo docker container attach [containerID]
+```
+
+#### 7.2.6、删除容器
+
+如果某个容器出现错误或者想删除，则可使用以下命令：
+
+```shell
+# 列出所有的容器
+sudo docker container ls --all
+# 根据列出的容器，选择对应的containerID
+sudo docker container rm [containerID]
+```
 
 ## 8、烧录打印
 

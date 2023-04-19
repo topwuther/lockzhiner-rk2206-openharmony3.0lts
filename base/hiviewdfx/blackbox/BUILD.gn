@@ -28,5 +28,6 @@ static_library("blackbox") {
     "//base/hiviewdfx/hiview_lite",
     "//base/hiviewdfx/hilog_lite/interfaces/native/kits/hilog_lite",
     "//utils/native/lite/include",
+    "//third_party/musl/porting/liteos_m/kernel/include",
   ]
 }
