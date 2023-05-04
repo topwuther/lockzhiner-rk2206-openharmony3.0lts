@@ -362,7 +362,7 @@ sudo docker container rm [containerID]
 
 ![](image/README/1646019659588.png)
 
-在小凌派-RK2206开发板上，长按MaskRom按键（详见板子的按钮），点击ReSet按键（详见板子的按钮），烧写工具出现：“发现一个MASKROM设备”。如下图所示：
+在小凌派-RK2206开发板上，***长按MaskRom按键（详见板子的按钮，另外不要松开），点击ReSet按键（详见板子的按钮，按下后松开，但MaskRom按键不要松开，大约5秒后松开），烧写工具出现：“发现一个MASKROM设备”。***如下图所示：
 
 ![](image/README/1646019963421.png)
 
