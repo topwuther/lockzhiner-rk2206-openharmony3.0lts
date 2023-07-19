@@ -33,8 +33,25 @@ vendor/lockzhiner/rk2206
 
 ### 2.1、下载Ubuntu系统镜像
 
+#### 2.1.1、Ubuntu系统镜像1
+
 下载网址（百度云）：https://pan.baidu.com/s/1IfT0onLb1kcoByhOUU-kyA
+
 提取码：eikl
+
+该镜像安装步骤请参考“**3.2、加载Ubuntu系统镜像**”
+
+#### 2.1.2、Ubuntu系统镜像2
+
+下载网址（百度云）：https://pan.baidu.com/s/1VQLEwJk0Oxu6ROKOMK0qkA 
+
+提取码：wp62 
+
+该镜像包含Git仓、docker和VSCode工具等。
+
+该网址路径下有README_zh.md文档，详细说明如何安装（该镜像安装步骤与“**3.2、加载Ubuntu系统镜像**”步骤不同，请注意参考镜像同级目录的README_zh.md）。
+
+#### 2.1.3、注意事项
 
 ```
 Ubuntu系统镜像是Ubuntu 20.04.3 LTS 64位系统版本，已安装相对应的编译环境。其中，账号主要有2个：
@@ -49,26 +66,31 @@ Ubuntu系统镜像是Ubuntu 20.04.3 LTS 64位系统版本，已安装相对应�
 ### 2.2、下载并安装VBox工具
 
 下载网址（百度云）：https://pan.baidu.com/s/1EYgUAO1_2N0GluF7h8HvBQ
+
 提取码：eekp
 
 ### 2.3、下载并安装MobaXterm工具
 
 下载网址（百度云）：https://pan.baidu.com/s/1FGz4TEJ3Np-ppP1-o0E05g
+
 提取码：n0ll
 
 ### 2.4、下载并安装烧写工具
 
 下载网址（百度云）：https://pan.baidu.com/s/1SU99yvtPehkRzBKH2jzNtA
+
 提取码：1adc
 
 ### 2.5、下载并安装USB驱动
 
 下载网址（百度云）：https://pan.baidu.com/s/1s_zEuDU_OpcltaJUZNvbLA
+
 提取码：9slw
 
 ### 2.6、下载并安装VSCode
 
 下载网址（百度云）：https://pan.baidu.com/s/1gi5froBzuSjLjvV4syKQ0A
+
 提取码：iv3k
 
 ## 3、部署环境
