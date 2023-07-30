@@ -45,6 +45,7 @@
 #include "lz_hardware/wifi.h"
 #include "lz_hardware/vendor.h"
 #include "lz_hardware/watchdog.h"
+#include "lz_hardware/efuse.h"
 
 unsigned int HalInit(void);
 #endif

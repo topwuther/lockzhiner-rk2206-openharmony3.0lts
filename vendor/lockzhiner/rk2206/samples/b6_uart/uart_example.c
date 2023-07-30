@@ -22,11 +22,16 @@
  */
 #define UART_ID                 0
 
+#define STRING_MAXSIZE          128
+
 void uart_process(void)
 {
     unsigned int ret;
     UartAttribute attr;
-    unsigned char str[] = "HelloWorld!\n";
+    unsigned char str[] = "HelloWorld!";
+    unsigned char recv_buffer[STRING_MAXSIZE];
+    unsigned int recv_length = 0;
+    unsigned int i;
 
     LzUartDeinit(UART_ID);
     
@@ -47,11 +52,21 @@ void uart_process(void)
         printf("%s, %d: LzUartInit(%d) failed!\n", __FILE__, __LINE__, ret);
         return;
     }
+    LOS_Msleep(1000);
 
     while (1)
     {
-        printf("%s, %d: uart write!\n", __FILE__, __LINE__);
+        printf("%s, %d: uart write and str(%s), len(%d)!\n", __FILE__, __LINE__, str, strlen(str));
+        // LzUartWrite是异步发送，非阻塞发送
         LzUartWrite(UART_ID, str, strlen(str));
+        // 等待发送完毕
+        LOS_Msleep(1000);
+
+        recv_length = 0;
+        memset(recv_buffer, 0, sizeof(recv_buffer));
+        recv_length = LzUartRead(UART_ID, recv_buffer, sizeof(recv_buffer));
+        printf("%s, %d: uart recv and str(%s), len(%d)\n", __FILE__, __LINE__, recv_buffer, recv_length);
+        printf("");
 
         LOS_Msleep(2000);
     }
@@ -72,7 +87,7 @@ void uart_example()
     unsigned int ret = LOS_OK;
 
     task.pfnTaskEntry = (TSK_ENTRY_FUNC)uart_process;
-    task.uwStackSize = 2048;
+    task.uwStackSize = 1024 * 1024;
     task.pcName = "uart process";
     task.usTaskPrio = 24;
     ret = LOS_TaskCreate(&thread_id, &task);

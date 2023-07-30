@@ -4,14 +4,18 @@
 
 ![小凌派-RK2206开发板](/vendor/lockzhiner/rk2206/docs/figures/lockzhiner-rk2206.jpg)
 
-
-
 ## WiFi ssid 和密码设置
 
-修改文件```device/rockchip/rk2206/sdk_liteos/board/src/config_network.c``` 中的SSID WiFi名称，PASSWORD WiFi密码 连接到与pc同一网络
+修改文件`device/rockchip/rk2206/sdk_liteos/board/src/config_network.c` 中的`TaskConfigWifiModeEntry()`函数修改`set_wifi_config_route_ssid()`和`set_wifi_config_route_passwd()`的参数（即分别为WiFi名称和WiFi密码），让设备连接到与pc同一网络。
+
 ```c
-#define SSID                    "凌智电子"
-#define PASSWORD                "88888888"
+static void TaskConfigWifiModeEntry()
+{
+    // 如果需要修改Wifi的SSID和密码，可以在此启用下述接口
+    set_wifi_config_route_ssid(printf,   "凌智电子");     // 路由的WiFi名称
+    set_wifi_config_route_passwd(printf, "88888888");    // 路由器WiFi密码
+    ......
+}
 ```
 
 确认main文件```device/rockchip/rk2206/sdk_liteos/board/main.c``` wifi功能已开启

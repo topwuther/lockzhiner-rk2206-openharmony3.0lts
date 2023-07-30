@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 #include "link.h"
 #include "lz_hardware.h"
@@ -329,4 +330,75 @@ int HalFileDelete(const char* path)
     strcat(path_buf, path);
     
     return LfsUnlink(path_buf);
+}
+
+/***************************************************************
+ * 函数名称: HalFileReadDir
+ * 说    明: 列出某目录下所有文件和文件夹
+ * 参    数: 
+ *      @path           要求列表的目录
+ *      @entry          struct dirent数组
+ *      @entry_max      entry数组有多少个struct dirent
+ *      @entry_length   当前目录下所有的文件和文件夹的数量
+ * 返 回 值: 0为成功，反之为失败
+***************************************************************/
+int HalFileReadDir(const char *path, struct dirent *entry, int entry_max, int *entry_length)
+{
+    if (path == NULL) {
+        printf("%s, %s, %d: path is null\n", __FILE__, __func__, __LINE__);
+        return -1;
+    }
+    if (entry == NULL) {
+        printf("%s, %s, %d: entry is null\n", __FILE__, __func__, __LINE__);
+        return -1;
+    }
+    if (entry_max <= 0) {
+        printf("%s, %s, %d: entry_max(%d) <= 0\n", __FILE__, __func__, __LINE__, entry_length);
+        return -1;
+    }
+    if (entry_length == NULL) {
+        printf("%s, %s, %d: entry_length is null\n", __FILE__, __func__, __LINE__);
+        return -1;
+    }
+
+    DIR *dir = NULL;
+    struct dirent *rent = NULL;
+    int i;
+    char path_buf[LFS_NAME_MAX] = {0};
+
+    HalFileInit();
+    if (strlen(path) + strlen((MOUNT_PATH DIR_PATH STR_SLASHES)) >= LFS_NAME_MAX) {
+        return -1;
+    }
+    strcpy(path_buf, (MOUNT_PATH DIR_PATH STR_SLASHES));
+    strcat(path_buf, path);
+
+    dir = LfsOpendir(path_buf);
+    if (dir == NULL) {
+        printf("%s, %s, %d: LfsOpendir(%s) failed\n", __FILE__, __func__, __LINE__, path_buf);
+        return -1;
+    }
+
+    i = 0;
+
+    do {
+        rent = LfsReaddir(dir);
+        if (rent == NULL) {
+            // 结束
+            break;
+        }
+        if (i >= entry_max) {
+            // 超出
+            break;
+        }
+        
+        memcpy(&entry[i], rent, sizeof(struct dirent));
+        i++;
+        //printf("i(%d), name(%s), type(%d)\n", i, rent->d_name, rent->d_type);
+    } while (1);
+
+    *entry_length = i;
+    LfsClosedir(dir);
+
+    return 0;
 }

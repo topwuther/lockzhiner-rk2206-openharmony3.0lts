@@ -13,28 +13,25 @@
  * limitations under the License.
  */
 
-#include "lz_hardware.h"
+/**
+ * @addtogroup Lockzhiner
+ *
+ * @file efuse.h
+ *
+ */
+#ifndef LZ_HARDWARE_EFUSE_H
+#define LZ_HARDWARE_EFUSE_H
 
-#define IOT_TAG      "IOT"
+/**
+ * @brief Read data from an efuse device.
+ *
+ * @param offset .
+ * @param len Indicates the bytes of the data to read.
+ * @param data Indicates the data buffer to read.
+ * @return Returns {@link > 0 read byte number}  successfully;
+ * returns {@link <= 0} failed
+ */
 
-static void IotProcess(void *arg)
-{
-    uint32_t ret = LZ_HARDWARE_SUCCESS;
+uint8_t LzEfuseRead(uint32_t offset, uint32_t len, uint8_t *val);
 
-    LZ_HARDWARE_LOGD(IOT_TAG, "%s: start ....", __func__);
-
-    while (1)
-    {
-        printf("%s: sleep 5 sec!\n", __func__);
-        LOS_Msleep(5000);
-    }
-}
-
-void IotInit(void)
-{
-    unsigned int threadID;
-
-    LZ_HARDWARE_LOGD(IOT_TAG, "%s: start ....", __func__);
-
-    CreateThread(&threadID, IotProcess, NULL, "iot process");
-}
+#endif

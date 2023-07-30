@@ -152,12 +152,20 @@ if (ret != LZ_HARDWARE_SUCCESS)
 具体uart写操作如下：
 
 ```c
-ret = LzUartWrite(UART_ID, str, strlen(str));
-if (ret != LZ_HARDWARE_SUCCESS)
-{
-    printf("%s, %d: LzUartInit(%d) failed!\n", __FILE__, __LINE__, ret);
-    return;
-}
+// LzUartWrite是异步发送，非阻塞发送
+LzUartWrite(UART_ID, str, strlen(str));
+// 等待发送完毕
+LOS_Msleep(1000);
+```
+
+具体uart读操作如下：
+
+```c
+recv_length = 0;
+memset(recv_buffer, 0, sizeof(recv_buffer));
+recv_length = LzUartRead(UART_ID, recv_buffer, sizeof(recv_buffer));
+printf("%s, %d: uart recv and str(%s), len(%d)\n", __FILE__, __LINE__, recv_buffer, recv_length);
+printf("");
 ```
 
 ## 编译调试

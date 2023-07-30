@@ -47,6 +47,12 @@ typedef enum {
     VENDOR_ID_WIFI_SSID,
     /* Wifi device mode: password */
     VENDOR_ID_WIFI_PASSWD,
+    /* Route device mode: ssid */
+    VENDOR_ID_WIFI_ROUTE_SSID,
+    /* Route device mode: password */
+    VENDOR_ID_WIFI_ROUTE_PASSWD,
+    /* AP OR STA MODE */
+    VENDOR_ID_WIFI_MODE,
 
     /* Custom definition ID */
     VENDOR_ID_CUSTOM = 32,

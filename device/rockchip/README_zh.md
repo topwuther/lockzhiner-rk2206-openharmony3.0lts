@@ -1,8 +1,8 @@
 # device_rockchip
 
-#### 介绍
+## 介绍
 
-##### 目录
+## 目录
 
 ```
 device/rockchip
@@ -56,6 +56,22 @@ repo forall -c 'git lfs pull'
 sudo apt-get install build-essential gcc g++ make zlib* libffi-dev e2fsprogs pkg-config flex bison perl bc openssl libssl-dev libelf-dev libc6-dev-amd64 binutils binutils-dev libdwarf-dev u-boot-tools mtd-utils gcc-arm-linux-gnueabi
 ```
 
+如果是aarch64，则需要执行：
+
+```sh
+pip3 install Click==7.0
+pip3 install colorama==0.4.3
+pip3 install pycryptodome==3.9.4
+pip3 install recordclass
+```
+
+另外下载代码后，将aarch64的gn和ninja替换到工具目录下：
+
+```sh
+cp /usr/bin/gn ./prebuilts/build-tools/linux-x86/bin/
+cp /usr/bin/ninja ./prebuilts/build-tools/linux-x86/bin/
+```
+
 ## 安装Python3
 
 1. 打开Linux编译服务器终端。
@@ -99,8 +115,6 @@ sudo apt-get install build-essential gcc g++ make zlib* libffi-dev e2fsprogs pkg
 
 ## 安装hb
 
-### 安装方法
-
 1. 运行如下命令安装hb
 
    ```
@@ -128,16 +142,16 @@ sudo apt-get install build-essential gcc g++ make zlib* libffi-dev e2fsprogs pkg
 
    ```
    usage: hb
-
+   
    OHOS build system
-
+   
    positional arguments:
      {build,set,env,clean}
        build               Build source code
        set                 OHOS build settings
        env                 Show OHOS build env
        clean               Clean output
-
+   
    optional arguments:
      -h, --help            show this help message and exit
    ```

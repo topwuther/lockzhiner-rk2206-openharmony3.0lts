@@ -24,6 +24,7 @@ lite_component("app") {
         #"./a6_kernel_event:event_example",
         #"./a7_hal_file:hal_file_example",
         #"./a8_hal_pwm:hal_pwm_example",
+        #"./a9_hal_dir:hal_dir_example",
 
         # 基础外设类
         #"./b1_adc:adc_example",
