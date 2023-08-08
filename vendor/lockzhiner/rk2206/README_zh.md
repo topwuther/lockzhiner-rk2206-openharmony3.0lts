@@ -360,23 +360,23 @@ sudo docker container rm [containerID]
 
 点击“开始” => 系统设置" => "应用" ，具体如下所示：
 
-![系统设置-点击应用](.\image\README\系统设置-应用.jpg)
+![系统设置-点击应用](image/README/系统设置-应用.jpg)
 
  选择"应用和功能" => "程序和功能" ，具体如下所示：
 
-![应用和功能](.\image\README\应用和功能.jpg)
+![应用和功能](image/README/应用和功能.jpg)
 
 点击 “启用或关闭Windows功能”，具体如下所示：
 
-![启用或关闭Windows功能](.\image\README\启用或关闭Windows功能.jpg)
+![启用或关闭Windows功能](image/README/启用或关闭Windows功能.jpg)
 
 勾选“Hyper-V”选项，具体如下所示：
 
-![Hyper-V](.\image\README\Hyper-V.jpg)
+![Hyper-V](image/README/Hyper-V.jpg)
 
 勾选“适用于Linux的Windows子系统”和“虚拟机平台”选项，具体如下所示：
 
-![启用虚拟机平台+Windows子系统](.\image\README\启用虚拟机平台+Windows子系统.jpg)
+![启用虚拟机平台+Windows子系统](image/README/启用虚拟机平台+Windows子系统.jpg)
 
 点击“确定”，重启Windows。
 
@@ -396,19 +396,19 @@ docker安装路径一般是：C:\Program Files\Docker\Docker\resources\bin
 
 右击“我的电脑” => "属性" => “关于” => "高级系统设置"，具体如下所示：
 
-![高级系统设置](.\image\README\高级系统设置.jpg)
+![高级系统设置](image/README/高级系统设置.jpg)
 
 点击“高级” => "环境变量"，具体如下所示：
 
-![环境变量](.\image\README\环境变量.jpg)
+![环境变量](image/README/环境变量.jpg)
 
 选中“Path”，点击“编辑”按钮，具体如下所示：
 
-![编辑PATH环境变量](.\image\README\编辑PATH环境变量.jpg)
+![编辑PATH环境变量](image/README/编辑PATH环境变量.jpg)
 
 点击“新建”按钮，将docker可执行程序目录放入，具体如下所示：
 
-![新建环境变量](.\image\README\新建环境变量.jpg)
+![新建环境变量](image/README/新建环境变量.jpg)
 
 点击“确定”，Windows重启。
 
@@ -511,29 +511,29 @@ docker container rm [containerID]
 
 启动VSCode，点击“扩展”按钮，输入“docker”，安装Docker插件。具体如下所示：
 
-![VSCode安装docker](.\image\README\VSCode安装docker.jpg)
+![VSCode安装docker](image/README/VSCode安装docker.jpg)
 
 重启VSCode。
 
 点击docker图标，可以查看所有的docker容器，具体如下所示：
 
-![docker-开启容器](.\image\README\docker-开启容器.jpg)
+![docker-开启容器](image/README/docker-开启容器.jpg)
 
 点击“终端” => "新建终端"，具体如下所示：
 
-![新建终端](.\image\README\新建终端.jpg)
+![新建终端](image/README/新建终端.jpg)
 
 选择“Containers” => "swr.cn-...."，右击，选择“Start”选项，具体如下所示：
 
-![VSCode编辑器开启docker容器](.\image\README\VSCode编辑器开启docker容器.jpg)
+![VSCode编辑器开启docker容器](image/README/VSCode编辑器开启docker容器.jpg)
 
 选择“Containers” => "swr.cn-...."，右击，选择“Attach Shell”选项，具体如下所示：
 
-![VSCode编辑器docker_attach_shell](.\image\README\VSCode编辑器docker_attach_shell.jpg)
+![VSCode编辑器docker_attach_shell](image/README/VSCode编辑器docker_attach_shell.jpg)
 
 终端进入OpenHarmony镜像中，具体如下所示：
 
-![VSCode编辑器进入OpenHarmony镜像](.\image\README\VSCode编辑器进入OpenHarmony镜像.jpg)
+![VSCode编辑器进入OpenHarmony镜像](image/README/VSCode编辑器进入OpenHarmony镜像.jpg)
 
 如此，我们就可以编译OpenHarmony
 
