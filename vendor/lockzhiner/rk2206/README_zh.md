@@ -424,13 +424,13 @@ docker安装路径一般是：C:\Program Files\Docker\Docker\resources\bin
 
 打开Power Shell命令窗口，执行如下命令。
 
-#### 3.4.1、下载镜像
+#### 3.3.1、下载镜像
 
 ```shell
 docker pull swr.cn-south-1.myhuaweicloud.com/openharmony-docker/openharmony-docker:1.0.0
 ```
 
-#### 3.4.2、开启容器
+#### 3.3.2、开启容器
 
 移动到OpenHarmony主目录下（这里假设OpenHarmony主目录为G:\git\lockzhiner-rk2206-openharmony3.0lts-master），运行如下命令：
 
@@ -464,7 +464,7 @@ hb build -f
 
 编译出的目标文件在 `out/rk2206/lockzhiner-rk2206/images`目录下。
 
-#### 3.4.3、关闭容器
+#### 3.3.3、关闭容器
 
 关闭容器可以分为2种方式。
 
@@ -485,7 +485,7 @@ docker container stop [containerID]
 
 注意：使用stop命令需要等待5~10秒才能退出。
 
-#### 3.4.4、重启容器
+#### 3.3.4、重启容器
 
 ```shell
 # 列出所有的容器
@@ -496,7 +496,7 @@ docker container start [containerID]
 docker container attach [containerID]
 ```
 
-#### 3.4.5、删除容器
+#### 3.3.5、删除容器
 
 如果某个容器出现错误或者想删除，则可使用以下命令：
 
