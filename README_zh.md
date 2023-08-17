@@ -13,7 +13,7 @@
 | 1    | 开发板硬件资料 | [硬件原理图](/vendor/lockzhiner/rk2206/docs/board/硬件原理图) |
 | 2    | 快速上手教程   | [教程](/vendor/lockzhiner/rk2206/README_zh.md)               |
 | 3    | 案例代码列表   | [案例](/vendor/lockzhiner/rk2206/samples/README_zh.md)       |
-| 4    | 视频学习地址   | [视频地址](https://www.bilibili.com/list/1360647720?sid=2088027&desc=1&oid=684096173&bvid=BV1aU4y1m73b)<br>注意：网页跳转后请重新刷新才生效 |
+| 4    | 视频学习地址   | [视频地址](https://space.bilibili.com/1360647720/channel/seriesdetail?sid=2088027)<br>注意：网页跳转后请重新刷新才生效 |
 | 5    | 视频课程PPT    | [课程配套课件](/vendor/lockzhiner/rk2206/docs/board/课程配套课件) |
 | 6    | 常见问题       | 暂无                                                         |
 
