@@ -95,7 +95,7 @@ function make_config_json()
 
 function main()
 {
-    arch_text=`arch`
+    arch_text=$(uname -m)
 
     mkdir -p ${IMAGE_DIR}
 
@@ -109,7 +109,7 @@ function main()
         echo "arch is aarch64 and packet for aarch64"
 		python3 ${TOOLS_DIR}/resource_header_tool_aarch64.py pack --json ${CONFIG_JSON} ${OUT_DIR}/${LITEOS_BIN}
 		${TOOLS_DIR}/firmware_merger_aarch64 -p ${SETTING_INI} ${IMAGE_DIR}
-	else:
+	else
 		echo "mkimage.sh => ${arch_text} is out of the range!"
     fi
     cp ${LOADER_IMAGE} ${IMAGE_DIR}/
