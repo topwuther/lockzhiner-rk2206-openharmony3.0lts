@@ -1,0 +1,2 @@
+[console_scripts]
+hb = hb.__main__:main
