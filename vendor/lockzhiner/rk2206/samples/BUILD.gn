@@ -58,6 +58,9 @@ lite_component("app") {
         #"./d4_iot_cloud_intelligent_vehicle:iot_cloud_iv_example",
         #"./d5_iot_cloud_body_induction:iot_cloud_bi_example",
         #"./d6_iot_cloud_gesture_sensor:iot_cloud_gs_example",
+
+        # 智能家居
+        #"./x0_doorbell:doorbell",
     ]
 
     deps = [
