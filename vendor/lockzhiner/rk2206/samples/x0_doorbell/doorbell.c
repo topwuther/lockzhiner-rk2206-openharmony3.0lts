@@ -6,15 +6,12 @@ void doorbell_process()
 
     /* 初始化引脚为GPIO */
     LzGpioInit(BUTTON);
-    LzGpioInit(DOORBELL_PWR);
     LzGpioInit(DOORBELL);
 
     PinctrlSet(BUTTON, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
-    PinctrlSet(DOORBELL_PWR, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
     PinctrlSet(DOORBELL, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
 
     LzGpioSetDir(BUTTON, LZGPIO_DIR_IN);
-    LzGpioSetDir(DOORBELL_PWR, LZGPIO_DIR_OUT);
     LzGpioSetDir(DOORBELL, LZGPIO_DIR_OUT);
     uint8_t flag = 0;
 
@@ -23,20 +20,20 @@ void doorbell_process()
     {
         LzGpioGetVal(BUTTON, &value);
         if(value == LZGPIO_LEVEL_HIGH){
-            LzGpioSetVal(DOORBELL_PWR,LZGPIO_LEVEL_HIGH);
             LzGpioSetVal(DOORBELL,LZGPIO_LEVEL_LOW);
-            LOS_Msleep(1);
+            HAL_DelayMs(1);
             LzGpioSetVal(DOORBELL,LZGPIO_LEVEL_HIGH);
+            HAL_DelayMs(1);
             flag = 90;
+            continue;
         }
         else{
             for(;flag!=0;--flag){
             LzGpioSetVal(DOORBELL,LZGPIO_LEVEL_LOW);
-            LOS_Msleep(3);
+            HAL_DelayMs(3);
             LzGpioSetVal(DOORBELL,LZGPIO_LEVEL_HIGH);
-            LOS_Msleep(3);
+            HAL_DelayMs(3);
             }
-            LzGpioSetVal(DOORBELL_PWR,LZGPIO_LEVEL_LOW);
         }
         LOS_Msleep(1);
     }
