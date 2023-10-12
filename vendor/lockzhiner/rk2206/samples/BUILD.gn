@@ -62,6 +62,7 @@ lite_component("app") {
         # 智能家居
         #"./x0_doorbell:doorbell",
         #"./x1_smartdoor:smartdoor",
+        #"./x2_sensor:sensor",
     ]
 
     deps = [
