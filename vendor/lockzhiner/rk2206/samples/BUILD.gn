@@ -63,6 +63,7 @@ lite_component("app") {
         #"./x0_doorbell:doorbell",
         #"./x1_smartdoor:smartdoor",
         #"./x2_sensor:sensor",
+        #"./x3_voice:voice",
     ]
 
     deps = [
