@@ -1,8 +1,12 @@
 #include "sensor.h"
 
+extern void sg90cycle(GpioID pin,uint8_t cycle);
+
 static bool flags[5] = {true, true, true, true, true};
 static uint8_t sht30Update = 0;
 static uint8_t bh1750Update = 0;
+float temperature = 0; // temperature [°C]
+float humidity = 0;    // relative humidity [%RH]
 
 void MQ2SensorShow()
 {
@@ -59,19 +63,19 @@ void RainSensorShow()
         lcd_show_chinese(0, 64, rain_chinese, LCD_RED, LCD_BLACK, 32, 0);
         lcd_fill(160, 64, 192, 96, LCD_BLACK);
         flags[2] = true;
+        sg90cycle(WINDOW_PIN,0);
     }
     else if (value && flags[2])
     {
         lcd_show_chinese(0, 64, norain_chinese, LCD_WHITE, LCD_BLACK, 32, 0);
         flags[2] = false;
+        sg90cycle(WINDOW_PIN,90);
     }
 }
 
 void SHT30SensorShow()
 {
     etError error;
-    ft temperature; // temperature [°C]
-    ft humidity;    // relative humidity [%RH]
     uint8_t errsensor_chinese[] = "温湿度异常";
     uint8_t temperature_chinese[] = "温度";
     uint8_t humidity_chinese[] = "湿度";
@@ -146,18 +150,21 @@ void sensor_process()
     LzGpioInit(LIGHT);
     LzGpioInit(ALERT_PIN);
     LzGpioInit(RAIN_SENSOR);
+    LzGpioInit(WINDOW_PIN);
     /* 引脚复用配置为GPIO */
     PinctrlSet(MQ_2_SENSOR, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
     PinctrlSet(FLAME_SENSOR, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
     PinctrlSet(LIGHT, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
     PinctrlSet(ALERT_PIN, MUX_FUNC0, PULL_UP, DRIVE_LEVEL0);
     PinctrlSet(RAIN_SENSOR, MUX_FUNC0, PULL_UP, DRIVE_LEVEL0);
+    PinctrlSet(WINDOW_PIN, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
 
     LzGpioSetDir(MQ_2_SENSOR, LZGPIO_DIR_IN);
     LzGpioSetDir(FLAME_SENSOR, LZGPIO_DIR_IN);
     LzGpioSetDir(LIGHT, LZGPIO_DIR_OUT);
     LzGpioSetDir(ALERT_PIN, LZGPIO_DIR_OUT);
     LzGpioSetDir(RAIN_SENSOR, LZGPIO_DIR_IN);
+    LzGpioSetDir(WINDOW_PIN, LZGPIO_DIR_OUT);
 
     SHT3X_Init(SHT30_ADDR);
     BH1750_Init(BH1750_ADDR);

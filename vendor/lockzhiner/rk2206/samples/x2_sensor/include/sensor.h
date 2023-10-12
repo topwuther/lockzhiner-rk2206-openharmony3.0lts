@@ -22,4 +22,6 @@
 #define SHT30_ADDR              0x44
 #define BH1750_ADDR             0x23
 
+#define WINDOW_PIN              GPIO0_PB4
+
 #endif
