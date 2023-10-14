@@ -7,6 +7,7 @@ static uint8_t sht30Update = 0;
 static uint8_t bh1750Update = 0;
 float temperature = 0; // temperature [°C]
 float humidity = 0;    // relative humidity [%RH]
+float light = 0;
 
 void MQ2SensorShow()
 {
@@ -101,7 +102,6 @@ void BH1750SensorShow()
 {
     etError error;
     uint8_t recv_data[2] = {0};
-    ft light;
     uint8_t light_chinese[] = "光照";
     uint8_t errlight_chinese[] = "光照异常";
     bh1750Update = (bh1750Update + 1) % 180;
