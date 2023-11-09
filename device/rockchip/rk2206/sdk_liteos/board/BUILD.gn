@@ -21,6 +21,7 @@ static_library("board") {
       "./main.c",
       "./iotmain.c",
       "./src/config_network.c",
+      "./src/config_uuid.c"
   ]
 
   include_dirs = [

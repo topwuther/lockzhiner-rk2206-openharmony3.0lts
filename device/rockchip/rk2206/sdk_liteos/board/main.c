@@ -21,6 +21,7 @@
 #include "los_compiler.h"
 #include "lz_hardware.h"
 #include "config_network.h"
+#include "config_uuid.h"
 
 #define  MAIN_TAG              "MAIN"
 int DeviceManagerStart();
@@ -47,6 +48,7 @@ int main(void)
         /* 开启驱动管理服务 */
         //DeviceManagerStart();
         //ExternalTaskConfigNetwork();
+        //TaskConfigUUID();
         LZ_HARDWARE_LOGD(MAIN_TAG, "%s: LOS_Start ...", __func__);
         LOS_Start();
     }
