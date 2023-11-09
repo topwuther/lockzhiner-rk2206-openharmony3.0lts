@@ -51,6 +51,7 @@ lite_component("sdk") {
     "//kernel/liteos_m/components/net/lwip-2.1:lwip",
     "//vendor/lockzhiner/rk2206/samples:app",
     "//third_party/paho_mqtt:pahomqtt_static",
+    "//third_party/ntpclient:ntpclient_static",
     "//vendor/lockzhiner/rk2206/hdf_config:hdf_config",
     "//vendor/lockzhiner/rk2206/hdf_drivers:hdf_drivers",
     "//drivers/adapter/khdf/liteos_m/test/sample_driver:sample_driver",

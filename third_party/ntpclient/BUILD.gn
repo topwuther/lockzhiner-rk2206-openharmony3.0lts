@@ -1,0 +1,16 @@
+import("//drivers/adapter/khdf/liteos_m/hdf.gni")
+import("//device/rockchip/rk2206/sdk_liteos/board.gni")
+
+static_library("ntpclient_static") {
+    sources = [
+        "src/ntpclient.c",
+    ]
+    include_dirs = [ 
+        "include",
+        "//third_party/lwip/src/include/lwip",
+    ]
+    deps = [
+        "//device/rockchip/hardware:hardware",
+        "//kernel/liteos_m/kal/posix"
+    ]
+}
