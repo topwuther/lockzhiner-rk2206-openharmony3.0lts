@@ -28,16 +28,16 @@ void IotInit(void);
 
 /*****************************************************************************
  Function    : main
- Description : Main function entry
+ Description : main function entry
  Input       : None
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT int Main(void)
+int main(void)
 {
     int ret;
     LZ_HARDWARE_LOGD(MAIN_TAG, "%s: enter ...", __func__);
-    
+
     HalInit();
 
     ret = LOS_KernelInit();

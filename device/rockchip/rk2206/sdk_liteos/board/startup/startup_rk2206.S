@@ -35,7 +35,7 @@
 
   .extern  IntDefaultHandler
   .extern  SystemInit
-  .extern  Main
+  .extern  main
 
   .section .isr_vector
   .align   2
@@ -122,7 +122,7 @@ Reset_Handler:
   blt      .L_loop_bss
 
   bl       SystemInit
-  bl       Main
+  bl       main
 
   .fnend
   .size    Reset_Handler, . - Reset_Handler
