@@ -50,12 +50,12 @@ extern "C" {
 // 该处为Wifi模式默认的SSID和密码，即Flash如为空，则填写默认
 // 如需要修改，请直接调用set_wifi_config_route_ssid()和set_wifi_config_route_passwd()函数
 // 如需要修改，可以TaskConfigWifiModeEntry()启用上述2个函数
-#define ROUTE_SSID              "凌智电子"
-#define ROUTE_PASSWORD          "88888888"
+#define ROUTE_SSID              "Hello"
+#define ROUTE_PASSWORD          "12345678"
 // 该处为AP模式的默认SSID和密码，即Flash如为空，则填写默认
 // 如需要修改，请直接调用set_wifi_config_ssid()和set_wifi_config_passwd()函数
-#define AP_SSID                 "凌智电子"
-#define AP_PASSWORD             "88888888"
+#define AP_SSID                 "Hello"
+#define AP_PASSWORD             "12345678"
 
 
 STATIC RKWifiConfig g_wificonfig = {0};
@@ -327,6 +327,30 @@ void set_wifi_config_route_passwd(printf_fn pfn, uint8_t *p)
     VendorGet(VENDOR_ID_WIFI_ROUTE_PASSWD, wifi_config.route_password, sizeof(wifi_config.route_password));
     if(pfn == NULL) return;
     pfn("route_passwd: %s\n", wifi_config.route_password);
+}
+
+int get_wifi_info()
+{
+    WifiLinkedInfo info;
+    int ret = -1;
+    int gw, netmask;
+    memset(&info, 0, sizeof(WifiLinkedInfo));
+    unsigned int retry = 15;
+    while (retry) {
+        if (GetLinkedInfo(&info) == WIFI_SUCCESS) {
+            if (info.connState == WIFI_CONNECTED) {
+                if (info.ipAddress != 0) {
+                    ret = 0;
+                    goto connect_done;
+                }
+            }
+        }
+        LOS_Msleep(1000);
+        retry--;
+    }
+
+connect_done:
+    return ret;
 }
 
 
@@ -650,8 +674,8 @@ static void TaskConfigApModeEntry()
 static void TaskConfigWifiModeEntry()
 {
     // 如果需要修改Wifi的SSID和密码，可以在此启用下述接口
-    set_wifi_config_route_ssid(printf,   "凌智电子");     // 路由的WiFi名称
-    set_wifi_config_route_passwd(printf, "88888888");    // 路由器WiFi密码
+    set_wifi_config_route_ssid(printf,   ROUTE_SSID);     // 路由的WiFi名称
+    set_wifi_config_route_passwd(printf, ROUTE_PASSWORD);    // 路由器WiFi密码
 
 init:
     SetWifiModeOff();

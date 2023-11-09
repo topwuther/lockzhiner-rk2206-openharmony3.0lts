@@ -88,6 +88,7 @@ void set_wifi_config_ssid(printf_fn pfn, uint8_t *s);
 void set_wifi_config_passwd(printf_fn pfn, uint8_t *p);
 void set_wifi_config_route_ssid(printf_fn pfn, uint8_t *s);
 void set_wifi_config_route_passwd(printf_fn pfn, uint8_t *p);
+int get_wifi_info();
 
 WifiErrorCode SetApModeOn();
 WifiErrorCode SetApModeOff();
