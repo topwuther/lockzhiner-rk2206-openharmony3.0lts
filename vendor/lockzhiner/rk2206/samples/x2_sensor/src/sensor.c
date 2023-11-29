@@ -2,7 +2,7 @@
 
 extern void sg90cycle(GpioID pin,uint8_t cycle);
 
-static bool flags[5] = {true, true, true, true, true};
+bool flags[5] = {true, true, true, true, true};
 static uint8_t sht30Update = 0;
 static uint8_t bh1750Update = 0;
 float temperature = 0; // temperature [°C]

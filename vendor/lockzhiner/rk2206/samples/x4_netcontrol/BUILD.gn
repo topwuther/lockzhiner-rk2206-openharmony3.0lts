@@ -1,0 +1,25 @@
+import("//drivers/adapter/khdf/liteos_m/hdf.gni")
+import("//device/rockchip/rk2206/sdk_liteos/board.gni")
+
+static_library("netcontrol") {
+    sources = [
+        "netcontrol.c",
+        "src/mqttclient.c",
+    ]
+
+    include_dirs = [
+        "//third_party/ntpclient/include",
+        "//utils/native/lite/include",
+        "//third_party/cJSON",
+        "//third_party/musl/porting/liteos_m/kernel/include",
+        "//third_party/paho_mqtt/MQTTPacket/src",
+        "//third_party/paho_mqtt/MQTTClient-C/src",
+        "include",
+        "//device/rockchip/rk2206/sdk_liteos/board/include",
+        "//device/rockchip/rk2206/adapter/include",
+    ]
+
+    deps = [
+        "//device/rockchip/hardware:hardware",
+    ]
+}

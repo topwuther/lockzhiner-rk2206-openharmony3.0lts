@@ -64,6 +64,7 @@ lite_component("app") {
         #"./x1_smartdoor:smartdoor",
         #"./x2_sensor:sensor",
         #"./x3_voice:voice",
+        #"./x4_netcontrol:netcontrol",
     ]
 
     deps = [
