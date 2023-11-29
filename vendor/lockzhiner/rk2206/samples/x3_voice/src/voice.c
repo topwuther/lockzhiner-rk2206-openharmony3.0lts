@@ -49,7 +49,7 @@ void voice_process()
         recv_length = 0;
         memset(recv_buffer, 0, sizeof(recv_buffer));
         recv_length = LzUartRead(UART_ID, recv_buffer, sizeof(recv_buffer));
-        printf("recv:[%s]\n", recv_buffer);
+        // printf("recv:[%s]\n", recv_buffer);
         if (strcmp(recv_buffer, "ledon") == 0)
         {
             LzGpioSetVal(LIGHT, LZGPIO_LEVEL_HIGH);
@@ -91,10 +91,10 @@ void voice_process()
             send_buffer[5] = (uint8_t)((light - light_int) * 100);
             LzUartWrite(UART_ID, send_buffer, 6);
         }
-        else
-        {
-            printf("Unknown command.\n");
-        }
+        // else
+        // {
+        //     printf("Unknown command.\n");
+        // }
 
         LOS_Msleep(1000);
     }
