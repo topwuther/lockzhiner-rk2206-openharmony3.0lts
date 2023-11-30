@@ -45,9 +45,17 @@ MQTT_USERNAME为MQTT的用户名
 
 MQTT_PASSWORD为MQTT的密码
 
-编译代码
+将`//vendor/lockzhiner/rk2206/samples/BUILD.gn`中的x0-x4的注释去掉
+在`//device/rockchip/rk2206/sdk_liteos/Makefile`中添加`-ldoorbell -lsmartdoor -lsensor -lvoice -lnetcontrol`
+### 依赖问题
+
+x0无依赖，可单独运行
+
+其他的建议一起，数字高的需要依赖数字低的模块
+### 编译代码
 >hb build -f
 
-烧录到开发板中
+### 烧录到开发板中
 >./flash.py
+
 
