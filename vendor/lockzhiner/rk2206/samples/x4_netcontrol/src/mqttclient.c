@@ -5,6 +5,8 @@
 
 #define MQTT_SERVER_IP                          "192.168.130.75"
 #define MQTT_SERVER_PORT                        1883
+#define MQTT_USERNAME                           "user1"
+#define MQTT_PASSWORD                           "123456"
 
 static unsigned char sendBuf[1000];
 static unsigned char readBuf[1000];
@@ -33,8 +35,8 @@ begin:
     MQTTClientInit(&client, &MQTTNetwork, 2000, sendBuf, sizeof(sendBuf), readBuf, sizeof(readBuf));
     
     clientId.cstring = uuid;
-    username.cstring = "user1";
-    password.cstring = "9#N$aZSwF'g7w#W";
+    username.cstring = MQTT_USERNAME;
+    password.cstring = MQTT_PASSWORD;
 
     data.clientID          = clientId;
     data.willFlag          = 0;
