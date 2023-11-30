@@ -12,6 +12,7 @@
 #include "lwip/stats.h"
 #include "lwip/inet_chksum.h"
 
+#define SERVER_IP "192.168.12.1"
 #define NTP_TIMESTAMP_DELTA 2208988800ull
 #define close lwip_close
 
@@ -19,7 +20,7 @@ uint32_t GetNTPTime()
 {
     int sockfd, n; 
     int portno = 123;
-    char *server = "192.168.12.1"; // NTP server host-name.
+    char *server = SERVER_IP; // NTP server host-name.
     ntp_packet packet = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     packet.li_vn_mode = 0x1b;
     struct sockaddr_in serv_addr; // Server address data structure.
