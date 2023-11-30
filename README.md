@@ -3,7 +3,7 @@
 
 这是一个非官方的小凌派RK2206仓库，主要添加一些原有代码没有的新特性以及新案例，还有官方代码仓库中的一些错误修复
 ## BUG修复:
-修复`./device/rockchip/tools/package/mkimage.sh`的一个语法错误，以及在部分Linux发行版中无法正确生成烧录镜像的问题
+修复`//device/rockchip/tools/package/mkimage.sh`的一个语法错误，以及在部分Linux发行版中无法正确生成烧录镜像的问题
 
 ## 新特性:
  - 允许从局域网中的NTP服务器上获取时间(秒)
