@@ -15,12 +15,32 @@
  - Python 3.11
  - Git
 ## 使用方法:
-下载仓库代码
+### 下载仓库代码
 > git clone https://github.com/topwuther/lockzhiner-rk2206-openharmony3.0lts.git
 
-设置环境
+### 设置环境
 > . venv/bin/activate\
 hb set -root .
+
+### 使NTP能够使用
+修改
+`//third_party/ntpclient/src/ntpclient.c`
+中的define字段
+
+SERVER_IP为需要连接到的NTP IP地址
+
+### 运行智慧小屋系统
+查看例程b7_wifi_tcp，根据“WiFi ssid 和密码设置”来操作以设置WIFI\
+修改`//vendor/lockzhiner/rk2206/samples/x4_netcontrol/src/mqttclient.c`
+中的define字段
+
+MQTT_SERVER_IP为MQTT的IP地址
+
+MQTT_SERVER_PORT为MQTT的端口
+
+MQTT_USERNAME为MQTT的用户名
+
+MQTT_PASSWORD为MQTT的密码
 
 编译代码
 >hb build -f
