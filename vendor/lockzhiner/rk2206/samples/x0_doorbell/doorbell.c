@@ -8,8 +8,8 @@ void doorbell_process()
     LzGpioInit(BUTTON);
     LzGpioInit(DOORBELL);
 
-    PinctrlSet(BUTTON, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
-    PinctrlSet(DOORBELL, MUX_FUNC0, PULL_KEEP, DRIVE_LEVEL0);
+    PinctrlSet(BUTTON, MUX_FUNC0, PULL_DOWN, DRIVE_LEVEL0);
+    PinctrlSet(DOORBELL, MUX_FUNC0, PULL_DOWN, DRIVE_LEVEL0);
 
     LzGpioSetDir(BUTTON, LZGPIO_DIR_IN);
     LzGpioSetDir(DOORBELL, LZGPIO_DIR_OUT);

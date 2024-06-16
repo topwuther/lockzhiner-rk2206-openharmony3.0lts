@@ -39,8 +39,8 @@ void voice_process()
     attr.stopBits = UART_STOP_BIT_1;
     attr.txBlock = UART_BLOCK_STATE_NONE_BLOCK;
 
-    PinctrlSet(GPIO0_PB6, MUX_FUNC2, PULL_KEEP, DRIVE_LEVEL2);
-    PinctrlSet(GPIO0_PB7, MUX_FUNC2, PULL_KEEP, DRIVE_LEVEL2);
+    PinctrlSet(GPIO0_PB6, MUX_FUNC2, PULL_DOWN, DRIVE_LEVEL2);
+    PinctrlSet(GPIO0_PB7, MUX_FUNC2, PULL_DOWN, DRIVE_LEVEL2);
 
     LzUartInit(UART_ID, &attr);
 
