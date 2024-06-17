@@ -139,7 +139,7 @@ void smartdoor_process()
     LzGpioInit(GARAGE_PIN);
 
     /* 引脚复用配置为GPIO */
-    PinctrlSet(KEYPAD_SDO, MUX_FUNC0, PULL_DOWN, DRIVE_LEVEL0);
+    PinctrlSet(KEYPAD_SDO, MUX_FUNC0, PULL_UP, DRIVE_LEVEL0);
     PinctrlSet(KEYPAD_SCL, MUX_FUNC0, PULL_UP, DRIVE_LEVEL0);
     PinctrlSet(DOOR_PIN, MUX_FUNC0, PULL_DOWN, DRIVE_LEVEL0);
 
