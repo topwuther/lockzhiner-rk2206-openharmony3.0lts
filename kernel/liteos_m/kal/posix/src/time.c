@@ -589,59 +589,59 @@ time_t mktime(struct tm *tmptr)
     return timeInSeconds;
 }
 
-int gettimeofday(struct timeval *tv, void *ptz)
-{
-    struct timespec ts;
-    struct timezone *tz = (struct timezone *)ptz;
+// int gettimeofday(struct timeval *tv, void *ptz)
+// {
+//     struct timespec ts;
+//     struct timezone *tz = (struct timezone *)ptz;
 
-    if (tv != NULL) {
-        if (-1 == clock_gettime(CLOCK_REALTIME, &ts)) {
-            return -1;
-        }
-        tv->tv_sec = ts.tv_sec;
-        tv->tv_usec = ts.tv_nsec / OS_SYS_NS_PER_US;
-    }
-    if (tz != NULL) {
-        tz->tz_minuteswest = timezone / SECS_PER_MIN;
-        tz->tz_dsttime = 0;
-    }
-    return 0;
-}
+//     if (tv != NULL) {
+//         if (-1 == clock_gettime(CLOCK_REALTIME, &ts)) {
+//             return -1;
+//         }
+//         tv->tv_sec = ts.tv_sec;
+//         tv->tv_usec = ts.tv_nsec / OS_SYS_NS_PER_US;
+//     }
+//     if (tz != NULL) {
+//         tz->tz_minuteswest = timezone / SECS_PER_MIN;
+//         tz->tz_dsttime = 0;
+//     }
+//     return 0;
+// }
 
-int settimeofday(const struct timeval *tv, const struct timezone *tz)
-{
-    struct timespec ts;
-    INT32 rtcTimeZone = timezone;
+// int settimeofday(const struct timeval *tv, const struct timezone *tz)
+// {
+//     struct timespec ts;
+//     INT32 rtcTimeZone = timezone;
 
-    if (tv == NULL) {
-        errno = EFAULT;
-        return -1;
-    }
-    if (tz != NULL) {
-        if ((tz->tz_minuteswest >= TIME_ZONE_MIN) &&
-            (tz->tz_minuteswest <= TIME_ZONE_MAX)) {
-            rtcTimeZone = tz->tz_minuteswest * SECS_PER_MIN;
-        } else {
-            errno = EINVAL;
-            return -1;
-        }
-    }
+//     if (tv == NULL) {
+//         errno = EFAULT;
+//         return -1;
+//     }
+//     if (tz != NULL) {
+//         if ((tz->tz_minuteswest >= TIME_ZONE_MIN) &&
+//             (tz->tz_minuteswest <= TIME_ZONE_MAX)) {
+//             rtcTimeZone = tz->tz_minuteswest * SECS_PER_MIN;
+//         } else {
+//             errno = EINVAL;
+//             return -1;
+//         }
+//     }
 
-    if (tv->tv_usec >= OS_SYS_US_PER_SECOND) {
-        errno = EINVAL;
-        return -1;
-    }
+//     if (tv->tv_usec >= OS_SYS_US_PER_SECOND) {
+//         errno = EINVAL;
+//         return -1;
+//     }
 
-    ts.tv_sec = tv->tv_sec;
-    ts.tv_nsec = tv->tv_usec * OS_SYS_NS_PER_US;
-    if (-1 == clock_settime(CLOCK_REALTIME, &ts)) {
-        return -1;
-    }
+//     ts.tv_sec = tv->tv_sec;
+//     ts.tv_nsec = tv->tv_usec * OS_SYS_NS_PER_US;
+//     if (-1 == clock_settime(CLOCK_REALTIME, &ts)) {
+//         return -1;
+//     }
 
-    timezone = rtcTimeZone;
+//     timezone = rtcTimeZone;
 
-    return 0;
-}
+//     return 0;
+// }
 
 int usleep(unsigned useconds)
 {
