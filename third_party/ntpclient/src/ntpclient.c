@@ -12,7 +12,7 @@
 #include "lwip/stats.h"
 #include "lwip/inet_chksum.h"
 
-#define SERVER_IP "192.168.12.1"
+#define SERVER_IP "120.25.115.20"
 #define NTP_TIMESTAMP_DELTA 2208988800ull
 #define close lwip_close
 
