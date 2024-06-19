@@ -49,7 +49,7 @@ int main(void)
         //DeviceManagerStart();
         //ExternalTaskConfigNetwork();
         //TaskConfigUUID();
-        //TaskConfigTime();
+        //EnableSystemTimeFeature();
         LZ_HARDWARE_LOGD(MAIN_TAG, "%s: LOS_Start ...", __func__);
         LOS_Start();
     }

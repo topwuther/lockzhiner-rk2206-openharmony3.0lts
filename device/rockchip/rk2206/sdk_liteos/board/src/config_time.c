@@ -2,6 +2,7 @@
 #include "los_task.h"
 #include "lz_hardware.h"
 #include "config_time.h"
+#include "los_swtmr.h"
 
 #define LOG_TAG "config_time"
 
@@ -22,34 +23,21 @@ int gettimeofday(struct timeval *tv, void *ptz)
 
 int settimeofday(const struct timeval *tv, const void *tz){
     timestamp = tv->tv_sec;
+    return 0;
 }
 
-void TaskConfigTimeEntry(){
+void timeTick(void *arg){
+    timestamp++;
+}
+
+uint32_t EnableSystemTimeFeature(){
     while(get_wifi_info() != 0){
-        // LOS_Msleep(1);
-        printf("wait wifi!!!\n");
-    }
-    running = true;
-    timestamp = GetNTPTime();
-    while(true){
         LOS_Msleep(1000);
-        timestamp++;
     }
-}
-uint32_t TaskConfigTime()
-{
-    unsigned int threadID;
-    unsigned int ret = LOS_OK;
-    TSK_INIT_PARAM_S task = {0};
-    task.pfnTaskEntry = (TSK_ENTRY_FUNC)TaskConfigTimeEntry;
-    task.uwStackSize  = 10240;
-    task.pcName       = "taskConfigTimeEntry";
-    task.usTaskPrio   = 8;
-    ret = LOS_TaskCreate(&threadID, &task);
-    if (ret != LOS_OK) {
-        LZ_HARDWARE_LOGE(LOG_TAG, "LOS_TaskCreate error: %d\n", ret);
-        return ret;
-    }
-
-    return LOS_OK;
+    uint32_t timer_id;
+    uint32_t ret;
+    timestamp = GetNTPTime();
+    ret = LOS_SwtmrCreate(1000, LOS_SWTMR_MODE_PERIOD, timeTick, &timer_id, NULL);
+    running = true;
+    return ret;
 }

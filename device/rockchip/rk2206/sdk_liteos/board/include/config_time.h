@@ -7,8 +7,7 @@ struct timeval {
     uint32_t tv_sec, tv_usec;
 };
 
-void TaskConfigTimeEntry();
-uint32_t TaskConfigTime();
+uint32_t EnableSystemTimeFeature();
 int gettimeofday(struct timeval *tv, void *ptz);
 int settimeofday(const struct timeval *tv, const void *tz);
 #endif
